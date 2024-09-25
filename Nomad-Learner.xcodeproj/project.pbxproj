@@ -13,9 +13,12 @@
 		835BD2F82CA413560088CA02 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 835BD2F72CA413560088CA02 /* Base */; };
 		835BD2FA2CA413570088CA02 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 835BD2F92CA413570088CA02 /* Assets.xcassets */; };
 		835BD2FD2CA413570088CA02 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 835BD2FC2CA413570088CA02 /* Base */; };
+		835BD3072CA423FB0088CA02 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835BD3062CA423FB0088CA02 /* APIKeys.swift */; };
+		E1B4908C044C675F5B284480 /* Pods_Nomad_Learner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4FC40ED509727A95F858024 /* Pods_Nomad_Learner.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		04E2362154E42F3944BE8219 /* Pods-Nomad-Learner.develop.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nomad-Learner.develop.xcconfig"; path = "Target Support Files/Pods-Nomad-Learner/Pods-Nomad-Learner.develop.xcconfig"; sourceTree = "<group>"; };
 		835BD2ED2CA413560088CA02 /* Nomad-LearnerDev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Nomad-LearnerDev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		835BD2F02CA413560088CA02 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		835BD2F22CA413560088CA02 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +27,9 @@
 		835BD2F92CA413570088CA02 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		835BD2FC2CA413570088CA02 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		835BD2FE2CA413570088CA02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		835BD3062CA423FB0088CA02 /* APIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
+		A2D42D523F052595228AA30F /* Pods-Nomad-Learner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nomad-Learner.release.xcconfig"; path = "Target Support Files/Pods-Nomad-Learner/Pods-Nomad-Learner.release.xcconfig"; sourceTree = "<group>"; };
+		B4FC40ED509727A95F858024 /* Pods_Nomad_Learner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Nomad_Learner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1B4908C044C675F5B284480 /* Pods_Nomad_Learner.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,6 +49,8 @@
 			children = (
 				835BD2EF2CA413560088CA02 /* Nomad-Learner */,
 				835BD2EE2CA413560088CA02 /* Products */,
+				D409FDF61F0D67B5CE982948 /* Pods */,
+				9F7F78C28391D8E8BBF1166B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -59,12 +68,39 @@
 				835BD2F02CA413560088CA02 /* AppDelegate.swift */,
 				835BD2F22CA413560088CA02 /* SceneDelegate.swift */,
 				835BD2F42CA413560088CA02 /* ViewController.swift */,
+				835BD3082CA424020088CA02 /* APIKeys */,
 				835BD2F62CA413560088CA02 /* Main.storyboard */,
 				835BD2F92CA413570088CA02 /* Assets.xcassets */,
 				835BD2FB2CA413570088CA02 /* LaunchScreen.storyboard */,
 				835BD2FE2CA413570088CA02 /* Info.plist */,
 			);
 			path = "Nomad-Learner";
+			sourceTree = "<group>";
+		};
+		835BD3082CA424020088CA02 /* APIKeys */ = {
+			isa = PBXGroup;
+			children = (
+				835BD3062CA423FB0088CA02 /* APIKeys.swift */,
+			);
+			path = APIKeys;
+			sourceTree = "<group>";
+		};
+		9F7F78C28391D8E8BBF1166B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B4FC40ED509727A95F858024 /* Pods_Nomad_Learner.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D409FDF61F0D67B5CE982948 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				04E2362154E42F3944BE8219 /* Pods-Nomad-Learner.develop.xcconfig */,
+				A2D42D523F052595228AA30F /* Pods-Nomad-Learner.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,9 +110,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 835BD3012CA413570088CA02 /* Build configuration list for PBXNativeTarget "Nomad-Learner" */;
 			buildPhases = (
+				26571E9819DC7107C7A56922 /* [CP] Check Pods Manifest.lock */,
 				835BD2E92CA413560088CA02 /* Sources */,
 				835BD2EA2CA413560088CA02 /* Frameworks */,
 				835BD2EB2CA413560088CA02 /* Resources */,
+				9763FD8E10C4CBF809C77ECB /* [CP] Embed Pods Frameworks */,
+				C759022AFA891B2DAE3297AB /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -133,6 +172,65 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		26571E9819DC7107C7A56922 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Nomad-Learner-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9763FD8E10C4CBF809C77ECB /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Nomad-Learner/Pods-Nomad-Learner-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Nomad-Learner/Pods-Nomad-Learner-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Nomad-Learner/Pods-Nomad-Learner-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C759022AFA891B2DAE3297AB /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Nomad-Learner/Pods-Nomad-Learner-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Nomad-Learner/Pods-Nomad-Learner-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Nomad-Learner/Pods-Nomad-Learner-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		835BD2E92CA413560088CA02 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -140,6 +238,7 @@
 			files = (
 				835BD2F52CA413560088CA02 /* ViewController.swift in Sources */,
 				835BD2F12CA413560088CA02 /* AppDelegate.swift in Sources */,
+				835BD3072CA423FB0088CA02 /* APIKeys.swift in Sources */,
 				835BD2F32CA413560088CA02 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -224,6 +323,7 @@
 		};
 		835BD3032CA413570088CA02 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A2D42D523F052595228AA30F /* Pods-Nomad-Learner.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -316,6 +416,7 @@
 		};
 		835BD3052CA414550088CA02 /* Develop */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 04E2362154E42F3944BE8219 /* Pods-Nomad-Learner.develop.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

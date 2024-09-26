@@ -4,6 +4,7 @@
 target 'Nomad-Learner' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
+  use_frameworks! :linkage => :static
 
   # Pods for Nomad-Learner
 pod 'Alamofire', '~> 5.9.1'
@@ -16,7 +17,7 @@ pod 'SnapKit', '~> 5.7.0'
 pod 'Firebase', '~> 11.2.0'
 pod 'Firebase/Analytics'
 pod 'Firebase/Auth', '~> 11.2.0'
-pod 'Firebase/Firestore', '~> 11.2.0'
+pod 'FirebaseFirestore', :git => 'https://github.com/invertase/firestore-ios-sdk-frameworks.git', :tag => '11.2.0'
 pod 'Firebase/Storage', '~> 11.2.0'
 pod 'FirebaseUI', '~> 14.2.0'
 pod 'FirebaseUI/Auth', '~> 14.2.0'

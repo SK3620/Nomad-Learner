@@ -1,5 +1,5 @@
 # Uncomment the next line to define a global platform for your project
-# platform :ios, '9.0'
+# platform :ios, '11.0'
 
 target 'Nomad-Learner' do
   # Comment the next line if you don't want to use dynamic frameworks
@@ -18,4 +18,9 @@ pod 'Firebase/Analytics'
 pod 'Firebase/Auth', '~> 11.2.0'
 pod 'Firebase/Firestore', '~> 11.2.0'
 pod 'Firebase/Storage', '~> 11.2.0'
+pod 'FirebaseUI', '~> 14.2.0'
+pod 'FirebaseUI/Auth', '~> 14.2.0'
+pod 'FirebaseUI/Google', '~> 14.2.0'
+pod 'FirebaseUI/Facebook', '~> 14.2.0'
+pod 'FirebaseUI/OAuth', '~> 14.2.0'
 end

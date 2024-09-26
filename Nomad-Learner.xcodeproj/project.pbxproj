@@ -14,6 +14,8 @@
 		835BD2FA2CA413570088CA02 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 835BD2F92CA413570088CA02 /* Assets.xcassets */; };
 		835BD2FD2CA413570088CA02 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 835BD2FC2CA413570088CA02 /* Base */; };
 		835BD3072CA423FB0088CA02 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835BD3062CA423FB0088CA02 /* APIKeys.swift */; };
+		835BD3102CA4EBEB0088CA02 /* GoogleService-Info-Nomad-Learner.plist in Resources */ = {isa = PBXBuildFile; fileRef = 835BD30E2CA4EBEB0088CA02 /* GoogleService-Info-Nomad-Learner.plist */; };
+		835BD3112CA4EBEB0088CA02 /* GoogleService-Info-Nomad-LearnerDev.plist in Resources */ = {isa = PBXBuildFile; fileRef = 835BD30F2CA4EBEB0088CA02 /* GoogleService-Info-Nomad-LearnerDev.plist */; };
 		E1B4908C044C675F5B284480 /* Pods_Nomad_Learner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4FC40ED509727A95F858024 /* Pods_Nomad_Learner.framework */; };
 /* End PBXBuildFile section */
 
@@ -28,6 +30,8 @@
 		835BD2FC2CA413570088CA02 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		835BD2FE2CA413570088CA02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		835BD3062CA423FB0088CA02 /* APIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
+		835BD30E2CA4EBEB0088CA02 /* GoogleService-Info-Nomad-Learner.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Nomad-Learner.plist"; sourceTree = "<group>"; };
+		835BD30F2CA4EBEB0088CA02 /* GoogleService-Info-Nomad-LearnerDev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Nomad-LearnerDev.plist"; sourceTree = "<group>"; };
 		A2D42D523F052595228AA30F /* Pods-Nomad-Learner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nomad-Learner.release.xcconfig"; path = "Target Support Files/Pods-Nomad-Learner/Pods-Nomad-Learner.release.xcconfig"; sourceTree = "<group>"; };
 		B4FC40ED509727A95F858024 /* Pods_Nomad_Learner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Nomad_Learner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -65,6 +69,7 @@
 		835BD2EF2CA413560088CA02 /* Nomad-Learner */ = {
 			isa = PBXGroup;
 			children = (
+				835BD30D2CA4EB920088CA02 /* Configurations */,
 				835BD2F02CA413560088CA02 /* AppDelegate.swift */,
 				835BD2F22CA413560088CA02 /* SceneDelegate.swift */,
 				835BD2F42CA413560088CA02 /* ViewController.swift */,
@@ -85,6 +90,15 @@
 			path = APIKeys;
 			sourceTree = "<group>";
 		};
+		835BD30D2CA4EB920088CA02 /* Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				835BD30E2CA4EBEB0088CA02 /* GoogleService-Info-Nomad-Learner.plist */,
+				835BD30F2CA4EBEB0088CA02 /* GoogleService-Info-Nomad-LearnerDev.plist */,
+			);
+			path = Configurations;
+			sourceTree = "<group>";
+		};
 		9F7F78C28391D8E8BBF1166B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -99,7 +113,6 @@
 				04E2362154E42F3944BE8219 /* Pods-Nomad-Learner.develop.xcconfig */,
 				A2D42D523F052595228AA30F /* Pods-Nomad-Learner.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -165,8 +178,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				835BD2FA2CA413570088CA02 /* Assets.xcassets in Resources */,
+				835BD3102CA4EBEB0088CA02 /* GoogleService-Info-Nomad-Learner.plist in Resources */,
 				835BD2FD2CA413570088CA02 /* Base in Resources */,
 				835BD2F82CA413560088CA02 /* Base in Resources */,
+				835BD3112CA4EBEB0088CA02 /* GoogleService-Info-Nomad-LearnerDev.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

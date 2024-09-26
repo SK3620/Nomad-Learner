@@ -7,10 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8304A0E22CA5123300061B33 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8304A0E12CA5123300061B33 /* AuthViewController.swift */; };
 		835BD2F12CA413560088CA02 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835BD2F02CA413560088CA02 /* AppDelegate.swift */; };
 		835BD2F32CA413560088CA02 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835BD2F22CA413560088CA02 /* SceneDelegate.swift */; };
-		835BD2F52CA413560088CA02 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835BD2F42CA413560088CA02 /* ViewController.swift */; };
-		835BD2F82CA413560088CA02 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 835BD2F72CA413560088CA02 /* Base */; };
 		835BD2FA2CA413570088CA02 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 835BD2F92CA413570088CA02 /* Assets.xcassets */; };
 		835BD2FD2CA413570088CA02 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 835BD2FC2CA413570088CA02 /* Base */; };
 		835BD3072CA423FB0088CA02 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835BD3062CA423FB0088CA02 /* APIKeys.swift */; };
@@ -22,11 +21,10 @@
 /* Begin PBXFileReference section */
 		04E2362154E42F3944BE8219 /* Pods-Nomad-Learner.develop.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nomad-Learner.develop.xcconfig"; path = "Target Support Files/Pods-Nomad-Learner/Pods-Nomad-Learner.develop.xcconfig"; sourceTree = "<group>"; };
 		8304A0D92CA4F83700061B33 /* Nomad-Learner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Nomad-Learner.entitlements"; sourceTree = "<group>"; };
+		8304A0E12CA5123300061B33 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		835BD2ED2CA413560088CA02 /* Nomad-LearnerDev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Nomad-LearnerDev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		835BD2F02CA413560088CA02 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		835BD2F22CA413560088CA02 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		835BD2F42CA413560088CA02 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		835BD2F72CA413560088CA02 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		835BD2F92CA413570088CA02 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		835BD2FC2CA413570088CA02 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		835BD2FE2CA413570088CA02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -49,6 +47,44 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8304A0DC2CA50DB100061B33 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				8304A0E02CA5118700061B33 /* Components */,
+				8304A0DF2CA5113700061B33 /* Pages */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		8304A0DD2CA50E3200061B33 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		8304A0DE2CA50E3700061B33 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		8304A0DF2CA5113700061B33 /* Pages */ = {
+			isa = PBXGroup;
+			children = (
+				8304A0E12CA5123300061B33 /* AuthViewController.swift */,
+			);
+			path = Pages;
+			sourceTree = "<group>";
+		};
+		8304A0E02CA5118700061B33 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		835BD2E42CA413560088CA02 = {
 			isa = PBXGroup;
 			children = (
@@ -70,13 +106,14 @@
 		835BD2EF2CA413560088CA02 /* Nomad-Learner */ = {
 			isa = PBXGroup;
 			children = (
+				8304A0DE2CA50E3700061B33 /* Model */,
+				8304A0DD2CA50E3200061B33 /* ViewModel */,
+				8304A0DC2CA50DB100061B33 /* View */,
 				8304A0D92CA4F83700061B33 /* Nomad-Learner.entitlements */,
 				835BD30D2CA4EB920088CA02 /* Configurations */,
 				835BD2F02CA413560088CA02 /* AppDelegate.swift */,
 				835BD2F22CA413560088CA02 /* SceneDelegate.swift */,
-				835BD2F42CA413560088CA02 /* ViewController.swift */,
 				835BD3082CA424020088CA02 /* APIKeys */,
-				835BD2F62CA413560088CA02 /* Main.storyboard */,
 				835BD2F92CA413570088CA02 /* Assets.xcassets */,
 				835BD2FB2CA413570088CA02 /* LaunchScreen.storyboard */,
 				835BD2FE2CA413570088CA02 /* Info.plist */,
@@ -183,7 +220,6 @@
 				835BD2FA2CA413570088CA02 /* Assets.xcassets in Resources */,
 				835BD3102CA4EBEB0088CA02 /* GoogleService-Info-Nomad-Learner.plist in Resources */,
 				835BD2FD2CA413570088CA02 /* Base in Resources */,
-				835BD2F82CA413560088CA02 /* Base in Resources */,
 				835BD3112CA4EBEB0088CA02 /* GoogleService-Info-Nomad-LearnerDev.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -272,8 +308,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				835BD2F52CA413560088CA02 /* ViewController.swift in Sources */,
 				835BD2F12CA413560088CA02 /* AppDelegate.swift in Sources */,
+				8304A0E22CA5123300061B33 /* AuthViewController.swift in Sources */,
 				835BD3072CA423FB0088CA02 /* APIKeys.swift in Sources */,
 				835BD2F32CA413560088CA02 /* SceneDelegate.swift in Sources */,
 			);
@@ -282,14 +318,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		835BD2F62CA413560088CA02 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				835BD2F72CA413560088CA02 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		835BD2FB2CA413570088CA02 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -374,7 +402,6 @@
 				INFOPLIST_FILE = "Nomad-Learner/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -473,7 +500,6 @@
 				INFOPLIST_FILE = "Nomad-Learner/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (

@@ -15,6 +15,11 @@
 		835BD2FA2CA413570088CA02 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 835BD2F92CA413570088CA02 /* Assets.xcassets */; };
 		835BD2FD2CA413570088CA02 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 835BD2FC2CA413570088CA02 /* Base */; };
 		835BD3072CA423FB0088CA02 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835BD3062CA423FB0088CA02 /* APIKeys.swift */; };
+		83A9C2BE2CA7BF2200898F0B /* CustomAuthPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2BD2CA7BF2200898F0B /* CustomAuthPickerViewController.swift */; };
+		83A9C2C02CA7C9B700898F0B /* AuthStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2BF2CA7C9B700898F0B /* AuthStackView.swift */; };
+		83A9C2C22CA7D08500898F0B /* AuthTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2C12CA7D08500898F0B /* AuthTextField.swift */; };
+		83A9C2C52CA7DA5000898F0B /* ExtensionedUILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2C42CA7DA5000898F0B /* ExtensionedUILabel.swift */; };
+		83A9C2C92CA8378C00898F0B /* UIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2C82CA8378C00898F0B /* UIConstants.swift */; };
 		E1B4908C044C675F5B284480 /* Pods_Nomad_Learner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4FC40ED509727A95F858024 /* Pods_Nomad_Learner.framework */; };
 /* End PBXBuildFile section */
 
@@ -24,13 +29,18 @@
 		8304A0E12CA5123300061B33 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		8304A0E32CA5437800061B33 /* GoogleService-Info-Nomad-LearnerDev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Nomad-LearnerDev.plist"; sourceTree = "<group>"; };
 		8304A0E52CA546F700061B33 /* GoogleService-Info-Nomad-Learner.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Nomad-Learner.plist"; sourceTree = "<group>"; };
-		835BD2ED2CA413560088CA02 /* Nomad-LearnerDev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Nomad-LearnerDev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		835BD2ED2CA413560088CA02 /* Nomad-Learner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Nomad-Learner.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		835BD2F02CA413560088CA02 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		835BD2F22CA413560088CA02 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		835BD2F92CA413570088CA02 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		835BD2FC2CA413570088CA02 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		835BD2FE2CA413570088CA02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		835BD3062CA423FB0088CA02 /* APIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
+		83A9C2BD2CA7BF2200898F0B /* CustomAuthPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAuthPickerViewController.swift; sourceTree = "<group>"; };
+		83A9C2BF2CA7C9B700898F0B /* AuthStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStackView.swift; sourceTree = "<group>"; };
+		83A9C2C12CA7D08500898F0B /* AuthTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTextField.swift; sourceTree = "<group>"; };
+		83A9C2C42CA7DA5000898F0B /* ExtensionedUILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionedUILabel.swift; sourceTree = "<group>"; };
+		83A9C2C82CA8378C00898F0B /* UIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIConstants.swift; sourceTree = "<group>"; };
 		A2D42D523F052595228AA30F /* Pods-Nomad-Learner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nomad-Learner.release.xcconfig"; path = "Target Support Files/Pods-Nomad-Learner/Pods-Nomad-Learner.release.xcconfig"; sourceTree = "<group>"; };
 		B4FC40ED509727A95F858024 /* Pods_Nomad_Learner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Nomad_Learner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -74,6 +84,7 @@
 			isa = PBXGroup;
 			children = (
 				8304A0E12CA5123300061B33 /* AuthViewController.swift */,
+				83A9C2BD2CA7BF2200898F0B /* CustomAuthPickerViewController.swift */,
 			);
 			path = Pages;
 			sourceTree = "<group>";
@@ -81,6 +92,7 @@
 		8304A0E02CA5118700061B33 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				83A9C2BC2CA7BE6200898F0B /* Auth */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -98,7 +110,7 @@
 		835BD2EE2CA413560088CA02 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				835BD2ED2CA413560088CA02 /* Nomad-LearnerDev.app */,
+				835BD2ED2CA413560088CA02 /* Nomad-Learner.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -106,6 +118,7 @@
 		835BD2EF2CA413560088CA02 /* Nomad-Learner */ = {
 			isa = PBXGroup;
 			children = (
+				83A9C2C32CA7D61600898F0B /* Utils */,
 				8304A0DE2CA50E3700061B33 /* Model */,
 				8304A0DD2CA50E3200061B33 /* ViewModel */,
 				8304A0DC2CA50DB100061B33 /* View */,
@@ -136,6 +149,24 @@
 				8304A0E32CA5437800061B33 /* GoogleService-Info-Nomad-LearnerDev.plist */,
 			);
 			path = Configurations;
+			sourceTree = "<group>";
+		};
+		83A9C2BC2CA7BE6200898F0B /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				83A9C2BF2CA7C9B700898F0B /* AuthStackView.swift */,
+				83A9C2C12CA7D08500898F0B /* AuthTextField.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		83A9C2C32CA7D61600898F0B /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				83A9C2C42CA7DA5000898F0B /* ExtensionedUILabel.swift */,
+				83A9C2C82CA8378C00898F0B /* UIConstants.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		9F7F78C28391D8E8BBF1166B /* Frameworks */ = {
@@ -176,7 +207,7 @@
 			);
 			name = "Nomad-Learner";
 			productName = "Nomad-Learner";
-			productReference = 835BD2ED2CA413560088CA02 /* Nomad-LearnerDev.app */;
+			productReference = 835BD2ED2CA413560088CA02 /* Nomad-Learner.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -310,8 +341,13 @@
 			files = (
 				835BD2F12CA413560088CA02 /* AppDelegate.swift in Sources */,
 				8304A0E22CA5123300061B33 /* AuthViewController.swift in Sources */,
+				83A9C2C22CA7D08500898F0B /* AuthTextField.swift in Sources */,
+				83A9C2BE2CA7BF2200898F0B /* CustomAuthPickerViewController.swift in Sources */,
 				835BD3072CA423FB0088CA02 /* APIKeys.swift in Sources */,
 				835BD2F32CA413560088CA02 /* SceneDelegate.swift in Sources */,
+				83A9C2C92CA8378C00898F0B /* UIConstants.swift in Sources */,
+				83A9C2C02CA7C9B700898F0B /* AuthStackView.swift in Sources */,
+				83A9C2C52CA7DA5000898F0B /* ExtensionedUILabel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -508,7 +544,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kenta-suzuki.Nomad-LearnerDev";
-				PRODUCT_NAME = "Nomad-LearnerDev";
+				PRODUCT_NAME = "Nomad-Learner";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Nomad-LearnerDevProfile";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEVELOP;

@@ -19,6 +19,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
+        
+        // 指定したフォントを全画面のUILabelに適用
+        UILabel.appearance().substituteFontName = "AppleSDGothicNeo-Bold"
+                
         return true
     }
     

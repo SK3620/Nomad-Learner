@@ -12,7 +12,6 @@ struct UIConstants {
     struct TextField {
         static let height: CGFloat = 44
         static let fontSize: CGFloat = 17
-        static let borderHeight: CGFloat = 0.75
         static let leftIconSize: CGFloat = 24
     }
     
@@ -34,8 +33,9 @@ struct UIConstants {
     
     // 共通マージンやパディング
     struct Layout {
-        static let standardPadding: CGFloat = 16
+        static let extraSmallPadding: CGFloat = 4
         static let smallPadding: CGFloat = 8
+        static let standardPadding: CGFloat = 16
         static let largePadding: CGFloat = 32
     }
     

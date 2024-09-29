@@ -22,6 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // 指定したフォントを全画面のUILabelに適用
         UILabel.appearance().substituteFontName = "AppleSDGothicNeo-Bold"
+        // 指定したフォントを全画面のUITextFieldに適用
+        UITextField.appearance().substituteFontName = "AppleSDGothicNeo-Bold"
                 
         return true
     }

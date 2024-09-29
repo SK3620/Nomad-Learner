@@ -9,6 +9,7 @@ import UIKit
 
 extension UILabel {
     
+    // フォントの一括指定
     @objc var substituteFontName: String {
         get {
             return font.fontName

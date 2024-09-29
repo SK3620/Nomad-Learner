@@ -18,8 +18,12 @@
 		83A9C2BE2CA7BF2200898F0B /* CustomAuthPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2BD2CA7BF2200898F0B /* CustomAuthPickerViewController.swift */; };
 		83A9C2C02CA7C9B700898F0B /* AuthStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2BF2CA7C9B700898F0B /* AuthStackView.swift */; };
 		83A9C2C22CA7D08500898F0B /* AuthTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2C12CA7D08500898F0B /* AuthTextField.swift */; };
-		83A9C2C52CA7DA5000898F0B /* ExtensionedUILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2C42CA7DA5000898F0B /* ExtensionedUILabel.swift */; };
+		83A9C2C52CA7DA5000898F0B /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2C42CA7DA5000898F0B /* UILabel.swift */; };
 		83A9C2C92CA8378C00898F0B /* UIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2C82CA8378C00898F0B /* UIConstants.swift */; };
+		83C9F3B42CA85BC300CF0D73 /* SeparatorWithLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C9F3B32CA85BC300CF0D73 /* SeparatorWithLabelView.swift */; };
+		83C9F3B62CA907B900CF0D73 /* ColorCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C9F3B52CA907B900CF0D73 /* ColorCodes.swift */; };
+		83C9F3BA2CA9161300CF0D73 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C9F3B92CA9161300CF0D73 /* UITextField.swift */; };
+		83C9F3BC2CA931F400CF0D73 /* KeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C9F3BB2CA931F400CF0D73 /* KeyboardManager.swift */; };
 		E1B4908C044C675F5B284480 /* Pods_Nomad_Learner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4FC40ED509727A95F858024 /* Pods_Nomad_Learner.framework */; };
 /* End PBXBuildFile section */
 
@@ -39,8 +43,12 @@
 		83A9C2BD2CA7BF2200898F0B /* CustomAuthPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAuthPickerViewController.swift; sourceTree = "<group>"; };
 		83A9C2BF2CA7C9B700898F0B /* AuthStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStackView.swift; sourceTree = "<group>"; };
 		83A9C2C12CA7D08500898F0B /* AuthTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTextField.swift; sourceTree = "<group>"; };
-		83A9C2C42CA7DA5000898F0B /* ExtensionedUILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionedUILabel.swift; sourceTree = "<group>"; };
+		83A9C2C42CA7DA5000898F0B /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
 		83A9C2C82CA8378C00898F0B /* UIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIConstants.swift; sourceTree = "<group>"; };
+		83C9F3B32CA85BC300CF0D73 /* SeparatorWithLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorWithLabelView.swift; sourceTree = "<group>"; };
+		83C9F3B52CA907B900CF0D73 /* ColorCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCodes.swift; sourceTree = "<group>"; };
+		83C9F3B92CA9161300CF0D73 /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
+		83C9F3BB2CA931F400CF0D73 /* KeyboardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardManager.swift; sourceTree = "<group>"; };
 		A2D42D523F052595228AA30F /* Pods-Nomad-Learner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nomad-Learner.release.xcconfig"; path = "Target Support Files/Pods-Nomad-Learner/Pods-Nomad-Learner.release.xcconfig"; sourceTree = "<group>"; };
 		B4FC40ED509727A95F858024 /* Pods_Nomad_Learner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Nomad_Learner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -156,6 +164,7 @@
 			children = (
 				83A9C2BF2CA7C9B700898F0B /* AuthStackView.swift */,
 				83A9C2C12CA7D08500898F0B /* AuthTextField.swift */,
+				83C9F3B32CA85BC300CF0D73 /* SeparatorWithLabelView.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -163,10 +172,21 @@
 		83A9C2C32CA7D61600898F0B /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				83A9C2C42CA7DA5000898F0B /* ExtensionedUILabel.swift */,
+				83C9F3B82CA915EF00CF0D73 /* Extension */,
 				83A9C2C82CA8378C00898F0B /* UIConstants.swift */,
+				83C9F3BB2CA931F400CF0D73 /* KeyboardManager.swift */,
+				83C9F3B52CA907B900CF0D73 /* ColorCodes.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		83C9F3B82CA915EF00CF0D73 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				83A9C2C42CA7DA5000898F0B /* UILabel.swift */,
+				83C9F3B92CA9161300CF0D73 /* UITextField.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 		9F7F78C28391D8E8BBF1166B /* Frameworks */ = {
@@ -342,12 +362,16 @@
 				835BD2F12CA413560088CA02 /* AppDelegate.swift in Sources */,
 				8304A0E22CA5123300061B33 /* AuthViewController.swift in Sources */,
 				83A9C2C22CA7D08500898F0B /* AuthTextField.swift in Sources */,
+				83C9F3BA2CA9161300CF0D73 /* UITextField.swift in Sources */,
+				83C9F3B42CA85BC300CF0D73 /* SeparatorWithLabelView.swift in Sources */,
+				83C9F3B62CA907B900CF0D73 /* ColorCodes.swift in Sources */,
+				83C9F3BC2CA931F400CF0D73 /* KeyboardManager.swift in Sources */,
 				83A9C2BE2CA7BF2200898F0B /* CustomAuthPickerViewController.swift in Sources */,
 				835BD3072CA423FB0088CA02 /* APIKeys.swift in Sources */,
 				835BD2F32CA413560088CA02 /* SceneDelegate.swift in Sources */,
 				83A9C2C92CA8378C00898F0B /* UIConstants.swift in Sources */,
 				83A9C2C02CA7C9B700898F0B /* AuthStackView.swift in Sources */,
-				83A9C2C52CA7DA5000898F0B /* ExtensionedUILabel.swift in Sources */,
+				83A9C2C52CA7DA5000898F0B /* UILabel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

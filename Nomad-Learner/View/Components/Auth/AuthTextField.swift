@@ -44,6 +44,14 @@ class AuthTextField: UITextField {
         self.snp.makeConstraints {
             $0.height.equalTo(UIConstants.TextField.height)
         }
+
+        // キーボードに完了ボタン表示
+        self.addDoneToolbar(onDone: (target: self, action: #selector(doneButtonTapped)))
+    }
+    
+    // キーボード閉じる
+    @objc func doneButtonTapped() {
+        self.endEditing(true)
     }
     
     // TextFieldの左端に画像を配置

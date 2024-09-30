@@ -15,11 +15,21 @@ class AuthStackView: UIStackView {
     private let emailTextField = AuthTextField(placeholder: "Email Address", keyboardType: .emailAddress, imageName: "envelope")
     private let passwordTextField = AuthTextField(placeholder: "Password", isSecureTextEntry: true, imageName: "lock")
     
+    // 各認証情報入力欄を格納する配列
+    var authTextFields: [UITextField] {
+        [
+            usernameTextField,
+            emailTextField,
+            passwordTextField
+        ]
+    }
+    
     // Forget Passwordボタンコンテナビュー
     private let forgetPasswordButtonContainer = UIView()
     // Forget Passwordボタン
     private let forgetPasswordButton = UIButton(type: .system).then {
         $0.setTitle("forget your password?", for: .normal)
+        $0.tintColor = ColorCodes.primaryPurple.color()
     }
     
     // SignUp/SignInボタン
@@ -28,7 +38,25 @@ class AuthStackView: UIStackView {
         $0.layer.cornerRadius = UIConstants.Button.height / 2
         $0.titleLabel?.font = UIFont.systemFont(ofSize: UIConstants.Font.smallFont)
         $0.tintColor = .white
-        $0.backgroundColor = .blue
+        $0.backgroundColor = ColorCodes.primaryPurple.color()
+    }
+    
+    // テキスト付き区切り線
+    private let separatorWithText = SeparatorWithLabelView(text: "or")
+    
+    // Google, Apple, Twitterボタン
+    private let providerButtonStackView = UIStackView().then {
+        $0.axis = .horizontal
+        $0.distribution = .equalSpacing // ボタンを最大限埋めて均等に配置
+    }
+    
+    // 区切り線
+    private let separator = SeparatorWithLabelView()
+    
+    // Dont't you have an account? ボタン
+    private let dontHaveAccountButton = UIButton(type: .system).then {
+        $0.setTitle("Dont't you have an account?", for: .normal)
+        $0.tintColor = ColorCodes.primaryPurple.color()
     }
     
     // 初期化処理
@@ -53,6 +81,10 @@ class AuthStackView: UIStackView {
         addArrangedSubview(passwordTextField)
         addArrangedSubview(forgetPasswordButtonContainer)
         addArrangedSubview(authButton)
+        addArrangedSubview(separatorWithText)
+        addArrangedSubview(providerButtonStackView)
+        addArrangedSubview(separator)
+        addArrangedSubview(dontHaveAccountButton)
         
         forgetPasswordButton.snp.makeConstraints {
             $0.top.equalTo(passwordTextField.snp.bottom)
@@ -62,5 +94,40 @@ class AuthStackView: UIStackView {
         authButton.snp.makeConstraints {
             $0.height.equalTo(UIConstants.Button.height)
         }
+        
+        separatorWithText.snp.makeConstraints {
+            $0.height.equalTo(UIConstants.Button.height)
+        }
+        
+        providerButtonStackView.snp.makeConstraints {
+            $0.height.equalTo(UIConstants.Button.height)
+            $0.horizontalEdges.equalTo(separatorWithText).inset(UIConstants.Layout.largePadding * 2)
+        }
+        
+        separator.snp.makeConstraints {
+            $0.height.equalTo(UIConstants.Button.height)
+        }
+        
+        dontHaveAccountButton.snp.makeConstraints {
+            $0.height.equalTo(UIConstants.Button.height)
+        }
+    }
+    
+    // FirebaseUI認証ボタンをstackViewへ追加
+    func addProviderButton(_ button: UIButton) {
+        // ボタンのタイトルを空に設定
+        button.setTitle("", for: .normal)
+        button.layer.cornerRadius = UIConstants.Button.height / 2
+        button.snp.makeConstraints {
+            $0.size.equalTo(UIConstants.Button.height)
+        }
+        // UIImageViewプロパティをカスタマイズ
+        if let imageView = button.imageView {
+            imageView.snp.makeConstraints {
+                $0.size.equalTo(button).inset(UIConstants.Layout.smallPadding)
+                $0.center.equalTo(button) // ボタン中央に配置
+            }
+        }
+        providerButtonStackView.addArrangedSubview(button)
     }
 }

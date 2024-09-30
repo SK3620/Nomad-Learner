@@ -30,7 +30,7 @@ class AuthTextField: UITextField {
     // 枠線は下線のみ表示
     override func draw(_ rect: CGRect) {
         let border = CALayer()
-        border.frame = CGRect(x: 0, y: rect.height, width: rect.width, height: UIConstants.TextField.borderHeight)
+        border.frame = CGRect(x: 0, y: rect.height, width: rect.width, height: 0.75)
         border.backgroundColor = UIColor.lightGray.cgColor
         self.layer.addSublayer(border)
     }

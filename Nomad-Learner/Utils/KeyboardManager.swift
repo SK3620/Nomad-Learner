@@ -9,9 +9,9 @@ import UIKit
 import Foundation
 
 class KeyboardManager {
-    private weak var viewController: UIViewController?
+    private var viewController: UIViewController
     // レイアウト調整の基準にしたいTextField（オプション）
-    private weak var targetBaseTextField: UITextField?
+    private var targetBaseTextField: UITextField?
     private var originalY: CGFloat = 0
     
     init(viewController: UIViewController, textField: UITextField? = nil) {
@@ -52,41 +52,41 @@ class KeyboardManager {
         }
         
         // 現在のfirstResponder（TextField）を取得する。targetBaseTextFieldが設定されている場合はそれを優先
-        let activeTextField = targetBaseTextField ?? viewController?.view.findFirstResponder() as? UITextField
+        let activeTextField = targetBaseTextField ?? self.findFirstResponder(in: viewController.view) as? UITextField
         guard let textField = activeTextField else {
             return
         }
         
         // UITextFieldの位置をviewControllerの座標系に変換
-        let textFieldFrameInView = textField.convert(textField.bounds, to: viewController?.view)
+        let textFieldFrameInView = textField.convert(textField.bounds, to: viewController.view)
         
-        let keyboardTopY = viewController!.view.frame.height - keyboardFrame.height
+        let keyboardTopY = viewController.view.frame.height - keyboardFrame.height
         
         // TextFieldがキーボードに隠れる場合は画面を持ち上げる
         if textFieldFrameInView.maxY > keyboardTopY {
             let adjustmentHeight = textFieldFrameInView.maxY - keyboardTopY + UIConstants.Layout.standardPadding
-            viewController?.view.frame.origin.y = originalY - adjustmentHeight
+            
+            UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveEaseInOut, animations: {
+                self.viewController.view.frame.origin.y = self.originalY - adjustmentHeight
+            })
         }
     }
     
-    @objc private func keyboardWillHide(notification: Notification) {
-        viewController?.view.frame.origin.y = originalY
-    }
-}
-
-// 現在入力フォーカスを持っているビューを探し出す
-private extension UIView {
-    func findFirstResponder() -> UIView? {
-        if self.isFirstResponder {
-            // 自身がfirst responderなら返す
-                   return self
-               }
-        // サブビューにfirst responderがあれば返す
-        for subview in subviews {
-            if let firstResponder = subview.findFirstResponder() {
+    // フォーカスされているビューを探して返す
+    private func findFirstResponder(in view: UIView) -> UIView? {
+        for subView in view.subviews {
+            if subView.isFirstResponder {
+                return subView
+            } else if let firstResponder = self.findFirstResponder(in: subView) {
                 return firstResponder
             }
         }
         return nil
+    }
+    
+    @objc private func keyboardWillHide(notification: Notification) {
+        UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveEaseInOut, animations: {
+            self.viewController.view.frame.origin.y = self.originalY
+        })
     }
 }

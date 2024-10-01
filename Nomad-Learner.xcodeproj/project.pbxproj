@@ -15,6 +15,9 @@
 		835BD2FA2CA413570088CA02 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 835BD2F92CA413570088CA02 /* Assets.xcassets */; };
 		835BD2FD2CA413570088CA02 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 835BD2FC2CA413570088CA02 /* Base */; };
 		835BD3072CA423FB0088CA02 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835BD3062CA423FB0088CA02 /* APIKeys.swift */; };
+		838753D02CABDEFE001EE8F1 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753CF2CABDEFE001EE8F1 /* ViewModelType.swift */; };
+		838753D42CABFDB7001EE8F1 /* AuthInputValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753D32CABFDB7001EE8F1 /* AuthInputValidation.swift */; };
+		838753D62CAC19D1001EE8F1 /* AuthInputValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753D52CAC19D1001EE8F1 /* AuthInputValidator.swift */; };
 		83A9C2BE2CA7BF2200898F0B /* CustomAuthPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2BD2CA7BF2200898F0B /* CustomAuthPickerViewController.swift */; };
 		83A9C2C02CA7C9B700898F0B /* AuthStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2BF2CA7C9B700898F0B /* AuthStackView.swift */; };
 		83A9C2C22CA7D08500898F0B /* AuthTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2C12CA7D08500898F0B /* AuthTextField.swift */; };
@@ -40,6 +43,9 @@
 		835BD2FC2CA413570088CA02 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		835BD2FE2CA413570088CA02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		835BD3062CA423FB0088CA02 /* APIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
+		838753CF2CABDEFE001EE8F1 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
+		838753D32CABFDB7001EE8F1 /* AuthInputValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInputValidation.swift; sourceTree = "<group>"; };
+		838753D52CAC19D1001EE8F1 /* AuthInputValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInputValidator.swift; sourceTree = "<group>"; };
 		83A9C2BD2CA7BF2200898F0B /* CustomAuthPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAuthPickerViewController.swift; sourceTree = "<group>"; };
 		83A9C2BF2CA7C9B700898F0B /* AuthStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStackView.swift; sourceTree = "<group>"; };
 		83A9C2C12CA7D08500898F0B /* AuthTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTextField.swift; sourceTree = "<group>"; };
@@ -126,6 +132,7 @@
 		835BD2EF2CA413560088CA02 /* Nomad-Learner */ = {
 			isa = PBXGroup;
 			children = (
+				838753CE2CABDEDC001EE8F1 /* Protocols */,
 				83A9C2C32CA7D61600898F0B /* Utils */,
 				8304A0DE2CA50E3700061B33 /* Model */,
 				8304A0DD2CA50E3200061B33 /* ViewModel */,
@@ -157,6 +164,16 @@
 				8304A0E32CA5437800061B33 /* GoogleService-Info-Nomad-LearnerDev.plist */,
 			);
 			path = Configurations;
+			sourceTree = "<group>";
+		};
+		838753CE2CABDEDC001EE8F1 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				838753CF2CABDEFE001EE8F1 /* ViewModelType.swift */,
+				838753D32CABFDB7001EE8F1 /* AuthInputValidation.swift */,
+				838753D52CAC19D1001EE8F1 /* AuthInputValidator.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 		83A9C2BC2CA7BE6200898F0B /* Auth */ = {
@@ -367,6 +384,9 @@
 				83C9F3B62CA907B900CF0D73 /* ColorCodes.swift in Sources */,
 				83C9F3BC2CA931F400CF0D73 /* KeyboardManager.swift in Sources */,
 				83A9C2BE2CA7BF2200898F0B /* CustomAuthPickerViewController.swift in Sources */,
+				838753D02CABDEFE001EE8F1 /* ViewModelType.swift in Sources */,
+				838753D62CAC19D1001EE8F1 /* AuthInputValidator.swift in Sources */,
+				838753D42CABFDB7001EE8F1 /* AuthInputValidation.swift in Sources */,
 				835BD3072CA423FB0088CA02 /* APIKeys.swift in Sources */,
 				835BD2F32CA413560088CA02 /* SceneDelegate.swift in Sources */,
 				83A9C2C92CA8378C00898F0B /* UIConstants.swift in Sources */,

@@ -14,15 +14,15 @@ import SnapKit
 
 class SeparatorWithLabelView: UIStackView {
     
-    private let leftLineView = UIView().then {
+    private lazy var leftLineView = UIView().then {
         $0.backgroundColor = .lightGray
     }
     
-    private let rightLineView = UIView().then {
+    private lazy var rightLineView = UIView().then {
         $0.backgroundColor = .lightGray
     }
     
-    private let label = UILabel().then {
+    private lazy var label = UILabel().then {
         $0.textColor = .gray
         $0.font = UIFont.systemFont(ofSize: UIConstants.Font.smallFont)
         $0.textAlignment = .center

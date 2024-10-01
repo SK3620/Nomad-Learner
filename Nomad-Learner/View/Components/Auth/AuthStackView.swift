@@ -11,29 +11,25 @@ import SnapKit
 
 class AuthStackView: UIStackView {
     // 入力欄
-    private let usernameTextField = AuthTextField(placeholder: "Username", imageName: "person")
-    private let emailTextField = AuthTextField(placeholder: "Email Address", keyboardType: .emailAddress, imageName: "envelope")
-    private let passwordTextField = AuthTextField(placeholder: "Password", isSecureTextEntry: true, imageName: "lock")
+    private lazy var usernameTextField = AuthTextField(placeholder: "Username", imageName: "person")
+    private lazy var emailTextField = AuthTextField(placeholder: "Email Address", keyboardType: .emailAddress, imageName: "envelope")
+    private lazy var passwordTextField = AuthTextField(placeholder: "Password", isSecureTextEntry: true, imageName: "lock")
     
     // 各認証情報入力欄を格納する配列
-    var authTextFields: [UITextField] {
-        [
-            usernameTextField,
-            emailTextField,
-            passwordTextField
-        ]
-    }
+    lazy var authTextFields: [UITextField] = {
+        return [usernameTextField, emailTextField, passwordTextField]
+    }()
     
     // Forget Passwordボタンコンテナビュー
-    private let forgetPasswordButtonContainer = UIView()
+    private lazy var forgetPasswordButtonContainer = UIView()
     // Forget Passwordボタン
-    private let forgetPasswordButton = UIButton(type: .system).then {
+    private lazy var forgetPasswordButton = UIButton(type: .system).then {
         $0.setTitle("forget your password?", for: .normal)
         $0.tintColor = ColorCodes.primaryPurple.color()
     }
     
     // SignUp/SignInボタン
-    private let authButton = UIButton(type: .system).then {
+    private lazy var authButton = UIButton(type: .system).then {
         $0.setTitle("Sign Up / Sign Up", for: .normal)
         $0.layer.cornerRadius = UIConstants.Button.height / 2
         $0.titleLabel?.font = UIFont.systemFont(ofSize: UIConstants.Font.smallFont)
@@ -42,19 +38,20 @@ class AuthStackView: UIStackView {
     }
     
     // テキスト付き区切り線
-    private let separatorWithText = SeparatorWithLabelView(text: "or")
+    private lazy var separatorWithText = SeparatorWithLabelView(text: "or")
     
     // Google, Apple, Twitterボタン
-    private let providerButtonStackView = UIStackView().then {
+    private lazy var providerButtonStackView = UIStackView().then {
         $0.axis = .horizontal
+        $0.alignment = .center
         $0.distribution = .equalSpacing // ボタンを最大限埋めて均等に配置
     }
     
     // 区切り線
-    private let separator = SeparatorWithLabelView()
+    private lazy var separator = SeparatorWithLabelView()
     
     // Dont't you have an account? ボタン
-    private let dontHaveAccountButton = UIButton(type: .system).then {
+    private lazy var dontHaveAccountButton = UIButton(type: .system).then {
         $0.setTitle("Dont't you have an account?", for: .normal)
         $0.tintColor = ColorCodes.primaryPurple.color()
     }
@@ -131,3 +128,32 @@ class AuthStackView: UIStackView {
         providerButtonStackView.addArrangedSubview(button)
     }
 }
+
+import RxSwift
+
+extension Observable {
+  /// 要素の最初の１つを適用して処理を実行する
+  ///
+  /// (Variable含む）BehaviorSubject利用のObservableの現在値を適用するのに利用できる。
+  /// 注；PublishSubject利用のObservableでは何も起こらない。
+    func applyFirst(handler: @escaping (Element) -> Void) {
+        take(1).subscribe(onNext: handler).dispose()
+  }
+
+  /// 最初の値を取得する。
+  ///
+  /// 注； 最初の値を持っていない場合はnilを返す。
+  var firstValue: Element? {
+    var v: Element?
+      applyFirst(handler: {(element) -> Void in
+          v = element
+      })
+    return v
+  }
+
+  /// 現在値を取得する(firstValueのエイリアス)
+  ///
+  /// (Variable含む）BehaviorSubject利用のObservableの現在値を取得するのに利用できる。
+  var value: Element? { return firstValue }
+}
+

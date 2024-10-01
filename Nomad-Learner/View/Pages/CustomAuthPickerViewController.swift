@@ -28,7 +28,7 @@ class CustomAuthPickerViewController: FUIAuthPickerViewController, UITextFieldDe
         $0.backgroundColor = .white
     }
     
-    private let authStackView: AuthStackView = AuthStackView().then {
+    private lazy var authStackView: AuthStackView = AuthStackView().then {
         $0.axis = .vertical
         $0.distribution = .fillProportionally
         $0.spacing = UIConstants.Layout.standardPadding

@@ -8,6 +8,22 @@
 import Foundation
 import RxSwift
 
+// MARK: - String Extension for Validation
+extension String {
+    
+    func validateUsername() -> AuthInputValidation {
+        return AuthInputValidator.validateUsername(self)
+    }
+    
+    func validateEmail() -> AuthInputValidation {
+        return AuthInputValidator.validateEmail(self)
+    }
+    
+    func validatePassword() -> AuthInputValidation {
+        return AuthInputValidator.validatePassword(self)
+    }
+}
+
 // MARK: - Validation Error Messages
 struct AuthInputValidationMessages {
     static let missingUsername = "Please enter a username."
@@ -21,7 +37,7 @@ struct AuthInputValidationMessages {
 }
 
 // MARK: - Auth Input Validator
-class SignUpValidator {
+class AuthInputValidator {
     
     // MARK: - Constants
     private struct Constants {
@@ -32,10 +48,10 @@ class SignUpValidator {
         static let passwordRegex = "^(?=.*?[A-Za-z])(?=.*?[0-9])[A-Za-z0-9]{8,}$"
     }
         
-    private let errorMsgs = AuthInputValidationMessages.self
+    private static let errorMsgs = AuthInputValidationMessages.self
     
     // ユーザー名バリデーション
-    func validateUsername(_ username: String) -> AuthInputValidation {
+    static func validateUsername(_ username: String) -> AuthInputValidation {
         // 未入力チェック
         if username.isEmpty {
             return .empty(message: errorMsgs.missingUsername)
@@ -49,7 +65,7 @@ class SignUpValidator {
     }
     
     // メールアドレスバリデーション
-    func validateEmail(_ email: String) -> AuthInputValidation {
+    static func validateEmail(_ email: String) -> AuthInputValidation {
         // 未入力チェック
         if email.isEmpty {
             return .empty(message: errorMsgs.missingEmail)
@@ -62,7 +78,7 @@ class SignUpValidator {
     }
     
     // パスワードバリデーション
-    func validatePassword(_ password: String) -> AuthInputValidation {
+    static func validatePassword(_ password: String) -> AuthInputValidation {
         // 未入力チェック
         if password.isEmpty {
             return .empty(message: errorMsgs.missingPassword)

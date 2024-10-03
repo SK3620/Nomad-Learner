@@ -10,7 +10,6 @@ import UIKit
 enum ColorCodes {
     case primaryPurple
     case primaryLightPurple
-    case primaryBlack
     case primaryGray
     case primaryGray2
     case primaryLightGray
@@ -29,8 +28,6 @@ extension ColorCodes {
             return UIColor(red: 0.3, green: 0.0, blue: 0.5, alpha: 1.0)
         case .primaryLightPurple:
             return UIColor(red: 0.95, green: 0.95, blue: 1.0, alpha: 1.0)
-        case .primaryBlack:
-            return UIColor.black
         case .primaryGray:
             return UIColor.gray
         case .primaryGray2:

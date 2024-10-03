@@ -15,6 +15,11 @@ struct UIConstants {
         static let leftIconSize: CGFloat = 24
     }
     
+    // UILabel
+    struct UILabel {
+        static let fontSize: CGFloat = 12
+    }
+    
     // Button
     struct Button {
         static let height: CGFloat = 44

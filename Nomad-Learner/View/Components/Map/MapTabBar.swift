@@ -22,12 +22,7 @@ class MapTabBar: UIView {
         // 縦向きの飛行機に調整
         $0.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi) * 2 * 270 / 360)
         // 影を追加
-        $0.applyShadow(
-            color: .black,
-            opacity: 0.6,
-            offset: CGSize(width: 0.5, height: 4),
-            radius: 5
-        )
+        $0.applyShadow(color: .black, opacity: 0.6, offset: CGSize(width: 0.5, height: 4), radius: 5)
     }
     
     // レポートボタン

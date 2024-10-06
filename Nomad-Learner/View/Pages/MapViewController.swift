@@ -12,6 +12,8 @@ class MapViewController: UIViewController {
     
     private lazy var navigationBoxBar: NavigationBoxBar = NavigationBoxBar()
     
+    private lazy var locationDetailView: LocationDetailView = LocationDetailView()
+    
     // タブバー
     private lazy var mapTabBar: MapTabBar = MapTabBar()
     
@@ -27,15 +29,23 @@ class MapViewController: UIViewController {
     private func setupUI() {
         
         // ナビゲーションバーの設定
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.title = "NavigationBar"
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        title = "NavigationBar"
         
         view.addSubview(navigationBoxBar)
+        view.addSubview(locationDetailView)
         view.addSubview(mapTabBar)
         
         navigationBoxBar.snp.makeConstraints {
             $0.width.top.equalToSuperview()
+            $0.height.equalTo(180)
+        }
+        
+        locationDetailView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.width.equalToSuperview().inset(UIConstants.Layout.standardPadding)
+            $0.top.equalToSuperview().offset(NavigationHeightProvidable.totalTopBarHeight(navigationController: navigationController))
             $0.height.equalTo(180)
         }
         

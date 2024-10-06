@@ -6,3 +6,17 @@
 //
 
 import Foundation
+import UIKit
+
+class NavigationBoxBar: UIView {
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.backgroundColor = .white
+        self.layer.cornerRadius = UIConstants.Layer.radius
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}

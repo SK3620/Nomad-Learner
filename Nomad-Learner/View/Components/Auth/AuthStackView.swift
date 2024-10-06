@@ -11,26 +11,34 @@ import SnapKit
 
 class AuthStackView: UIStackView {
     // 入力欄
-    private lazy var usernameTextField = AuthTextField(placeholder: "Username", imageName: "person")
-    private lazy var emailTextField = AuthTextField(placeholder: "Email Address", keyboardType: .emailAddress, imageName: "envelope")
-    private lazy var passwordTextField = AuthTextField(placeholder: "Password", isSecureTextEntry: true, imageName: "lock")
+    lazy var usernameTextField = AuthTextField(placeholder: "Username", imageName: "person")
+    lazy var emailTextField = AuthTextField(placeholder: "Email Address", keyboardType: .emailAddress, imageName: "envelope")
+    lazy var passwordTextField = AuthTextField(placeholder: "Password", isSecureTextEntry: true, imageName: "lock")
+    
+    // バリデーションメッセージ
+    lazy var usernameValidation: UILabel = ValidationLabel()
+    lazy var emailValidation: UILabel = ValidationLabel()
+    lazy var passwordValidation: UILabel = ValidationLabel()
     
     // 各認証情報入力欄を格納する配列
     lazy var authTextFields: [UITextField] = {
         return [usernameTextField, emailTextField, passwordTextField]
     }()
     
-    // Forget Passwordボタンコンテナビュー
-    private lazy var forgetPasswordButtonContainer = UIView()
+    // 間隔を空けるための空のView
+    lazy var emptyView = UIView()
+    
+    /*
     // Forget Passwordボタン
-    private lazy var forgetPasswordButton = UIButton(type: .system).then {
+    lazy var passwordResetButton = UIButton(type: .system).then {
+        $0.titleLabel?.font = UIFont.systemFont(ofSize: UIConstants.Font.smallFont)
         $0.setTitle("forget your password?", for: .normal)
         $0.tintColor = ColorCodes.primaryPurple.color()
     }
+     */
     
     // SignUp/SignInボタン
-    private lazy var authButton = UIButton(type: .system).then {
-        $0.setTitle("Sign Up / Sign Up", for: .normal)
+    lazy var authButton = UIButton(type: .system).then {
         $0.layer.cornerRadius = UIConstants.Button.height / 2
         $0.titleLabel?.font = UIFont.systemFont(ofSize: UIConstants.Font.smallFont)
         $0.tintColor = .white
@@ -51,7 +59,8 @@ class AuthStackView: UIStackView {
     private lazy var separator = SeparatorWithLabelView()
     
     // Dont't you have an account? ボタン
-    private lazy var dontHaveAccountButton = UIButton(type: .system).then {
+    lazy var authModeToggleButton = UIButton(type: .system).then {
+        $0.titleLabel?.font = UIFont.systemFont(ofSize: UIConstants.Font.smallFont)
         $0.setTitle("Dont't you have an account?", for: .normal)
         $0.tintColor = ColorCodes.primaryPurple.color()
     }
@@ -67,46 +76,80 @@ class AuthStackView: UIStackView {
     }
     
     private func setupUI() {
-        forgetPasswordButtonContainer.snp.makeConstraints {
-            $0.height.equalTo(UIConstants.Button.height)
-        }
-        forgetPasswordButtonContainer.addSubview(forgetPasswordButton)
         
         // サブビューの追加
         addArrangedSubview(usernameTextField)
         addArrangedSubview(emailTextField)
         addArrangedSubview(passwordTextField)
-        addArrangedSubview(forgetPasswordButtonContainer)
+        addArrangedSubview(emptyView)
         addArrangedSubview(authButton)
         addArrangedSubview(separatorWithText)
         addArrangedSubview(providerButtonStackView)
         addArrangedSubview(separator)
-        addArrangedSubview(dontHaveAccountButton)
+        addArrangedSubview(authModeToggleButton)
         
-        forgetPasswordButton.snp.makeConstraints {
+        self.addSubview(usernameValidation)
+        self.addSubview(emailValidation)
+        self.addSubview(passwordValidation)
+        // self.addSubview(passwordResetButton)
+        
+        // ユーザー名バリデーションメッセージ
+        usernameValidation.snp.makeConstraints {
+            $0.top.equalTo(usernameTextField.snp.bottom).offset(UIConstants.Layout.extraSmallPadding)
+            $0.right.equalToSuperview()
+        }
+        
+        // メールアドレスバリデーションメッセージ
+        emailValidation.snp.makeConstraints {
+            $0.top.equalTo(emailTextField.snp.bottom)
+                .offset(UIConstants.Layout.extraSmallPadding)
+            $0.right.equalToSuperview()
+        }
+        
+        // パスワードバリデーションメッセージ
+        passwordValidation.snp.makeConstraints {
             $0.top.equalTo(passwordTextField.snp.bottom)
-            $0.right.equalTo(passwordTextField.snp.right)
+                .offset(UIConstants.Layout.extraSmallPadding)
+            $0.right.equalToSuperview()
         }
         
+        /*
+        // Forget Passwordボタン
+        passwordResetButton.snp.makeConstraints {
+            $0.top.equalTo(passwordValidation.snp.bottom)
+            $0.right.equalToSuperview()
+        }
+         */
+        
+        // 間隔を空けるための空のView
+        emptyView.snp.makeConstraints {
+            $0.height.equalTo(UIConstants.StackViewElement.height)
+        }
+        
+        // SignUp/SignInボタン
         authButton.snp.makeConstraints {
-            $0.height.equalTo(UIConstants.Button.height)
+            $0.height.equalTo(UIConstants.StackViewElement.height)
         }
         
+        // テキスト付き区切り線
         separatorWithText.snp.makeConstraints {
-            $0.height.equalTo(UIConstants.Button.height)
+            $0.height.equalTo(UIConstants.StackViewElement.height)
         }
         
+        // Google, Apple, Twitterボタン
         providerButtonStackView.snp.makeConstraints {
-            $0.height.equalTo(UIConstants.Button.height)
+            $0.height.equalTo(UIConstants.StackViewElement.height)
             $0.horizontalEdges.equalTo(separatorWithText).inset(UIConstants.Layout.largePadding * 2)
         }
         
+        // 区切り線
         separator.snp.makeConstraints {
-            $0.height.equalTo(UIConstants.Button.height)
+            $0.height.equalTo(UIConstants.StackViewElement.height)
         }
         
-        dontHaveAccountButton.snp.makeConstraints {
-            $0.height.equalTo(UIConstants.Button.height)
+        // Dont't you have an account? ボタン
+        authModeToggleButton.snp.makeConstraints {
+            $0.height.equalTo(UIConstants.StackViewElement.height)
         }
     }
     
@@ -129,31 +172,49 @@ class AuthStackView: UIStackView {
     }
 }
 
-import RxSwift
-
-extension Observable {
-  /// 要素の最初の１つを適用して処理を実行する
-  ///
-  /// (Variable含む）BehaviorSubject利用のObservableの現在値を適用するのに利用できる。
-  /// 注；PublishSubject利用のObservableでは何も起こらない。
-    func applyFirst(handler: @escaping (Element) -> Void) {
-        take(1).subscribe(onNext: handler).dispose()
-  }
-
-  /// 最初の値を取得する。
-  ///
-  /// 注； 最初の値を持っていない場合はnilを返す。
-  var firstValue: Element? {
-    var v: Element?
-      applyFirst(handler: {(element) -> Void in
-          v = element
-      })
-    return v
-  }
-
-  /// 現在値を取得する(firstValueのエイリアス)
-  ///
-  /// (Variable含む）BehaviorSubject利用のObservableの現在値を取得するのに利用できる。
-  var value: Element? { return firstValue }
+extension AuthStackView {
+    
+    // ViewModel状態に応じてUIを更新
+    enum UIUpdate {
+        case transform(to: AuthViewModel.AuthMode)
+        case updateAuthButtonState(Bool)
+        case clearTextField
+    }
+    
+    func apply(_ update: UIUpdate) {
+        switch update {
+        case .transform(let mode):
+            transform(to: mode)
+        case .updateAuthButtonState(let isValid):
+            updateAuthButtonState(isValid)
+        case .clearTextField:
+            clearTextField()
+        }
+    }
+    
+    // SignIn/SignUp画面に応じてUI要素を調整
+    private func transform(to screenMode: AuthViewModel.AuthMode) {
+        usernameTextField.isHidden = screenMode == .signIn
+        usernameValidation.isHidden = screenMode == .signIn
+        // passwordResetButton.isHidden = screenMode == .signUp
+        authButton.setTitle(screenMode.authButtonTitleToString, for: .normal)
+        authModeToggleButton.setTitle(screenMode.sectionSwitchTitleToString, for: .normal)
+    }
+    
+    // SignIn/SignUpボタンの非/活性状態の調整
+    private func updateAuthButtonState(_ isValid: Bool) {
+        let color = ColorCodes.primaryPurple.color()
+        authButton.isEnabled = isValid
+        authButton.backgroundColor = isValid ? color : color.withAlphaComponent(0.3)
+    }
+    
+    // 認証成功時、入力フィールドをクリア
+    private func clearTextField() {
+        usernameTextField.text = ""
+        usernameTextField.sendActions(for: .valueChanged)
+        emailTextField.text = ""
+        emailTextField.sendActions(for: .valueChanged)
+        passwordTextField.text = ""
+        passwordTextField.sendActions(for: .valueChanged)
+    }
 }
-

@@ -42,7 +42,7 @@ class AuthTextField: UITextField {
         autocorrectionType = .no
         // 高さ調整
         self.snp.makeConstraints {
-            $0.height.equalTo(UIConstants.TextField.height)
+            $0.height.equalTo(UIConstants.StackViewElement.height)
         }
 
         // キーボードに完了ボタン表示

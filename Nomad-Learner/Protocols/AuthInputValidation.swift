@@ -15,6 +15,7 @@ enum MyError: Error {
 }
 
 enum AuthInputValidation {
+    case initialValidating
     case ok(message: String)
     case empty(message: String)
     case validating
@@ -22,6 +23,7 @@ enum AuthInputValidation {
 
     var description: String {
         switch self {
+        case .initialValidating : return ""
         case let .ok(message) : return message
         case let .empty(message) : return message
         case .validating : return ""

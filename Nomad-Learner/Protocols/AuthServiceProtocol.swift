@@ -11,14 +11,54 @@ import Firebase
 import FirebaseAuth
 
 protocol AuthServiceProtocol {
-    func signUp(username: String, email: String, password: String) -> Observable<User>
-//    func signUp(username: String, email: String, password: String) -> Single<User>
+    // ログイン状態の確認
+    func addStateDidChangeListener() -> Observable<Bool>
+    // ログイン状態の確認リスナー破棄
+    func removeStateDidChangeListener()
+    // サインイン
+    func signIn(email: String, password: String) -> Observable<User?>
+    // サインアップ
+    func signUp(username: String, email: String, password: String) -> Observable<User?>
+    // パスワード再設定メール
+    func sendPasswordRest(with email: String) -> Observable<Void>
 }
 
 final class AuthService: AuthServiceProtocol {
     
-    func signUp(username: String, email: String, password: String) -> Observable<User> {
-        return Observable<User>.create { observer in
+    public static let shared = AuthService()
+
+    // ログイン状態確認リスナー
+    private var handler: AuthStateDidChangeListenerHandle?
+
+    private init() {}
+    
+    // ログイン状態確認リスナー破棄
+    deinit { removeStateDidChangeListener() }
+    
+    // ログイン状態確認
+    func addStateDidChangeListener() -> Observable<Bool> {
+        Observable<Bool>.create { observer in
+            self.handler = Auth.auth().addStateDidChangeListener { _, user in
+                if let _ = user {
+                    observer.onNext(true)
+                } else {
+                    observer.onNext(false)
+                }
+            }
+            return Disposables.create()
+        }
+    }
+    
+    // ログイン状態確認リスナー破棄
+    func removeStateDidChangeListener() {
+        if let handler = handler {
+            Auth.auth().removeStateDidChangeListener(handler)
+        }
+    }
+    
+    // サインアップ
+    func signUp(username: String, email: String, password: String) -> Observable<User?> {
+        return Observable<User?>.create { observer in
             Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
                 if let user = authResult?.user {
                     // usernameをuserに保存する
@@ -42,33 +82,33 @@ final class AuthService: AuthServiceProtocol {
         }
     }
     
-    /*
-    func signUp(username: String, email: String, password: String) -> Single<User> {
-        Single<User>.create { observer in
-            Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+    // サインイン
+    func signIn(email: String, password: String) -> Observable<User?> {
+        return Observable<User?>.create { observer in
+            Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
                 if let user = authResult?.user {
-                    // ユーザープロフィール変更リクエスト
-                    let req = user.createProfileChangeRequest()
-                    // ユーザー名を設定
-                    req.displayName = username
-                    // 変更をサーバーに送信
-                    req.commitChanges { error in
-                        if let error = error {
-                            observer(.failure(error))
-                        } else {
-                            observer(.success(user))
-                        }
-                    }
+                    observer.onNext(user)
                 } else if let error = error {
-                    observer(.failure(error))
+                    observer.onError(error)
                 } else {
-                    observer(.failure(MyError.unknown))
+                    observer.onError(MyError.unknown)
                 }
             }
             return Disposables.create()
         }
     }
-     */
     
-    
+    // パスワードリセット（現在不使用）
+    func sendPasswordRest(with email: String) -> Observable<Void> {
+        Observable<Void>.create { observer in
+            Auth.auth().sendPasswordReset(withEmail: email, completion:  { error in
+                if let error = error {
+                    observer.onError(error)
+                } else {
+                    observer.onCompleted()
+                }
+            })
+            return Disposables.create()
+        }
+    }
 }

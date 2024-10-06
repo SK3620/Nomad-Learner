@@ -14,13 +14,7 @@ class ValidationLabel: UILabel {
         super.init(frame: .zero)
         self.textColor = .red
         self.font = UIFont.systemFont(ofSize: UIConstants.UILabel.fontSize)
-        self.text = "パスワードは8文字以上で入力してください"
-    }
-    
-    private func setupUI() {
-        self.snp.makeConstraints {
-            $0.height.equalTo(16)
-        }
+        self.text = ""
     }
     
     required init?(coder: NSCoder) {

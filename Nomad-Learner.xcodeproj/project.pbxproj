@@ -15,7 +15,6 @@
 		835BD2FA2CA413570088CA02 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 835BD2F92CA413570088CA02 /* Assets.xcassets */; };
 		835BD2FD2CA413570088CA02 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 835BD2FC2CA413570088CA02 /* Base */; };
 		835BD3072CA423FB0088CA02 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835BD3062CA423FB0088CA02 /* APIKeys.swift */; };
-		838753CC2CABDD82001EE8F1 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753CB2CABDD82001EE8F1 /* UserModel.swift */; };
 		838753D22CABE9A3001EE8F1 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753D12CABE9A3001EE8F1 /* AuthViewModel.swift */; };
 		838753D42CABFDB7001EE8F1 /* AuthInputValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753D32CABFDB7001EE8F1 /* AuthInputValidation.swift */; };
 		838753D62CAC19D1001EE8F1 /* AuthInputValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753D52CAC19D1001EE8F1 /* AuthInputValidator.swift */; };
@@ -57,7 +56,6 @@
 		835BD2FC2CA413570088CA02 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		835BD2FE2CA413570088CA02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		835BD3062CA423FB0088CA02 /* APIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
-		838753CB2CABDD82001EE8F1 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		838753D12CABE9A3001EE8F1 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		838753D32CABFDB7001EE8F1 /* AuthInputValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInputValidation.swift; sourceTree = "<group>"; };
 		838753D52CAC19D1001EE8F1 /* AuthInputValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInputValidator.swift; sourceTree = "<group>"; };
@@ -119,7 +117,6 @@
 		8304A0DE2CA50E3700061B33 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				838753CB2CABDD82001EE8F1 /* UserModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -462,7 +459,6 @@
 				838753E22CAF9E53001EE8F1 /* ErrorAlertEnabled.swift in Sources */,
 				83A9C2BE2CA7BF2200898F0B /* CustomAuthPickerViewController.swift in Sources */,
 				838753D62CAC19D1001EE8F1 /* AuthInputValidator.swift in Sources */,
-				838753CC2CABDD82001EE8F1 /* UserModel.swift in Sources */,
 				838753D42CABFDB7001EE8F1 /* AuthInputValidation.swift in Sources */,
 				835BD3072CA423FB0088CA02 /* APIKeys.swift in Sources */,
 				835BD2F32CA413560088CA02 /* SceneDelegate.swift in Sources */,

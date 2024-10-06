@@ -15,14 +15,28 @@
 		835BD2FA2CA413570088CA02 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 835BD2F92CA413570088CA02 /* Assets.xcassets */; };
 		835BD2FD2CA413570088CA02 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 835BD2FC2CA413570088CA02 /* Base */; };
 		835BD3072CA423FB0088CA02 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835BD3062CA423FB0088CA02 /* APIKeys.swift */; };
-		838753D02CABDEFE001EE8F1 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753CF2CABDEFE001EE8F1 /* ViewModelType.swift */; };
+		838753CC2CABDD82001EE8F1 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753CB2CABDD82001EE8F1 /* UserModel.swift */; };
+		838753D22CABE9A3001EE8F1 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753D12CABE9A3001EE8F1 /* AuthViewModel.swift */; };
 		838753D42CABFDB7001EE8F1 /* AuthInputValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753D32CABFDB7001EE8F1 /* AuthInputValidation.swift */; };
 		838753D62CAC19D1001EE8F1 /* AuthInputValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753D52CAC19D1001EE8F1 /* AuthInputValidator.swift */; };
+		838753D82CACE930001EE8F1 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753D72CACE930001EE8F1 /* ActivityIndicator.swift */; };
+		838753DA2CACF2D1001EE8F1 /* KRProgressHUDEnabled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753D92CACF2D0001EE8F1 /* KRProgressHUDEnabled.swift */; };
+		838753DC2CAD33E2001EE8F1 /* AuthServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753DB2CAD33E2001EE8F1 /* AuthServiceProtocol.swift */; };
+		838753DE2CAED385001EE8F1 /* ValidationLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753DD2CAED385001EE8F1 /* ValidationLabel.swift */; };
+		838753E22CAF9E53001EE8F1 /* ErrorAlertEnabled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753E12CAF9E53001EE8F1 /* ErrorAlertEnabled.swift */; };
+		838753E42CB00A4B001EE8F1 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753E32CB00A4B001EE8F1 /* MapViewController.swift */; };
+		838753E82CB02B42001EE8F1 /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753E72CB02B42001EE8F1 /* CurrentUser.swift */; };
+		838753ED2CB0EEED001EE8F1 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753EC2CB0EEED001EE8F1 /* Router.swift */; };
 		83A9C2BE2CA7BF2200898F0B /* CustomAuthPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2BD2CA7BF2200898F0B /* CustomAuthPickerViewController.swift */; };
 		83A9C2C02CA7C9B700898F0B /* AuthStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2BF2CA7C9B700898F0B /* AuthStackView.swift */; };
 		83A9C2C22CA7D08500898F0B /* AuthTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2C12CA7D08500898F0B /* AuthTextField.swift */; };
 		83A9C2C52CA7DA5000898F0B /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2C42CA7DA5000898F0B /* UILabel.swift */; };
 		83A9C2C92CA8378C00898F0B /* UIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2C82CA8378C00898F0B /* UIConstants.swift */; };
+		83AFB3A82CB1A94400501FEE /* MapTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AFB3A72CB1A94400501FEE /* MapTabBar.swift */; };
+		83AFB3AA2CB2902C00501FEE /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AFB3A92CB2902C00501FEE /* UIView.swift */; };
+		83AFB3AC2CB29AC500501FEE /* NavigationBoxBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AFB3AB2CB29AC500501FEE /* NavigationBoxBar.swift */; };
+		83AFB3AE2CB2ABD300501FEE /* LocationDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AFB3AD2CB2ABD300501FEE /* LocationDetailView.swift */; };
+		83AFB3B12CB2B75F00501FEE /* NavigationHeightProvidable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AFB3B02CB2B75F00501FEE /* NavigationHeightProvidable.swift */; };
 		83C9F3B42CA85BC300CF0D73 /* SeparatorWithLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C9F3B32CA85BC300CF0D73 /* SeparatorWithLabelView.swift */; };
 		83C9F3B62CA907B900CF0D73 /* ColorCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C9F3B52CA907B900CF0D73 /* ColorCodes.swift */; };
 		83C9F3BA2CA9161300CF0D73 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C9F3B92CA9161300CF0D73 /* UITextField.swift */; };
@@ -43,14 +57,28 @@
 		835BD2FC2CA413570088CA02 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		835BD2FE2CA413570088CA02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		835BD3062CA423FB0088CA02 /* APIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
-		838753CF2CABDEFE001EE8F1 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
+		838753CB2CABDD82001EE8F1 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		838753D12CABE9A3001EE8F1 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		838753D32CABFDB7001EE8F1 /* AuthInputValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInputValidation.swift; sourceTree = "<group>"; };
 		838753D52CAC19D1001EE8F1 /* AuthInputValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInputValidator.swift; sourceTree = "<group>"; };
+		838753D72CACE930001EE8F1 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
+		838753D92CACF2D0001EE8F1 /* KRProgressHUDEnabled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KRProgressHUDEnabled.swift; sourceTree = "<group>"; };
+		838753DB2CAD33E2001EE8F1 /* AuthServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthServiceProtocol.swift; sourceTree = "<group>"; };
+		838753DD2CAED385001EE8F1 /* ValidationLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationLabel.swift; sourceTree = "<group>"; };
+		838753E12CAF9E53001EE8F1 /* ErrorAlertEnabled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAlertEnabled.swift; sourceTree = "<group>"; };
+		838753E32CB00A4B001EE8F1 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		838753E72CB02B42001EE8F1 /* CurrentUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUser.swift; sourceTree = "<group>"; };
+		838753EC2CB0EEED001EE8F1 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		83A9C2BD2CA7BF2200898F0B /* CustomAuthPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAuthPickerViewController.swift; sourceTree = "<group>"; };
 		83A9C2BF2CA7C9B700898F0B /* AuthStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStackView.swift; sourceTree = "<group>"; };
 		83A9C2C12CA7D08500898F0B /* AuthTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTextField.swift; sourceTree = "<group>"; };
 		83A9C2C42CA7DA5000898F0B /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
 		83A9C2C82CA8378C00898F0B /* UIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIConstants.swift; sourceTree = "<group>"; };
+		83AFB3A72CB1A94400501FEE /* MapTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTabBar.swift; sourceTree = "<group>"; };
+		83AFB3A92CB2902C00501FEE /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		83AFB3AB2CB29AC500501FEE /* NavigationBoxBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBoxBar.swift; sourceTree = "<group>"; };
+		83AFB3AD2CB2ABD300501FEE /* LocationDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDetailView.swift; sourceTree = "<group>"; };
+		83AFB3B02CB2B75F00501FEE /* NavigationHeightProvidable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationHeightProvidable.swift; sourceTree = "<group>"; };
 		83C9F3B32CA85BC300CF0D73 /* SeparatorWithLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorWithLabelView.swift; sourceTree = "<group>"; };
 		83C9F3B52CA907B900CF0D73 /* ColorCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCodes.swift; sourceTree = "<group>"; };
 		83C9F3B92CA9161300CF0D73 /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
@@ -83,6 +111,7 @@
 		8304A0DD2CA50E3200061B33 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				838753D12CABE9A3001EE8F1 /* AuthViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -90,6 +119,7 @@
 		8304A0DE2CA50E3700061B33 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				838753CB2CABDD82001EE8F1 /* UserModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -99,6 +129,7 @@
 			children = (
 				8304A0E12CA5123300061B33 /* AuthViewController.swift */,
 				83A9C2BD2CA7BF2200898F0B /* CustomAuthPickerViewController.swift */,
+				838753E32CB00A4B001EE8F1 /* MapViewController.swift */,
 			);
 			path = Pages;
 			sourceTree = "<group>";
@@ -106,6 +137,7 @@
 		8304A0E02CA5118700061B33 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				83AFB3A62CB1A91500501FEE /* Map */,
 				83A9C2BC2CA7BE6200898F0B /* Auth */,
 			);
 			path = Components;
@@ -132,6 +164,8 @@
 		835BD2EF2CA413560088CA02 /* Nomad-Learner */ = {
 			isa = PBXGroup;
 			children = (
+				83AFB3AF2CB2B6F900501FEE /* NavigationHeightProvidable */,
+				838753EB2CB0EEDF001EE8F1 /* Transition */,
 				838753CE2CABDEDC001EE8F1 /* Protocols */,
 				83A9C2C32CA7D61600898F0B /* Utils */,
 				8304A0DE2CA50E3700061B33 /* Model */,
@@ -169,11 +203,23 @@
 		838753CE2CABDEDC001EE8F1 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				838753CF2CABDEFE001EE8F1 /* ViewModelType.swift */,
 				838753D32CABFDB7001EE8F1 /* AuthInputValidation.swift */,
 				838753D52CAC19D1001EE8F1 /* AuthInputValidator.swift */,
+				838753D72CACE930001EE8F1 /* ActivityIndicator.swift */,
+				838753D92CACF2D0001EE8F1 /* KRProgressHUDEnabled.swift */,
+				838753DB2CAD33E2001EE8F1 /* AuthServiceProtocol.swift */,
+				838753E12CAF9E53001EE8F1 /* ErrorAlertEnabled.swift */,
+				838753E72CB02B42001EE8F1 /* CurrentUser.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		838753EB2CB0EEDF001EE8F1 /* Transition */ = {
+			isa = PBXGroup;
+			children = (
+				838753EC2CB0EEED001EE8F1 /* Router.swift */,
+			);
+			path = Transition;
 			sourceTree = "<group>";
 		};
 		83A9C2BC2CA7BE6200898F0B /* Auth */ = {
@@ -181,6 +227,7 @@
 			children = (
 				83A9C2BF2CA7C9B700898F0B /* AuthStackView.swift */,
 				83A9C2C12CA7D08500898F0B /* AuthTextField.swift */,
+				838753DD2CAED385001EE8F1 /* ValidationLabel.swift */,
 				83C9F3B32CA85BC300CF0D73 /* SeparatorWithLabelView.swift */,
 			);
 			path = Auth;
@@ -197,11 +244,30 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		83AFB3A62CB1A91500501FEE /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				83AFB3A72CB1A94400501FEE /* MapTabBar.swift */,
+				83AFB3AB2CB29AC500501FEE /* NavigationBoxBar.swift */,
+				83AFB3AD2CB2ABD300501FEE /* LocationDetailView.swift */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
+		83AFB3AF2CB2B6F900501FEE /* NavigationHeightProvidable */ = {
+			isa = PBXGroup;
+			children = (
+				83AFB3B02CB2B75F00501FEE /* NavigationHeightProvidable.swift */,
+			);
+			path = NavigationHeightProvidable;
+			sourceTree = "<group>";
+		};
 		83C9F3B82CA915EF00CF0D73 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
 				83A9C2C42CA7DA5000898F0B /* UILabel.swift */,
 				83C9F3B92CA9161300CF0D73 /* UITextField.swift */,
+				83AFB3A92CB2902C00501FEE /* UIView.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -376,22 +442,36 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83AFB3B12CB2B75F00501FEE /* NavigationHeightProvidable.swift in Sources */,
 				835BD2F12CA413560088CA02 /* AppDelegate.swift in Sources */,
+				83AFB3AE2CB2ABD300501FEE /* LocationDetailView.swift in Sources */,
+				838753DC2CAD33E2001EE8F1 /* AuthServiceProtocol.swift in Sources */,
 				8304A0E22CA5123300061B33 /* AuthViewController.swift in Sources */,
+				838753D82CACE930001EE8F1 /* ActivityIndicator.swift in Sources */,
 				83A9C2C22CA7D08500898F0B /* AuthTextField.swift in Sources */,
+				838753E82CB02B42001EE8F1 /* CurrentUser.swift in Sources */,
 				83C9F3BA2CA9161300CF0D73 /* UITextField.swift in Sources */,
+				83AFB3AA2CB2902C00501FEE /* UIView.swift in Sources */,
 				83C9F3B42CA85BC300CF0D73 /* SeparatorWithLabelView.swift in Sources */,
+				838753E42CB00A4B001EE8F1 /* MapViewController.swift in Sources */,
+				838753DE2CAED385001EE8F1 /* ValidationLabel.swift in Sources */,
 				83C9F3B62CA907B900CF0D73 /* ColorCodes.swift in Sources */,
 				83C9F3BC2CA931F400CF0D73 /* KeyboardManager.swift in Sources */,
+				83AFB3A82CB1A94400501FEE /* MapTabBar.swift in Sources */,
+				838753ED2CB0EEED001EE8F1 /* Router.swift in Sources */,
+				838753E22CAF9E53001EE8F1 /* ErrorAlertEnabled.swift in Sources */,
 				83A9C2BE2CA7BF2200898F0B /* CustomAuthPickerViewController.swift in Sources */,
-				838753D02CABDEFE001EE8F1 /* ViewModelType.swift in Sources */,
 				838753D62CAC19D1001EE8F1 /* AuthInputValidator.swift in Sources */,
+				838753CC2CABDD82001EE8F1 /* UserModel.swift in Sources */,
 				838753D42CABFDB7001EE8F1 /* AuthInputValidation.swift in Sources */,
 				835BD3072CA423FB0088CA02 /* APIKeys.swift in Sources */,
 				835BD2F32CA413560088CA02 /* SceneDelegate.swift in Sources */,
+				838753D22CABE9A3001EE8F1 /* AuthViewModel.swift in Sources */,
+				83AFB3AC2CB29AC500501FEE /* NavigationBoxBar.swift in Sources */,
 				83A9C2C92CA8378C00898F0B /* UIConstants.swift in Sources */,
 				83A9C2C02CA7C9B700898F0B /* AuthStackView.swift in Sources */,
 				83A9C2C52CA7DA5000898F0B /* UILabel.swift in Sources */,
+				838753DA2CACF2D1001EE8F1 /* KRProgressHUDEnabled.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -27,6 +27,14 @@ struct UIConstants {
         static let fontSize: CGFloat = 17
     }
     
+    struct StackViewElement {
+        static let height: CGFloat = 44
+    }
+    
+    struct TabBarHeight {
+        static let height: CGFloat = 70
+    }
+    
     struct Font {
         static let smallFont: CGFloat = 17
     }
@@ -41,13 +49,19 @@ struct UIConstants {
         static let extraSmallPadding: CGFloat = 4
         static let smallPadding: CGFloat = 8
         static let standardPadding: CGFloat = 16
+        static let semiMediumPadding: CGFloat = 20
+        static let mediumPadding: CGFloat = 24
+        static let semiLargePadding: CGFloat = 28
         static let largePadding: CGFloat = 32
+        static let semiExtraLargePadding: CGFloat = 36
+        static let extraLargePadding: CGFloat = 40
     }
     
-    // 色やフォントのスタイル
     struct Style {
-        static let borderColor: UIColor = .lightGray
-        static let buttonBackgroundColor: UIColor = .systemBlue
-        static let buttonTextColor: UIColor = .white
+       
+    }
+    
+    struct Layer {
+        static let radius: CGFloat = 32
     }
 }

@@ -41,7 +41,15 @@ struct UIConstants {
     
     // Image
     struct Image {
-        static let size = 24
+        static let small: CGFloat = 16
+        static let semiMedium: CGFloat = 20
+        static let medium: CGFloat = 24
+        static let semiLarge: CGFloat = 28
+        static let large: CGFloat = 32
+        static let semiExtraLarge: CGFloat = 36
+        static let extraLarge: CGFloat = 40
+        static let semiSuperLarge: CGFloat = 44
+        static let superLarge: CGFloat = 48
     }
     
     // 共通マージンやパディング
@@ -63,5 +71,18 @@ struct UIConstants {
     
     struct Layer {
         static let radius: CGFloat = 32
+    }
+    
+    struct TextSize {
+        static let extraSmall: CGFloat = 12
+        static let small: CGFloat = 14
+        static let semiMedium: CGFloat = 16
+        static let medium: CGFloat = 18
+        static let semiLarge: CGFloat = 20
+        static let large: CGFloat = 22
+        static let semiExtraLarge: CGFloat = 24
+        static let extraLarge: CGFloat = 26
+        static let semiSuperLarge: CGFloat = 28
+        static let superLarge: CGFloat = 30
     }
 }

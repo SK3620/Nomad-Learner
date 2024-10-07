@@ -70,7 +70,7 @@ class AuthTextField: UITextField {
         
         // 画像
         imageView.snp.makeConstraints {
-            $0.size.equalTo(UIConstants.Image.size) // アイコンサイズ
+            $0.size.equalTo(UIConstants.Image.medium) // アイコンサイズ
             $0.left.equalToSuperview().offset(UIConstants.Layout.smallPadding) // 左側の余白
             $0.centerY.equalToSuperview()
         }

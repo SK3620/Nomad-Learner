@@ -51,7 +51,7 @@ class MapTabBar: UIView {
             $0.right.equalTo(airplaneItem.snp.left).offset(-(UIConstants.Layout.extraLargePadding))
         }
         mapItem.imageView!.snp.makeConstraints {
-            $0.size.equalTo(UIConstants.Image.size)
+            $0.size.equalTo(UIConstants.Image.medium)
         }
         
         airplaneItem.snp.makeConstraints {
@@ -60,7 +60,7 @@ class MapTabBar: UIView {
             $0.centerY.equalToSuperview().offset(-(UIConstants.Layout.extraSmallPadding))
         }
         airplaneItem.imageView!.snp.makeConstraints {
-            $0.size.equalTo(UIConstants.Image.size)
+            $0.size.equalTo(UIConstants.Image.medium)
         }
         
         reportItem.snp.makeConstraints {
@@ -69,7 +69,7 @@ class MapTabBar: UIView {
             $0.left.equalTo(airplaneItem.snp.right).offset(UIConstants.Layout.extraLargePadding)
         }
         reportItem.imageView!.snp.makeConstraints {
-            $0.size.equalTo(UIConstants.Image.size)
+            $0.size.equalTo(UIConstants.Image.medium)
         }
     }
     

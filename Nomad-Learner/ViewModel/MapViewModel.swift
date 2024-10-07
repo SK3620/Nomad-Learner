@@ -6,3 +6,12 @@
 //
 
 import Foundation
+import RxSwift
+import RxCocoa
+
+class MapViewModel {
+    
+    // MARK: - Output
+    let categories: Driver<[LocationCategory]> = Driver.just(LocationCategory.allCases)
+
+}

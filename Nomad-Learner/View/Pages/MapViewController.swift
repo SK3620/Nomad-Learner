@@ -7,6 +7,8 @@
 
 import UIKit
 import SwiftUI
+import RxSwift
+import RxCocoa
 
 class MapViewController: UIViewController {
     
@@ -14,16 +16,23 @@ class MapViewController: UIViewController {
     
     private lazy var locationDetailView: LocationDetailView = LocationDetailView()
     
+    private let disposeBag = DisposeBag()
+    
     // タブバー
     private lazy var mapTabBar: MapTabBar = MapTabBar()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.backgroundColor = .yellow
-        
         // UIのセットアップ
         setupUI()
+        // viewModelとのバインディング
+        bind()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        // 子ビューのレイアウト完了後にcollectionViewのitemSizeを決定する
+        let layout = locationDetailView.categorySelectCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        layout.itemSize = CGSize(width: locationDetailView.bounds.width / 4, height: locationDetailView.bounds.height / 2)
     }
     
     private func setupUI() {
@@ -32,6 +41,8 @@ class MapViewController: UIViewController {
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
         title = "NavigationBar"
+        
+        locationDetailView.categorySelectCollectionView.register(LocationCategoryCollectionViewCell.self, forCellWithReuseIdentifier: LocationCategoryCollectionViewCell.identifier)
         
         view.addSubview(navigationBoxBar)
         view.addSubview(locationDetailView)
@@ -57,10 +68,25 @@ class MapViewController: UIViewController {
     }
 }
 
+extension MapViewController {
+    private func bind() {
+        
+        let viewModel = MapViewModel()
+        
+        let collectionView = locationDetailView.categorySelectCollectionView
+        
+        viewModel.categories
+            .drive(collectionView.rx.items(cellIdentifier: LocationCategoryCollectionViewCell.identifier, cellType: LocationCategoryCollectionViewCell.self)) { row, item, cell in
+                cell.configure(with: item)
+            }
+            .disposed(by: disposeBag)
+    }
+}
+
 struct ViewControllerPreview: PreviewProvider {
     struct Wrapper: UIViewControllerRepresentable {
         func makeUIViewController(context: Context) -> some UIViewController {
-            UINavigationController(rootViewController: AuthViewController())
+            UINavigationController(rootViewController: MapViewController())
         }
         func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
         }
@@ -69,4 +95,3 @@ struct ViewControllerPreview: PreviewProvider {
         Wrapper()
     }
 }
-

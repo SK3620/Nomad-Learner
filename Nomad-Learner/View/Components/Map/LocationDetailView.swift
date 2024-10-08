@@ -30,13 +30,13 @@ class LocationDetailView: UIView {
     
     // 距離とコインの値
     private lazy var distanceAndCoinValueLabel: UILabel = UILabel().then {
-        $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.semiExtraLarge)
+        $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.extraLarge)
         $0.text = "12600"
         $0.textAlignment = .center
     }
     
     // 目的地label
-    private lazy var destinationLabel: LocationLabel = LocationLabel(textColor: .darkGray, fontSize: UIConstants.TextSize.large)
+    private lazy var destinationLabel: LocationLabel = LocationLabel(textColor: .darkGray, fontSize: UIConstants.TextSize.semiLarge)
     
     // 目的地scrollView
     private lazy var destinationScrollView: UIScrollView = UIScrollView().then {
@@ -44,7 +44,7 @@ class LocationDetailView: UIView {
     }
     
     // 地域・国label
-    private lazy var regionLabel: LocationLabel = LocationLabel(textColor: .lightGray, fontSize: UIConstants.TextSize.semiMedium)
+    private lazy var regionLabel: LocationLabel = LocationLabel(textColor: .lightGray, fontSize: UIConstants.TextSize.small)
     
     // 地域・国scrollView
     private lazy var regionScrollView: UIScrollView = UIScrollView().then {
@@ -62,15 +62,7 @@ class LocationDetailView: UIView {
     }
     
     // セクション選択colloectionView
-    lazy var categorySelectCollectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout()).then {
-        let layout = $0.collectionViewLayout as! UICollectionViewFlowLayout
-        layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 0
-        $0.backgroundColor = .white
-        $0.showsHorizontalScrollIndicator = false
-        $0.layer.cornerRadius = 30
-        $0.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
-    }
+    lazy var locationCategoryCollectionView: LocationCategoryCollectionView = LocationCategoryCollectionView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -97,7 +89,7 @@ class LocationDetailView: UIView {
         addSubview(destinationScrollView)
         addSubview(regionScrollView)
         
-        addSubview(categorySelectCollectionView)
+        addSubview(locationCategoryCollectionView)
         
         // 距離アイコン
         distanceImageView.snp.makeConstraints {
@@ -173,7 +165,7 @@ class LocationDetailView: UIView {
         }
         
         // セクション選択collectionView
-        categorySelectCollectionView.snp.makeConstraints {
+        locationCategoryCollectionView.snp.makeConstraints {
             $0.right.left.bottom.equalToSuperview()
             $0.top.equalTo(horizontalDivider.snp.bottom)
         }

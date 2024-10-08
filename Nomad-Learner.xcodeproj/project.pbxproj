@@ -31,6 +31,8 @@
 		83A6D7AF2CB3F0F800D18A30 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7AE2CB3F0F800D18A30 /* MapViewModel.swift */; };
 		83A6D7B12CB3F39300D18A30 /* LocationCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7B02CB3F39300D18A30 /* LocationCategory.swift */; };
 		83A6D7B32CB3F3E200D18A30 /* LocationCategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7B22CB3F3E100D18A30 /* LocationCategoryCollectionViewCell.swift */; };
+		83A6D7B52CB4BF2500D18A30 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7B42CB4BF2500D18A30 /* Observable.swift */; };
+		83A6D7B72CB4D3CF00D18A30 /* LocationCategoryCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7B62CB4D3CF00D18A30 /* LocationCategoryCollectionView.swift */; };
 		83A9C2BE2CA7BF2200898F0B /* CustomAuthPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2BD2CA7BF2200898F0B /* CustomAuthPickerViewController.swift */; };
 		83A9C2C02CA7C9B700898F0B /* AuthStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2BF2CA7C9B700898F0B /* AuthStackView.swift */; };
 		83A9C2C22CA7D08500898F0B /* AuthTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2C12CA7D08500898F0B /* AuthTextField.swift */; };
@@ -77,6 +79,8 @@
 		83A6D7AE2CB3F0F800D18A30 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		83A6D7B02CB3F39300D18A30 /* LocationCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCategory.swift; sourceTree = "<group>"; };
 		83A6D7B22CB3F3E100D18A30 /* LocationCategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCategoryCollectionViewCell.swift; sourceTree = "<group>"; };
+		83A6D7B42CB4BF2500D18A30 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		83A6D7B62CB4D3CF00D18A30 /* LocationCategoryCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCategoryCollectionView.swift; sourceTree = "<group>"; };
 		83A9C2BD2CA7BF2200898F0B /* CustomAuthPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAuthPickerViewController.swift; sourceTree = "<group>"; };
 		83A9C2BF2CA7C9B700898F0B /* AuthStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStackView.swift; sourceTree = "<group>"; };
 		83A9C2C12CA7D08500898F0B /* AuthTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTextField.swift; sourceTree = "<group>"; };
@@ -258,6 +262,7 @@
 				83AFB3A72CB1A94400501FEE /* MapTabBar.swift */,
 				83AFB3AB2CB29AC500501FEE /* NavigationBoxBar.swift */,
 				83AFB3AD2CB2ABD300501FEE /* LocationDetailView.swift */,
+				83A6D7B62CB4D3CF00D18A30 /* LocationCategoryCollectionView.swift */,
 				83A6D7AA2CB3D93E00D18A30 /* LocationLabel.swift */,
 				83A6D7B02CB3F39300D18A30 /* LocationCategory.swift */,
 				83A6D7B22CB3F3E100D18A30 /* LocationCategoryCollectionViewCell.swift */,
@@ -280,6 +285,7 @@
 				83C9F3B92CA9161300CF0D73 /* UITextField.swift */,
 				83AFB3A92CB2902C00501FEE /* UIView.swift */,
 				83A6D7A82CB3D7B000D18A30 /* UIScrollView.swift */,
+				83A6D7B42CB4BF2500D18A30 /* Observable.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -467,6 +473,7 @@
 				83AFB3AA2CB2902C00501FEE /* UIView.swift in Sources */,
 				83C9F3B42CA85BC300CF0D73 /* SeparatorWithLabelView.swift in Sources */,
 				838753E42CB00A4B001EE8F1 /* MapViewController.swift in Sources */,
+				83A6D7B72CB4D3CF00D18A30 /* LocationCategoryCollectionView.swift in Sources */,
 				838753DE2CAED385001EE8F1 /* ValidationLabel.swift in Sources */,
 				83A6D7B32CB3F3E200D18A30 /* LocationCategoryCollectionViewCell.swift in Sources */,
 				83C9F3B62CA907B900CF0D73 /* ColorCodes.swift in Sources */,
@@ -485,6 +492,7 @@
 				838753D22CABE9A3001EE8F1 /* AuthViewModel.swift in Sources */,
 				83AFB3AC2CB29AC500501FEE /* NavigationBoxBar.swift in Sources */,
 				83A9C2C92CA8378C00898F0B /* UIConstants.swift in Sources */,
+				83A6D7B52CB4BF2500D18A30 /* Observable.swift in Sources */,
 				83A9C2C02CA7C9B700898F0B /* AuthStackView.swift in Sources */,
 				83A9C2C52CA7DA5000898F0B /* UILabel.swift in Sources */,
 				838753DA2CACF2D1001EE8F1 /* KRProgressHUDEnabled.swift in Sources */,

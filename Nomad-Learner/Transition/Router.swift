@@ -15,6 +15,11 @@ protocol RouterProtocol {
     static func showRoot(window: UIWindow)
     // AuthVC（認証画面）→ MapVC（マップ画面）
     static func showMap(vc: UIViewController, animated: Bool)
+    
+    // UINavigationを通して戻る
+    static func navigationBack(vc: UIViewController)
+    // モーダルで戻る
+    static func dismissModal(vc: UIViewController, animated: Bool)
 }
 
 final class Router {
@@ -30,6 +35,16 @@ final class Router {
     // from -> to にモーダル遷移
     private static func modal(from: UIViewController, to: UIViewController, animated: Bool = true) {
         from.present(to, animated: animated)
+    }
+    
+    // UINavigationを通して戻る
+    static func pushBack(from nav: UINavigationController, animated: Bool = true) {
+        nav.popViewController(animated: animated)
+    }
+    
+    // モーダルで戻る
+    private static func dismiss(from vc: UIViewController, animated: Bool = true) {
+        vc.dismiss(animated: animated)
     }
 }
 
@@ -49,5 +64,16 @@ extension Router: RouterProtocol {
         navigationController.modalTransitionStyle = .crossDissolve
         navigationController.modalPresentationStyle = .fullScreen
         modal(from: vc, to: navigationController)
+    }
+    
+    // モーダルで戻る
+    static func dismissModal(vc: UIViewController, animated: Bool = true) {
+        dismiss(from: vc, animated: animated)
+    }
+    
+    // UINavigationを通して戻る
+    static func navigationBack(vc: UIViewController) {
+        guard let nav = vc.navigationController else { return }
+        pushBack(from: nav)
     }
 }

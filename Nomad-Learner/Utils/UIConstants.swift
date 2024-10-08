@@ -22,6 +22,7 @@ struct UIConstants {
     
     // Button
     struct Button {
+        static let smallHeight: CGFloat = 42
         static let height: CGFloat = 44
         static let cornerRadius: CGFloat = 22
         static let fontSize: CGFloat = 17

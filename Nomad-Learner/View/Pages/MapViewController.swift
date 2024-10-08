@@ -18,6 +18,15 @@ class MapViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
     
+    // 認証画面へ戻るボタン
+    private lazy var backBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: nil, action: nil).then {
+        $0.tintColor = .lightGray
+    }
+    // プロフィール画面遷移ボタン
+    private lazy var profileBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person"), style: .plain, target: nil, action: nil).then {
+        $0.tintColor = .lightGray
+    }
+        
     // タブバー
     private lazy var mapTabBar: MapTabBar = MapTabBar()
     
@@ -31,7 +40,7 @@ class MapViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         // 子ビューのレイアウト完了後にcollectionViewのitemSizeを決定する
-        let layout = locationDetailView.categorySelectCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        let layout = locationDetailView.locationCategoryCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
         layout.itemSize = CGSize(width: locationDetailView.bounds.width / 4, height: locationDetailView.bounds.height / 2)
     }
     
@@ -42,7 +51,11 @@ class MapViewController: UIViewController {
         navigationController?.navigationBar.shadowImage = UIImage()
         title = "NavigationBar"
         
-        locationDetailView.categorySelectCollectionView.register(LocationCategoryCollectionViewCell.self, forCellWithReuseIdentifier: LocationCategoryCollectionViewCell.identifier)
+        // ナビゲーションバーボタンアイテムの設定
+        navigationItem.leftBarButtonItem = backBarButtonItem
+        navigationItem.rightBarButtonItem = profileBarButtonItem
+        
+        locationDetailView.locationCategoryCollectionView.register(LocationCategoryCollectionViewCell.self, forCellWithReuseIdentifier: LocationCategoryCollectionViewCell.identifier)
         
         view.addSubview(navigationBoxBar)
         view.addSubview(locationDetailView)
@@ -71,14 +84,40 @@ class MapViewController: UIViewController {
 extension MapViewController {
     private func bind() {
         
+        // 認証画面へ戻る
+        backBarButtonItem.rx.tap
+            .bind { [weak self] in
+                guard let self = self else { return }
+                Router.dismissModal(vc: self)
+            }
+            .disposed(by: disposeBag)
+        
+        // プロフィール画面へ遷移
+        profileBarButtonItem.rx.tap
+            .bind { [weak self] in
+                guard let self = self else { return }
+                print("showProfileScreen")
+            }
+            .disposed(by: disposeBag)
+        
         let viewModel = MapViewModel()
+        let collectionView = locationDetailView.locationCategoryCollectionView
         
-        let collectionView = locationDetailView.categorySelectCollectionView
-        
+        // カテゴリーをセルに表示
         viewModel.categories
             .drive(collectionView.rx.items(cellIdentifier: LocationCategoryCollectionViewCell.identifier, cellType: LocationCategoryCollectionViewCell.self)) { row, item, cell in
-                cell.configure(with: item)
+                // 選択されたセルかどうか
+                let isSelected = viewModel.selectedIndex.value?.row == row
+                cell.configure(with: item, isSelected: isSelected)
+                cell.bind(indexPath: IndexPath(row: row, section: 0), viewModel: viewModel)
             }
+            .disposed(by: disposeBag)
+        
+        viewModel.selectedIndex
+            .drive(onNext:  { indexPath in
+                collectionView.reloadData()
+                collectionView.scrollToCenter(indexPath: indexPath)
+            })
             .disposed(by: disposeBag)
     }
 }

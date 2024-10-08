@@ -12,6 +12,13 @@ import RxCocoa
 class MapViewModel {
     
     // MARK: - Output
-    let categories: Driver<[LocationCategory]> = Driver.just(LocationCategory.allCases)
+    let categories: Driver<[LocationCategoryItem]> = Driver.just(LocationCategoryItem.categories)
+    var selectedIndex: Driver<IndexPath> { return selectedCategoryIndex.asDriver(onErrorDriveWith: .empty())}
+    
+    // タップされたカテゴリーのインデックスを監視、最新の値を保持する
+    let selectedCategoryIndex = BehaviorRelay<IndexPath>(value: IndexPath(item: 0, section: 0))
+}
 
+extension MapViewModel {
+    
 }

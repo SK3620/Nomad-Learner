@@ -36,6 +36,12 @@
 		83A6D7B92CB56C7400D18A30 /* KeyChainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7B82CB56C7400D18A30 /* KeyChainManager.swift */; };
 		83A6D7BB2CB6195E00D18A30 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7BA2CB6195E00D18A30 /* ProfileViewController.swift */; };
 		83A6D7BD2CB61A8000D18A30 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7BC2CB61A8000D18A30 /* ProfileViewModel.swift */; };
+		83A6D7C22CB61E6B00D18A30 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7C12CB61E6B00D18A30 /* ProfileView.swift */; };
+		83A6D7C42CB6630700D18A30 /* ProfileNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7C32CB6630700D18A30 /* ProfileNavigationBar.swift */; };
+		83A6D7C62CB682D600D18A30 /* ProfileTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7C52CB682D500D18A30 /* ProfileTopView.swift */; };
+		83A6D7C82CB68A7700D18A30 /* StudyTimeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7C72CB68A7700D18A30 /* StudyTimeLabel.swift */; };
+		83A6D7CA2CB6B4FC00D18A30 /* ProfileBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7C92CB6B4FC00D18A30 /* ProfileBottomView.swift */; };
+		83A6D7CC2CB6B85A00D18A30 /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7CB2CB6B85A00D18A30 /* ProfileTableViewCell.swift */; };
 		83A9C2BE2CA7BF2200898F0B /* CustomAuthPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2BD2CA7BF2200898F0B /* CustomAuthPickerViewController.swift */; };
 		83A9C2C02CA7C9B700898F0B /* AuthStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2BF2CA7C9B700898F0B /* AuthStackView.swift */; };
 		83A9C2C22CA7D08500898F0B /* AuthTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2C12CA7D08500898F0B /* AuthTextField.swift */; };
@@ -87,6 +93,12 @@
 		83A6D7B82CB56C7400D18A30 /* KeyChainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainManager.swift; sourceTree = "<group>"; };
 		83A6D7BA2CB6195E00D18A30 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		83A6D7BC2CB61A8000D18A30 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		83A6D7C12CB61E6B00D18A30 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		83A6D7C32CB6630700D18A30 /* ProfileNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNavigationBar.swift; sourceTree = "<group>"; };
+		83A6D7C52CB682D500D18A30 /* ProfileTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTopView.swift; sourceTree = "<group>"; };
+		83A6D7C72CB68A7700D18A30 /* StudyTimeLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyTimeLabel.swift; sourceTree = "<group>"; };
+		83A6D7C92CB6B4FC00D18A30 /* ProfileBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileBottomView.swift; sourceTree = "<group>"; };
+		83A6D7CB2CB6B85A00D18A30 /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
 		83A9C2BD2CA7BF2200898F0B /* CustomAuthPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAuthPickerViewController.swift; sourceTree = "<group>"; };
 		83A9C2BF2CA7C9B700898F0B /* AuthStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStackView.swift; sourceTree = "<group>"; };
 		83A9C2C12CA7D08500898F0B /* AuthTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTextField.swift; sourceTree = "<group>"; };
@@ -157,6 +169,7 @@
 		8304A0E02CA5118700061B33 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				83A6D7C02CB61E5500D18A30 /* Profile */,
 				83AFB3A62CB1A91500501FEE /* Map */,
 				83A9C2BC2CA7BE6200898F0B /* Auth */,
 			);
@@ -240,6 +253,19 @@
 				838753EC2CB0EEED001EE8F1 /* Router.swift */,
 			);
 			path = Transition;
+			sourceTree = "<group>";
+		};
+		83A6D7C02CB61E5500D18A30 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				83A6D7C12CB61E6B00D18A30 /* ProfileView.swift */,
+				83A6D7C52CB682D500D18A30 /* ProfileTopView.swift */,
+				83A6D7C92CB6B4FC00D18A30 /* ProfileBottomView.swift */,
+				83A6D7CB2CB6B85A00D18A30 /* ProfileTableViewCell.swift */,
+				83A6D7C32CB6630700D18A30 /* ProfileNavigationBar.swift */,
+				83A6D7C72CB68A7700D18A30 /* StudyTimeLabel.swift */,
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		83A9C2BC2CA7BE6200898F0B /* Auth */ = {
@@ -472,6 +498,8 @@
 				83AFB3B12CB2B75F00501FEE /* NavigationHeightProvidable.swift in Sources */,
 				835BD2F12CA413560088CA02 /* AppDelegate.swift in Sources */,
 				83AFB3AE2CB2ABD300501FEE /* LocationDetailView.swift in Sources */,
+				83A6D7CC2CB6B85A00D18A30 /* ProfileTableViewCell.swift in Sources */,
+				83A6D7CA2CB6B4FC00D18A30 /* ProfileBottomView.swift in Sources */,
 				838753DC2CAD33E2001EE8F1 /* AuthServiceProtocol.swift in Sources */,
 				8304A0E22CA5123300061B33 /* AuthViewController.swift in Sources */,
 				838753D82CACE930001EE8F1 /* ActivityIndicator.swift in Sources */,
@@ -497,11 +525,15 @@
 				83A9C2BE2CA7BF2200898F0B /* CustomAuthPickerViewController.swift in Sources */,
 				838753D62CAC19D1001EE8F1 /* AuthInputValidator.swift in Sources */,
 				838753D42CABFDB7001EE8F1 /* AuthInputValidation.swift in Sources */,
+				83A6D7C62CB682D600D18A30 /* ProfileTopView.swift in Sources */,
+				83A6D7C42CB6630700D18A30 /* ProfileNavigationBar.swift in Sources */,
 				83A6D7BB2CB6195E00D18A30 /* ProfileViewController.swift in Sources */,
 				835BD3072CA423FB0088CA02 /* APIKeys.swift in Sources */,
 				835BD2F32CA413560088CA02 /* SceneDelegate.swift in Sources */,
 				838753D22CABE9A3001EE8F1 /* AuthViewModel.swift in Sources */,
+				83A6D7C22CB61E6B00D18A30 /* ProfileView.swift in Sources */,
 				83AFB3AC2CB29AC500501FEE /* NavigationBoxBar.swift in Sources */,
+				83A6D7C82CB68A7700D18A30 /* StudyTimeLabel.swift in Sources */,
 				83A9C2C92CA8378C00898F0B /* UIConstants.swift in Sources */,
 				83A6D7B52CB4BF2500D18A30 /* Observable.swift in Sources */,
 				83A9C2C02CA7C9B700898F0B /* AuthStackView.swift in Sources */,

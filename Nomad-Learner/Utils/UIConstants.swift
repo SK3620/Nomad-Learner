@@ -56,7 +56,9 @@ struct UIConstants {
     // 共通マージンやパディング
     struct Layout {
         static let extraSmallPadding: CGFloat = 4
+        static let semiSmallPadding: CGFloat = 6
         static let smallPadding: CGFloat = 8
+        static let semiStandardPadding: CGFloat = 12
         static let standardPadding: CGFloat = 16
         static let semiMediumPadding: CGFloat = 20
         static let mediumPadding: CGFloat = 24

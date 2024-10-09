@@ -18,6 +18,7 @@ enum ColorCodes {
     case failure
     case background
     case buttonBackground
+    case modalBackground
 }
 
 extension ColorCodes {
@@ -44,6 +45,8 @@ extension ColorCodes {
             return UIColor.white
         case .buttonBackground:
             return UIColor(red: 0.3, green: 0.0, blue: 0.5, alpha: 1.0)
+        case .modalBackground:
+            return UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         }
     }
 }

@@ -69,7 +69,7 @@ extension Router: RouterProtocol {
     }
     
     // MapVC（マップ画面）→ ProfileVC（プロフィール画面）
-    static func showProfile(vc: UIViewController, animated: Bool) {
+    static func showProfile(vc: UIViewController, animated: Bool = true) {
         let profileViewController = ProfileViewController()
         profileViewController.modalPresentationStyle = .overFullScreen
         profileViewController.modalTransitionStyle = .crossDissolve

@@ -34,6 +34,8 @@
 		83A6D7B52CB4BF2500D18A30 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7B42CB4BF2500D18A30 /* Observable.swift */; };
 		83A6D7B72CB4D3CF00D18A30 /* LocationCategoryCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7B62CB4D3CF00D18A30 /* LocationCategoryCollectionView.swift */; };
 		83A6D7B92CB56C7400D18A30 /* KeyChainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7B82CB56C7400D18A30 /* KeyChainManager.swift */; };
+		83A6D7BB2CB6195E00D18A30 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7BA2CB6195E00D18A30 /* ProfileViewController.swift */; };
+		83A6D7BD2CB61A8000D18A30 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7BC2CB61A8000D18A30 /* ProfileViewModel.swift */; };
 		83A9C2BE2CA7BF2200898F0B /* CustomAuthPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2BD2CA7BF2200898F0B /* CustomAuthPickerViewController.swift */; };
 		83A9C2C02CA7C9B700898F0B /* AuthStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2BF2CA7C9B700898F0B /* AuthStackView.swift */; };
 		83A9C2C22CA7D08500898F0B /* AuthTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2C12CA7D08500898F0B /* AuthTextField.swift */; };
@@ -83,6 +85,8 @@
 		83A6D7B42CB4BF2500D18A30 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		83A6D7B62CB4D3CF00D18A30 /* LocationCategoryCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCategoryCollectionView.swift; sourceTree = "<group>"; };
 		83A6D7B82CB56C7400D18A30 /* KeyChainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainManager.swift; sourceTree = "<group>"; };
+		83A6D7BA2CB6195E00D18A30 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		83A6D7BC2CB61A8000D18A30 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		83A9C2BD2CA7BF2200898F0B /* CustomAuthPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAuthPickerViewController.swift; sourceTree = "<group>"; };
 		83A9C2BF2CA7C9B700898F0B /* AuthStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStackView.swift; sourceTree = "<group>"; };
 		83A9C2C12CA7D08500898F0B /* AuthTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTextField.swift; sourceTree = "<group>"; };
@@ -127,6 +131,7 @@
 			children = (
 				838753D12CABE9A3001EE8F1 /* AuthViewModel.swift */,
 				83A6D7AE2CB3F0F800D18A30 /* MapViewModel.swift */,
+				83A6D7BC2CB61A8000D18A30 /* ProfileViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -144,6 +149,7 @@
 				8304A0E12CA5123300061B33 /* AuthViewController.swift */,
 				83A9C2BD2CA7BF2200898F0B /* CustomAuthPickerViewController.swift */,
 				838753E32CB00A4B001EE8F1 /* MapViewController.swift */,
+				83A6D7BA2CB6195E00D18A30 /* ProfileViewController.swift */,
 			);
 			path = Pages;
 			sourceTree = "<group>";
@@ -491,6 +497,7 @@
 				83A9C2BE2CA7BF2200898F0B /* CustomAuthPickerViewController.swift in Sources */,
 				838753D62CAC19D1001EE8F1 /* AuthInputValidator.swift in Sources */,
 				838753D42CABFDB7001EE8F1 /* AuthInputValidation.swift in Sources */,
+				83A6D7BB2CB6195E00D18A30 /* ProfileViewController.swift in Sources */,
 				835BD3072CA423FB0088CA02 /* APIKeys.swift in Sources */,
 				835BD2F32CA413560088CA02 /* SceneDelegate.swift in Sources */,
 				838753D22CABE9A3001EE8F1 /* AuthViewModel.swift in Sources */,
@@ -498,6 +505,7 @@
 				83A9C2C92CA8378C00898F0B /* UIConstants.swift in Sources */,
 				83A6D7B52CB4BF2500D18A30 /* Observable.swift in Sources */,
 				83A9C2C02CA7C9B700898F0B /* AuthStackView.swift in Sources */,
+				83A6D7BD2CB61A8000D18A30 /* ProfileViewModel.swift in Sources */,
 				83A9C2C52CA7DA5000898F0B /* UILabel.swift in Sources */,
 				838753DA2CACF2D1001EE8F1 /* KRProgressHUDEnabled.swift in Sources */,
 			);

@@ -32,6 +32,10 @@ struct UIConstants {
         static let height: CGFloat = 44
     }
     
+    struct NavigationBar {
+        static let standardHeight: CGFloat = 44
+    }
+    
     struct TabBarHeight {
         static let height: CGFloat = 70
     }

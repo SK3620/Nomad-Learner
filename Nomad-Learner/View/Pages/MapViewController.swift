@@ -26,6 +26,16 @@ class MapViewController: UIViewController {
     private lazy var profileBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person"), style: .plain, target: nil, action: nil).then {
         $0.tintColor = .lightGray
     }
+    
+    // プロフィール画面遷移処理
+    private var toProfileVC: Void {
+        Router.showProfile(vc: self)
+    }
+    
+    // 認証画面へ戻る
+    private var backToAuthVC: Void {
+        Router.dismissModal(vc: self)
+    }
         
     // タブバー
     private lazy var mapTabBar: MapTabBar = MapTabBar()
@@ -88,7 +98,7 @@ extension MapViewController {
         backBarButtonItem.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                Router.dismissModal(vc: self)
+                self.backToAuthVC
             }
             .disposed(by: disposeBag)
         
@@ -96,7 +106,7 @@ extension MapViewController {
         profileBarButtonItem.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                print("showProfileScreen")
+                self.toProfileVC
             }
             .disposed(by: disposeBag)
         
@@ -122,15 +132,15 @@ extension MapViewController {
     }
 }
 
-struct ViewControllerPreview: PreviewProvider {
-    struct Wrapper: UIViewControllerRepresentable {
-        func makeUIViewController(context: Context) -> some UIViewController {
-            UINavigationController(rootViewController: MapViewController())
-        }
-        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-        }
-    }
-    static var previews: some View {
-        Wrapper()
-    }
-}
+//struct ViewControllerPreview: PreviewProvider {
+//    struct Wrapper: UIViewControllerRepresentable {
+//        func makeUIViewController(context: Context) -> some UIViewController {
+//            UINavigationController(rootViewController: MapViewController())
+//        }
+//        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+//        }
+//    }
+//    static var previews: some View {
+//        Wrapper()
+//    }
+//}

@@ -49,6 +49,8 @@
 		83A6D7DB2CB80D9100D18A30 /* EditProfileViewNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7DA2CB80D9100D18A30 /* EditProfileViewNavigationBar.swift */; };
 		83A6D7DD2CB8195C00D18A30 /* EditProfileTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7DC2CB8195B00D18A30 /* EditProfileTextView.swift */; };
 		83A6D7E02CB8DA8600D18A30 /* DepartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7DF2CB8DA8600D18A30 /* DepartViewController.swift */; };
+		83A6D7E22CB8F88500D18A30 /* DepartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7E12CB8F88500D18A30 /* DepartViewModel.swift */; };
+		83A6D7E42CB8FD4E00D18A30 /* DepartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7E32CB8FD4E00D18A30 /* DepartView.swift */; };
 		83A9C2BE2CA7BF2200898F0B /* CustomAuthPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2BD2CA7BF2200898F0B /* CustomAuthPickerViewController.swift */; };
 		83A9C2C02CA7C9B700898F0B /* AuthStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2BF2CA7C9B700898F0B /* AuthStackView.swift */; };
 		83A9C2C22CA7D08500898F0B /* AuthTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2C12CA7D08500898F0B /* AuthTextField.swift */; };
@@ -113,6 +115,8 @@
 		83A6D7DA2CB80D9100D18A30 /* EditProfileViewNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewNavigationBar.swift; sourceTree = "<group>"; };
 		83A6D7DC2CB8195B00D18A30 /* EditProfileTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileTextView.swift; sourceTree = "<group>"; };
 		83A6D7DF2CB8DA8600D18A30 /* DepartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartViewController.swift; sourceTree = "<group>"; };
+		83A6D7E12CB8F88500D18A30 /* DepartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartViewModel.swift; sourceTree = "<group>"; };
+		83A6D7E32CB8FD4E00D18A30 /* DepartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartView.swift; sourceTree = "<group>"; };
 		83A9C2BD2CA7BF2200898F0B /* CustomAuthPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAuthPickerViewController.swift; sourceTree = "<group>"; };
 		83A9C2BF2CA7C9B700898F0B /* AuthStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStackView.swift; sourceTree = "<group>"; };
 		83A9C2C12CA7D08500898F0B /* AuthTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTextField.swift; sourceTree = "<group>"; };
@@ -159,6 +163,7 @@
 				83A6D7AE2CB3F0F800D18A30 /* MapViewModel.swift */,
 				83A6D7BC2CB61A8000D18A30 /* ProfileViewModel.swift */,
 				83A6D7D62CB80C5D00D18A30 /* EditProfileViewModel.swift */,
+				83A6D7E12CB8F88500D18A30 /* DepartViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -301,6 +306,7 @@
 		83A6D7DE2CB8DA2500D18A30 /* Depart */ = {
 			isa = PBXGroup;
 			children = (
+				83A6D7E32CB8FD4E00D18A30 /* DepartView.swift */,
 			);
 			path = Depart;
 			sourceTree = "<group>";
@@ -546,6 +552,7 @@
 				83A6D7D22CB7D7DD00D18A30 /* ProfileTextView.swift in Sources */,
 				838753E82CB02B42001EE8F1 /* CurrentUser.swift in Sources */,
 				83A6D7DB2CB80D9100D18A30 /* EditProfileViewNavigationBar.swift in Sources */,
+				83A6D7E42CB8FD4E00D18A30 /* DepartView.swift in Sources */,
 				83A6D7B12CB3F39300D18A30 /* LocationCategory.swift in Sources */,
 				83C9F3BA2CA9161300CF0D73 /* UITextField.swift in Sources */,
 				83AFB3AA2CB2902C00501FEE /* UIView.swift in Sources */,
@@ -566,6 +573,7 @@
 				83A6D7D92CB80C8F00D18A30 /* EditProfileView.swift in Sources */,
 				83A6D7AB2CB3D93E00D18A30 /* LocationLabel.swift in Sources */,
 				838753E22CAF9E53001EE8F1 /* ErrorAlertEnabled.swift in Sources */,
+				83A6D7E22CB8F88500D18A30 /* DepartViewModel.swift in Sources */,
 				83A9C2BE2CA7BF2200898F0B /* CustomAuthPickerViewController.swift in Sources */,
 				838753D62CAC19D1001EE8F1 /* AuthInputValidator.swift in Sources */,
 				838753D42CABFDB7001EE8F1 /* AuthInputValidation.swift in Sources */,

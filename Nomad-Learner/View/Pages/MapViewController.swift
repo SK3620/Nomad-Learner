@@ -16,6 +16,9 @@ class MapViewController: UIViewController {
     
     private lazy var locationDetailView: LocationDetailView = LocationDetailView()
     
+    // タブバー
+    private lazy var mapTabBar: MapTabBar = MapTabBar()
+    
     private let disposeBag = DisposeBag()
     
     // 認証画面へ戻るボタン
@@ -27,18 +30,20 @@ class MapViewController: UIViewController {
         $0.tintColor = .lightGray
     }
     
-    // プロフィール画面遷移処理
+    // ProfileVC（プロフィール画面）へ遷移
     private var toProfileVC: Void {
         Router.showProfile(vc: self)
     }
     
-    // 認証画面へ戻る
+    // DepartVC（出発画面）へ遷移
+    private var toDepartVC: Void {
+        Router.showDepartVC(vc: self)
+    }
+    
+    // AuthVC（認証画面）へ遷移
     private var backToAuthVC: Void {
         Router.dismissModal(vc: self)
     }
-        
-    // タブバー
-    private lazy var mapTabBar: MapTabBar = MapTabBar()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -94,7 +99,7 @@ class MapViewController: UIViewController {
 extension MapViewController {
     private func bind() {
         
-        // 認証画面へ戻る
+        // AuthVC（認証画面）へ遷移
         backBarButtonItem.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
@@ -102,7 +107,7 @@ extension MapViewController {
             }
             .disposed(by: disposeBag)
         
-        // プロフィール画面へ遷移
+        // ProfileVC（プロフィール画面）へ遷移
         profileBarButtonItem.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
@@ -110,6 +115,14 @@ extension MapViewController {
             }
             .disposed(by: disposeBag)
         
+        // DepartVC（出発画面）へ遷移
+        mapTabBar.airplaneItem.rx.tap
+            .bind { [weak self] in
+                guard let self = self else { return }
+                self.toDepartVC
+            }
+            .disposed(by: disposeBag)
+
         let viewModel = MapViewModel()
         let collectionView = locationDetailView.locationCategoryCollectionView
         

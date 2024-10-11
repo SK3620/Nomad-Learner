@@ -31,7 +31,7 @@ class ProfileViewController: UIViewController {
     private var toEditProfileVC: Void {
         Router.showEditProfile(vc: self)
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // UIセットアップ

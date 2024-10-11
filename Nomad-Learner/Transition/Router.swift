@@ -14,11 +14,13 @@ protocol RouterProtocol {
     // 初期画面表示
     static func showRoot(window: UIWindow)
     // AuthVC（認証画面）→ MapVC（マップ画面）
-    static func showMap(vc: UIViewController, animated: Bool)
+    static func showMap(vc: UIViewController)
     // MapVC（マップ画面）→ ProfileVC（プロフィール画面）
-    static func showProfile(vc: UIViewController, animated: Bool)
+    static func showProfile(vc: UIViewController)
     // ProfileVC → EditProfileVC（プロフィール編集画面）
-    static func showEditProfile(vc: UIViewController, animated: Bool)
+    static func showEditProfile(vc: UIViewController)
+    // MacVC（マップ画面）→ DepartVC（出発画面）
+    static func showDepartVC(vc: UIViewController)
     
     // UINavigationを通して戻る
     static func navigationBack(vc: UIViewController)
@@ -62,7 +64,7 @@ extension Router: RouterProtocol {
     }
     
     // AuthVC（認証画面）→ MapVC（マップ画面）
-    static func showMap(vc: UIViewController, animated: Bool = true) {
+    static func showMap(vc: UIViewController) {
         let mapViewController = MapViewController()
         let navigationController = UINavigationController(rootViewController: mapViewController)
         navigationController.modalTransitionStyle = .crossDissolve
@@ -71,18 +73,27 @@ extension Router: RouterProtocol {
     }
     
     // MapVC（マップ画面）→ ProfileVC（プロフィール画面）
-    static func showProfile(vc: UIViewController, animated: Bool = true) {
+    static func showProfile(vc: UIViewController) {
         let profileViewController = ProfileViewController()
         profileViewController.modalPresentationStyle = .overFullScreen
         profileViewController.modalTransitionStyle = .crossDissolve
         modal(from: vc, to: profileViewController)
     }
     
-    static func showEditProfile(vc: UIViewController, animated: Bool = true) {
+    // ProfileVC（プロフィール画面）→ EditProfileVC（プロフィール編集画面）
+    static func showEditProfile(vc: UIViewController) {
         let profileViewController = EditProfileViewController()
         profileViewController.modalPresentationStyle = .overFullScreen
         profileViewController.modalTransitionStyle = .crossDissolve
         modal(from: vc, to: profileViewController)
+    }
+    
+    // MacVC（マップ画面）→ DepartVC（出発画面）
+    static func showDepartVC(vc: UIViewController) {
+        let departViewController = DepartViewController()
+        departViewController.modalPresentationStyle = .overFullScreen
+        departViewController.modalTransitionStyle = .crossDissolve
+        modal(from: vc, to: departViewController)
     }
     
     // モーダルで戻る

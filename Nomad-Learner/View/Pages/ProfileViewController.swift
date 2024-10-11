@@ -15,7 +15,7 @@ import SnapKit
 class ProfileViewController: UIViewController {
     
     var isFromStudyRoomVC: Bool = false
-    
+        
     private let tapGesture = UITapGestureRecognizer()
     
     private let disposeBag = DisposeBag()
@@ -25,6 +25,11 @@ class ProfileViewController: UIViewController {
     // MapVC（マップ画面）へ戻る
     private var backToMapVC: Void {
         Router.dismissModal(vc: self)
+    }
+    
+    // EditProfileVC（プロフィール編集画面）へ遷移
+    private var toEditProfileVC: Void {
+        Router.showEditProfile(vc: self)
     }
 
     override func viewDidLoad() {
@@ -37,7 +42,7 @@ class ProfileViewController: UIViewController {
     
     private func setupUI() {
         view.backgroundColor = ColorCodes.modalBackground.color()
-        
+                
         view.addGestureRecognizer(tapGesture)
         view.addSubview(profileView)
         
@@ -52,21 +57,31 @@ class ProfileViewController: UIViewController {
         
         // MapVCへ戻る
         tapGesture.rx.event
-            .filter { sender in
+            .subscribe(onNext: { [weak self] sender in
+                guard let self = self else { return }
                 // タップ位置取得
                 let tapLocation = sender.location(in: self.view)
                 // profileView枠外のタップの場合、MapVCへ戻る
-                return !self.profileView.frame.contains(tapLocation)
-            }
-            .subscribe(onNext: { _ in
-                self.backToMapVC
+                if !self.profileView.frame.contains(tapLocation) {
+                    self.backToMapVC
+                }
+                
             })
             .disposed(by: disposeBag)
         
         // MapVCへ戻る
         profileView.navigationBar.closeButton.rx.tap
-            .subscribe(onNext: { _ in
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
                 self.backToMapVC
+            })
+            .disposed(by: disposeBag)
+        
+        // EditProfileVCへ遷移
+        profileView.navigationBar.editButton.rx.tap
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.toEditProfileVC
             })
             .disposed(by: disposeBag)
     }
@@ -85,54 +100,15 @@ extension ProfileViewController {
     }
 }
 
-struct ViewControllerPreview: PreviewProvider {
-    struct Wrapper: UIViewControllerRepresentable {
-        func makeUIViewController(context: Context) -> some UIViewController {
-            UINavigationController(rootViewController: ProfileViewController())
-        }
-        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-        }
-    }
-    static var previews: some View {
-        Wrapper()
-    }
-}
-
-class HogeViewController: UIViewController {
-    
-    var view1 = UIView()
-    var view2 = UIView()
-
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-       
-        view1.backgroundColor = .red
-        
-        view2.backgroundColor = .blue
-        
-        view.addSubview(view1)
-        view1.addSubview(view2)
-        
-        view1.snp.makeConstraints {
-            $0.size.equalTo(300)
-            $0.bottom.equalToSuperview()
-        }
-        
-        view2.snp.makeConstraints {
-            $0.edges.equalToSuperview().inset(50)
-        }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
-        
-        UIView.animate(withDuration: 0.3) {
-            
-//            self.view1.frame.size.height = 600
-            self.view1.frame.origin.y = 0
-            self.view1.frame.size.height = 300
-        }
-    }
-}
+//struct ViewControllerPreview: PreviewProvider {
+//    struct Wrapper: UIViewControllerRepresentable {
+//        func makeUIViewController(context: Context) -> some UIViewController {
+//            UINavigationController(rootViewController: ProfileViewController())
+//        }
+//        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+//        }
+//    }
+//    static var previews: some View {
+//        Wrapper()
+//    }
+//}

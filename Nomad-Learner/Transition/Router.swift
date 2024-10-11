@@ -17,6 +17,8 @@ protocol RouterProtocol {
     static func showMap(vc: UIViewController, animated: Bool)
     // MapVC（マップ画面）→ ProfileVC（プロフィール画面）
     static func showProfile(vc: UIViewController, animated: Bool)
+    // ProfileVC → EditProfileVC（プロフィール編集画面）
+    static func showEditProfile(vc: UIViewController, animated: Bool)
     
     // UINavigationを通して戻る
     static func navigationBack(vc: UIViewController)
@@ -51,7 +53,7 @@ final class Router {
 }
 
 extension Router: RouterProtocol {
-   
+    
     // 初期画面を表示するメソッド
     static func showRoot(window: UIWindow) {
         let authViewController = AuthViewController()
@@ -71,6 +73,13 @@ extension Router: RouterProtocol {
     // MapVC（マップ画面）→ ProfileVC（プロフィール画面）
     static func showProfile(vc: UIViewController, animated: Bool = true) {
         let profileViewController = ProfileViewController()
+        profileViewController.modalPresentationStyle = .overFullScreen
+        profileViewController.modalTransitionStyle = .crossDissolve
+        modal(from: vc, to: profileViewController)
+    }
+    
+    static func showEditProfile(vc: UIViewController, animated: Bool = true) {
+        let profileViewController = EditProfileViewController()
         profileViewController.modalPresentationStyle = .overFullScreen
         profileViewController.modalTransitionStyle = .crossDissolve
         modal(from: vc, to: profileViewController)

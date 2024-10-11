@@ -14,9 +14,9 @@ class ProfileView: UIView {
     
     public let navigationBar: ProfileNavigationBar = ProfileNavigationBar()
     
-    private let profileTopView: ProfileTopView = ProfileTopView()
+    public let profileTopView: ProfileTopView = ProfileTopView()
     
-    private let profileBottomView: ProfileBottomView = ProfileBottomView()
+    public let profileBottomView: ProfileBottomView = ProfileBottomView()
     
     private let profileTopViewHeight: CGFloat = 80
    

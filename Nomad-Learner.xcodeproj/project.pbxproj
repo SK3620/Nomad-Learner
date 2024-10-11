@@ -42,6 +42,12 @@
 		83A6D7C82CB68A7700D18A30 /* StudyTimeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7C72CB68A7700D18A30 /* StudyTimeLabel.swift */; };
 		83A6D7CA2CB6B4FC00D18A30 /* ProfileBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7C92CB6B4FC00D18A30 /* ProfileBottomView.swift */; };
 		83A6D7CC2CB6B85A00D18A30 /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7CB2CB6B85A00D18A30 /* ProfileTableViewCell.swift */; };
+		83A6D7D22CB7D7DD00D18A30 /* ProfileTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7D12CB7D7DC00D18A30 /* ProfileTextView.swift */; };
+		83A6D7D42CB807F100D18A30 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7D32CB807F100D18A30 /* EditProfileViewController.swift */; };
+		83A6D7D72CB80C5D00D18A30 /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7D62CB80C5D00D18A30 /* EditProfileViewModel.swift */; };
+		83A6D7D92CB80C8F00D18A30 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7D82CB80C8F00D18A30 /* EditProfileView.swift */; };
+		83A6D7DB2CB80D9100D18A30 /* EditProfileViewNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7DA2CB80D9100D18A30 /* EditProfileViewNavigationBar.swift */; };
+		83A6D7DD2CB8195C00D18A30 /* EditProfileTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7DC2CB8195B00D18A30 /* EditProfileTextView.swift */; };
 		83A9C2BE2CA7BF2200898F0B /* CustomAuthPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2BD2CA7BF2200898F0B /* CustomAuthPickerViewController.swift */; };
 		83A9C2C02CA7C9B700898F0B /* AuthStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2BF2CA7C9B700898F0B /* AuthStackView.swift */; };
 		83A9C2C22CA7D08500898F0B /* AuthTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2C12CA7D08500898F0B /* AuthTextField.swift */; };
@@ -99,6 +105,12 @@
 		83A6D7C72CB68A7700D18A30 /* StudyTimeLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyTimeLabel.swift; sourceTree = "<group>"; };
 		83A6D7C92CB6B4FC00D18A30 /* ProfileBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileBottomView.swift; sourceTree = "<group>"; };
 		83A6D7CB2CB6B85A00D18A30 /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
+		83A6D7D12CB7D7DC00D18A30 /* ProfileTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTextView.swift; sourceTree = "<group>"; };
+		83A6D7D32CB807F100D18A30 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
+		83A6D7D62CB80C5D00D18A30 /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
+		83A6D7D82CB80C8F00D18A30 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
+		83A6D7DA2CB80D9100D18A30 /* EditProfileViewNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewNavigationBar.swift; sourceTree = "<group>"; };
+		83A6D7DC2CB8195B00D18A30 /* EditProfileTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileTextView.swift; sourceTree = "<group>"; };
 		83A9C2BD2CA7BF2200898F0B /* CustomAuthPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAuthPickerViewController.swift; sourceTree = "<group>"; };
 		83A9C2BF2CA7C9B700898F0B /* AuthStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStackView.swift; sourceTree = "<group>"; };
 		83A9C2C12CA7D08500898F0B /* AuthTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTextField.swift; sourceTree = "<group>"; };
@@ -144,6 +156,7 @@
 				838753D12CABE9A3001EE8F1 /* AuthViewModel.swift */,
 				83A6D7AE2CB3F0F800D18A30 /* MapViewModel.swift */,
 				83A6D7BC2CB61A8000D18A30 /* ProfileViewModel.swift */,
+				83A6D7D62CB80C5D00D18A30 /* EditProfileViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -162,6 +175,7 @@
 				83A9C2BD2CA7BF2200898F0B /* CustomAuthPickerViewController.swift */,
 				838753E32CB00A4B001EE8F1 /* MapViewController.swift */,
 				83A6D7BA2CB6195E00D18A30 /* ProfileViewController.swift */,
+				83A6D7D32CB807F100D18A30 /* EditProfileViewController.swift */,
 			);
 			path = Pages;
 			sourceTree = "<group>";
@@ -169,6 +183,7 @@
 		8304A0E02CA5118700061B33 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				83A6D7D52CB8082100D18A30 /* EditProfile */,
 				83A6D7C02CB61E5500D18A30 /* Profile */,
 				83AFB3A62CB1A91500501FEE /* Map */,
 				83A9C2BC2CA7BE6200898F0B /* Auth */,
@@ -264,8 +279,19 @@
 				83A6D7CB2CB6B85A00D18A30 /* ProfileTableViewCell.swift */,
 				83A6D7C32CB6630700D18A30 /* ProfileNavigationBar.swift */,
 				83A6D7C72CB68A7700D18A30 /* StudyTimeLabel.swift */,
+				83A6D7D12CB7D7DC00D18A30 /* ProfileTextView.swift */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		83A6D7D52CB8082100D18A30 /* EditProfile */ = {
+			isa = PBXGroup;
+			children = (
+				83A6D7D82CB80C8F00D18A30 /* EditProfileView.swift */,
+				83A6D7DA2CB80D9100D18A30 /* EditProfileViewNavigationBar.swift */,
+				83A6D7DC2CB8195B00D18A30 /* EditProfileTextView.swift */,
+			);
+			path = EditProfile;
 			sourceTree = "<group>";
 		};
 		83A9C2BC2CA7BE6200898F0B /* Auth */ = {
@@ -497,6 +523,7 @@
 			files = (
 				83AFB3B12CB2B75F00501FEE /* NavigationHeightProvidable.swift in Sources */,
 				835BD2F12CA413560088CA02 /* AppDelegate.swift in Sources */,
+				83A6D7D42CB807F100D18A30 /* EditProfileViewController.swift in Sources */,
 				83AFB3AE2CB2ABD300501FEE /* LocationDetailView.swift in Sources */,
 				83A6D7CC2CB6B85A00D18A30 /* ProfileTableViewCell.swift in Sources */,
 				83A6D7CA2CB6B4FC00D18A30 /* ProfileBottomView.swift in Sources */,
@@ -504,7 +531,9 @@
 				8304A0E22CA5123300061B33 /* AuthViewController.swift in Sources */,
 				838753D82CACE930001EE8F1 /* ActivityIndicator.swift in Sources */,
 				83A9C2C22CA7D08500898F0B /* AuthTextField.swift in Sources */,
+				83A6D7D22CB7D7DD00D18A30 /* ProfileTextView.swift in Sources */,
 				838753E82CB02B42001EE8F1 /* CurrentUser.swift in Sources */,
+				83A6D7DB2CB80D9100D18A30 /* EditProfileViewNavigationBar.swift in Sources */,
 				83A6D7B12CB3F39300D18A30 /* LocationCategory.swift in Sources */,
 				83C9F3BA2CA9161300CF0D73 /* UITextField.swift in Sources */,
 				83AFB3AA2CB2902C00501FEE /* UIView.swift in Sources */,
@@ -516,10 +545,13 @@
 				83A6D7B32CB3F3E200D18A30 /* LocationCategoryCollectionViewCell.swift in Sources */,
 				83C9F3B62CA907B900CF0D73 /* ColorCodes.swift in Sources */,
 				83C9F3BC2CA931F400CF0D73 /* KeyboardManager.swift in Sources */,
+				83A6D7DD2CB8195C00D18A30 /* EditProfileTextView.swift in Sources */,
 				83A6D7A92CB3D7B000D18A30 /* UIScrollView.swift in Sources */,
+				83A6D7D72CB80C5D00D18A30 /* EditProfileViewModel.swift in Sources */,
 				83AFB3A82CB1A94400501FEE /* MapTabBar.swift in Sources */,
 				83A6D7AF2CB3F0F800D18A30 /* MapViewModel.swift in Sources */,
 				838753ED2CB0EEED001EE8F1 /* Router.swift in Sources */,
+				83A6D7D92CB80C8F00D18A30 /* EditProfileView.swift in Sources */,
 				83A6D7AB2CB3D93E00D18A30 /* LocationLabel.swift in Sources */,
 				838753E22CAF9E53001EE8F1 /* ErrorAlertEnabled.swift in Sources */,
 				83A9C2BE2CA7BF2200898F0B /* CustomAuthPickerViewController.swift in Sources */,

@@ -17,6 +17,9 @@
 		835BD3072CA423FB0088CA02 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835BD3062CA423FB0088CA02 /* APIKeys.swift */; };
 		837DE58E2CBA2FDE00819964 /* SafeAreaHeightProvidable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837DE58D2CBA2FDE00819964 /* SafeAreaHeightProvidable.swift */; };
 		837DE5902CBA564A00819964 /* TicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837DE58F2CBA564A00819964 /* TicketView.swift */; };
+		837DE5952CBAD11500819964 /* StudyRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837DE5942CBAD11500819964 /* StudyRoomViewController.swift */; };
+		837DE5972CBAD12E00819964 /* StudyRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837DE5962CBAD12E00819964 /* StudyRoomViewModel.swift */; };
+		837DE59A2CBAD8D400819964 /* NavigationControllerForStudyVCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837DE5992CBAD8D400819964 /* NavigationControllerForStudyVCViewController.swift */; };
 		838753D22CABE9A3001EE8F1 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753D12CABE9A3001EE8F1 /* AuthViewModel.swift */; };
 		838753D42CABFDB7001EE8F1 /* AuthInputValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753D32CABFDB7001EE8F1 /* AuthInputValidation.swift */; };
 		838753D62CAC19D1001EE8F1 /* AuthInputValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753D52CAC19D1001EE8F1 /* AuthInputValidator.swift */; };
@@ -85,6 +88,9 @@
 		835BD3062CA423FB0088CA02 /* APIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
 		837DE58D2CBA2FDE00819964 /* SafeAreaHeightProvidable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeAreaHeightProvidable.swift; sourceTree = "<group>"; };
 		837DE58F2CBA564A00819964 /* TicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketView.swift; sourceTree = "<group>"; };
+		837DE5942CBAD11500819964 /* StudyRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyRoomViewController.swift; sourceTree = "<group>"; };
+		837DE5962CBAD12E00819964 /* StudyRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyRoomViewModel.swift; sourceTree = "<group>"; };
+		837DE5992CBAD8D400819964 /* NavigationControllerForStudyVCViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationControllerForStudyVCViewController.swift; sourceTree = "<group>"; };
 		838753D12CABE9A3001EE8F1 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		838753D32CABFDB7001EE8F1 /* AuthInputValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInputValidation.swift; sourceTree = "<group>"; };
 		838753D52CAC19D1001EE8F1 /* AuthInputValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInputValidator.swift; sourceTree = "<group>"; };
@@ -154,6 +160,7 @@
 		8304A0DC2CA50DB100061B33 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				837DE5982CBAD88A00819964 /* NavigationController */,
 				8304A0E02CA5118700061B33 /* Components */,
 				8304A0DF2CA5113700061B33 /* Pages */,
 			);
@@ -168,6 +175,7 @@
 				83A6D7BC2CB61A8000D18A30 /* ProfileViewModel.swift */,
 				83A6D7D62CB80C5D00D18A30 /* EditProfileViewModel.swift */,
 				83A6D7E12CB8F88500D18A30 /* DepartViewModel.swift */,
+				837DE5962CBAD12E00819964 /* StudyRoomViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -182,6 +190,7 @@
 		8304A0DF2CA5113700061B33 /* Pages */ = {
 			isa = PBXGroup;
 			children = (
+				837DE5942CBAD11500819964 /* StudyRoomViewController.swift */,
 				8304A0E12CA5123300061B33 /* AuthViewController.swift */,
 				83A9C2BD2CA7BF2200898F0B /* CustomAuthPickerViewController.swift */,
 				838753E32CB00A4B001EE8F1 /* MapViewController.swift */,
@@ -195,6 +204,7 @@
 		8304A0E02CA5118700061B33 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				837DE5932CBAD0F400819964 /* StudyRoom */,
 				83A6D7DE2CB8DA2500D18A30 /* Depart */,
 				83A6D7D52CB8082100D18A30 /* EditProfile */,
 				83A6D7C02CB61E5500D18A30 /* Profile */,
@@ -268,6 +278,21 @@
 				837DE58D2CBA2FDE00819964 /* SafeAreaHeightProvidable.swift */,
 			);
 			path = SafeAreaHeightProvidable;
+			sourceTree = "<group>";
+		};
+		837DE5932CBAD0F400819964 /* StudyRoom */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = StudyRoom;
+			sourceTree = "<group>";
+		};
+		837DE5982CBAD88A00819964 /* NavigationController */ = {
+			isa = PBXGroup;
+			children = (
+				837DE5992CBAD8D400819964 /* NavigationControllerForStudyVCViewController.swift */,
+			);
+			path = NavigationController;
 			sourceTree = "<group>";
 		};
 		838753CE2CABDEDC001EE8F1 /* Protocols */ = {
@@ -557,6 +582,7 @@
 				83A6D7D42CB807F100D18A30 /* EditProfileViewController.swift in Sources */,
 				83AFB3AE2CB2ABD300501FEE /* LocationDetailView.swift in Sources */,
 				83A6D7E02CB8DA8600D18A30 /* DepartViewController.swift in Sources */,
+				837DE5952CBAD11500819964 /* StudyRoomViewController.swift in Sources */,
 				83A6D7CC2CB6B85A00D18A30 /* ProfileTableViewCell.swift in Sources */,
 				83A6D7CA2CB6B4FC00D18A30 /* ProfileBottomView.swift in Sources */,
 				838753DC2CAD33E2001EE8F1 /* AuthServiceProtocol.swift in Sources */,
@@ -580,6 +606,7 @@
 				83C9F3B62CA907B900CF0D73 /* ColorCodes.swift in Sources */,
 				83C9F3BC2CA931F400CF0D73 /* KeyboardManager.swift in Sources */,
 				83A6D7DD2CB8195C00D18A30 /* EditProfileTextView.swift in Sources */,
+				837DE5972CBAD12E00819964 /* StudyRoomViewModel.swift in Sources */,
 				83A6D7A92CB3D7B000D18A30 /* UIScrollView.swift in Sources */,
 				83A6D7D72CB80C5D00D18A30 /* EditProfileViewModel.swift in Sources */,
 				83AFB3A82CB1A94400501FEE /* MapTabBar.swift in Sources */,
@@ -589,6 +616,7 @@
 				83A6D7AB2CB3D93E00D18A30 /* LocationLabel.swift in Sources */,
 				838753E22CAF9E53001EE8F1 /* ErrorAlertEnabled.swift in Sources */,
 				83A6D7E22CB8F88500D18A30 /* DepartViewModel.swift in Sources */,
+				837DE59A2CBAD8D400819964 /* NavigationControllerForStudyVCViewController.swift in Sources */,
 				83A9C2BE2CA7BF2200898F0B /* CustomAuthPickerViewController.swift in Sources */,
 				837DE58E2CBA2FDE00819964 /* SafeAreaHeightProvidable.swift in Sources */,
 				838753D62CAC19D1001EE8F1 /* AuthInputValidator.swift in Sources */,
@@ -699,7 +727,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -797,7 +825,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

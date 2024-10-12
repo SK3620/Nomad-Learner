@@ -53,7 +53,7 @@ class TicketView: UIView {
     
     // 距離のアイコン
     private lazy var distanceImageView: UIImageView = UIImageView().then {
-        $0.image = UIImage(named: "distance_new")
+        $0.image = UIImage(named: "distance")
     }
     
     // 距離アイコンとコインアイコンの区切り線
@@ -64,7 +64,7 @@ class TicketView: UIView {
     
     // コインのアイコン
     private lazy var coinImageView: UIImageView = UIImageView().then {
-        $0.image = UIImage(named: "coin_new")
+        $0.image = UIImage(named: "coin")
     }
     
     // 距離と支払うコインの値

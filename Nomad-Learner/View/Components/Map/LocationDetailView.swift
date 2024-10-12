@@ -14,7 +14,7 @@ class LocationDetailView: UIView {
     
     // 距離のアイコン
     private lazy var distanceImageView: UIImageView = UIImageView().then {
-        $0.image = UIImage(named: "distance2")
+        $0.image = UIImage(named: "distance")
     }
     
     // 距離アイコンとコインアイコンの区切り線
@@ -25,7 +25,7 @@ class LocationDetailView: UIView {
     
     // コインのアイコン
     private lazy var coinImageView: UIImageView = UIImageView().then {
-        $0.image = UIImage(named: "coin2")
+        $0.image = UIImage(named: "coin")
     }
     
     // 距離とコインの値
@@ -93,9 +93,9 @@ class LocationDetailView: UIView {
         
         // 距離アイコン
         distanceImageView.snp.makeConstraints {
-             $0.size.equalTo(UIConstants.Image.superLarge)
+            $0.size.equalTo(CGSize(width: 45, height: 25))
             $0.left.equalToSuperview().inset(UIConstants.Layout.standardPadding)
-            $0.top.equalToSuperview().inset(UIConstants.Layout.smallPadding)
+            $0.top.equalToSuperview().inset(UIConstants.Layout.standardPadding)
         }
         
         // 距離アイコンとコインアイコンの区切り線
@@ -108,7 +108,7 @@ class LocationDetailView: UIView {
         
         // コインアイコン
         coinImageView.snp.makeConstraints {
-            $0.size.equalTo(UIConstants.Image.large)
+            $0.size.equalTo(distanceImageView.snp.height)
             $0.left.equalTo(IconImageDivider.snp.right)
             $0.centerY.equalTo(distanceImageView)
         }

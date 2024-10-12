@@ -11,16 +11,15 @@ import SnapKit
 import RxSwift
 
 class DepartView: UIView {
-    private let disposeBag = DisposeBag()
     
     // つまみの初期中心位置
     private lazy var startCenterY: CGFloat = {
-       return self.knobButton.center.y
+       return self.knobImageButton.center.y
     }()
     
     // つまみの最大中心位置
     private lazy var endCenterY: CGFloat = {
-        return self.knobButton.bounds.height / 2
+        return self.knobImageButton.bounds.height / 2
     }()
     
     private let ticketView: UIView = UIView().then {        $0.backgroundColor = UIColor(red: 0.86, green: 0.86, blue: 0.94, alpha: 1.0)
@@ -31,32 +30,50 @@ class DepartView: UIView {
 
     // 矢印画像
     private let arrowImageView: UIImageView = UIImageView().then {
-        let configuration = UIImage.SymbolConfiguration(weight: .ultraLight) // ここでアイコンの太さを設定
+        let configuration = UIImage.SymbolConfiguration(weight: .ultraLight)
         $0.image = UIImage(systemName: "arrowshape.up.fill", withConfiguration: configuration)
         $0.tintColor = ColorCodes.primaryLightPurple.color()
         $0.tintColor = UIColor(red: 0.97, green: 0.97, blue: 1.0, alpha: 1.0)
     }
     
+    // くの字の矢印画像を生成
+    private func createChevronImageView() -> UIImageView {
+        return UIImageView().then {
+            let configuration = UIImage.SymbolConfiguration(weight: .medium)
+            $0.image = UIImage(systemName: "chevron.up", withConfiguration: configuration)
+            $0.tintColor = ColorCodes.primaryPurple.color()
+        }
+    }
+        
+    // chevronImageViews用のUIStackView
+    private lazy var chevronStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [createChevronImageView(), createChevronImageView(), createChevronImageView()])
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.spacing = UIConstants.Layout.extraSmallPadding
+        return stackView
+    }()
+    
     // つまみが移動する範囲のView
    private let knobBackgroundView: UIView = UIView().then {
+       $0.backgroundColor = UIColor(red: 0.86, green: 0.86, blue: 0.94, alpha: 1.0)
         $0.layer.cornerRadius = 80 / 2
-        $0.backgroundColor = .lightGray
     }
     
     // つまみ
-    public let knobButton: UIButton = UIButton().then {
+    public let knobImageButton: UIButton = UIButton().then {
+        let configuration = UIImage.SymbolConfiguration(pointSize: 40)
         $0.backgroundColor = ColorCodes.primaryPurple.color()
         $0.tintColor = .white
-        $0.setImage(UIImage(systemName: "airplane"), for: .normal)
+        $0.setImage(UIImage(systemName: "airplane", withConfiguration: configuration), for: .normal)
         $0.layer.cornerRadius = 80 / 2
         // 縦向きの飛行機に調整
         $0.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi) * 2 * 270 / 360)
+        $0.isUserInteractionEnabled = true
     }
     
-    // チケット画像
-    private let departImageView: UIImageView = UIImageView().then {
-        $0.image = UIImage(named: "ticket")
-    }
+    // チケット
+    private let ticketFrame: TicketView = TicketView()
         
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -65,12 +82,13 @@ class DepartView: UIView {
     }
     
     private func setupUI() {
-                
+        
         addSubview(ticketView)
         addSubview(arrowImageView)
         addSubview(knobBackgroundView)
-        knobBackgroundView.addSubview(knobButton)
-        addSubview(departImageView)
+        knobBackgroundView.addSubview(chevronStackView)
+        knobBackgroundView.addSubview(knobImageButton)
+        addSubview(ticketFrame)
         
         ticketView.snp.makeConstraints {
             $0.height.equalToSuperview().multipliedBy(0.75)
@@ -79,46 +97,40 @@ class DepartView: UIView {
         
         arrowImageView.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.bottom.equalTo(departImageView.snp.top).offset(UIConstants.Layout.mediumPadding)
+            $0.bottom.equalTo(ticketFrame.snp.top)
             $0.centerX.equalToSuperview()
             $0.horizontalEdges.equalToSuperview().inset(-(UIConstants.Layout.standardPadding))
         }
         
         knobBackgroundView.snp.makeConstraints {
             $0.center.equalTo(arrowImageView)
-            $0.height.equalTo(arrowImageView).multipliedBy(0.75)
+            $0.height.equalTo(arrowImageView).multipliedBy(0.7)
             $0.width.equalTo(80)
         }
         
-        knobButton.snp.makeConstraints {
+        knobImageButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.bottom.equalToSuperview()
             $0.size.equalTo(80)
         }
         
-        knobButton.imageView?.snp.makeConstraints {
-            $0.size.equalToSuperview().inset(UIConstants.Layout.standardPadding)
+        knobImageButton.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.size.equalTo(80)
         }
-                        
-        departImageView.snp.makeConstraints {
+        
+        chevronStackView.snp.makeConstraints {
+            $0.center.equalToSuperview()  // knobBackgroundViewの中心
+        }
+        
+        ticketFrame.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.centerY.equalTo(ticketView.snp.bottom)
-            $0.horizontalEdges.equalToSuperview().inset(UIConstants.Layout.extraLargePadding)
-            $0.height.equalTo(250)
+            $0.horizontalEdges.equalToSuperview().inset(UIConstants.Layout.largePadding)
+            $0.height.equalTo(227)
         }
     }
     
-    /*
-    // レイアウト完了後に座標を取得
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        // (0.0）のため取得できない
-        startCenterY = knobButton.center.y
-        endCenterY = knobButton.bounds.height / 2
-    }
-     */
-            
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -130,7 +142,7 @@ extension DepartView {
         // knob（つまみ）の移動量を取得
         let point = sender.translation(in: knobBackgroundView)
         // つまみの中心Y座標
-        var knobCenterY = sender.view!.center.y + point.y
+        let knobCenterY = sender.view!.center.y + point.y
         var newCenterY: CGFloat = CGFloat()
         
         if sender.state == .ended {

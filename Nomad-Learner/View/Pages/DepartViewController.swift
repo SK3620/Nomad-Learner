@@ -14,13 +14,13 @@ import SwiftUI
 
 class DepartViewController: UIViewController {
     
+    // 基本のView
+    private let basicView: UIView = UIView().then {
+        $0.backgroundColor = .white
+    }
+    
     // 出発View
     private let departView: DepartView = DepartView()
-    
-    // チケット画像
-    private let departImageView: UIImageView = UIImageView().then {
-        $0.image = UIImage(named: "ticket")
-    }
     
     // 出発キャンセルボタン
     private let cancelButton: UIButton = UIButton(type: .system).then {
@@ -29,7 +29,7 @@ class DepartViewController: UIViewController {
         $0.tintColor = .red
         $0.layer.borderColor = UIColor.red.cgColor
         $0.layer.borderWidth = 1
-        $0.layer.cornerRadius = 20
+        $0.layer.cornerRadius = 30
         $0.backgroundColor = .white
     }
     
@@ -48,21 +48,29 @@ class DepartViewController: UIViewController {
     }
     
     private func setupUI() {
-        view.backgroundColor = .white
+        // 上部のSafeArea内を塗りつぶす
+        view.backgroundColor = UIColor(red: 0.86, green: 0.86, blue: 0.94, alpha: 1.0)
         
+        view.addSubview(basicView)
         view.addSubview(departView)
         view.addSubview(cancelButton)
         
+        basicView.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            $0.right.left.bottom.equalToSuperview()
+        }
+        
         departView.snp.makeConstraints {
             $0.height.equalToSuperview().multipliedBy(0.85)
-            $0.top.right.left.equalToSuperview()
+            $0.right.left.equalToSuperview()
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
         }
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(touchedKnob(_:)))
-        departView.knobButton.addGestureRecognizer(panGesture)
+        departView.knobImageButton.addGestureRecognizer(panGesture)
         
         cancelButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(departView.snp.bottom).offset(UIConstants.Layout.extraLargePadding)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
             $0.horizontalEdges.equalToSuperview().inset(UIConstants.Layout.extraLargePadding)
             $0.height.equalTo(60)
         }
@@ -100,4 +108,3 @@ struct ViewControllerPreview: PreviewProvider {
         Wrapper()
     }
 }
-

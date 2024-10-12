@@ -30,6 +30,29 @@ class MapViewController: UIViewController {
         $0.tintColor = .lightGray
     }
     
+    // お財布アイコンと所持金ラベルのスタックビュー
+    private lazy var walletStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [self.walletImageView, self.balanceLabel])
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.spacing = 8
+        return stackView
+    }()
+    
+    // 現在の所持金
+    private let balanceLabel: UILabel = UILabel().then {
+        $0.text = "100000"
+        $0.font = .systemFont(ofSize: UIConstants.TextSize.semiSuperLarge, weight: .heavy)
+        $0.textColor = .black
+    }
+    
+    // お財布アイコン
+    private let walletImageView: UIImageView = UIImageView().then {
+        $0.contentMode = .scaleAspectFit
+        $0.image = UIImage(named: "wallet")
+        $0.snp.makeConstraints { $0.size.equalTo(26) }
+    }
+    
     // ProfileVC（プロフィール画面）へ遷移
     private var toProfileVC: Void {
         Router.showProfile(vc: self)
@@ -64,11 +87,11 @@ class MapViewController: UIViewController {
         // ナビゲーションバーの設定
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
-        title = "NavigationBar"
         
         // ナビゲーションバーボタンアイテムの設定
         navigationItem.leftBarButtonItem = backBarButtonItem
         navigationItem.rightBarButtonItem = profileBarButtonItem
+        navigationItem.titleView = walletStackView
         
         locationDetailView.locationCategoryCollectionView.register(LocationCategoryCollectionViewCell.self, forCellWithReuseIdentifier: LocationCategoryCollectionViewCell.identifier)
         
@@ -145,15 +168,17 @@ extension MapViewController {
     }
 }
 
-//struct ViewControllerPreview: PreviewProvider {
-//    struct Wrapper: UIViewControllerRepresentable {
-//        func makeUIViewController(context: Context) -> some UIViewController {
-//            UINavigationController(rootViewController: MapViewController())
-//        }
-//        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-//        }
-//    }
-//    static var previews: some View {
-//        Wrapper()
-//    }
-//}
+/*
+ struct ViewControllerPreview: PreviewProvider {
+ struct Wrapper: UIViewControllerRepresentable {
+ func makeUIViewController(context: Context) -> some UIViewController {
+ UINavigationController(rootViewController: MapViewController())
+ }
+ func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+ }
+ }
+ static var previews: some View {
+ Wrapper()
+ }
+ }
+ */

@@ -93,7 +93,7 @@ class LocationDetailView: UIView {
         
         // 距離アイコン
         distanceImageView.snp.makeConstraints {
-            $0.size.equalTo(CGSize(width: 45, height: 25))
+            $0.size.equalTo(CGSize(width: 50, height: 30))
             $0.left.equalToSuperview().inset(UIConstants.Layout.standardPadding)
             $0.top.equalToSuperview().inset(UIConstants.Layout.standardPadding)
         }

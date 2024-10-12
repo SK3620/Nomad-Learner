@@ -15,6 +15,8 @@
 		835BD2FA2CA413570088CA02 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 835BD2F92CA413570088CA02 /* Assets.xcassets */; };
 		835BD2FD2CA413570088CA02 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 835BD2FC2CA413570088CA02 /* Base */; };
 		835BD3072CA423FB0088CA02 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835BD3062CA423FB0088CA02 /* APIKeys.swift */; };
+		837DE58E2CBA2FDE00819964 /* SafeAreaHeightProvidable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837DE58D2CBA2FDE00819964 /* SafeAreaHeightProvidable.swift */; };
+		837DE5902CBA564A00819964 /* TicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837DE58F2CBA564A00819964 /* TicketView.swift */; };
 		838753D22CABE9A3001EE8F1 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753D12CABE9A3001EE8F1 /* AuthViewModel.swift */; };
 		838753D42CABFDB7001EE8F1 /* AuthInputValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753D32CABFDB7001EE8F1 /* AuthInputValidation.swift */; };
 		838753D62CAC19D1001EE8F1 /* AuthInputValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753D52CAC19D1001EE8F1 /* AuthInputValidator.swift */; };
@@ -81,6 +83,8 @@
 		835BD2FC2CA413570088CA02 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		835BD2FE2CA413570088CA02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		835BD3062CA423FB0088CA02 /* APIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
+		837DE58D2CBA2FDE00819964 /* SafeAreaHeightProvidable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeAreaHeightProvidable.swift; sourceTree = "<group>"; };
+		837DE58F2CBA564A00819964 /* TicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketView.swift; sourceTree = "<group>"; };
 		838753D12CABE9A3001EE8F1 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		838753D32CABFDB7001EE8F1 /* AuthInputValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInputValidation.swift; sourceTree = "<group>"; };
 		838753D52CAC19D1001EE8F1 /* AuthInputValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInputValidator.swift; sourceTree = "<group>"; };
@@ -221,6 +225,7 @@
 		835BD2EF2CA413560088CA02 /* Nomad-Learner */ = {
 			isa = PBXGroup;
 			children = (
+				837DE58C2CBA2FB200819964 /* SafeAreaHeightProvidable */,
 				83AFB3AF2CB2B6F900501FEE /* NavigationHeightProvidable */,
 				838753EB2CB0EEDF001EE8F1 /* Transition */,
 				838753CE2CABDEDC001EE8F1 /* Protocols */,
@@ -255,6 +260,14 @@
 				8304A0E32CA5437800061B33 /* GoogleService-Info-Nomad-LearnerDev.plist */,
 			);
 			path = Configurations;
+			sourceTree = "<group>";
+		};
+		837DE58C2CBA2FB200819964 /* SafeAreaHeightProvidable */ = {
+			isa = PBXGroup;
+			children = (
+				837DE58D2CBA2FDE00819964 /* SafeAreaHeightProvidable.swift */,
+			);
+			path = SafeAreaHeightProvidable;
 			sourceTree = "<group>";
 		};
 		838753CE2CABDEDC001EE8F1 /* Protocols */ = {
@@ -307,6 +320,7 @@
 			isa = PBXGroup;
 			children = (
 				83A6D7E32CB8FD4E00D18A30 /* DepartView.swift */,
+				837DE58F2CBA564A00819964 /* TicketView.swift */,
 			);
 			path = Depart;
 			sourceTree = "<group>";
@@ -548,6 +562,7 @@
 				838753DC2CAD33E2001EE8F1 /* AuthServiceProtocol.swift in Sources */,
 				8304A0E22CA5123300061B33 /* AuthViewController.swift in Sources */,
 				838753D82CACE930001EE8F1 /* ActivityIndicator.swift in Sources */,
+				837DE5902CBA564A00819964 /* TicketView.swift in Sources */,
 				83A9C2C22CA7D08500898F0B /* AuthTextField.swift in Sources */,
 				83A6D7D22CB7D7DD00D18A30 /* ProfileTextView.swift in Sources */,
 				838753E82CB02B42001EE8F1 /* CurrentUser.swift in Sources */,
@@ -575,6 +590,7 @@
 				838753E22CAF9E53001EE8F1 /* ErrorAlertEnabled.swift in Sources */,
 				83A6D7E22CB8F88500D18A30 /* DepartViewModel.swift in Sources */,
 				83A9C2BE2CA7BF2200898F0B /* CustomAuthPickerViewController.swift in Sources */,
+				837DE58E2CBA2FDE00819964 /* SafeAreaHeightProvidable.swift in Sources */,
 				838753D62CAC19D1001EE8F1 /* AuthInputValidator.swift in Sources */,
 				838753D42CABFDB7001EE8F1 /* AuthInputValidation.swift in Sources */,
 				83A6D7C62CB682D600D18A30 /* ProfileTopView.swift in Sources */,

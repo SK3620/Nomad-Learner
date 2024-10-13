@@ -19,7 +19,7 @@
 		837DE5902CBA564A00819964 /* TicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837DE58F2CBA564A00819964 /* TicketView.swift */; };
 		837DE5952CBAD11500819964 /* StudyRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837DE5942CBAD11500819964 /* StudyRoomViewController.swift */; };
 		837DE5972CBAD12E00819964 /* StudyRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837DE5962CBAD12E00819964 /* StudyRoomViewModel.swift */; };
-		837DE59A2CBAD8D400819964 /* NavigationControllerForStudyVCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837DE5992CBAD8D400819964 /* NavigationControllerForStudyVCViewController.swift */; };
+		837DE59A2CBAD8D400819964 /* NavigationControllerForStudyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837DE5992CBAD8D400819964 /* NavigationControllerForStudyVC.swift */; };
 		838753D22CABE9A3001EE8F1 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753D12CABE9A3001EE8F1 /* AuthViewModel.swift */; };
 		838753D42CABFDB7001EE8F1 /* AuthInputValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753D32CABFDB7001EE8F1 /* AuthInputValidation.swift */; };
 		838753D62CAC19D1001EE8F1 /* AuthInputValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753D52CAC19D1001EE8F1 /* AuthInputValidator.swift */; };
@@ -90,7 +90,7 @@
 		837DE58F2CBA564A00819964 /* TicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketView.swift; sourceTree = "<group>"; };
 		837DE5942CBAD11500819964 /* StudyRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyRoomViewController.swift; sourceTree = "<group>"; };
 		837DE5962CBAD12E00819964 /* StudyRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyRoomViewModel.swift; sourceTree = "<group>"; };
-		837DE5992CBAD8D400819964 /* NavigationControllerForStudyVCViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationControllerForStudyVCViewController.swift; sourceTree = "<group>"; };
+		837DE5992CBAD8D400819964 /* NavigationControllerForStudyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationControllerForStudyVC.swift; sourceTree = "<group>"; };
 		838753D12CABE9A3001EE8F1 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		838753D32CABFDB7001EE8F1 /* AuthInputValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInputValidation.swift; sourceTree = "<group>"; };
 		838753D52CAC19D1001EE8F1 /* AuthInputValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInputValidator.swift; sourceTree = "<group>"; };
@@ -290,7 +290,7 @@
 		837DE5982CBAD88A00819964 /* NavigationController */ = {
 			isa = PBXGroup;
 			children = (
-				837DE5992CBAD8D400819964 /* NavigationControllerForStudyVCViewController.swift */,
+				837DE5992CBAD8D400819964 /* NavigationControllerForStudyVC.swift */,
 			);
 			path = NavigationController;
 			sourceTree = "<group>";
@@ -616,7 +616,7 @@
 				83A6D7AB2CB3D93E00D18A30 /* LocationLabel.swift in Sources */,
 				838753E22CAF9E53001EE8F1 /* ErrorAlertEnabled.swift in Sources */,
 				83A6D7E22CB8F88500D18A30 /* DepartViewModel.swift in Sources */,
-				837DE59A2CBAD8D400819964 /* NavigationControllerForStudyVCViewController.swift in Sources */,
+				837DE59A2CBAD8D400819964 /* NavigationControllerForStudyVC.swift in Sources */,
 				83A9C2BE2CA7BF2200898F0B /* CustomAuthPickerViewController.swift in Sources */,
 				837DE58E2CBA2FDE00819964 /* SafeAreaHeightProvidable.swift in Sources */,
 				838753D62CAC19D1001EE8F1 /* AuthInputValidator.swift in Sources */,

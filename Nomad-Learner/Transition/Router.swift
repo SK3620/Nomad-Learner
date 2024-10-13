@@ -101,7 +101,7 @@ extension Router: RouterProtocol {
     // DepartVC（出発画面）→ StudyRoomVC（勉強部屋画面）
     static func showStudyRoomVC(vc: UIViewController) {
         let studyRoomViewController = StudyRoomViewController()
-        let navigationController = NavigationControllerForStudyVCViewController(rootViewController: studyRoomViewController)
+        let navigationController = NavigationControllerForStudyVC(rootViewController: studyRoomViewController)
         navigationController.modalPresentationStyle = .overFullScreen
         navigationController.modalTransitionStyle = .crossDissolve
         modal(from: vc, to: navigationController)

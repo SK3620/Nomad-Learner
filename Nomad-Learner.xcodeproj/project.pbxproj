@@ -15,6 +15,9 @@
 		835BD2FA2CA413570088CA02 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 835BD2F92CA413570088CA02 /* Assets.xcassets */; };
 		835BD2FD2CA413570088CA02 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 835BD2FC2CA413570088CA02 /* Base */; };
 		835BD3072CA423FB0088CA02 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835BD3062CA423FB0088CA02 /* APIKeys.swift */; };
+		836180E12CBB68490059937E /* StudyRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836180E02CBB68490059937E /* StudyRoomView.swift */; };
+		836180E32CBB7E220059937E /* StudyRoomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836180E22CBB7E220059937E /* StudyRoomNavigationBar.swift */; };
+		836180E62CBB81E80059937E /* ScreenSizeProvidable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836180E52CBB81E80059937E /* ScreenSizeProvidable.swift */; };
 		837DE58E2CBA2FDE00819964 /* SafeAreaHeightProvidable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837DE58D2CBA2FDE00819964 /* SafeAreaHeightProvidable.swift */; };
 		837DE5902CBA564A00819964 /* TicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837DE58F2CBA564A00819964 /* TicketView.swift */; };
 		837DE5952CBAD11500819964 /* StudyRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837DE5942CBAD11500819964 /* StudyRoomViewController.swift */; };
@@ -86,6 +89,9 @@
 		835BD2FC2CA413570088CA02 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		835BD2FE2CA413570088CA02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		835BD3062CA423FB0088CA02 /* APIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
+		836180E02CBB68490059937E /* StudyRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyRoomView.swift; sourceTree = "<group>"; };
+		836180E22CBB7E220059937E /* StudyRoomNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyRoomNavigationBar.swift; sourceTree = "<group>"; };
+		836180E52CBB81E80059937E /* ScreenSizeProvidable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenSizeProvidable.swift; sourceTree = "<group>"; };
 		837DE58D2CBA2FDE00819964 /* SafeAreaHeightProvidable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeAreaHeightProvidable.swift; sourceTree = "<group>"; };
 		837DE58F2CBA564A00819964 /* TicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketView.swift; sourceTree = "<group>"; };
 		837DE5942CBAD11500819964 /* StudyRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyRoomViewController.swift; sourceTree = "<group>"; };
@@ -160,7 +166,6 @@
 		8304A0DC2CA50DB100061B33 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				837DE5982CBAD88A00819964 /* NavigationController */,
 				8304A0E02CA5118700061B33 /* Components */,
 				8304A0DF2CA5113700061B33 /* Pages */,
 			);
@@ -235,6 +240,7 @@
 		835BD2EF2CA413560088CA02 /* Nomad-Learner */ = {
 			isa = PBXGroup;
 			children = (
+				836180E42CBB81C80059937E /* ScreenSizeProvidable */,
 				837DE58C2CBA2FB200819964 /* SafeAreaHeightProvidable */,
 				83AFB3AF2CB2B6F900501FEE /* NavigationHeightProvidable */,
 				838753EB2CB0EEDF001EE8F1 /* Transition */,
@@ -272,6 +278,14 @@
 			path = Configurations;
 			sourceTree = "<group>";
 		};
+		836180E42CBB81C80059937E /* ScreenSizeProvidable */ = {
+			isa = PBXGroup;
+			children = (
+				836180E52CBB81E80059937E /* ScreenSizeProvidable.swift */,
+			);
+			path = ScreenSizeProvidable;
+			sourceTree = "<group>";
+		};
 		837DE58C2CBA2FB200819964 /* SafeAreaHeightProvidable */ = {
 			isa = PBXGroup;
 			children = (
@@ -283,16 +297,11 @@
 		837DE5932CBAD0F400819964 /* StudyRoom */ = {
 			isa = PBXGroup;
 			children = (
+				837DE5992CBAD8D400819964 /* NavigationControllerForStudyVC.swift */,
+				836180E22CBB7E220059937E /* StudyRoomNavigationBar.swift */,
+				836180E02CBB68490059937E /* StudyRoomView.swift */,
 			);
 			path = StudyRoom;
-			sourceTree = "<group>";
-		};
-		837DE5982CBAD88A00819964 /* NavigationController */ = {
-			isa = PBXGroup;
-			children = (
-				837DE5992CBAD8D400819964 /* NavigationControllerForStudyVC.swift */,
-			);
-			path = NavigationController;
 			sourceTree = "<group>";
 		};
 		838753CE2CABDEDC001EE8F1 /* Protocols */ = {
@@ -601,6 +610,7 @@
 				838753E42CB00A4B001EE8F1 /* MapViewController.swift in Sources */,
 				83A6D7B92CB56C7400D18A30 /* KeyChainManager.swift in Sources */,
 				83A6D7B72CB4D3CF00D18A30 /* LocationCategoryCollectionView.swift in Sources */,
+				836180E62CBB81E80059937E /* ScreenSizeProvidable.swift in Sources */,
 				838753DE2CAED385001EE8F1 /* ValidationLabel.swift in Sources */,
 				83A6D7B32CB3F3E200D18A30 /* LocationCategoryCollectionViewCell.swift in Sources */,
 				83C9F3B62CA907B900CF0D73 /* ColorCodes.swift in Sources */,
@@ -619,6 +629,7 @@
 				837DE59A2CBAD8D400819964 /* NavigationControllerForStudyVC.swift in Sources */,
 				83A9C2BE2CA7BF2200898F0B /* CustomAuthPickerViewController.swift in Sources */,
 				837DE58E2CBA2FDE00819964 /* SafeAreaHeightProvidable.swift in Sources */,
+				836180E32CBB7E220059937E /* StudyRoomNavigationBar.swift in Sources */,
 				838753D62CAC19D1001EE8F1 /* AuthInputValidator.swift in Sources */,
 				838753D42CABFDB7001EE8F1 /* AuthInputValidation.swift in Sources */,
 				83A6D7C62CB682D600D18A30 /* ProfileTopView.swift in Sources */,
@@ -632,6 +643,7 @@
 				83A6D7C82CB68A7700D18A30 /* StudyTimeLabel.swift in Sources */,
 				83A9C2C92CA8378C00898F0B /* UIConstants.swift in Sources */,
 				83A6D7B52CB4BF2500D18A30 /* Observable.swift in Sources */,
+				836180E12CBB68490059937E /* StudyRoomView.swift in Sources */,
 				83A9C2C02CA7C9B700898F0B /* AuthStackView.swift in Sources */,
 				83A6D7BD2CB61A8000D18A30 /* ProfileViewModel.swift in Sources */,
 				83A9C2C52CA7DA5000898F0B /* UILabel.swift in Sources */,

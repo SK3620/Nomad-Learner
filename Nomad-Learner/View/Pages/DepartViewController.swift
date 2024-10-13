@@ -19,8 +19,13 @@ class DepartViewController: UIViewController {
         $0.backgroundColor = .white
     }
     
+    // DepartVC（出発画面）→ StudyRoomVC（勉強部屋画面）
+    private func toStudyRoomVC() {
+        Router.showStudyRoomVC(vc: self)
+    }
+    
     // 出発View
-    private let departView: DepartView = DepartView()
+    private lazy var departView: DepartView = DepartView(toStudyRoomVC: self.toStudyRoomVC)
     
     // 出発キャンセルボタン
     private let cancelButton: UIButton = UIButton(type: .system).then {

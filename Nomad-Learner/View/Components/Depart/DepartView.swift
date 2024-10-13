@@ -12,6 +12,9 @@ import RxSwift
 
 class DepartView: UIView {
     
+    // StudyRoomVC（勉強部屋画面）へ遷移
+    private var toStudyRoomVC: () -> Void
+    
     // つまみの初期中心位置
     private lazy var startCenterY: CGFloat = {
        return self.knobImageButton.center.y
@@ -22,7 +25,8 @@ class DepartView: UIView {
         return self.knobImageButton.bounds.height / 2
     }()
     
-    private let ticketView: UIView = UIView().then {        $0.backgroundColor = UIColor(red: 0.86, green: 0.86, blue: 0.94, alpha: 1.0)
+    private let ticketView: UIView = UIView().then {     
+        $0.backgroundColor = UIColor(red: 0.86, green: 0.86, blue: 0.94, alpha: 1.0)
         $0.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         $0.layer.masksToBounds = true
         $0.layer.cornerRadius = 32
@@ -74,10 +78,11 @@ class DepartView: UIView {
     
     // チケット
     private let ticketFrame: TicketView = TicketView()
-        
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
+    
+    public init(toStudyRoomVC: @escaping () -> Void) {
+        self.toStudyRoomVC = toStudyRoomVC
+        super.init(frame: .zero)
+
         setupUI()
     }
     
@@ -159,7 +164,7 @@ extension DepartView {
             } completion: { _ in
                 // アニメーション終了時につまみが移動限界位置にあった場合の処理
                 if sender.view!.center.y == self.endCenterY {
-                    print("Depart!!!!!")
+                    self.toStudyRoomVC()
                 }
             }
             // senderが示すUIPanGestureRecognizerによって追跡されているジェスチャーの移動量をゼロにリセットする

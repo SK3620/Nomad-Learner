@@ -93,8 +93,6 @@ class MapViewController: UIViewController {
         navigationItem.rightBarButtonItem = profileBarButtonItem
         navigationItem.titleView = walletStackView
         
-        locationDetailView.locationCategoryCollectionView.register(LocationCategoryCollectionViewCell.self, forCellWithReuseIdentifier: LocationCategoryCollectionViewCell.identifier)
-        
         view.addSubview(navigationBoxBar)
         view.addSubview(locationDetailView)
         view.addSubview(mapTabBar)

@@ -17,10 +17,11 @@ class LocationCategoryCollectionView: UICollectionView {
         layout.minimumLineSpacing = 0
         super.init(frame: .zero, collectionViewLayout: layout)
         
-        self.backgroundColor = .white
-        self.showsHorizontalScrollIndicator = false
-        self.layer.cornerRadius = 30
-        self.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+        backgroundColor = .white
+        showsHorizontalScrollIndicator = false
+        layer.cornerRadius = 30
+        layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+        register(LocationCategoryCollectionViewCell.self, forCellWithReuseIdentifier: LocationCategoryCollectionViewCell.identifier)
     }
     
     required init?(coder: NSCoder) {
@@ -35,4 +36,3 @@ extension LocationCategoryCollectionView {
         scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
     }
 }
-

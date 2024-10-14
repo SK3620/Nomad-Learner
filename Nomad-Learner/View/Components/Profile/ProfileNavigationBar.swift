@@ -41,6 +41,8 @@ class ProfileNavigationBar: UINavigationBar {
         self.titleTextAttributes = [
             .foregroundColor: UIColor.white
         ]
+        // 半透明を無効にしtintColorを反映
+        self.isTranslucent = false
         
         // ナビゲーションアイテムを設定
         self.setItems([navigationItem], animated: false)

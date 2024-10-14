@@ -45,7 +45,7 @@ class AuthViewModel {
      let email: Driver<String>
      let password: Driver<String>
      let authButtonTaps: Signal<Void>
-     let authModeToggleTaps: Signal<AuthMode>
+     let authModeToggleTaps: Signal<Void>
      */
     
     // MARK: - Output
@@ -58,8 +58,12 @@ class AuthViewModel {
     let authError: Driver<Error>
     let authMode: Driver<AuthMode>
     
+    let savedEmail: Driver<String>
+    let savedPassword: Driver<String>
+
     // MARK: - Private properties
     private let authService: AuthServiceProtocol
+    private let keyChainManager: KeyChainManager
     
     init(input: (
         username: Driver<String>,
@@ -68,10 +72,15 @@ class AuthViewModel {
         authButtonTaps: Signal<Void>,
         authModeToggleTaps: Signal<Void>
     ),
-         authService: AuthServiceProtocol
+         authService: AuthServiceProtocol,
+         keyChainManager: KeyChainManager
     ) {
-        
         self.authService = authService
+        self.keyChainManager = keyChainManager
+        
+        // 認証情報をキーチェーンから取得
+        self.savedEmail = Driver.just(keyChainManager.loadCredentials(service: .emailService))
+        self.savedPassword = Driver.just(keyChainManager.loadCredentials(service: .passwordService))
         
         // .skip() → 最初のバリデーションをスキップ
         // .startWith() → combineLatestを作動させるため、初期値を流す
@@ -128,16 +137,26 @@ class AuthViewModel {
             .startWith(.next(nil)) // 初期値を持たせてcombineLatestを稼働させる
             .share(replay: 1)
         
-        // ログイン状態
+        // ログイン状態（すでにログインしているかどうか）
         let isLoggedIn = authService
             .addStateDidChangeListener()
-                
+        
         // 認証完了
         self.didAuthenticate = Observable.combineLatest(authResults, isLoggedIn)
             .filter { event, isLoggedIn in
-                event.element != nil || isLoggedIn
+                if let element = event.element {
+                   return element != nil || isLoggedIn
+                }
+                return isLoggedIn
             }
-            .map { _ in true }
+            .map { event, _ in
+                // 二重オプショナルをアンラップ
+                if let element = event.element, element != nil {
+                    // authResultsにユーザー情報が含まれている場合のみ、キーチェーンに認証情報を保存
+                    keyChainManager.saveCredentials(apiToken: "", email: input.email.value ?? "", password: input.password.value ?? "")
+                }
+                return true
+            }
             .asDriver(onErrorJustReturn: false)
         
         // 認証失敗

@@ -35,9 +35,6 @@ class EditProfileViewNavigationBar: UINavigationBar {
         self.barTintColor = ColorCodes.primaryPurple.color()
         self.backgroundColor = ColorCodes.primaryPurple.color()
         self.tintColor = ColorCodes.primaryPurple.color()
-        self.clipsToBounds = true
-        self.layer.cornerRadius = 20
-        self.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         self.titleTextAttributes = [
             .foregroundColor: UIColor.white
         ]

@@ -66,15 +66,15 @@ class EditProfileViewController: UIViewController {
     }
 }
 
-struct ViewControllerPreview: PreviewProvider {
-    struct Wrapper: UIViewControllerRepresentable {
-        func makeUIViewController(context: Context) -> some UIViewController {
-            UINavigationController(rootViewController: EditProfileViewController())
-        }
-        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-        }
-    }
-    static var previews: some View {
-        Wrapper()
-    }
-}
+//struct ViewControllerPreview: PreviewProvider {
+//    struct Wrapper: UIViewControllerRepresentable {
+//        func makeUIViewController(context: Context) -> some UIViewController {
+//            UINavigationController(rootViewController: EditProfileViewController())
+//        }
+//        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+//        }
+//    }
+//    static var previews: some View {
+//        Wrapper()
+//    }
+//}

@@ -14,14 +14,15 @@ import SnapKit
 
 class ProfileViewController: UIViewController {
     
-    var isFromStudyRoomVC: Bool = false
+    // 画面が縦向きか横向きか
+    var orientation: ScreenOrientation
         
     private let tapGesture = UITapGestureRecognizer()
     
     private let disposeBag = DisposeBag()
         
     private lazy var profileView: ProfileView = ProfileView(frame: .zero)
-    
+        
     // MapVC（マップ画面）へ戻る
     private var backToMapVC: Void {
         Router.dismissModal(vc: self)
@@ -30,6 +31,16 @@ class ProfileViewController: UIViewController {
     // EditProfileVC（プロフィール編集画面）へ遷移
     private var toEditProfileVC: Void {
         Router.showEditProfile(vc: self)
+    }
+    
+    // カスタムイニシャライザ
+    init(orientation: ScreenOrientation = .portrait) {
+        self.orientation = orientation
+        super.init(nibName: nil, bundle: nil)
+    }
+        
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
@@ -47,9 +58,16 @@ class ProfileViewController: UIViewController {
         view.addSubview(profileView)
         
         profileView.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview().inset(UIConstants.Layout.semiMediumPadding)
             $0.center.equalToSuperview()
-            $0.height.equalTo(400)
+            // 縦向き
+            if orientation == .portrait {
+                $0.horizontalEdges.equalToSuperview().inset(UIConstants.Layout.semiMediumPadding)
+                $0.height.equalToSuperview().multipliedBy(0.6)
+            // 横向き
+            } else if orientation == .landscape {
+                $0.verticalEdges.equalToSuperview().inset(UIConstants.Layout.semiMediumPadding)
+                $0.width.equalToSuperview().multipliedBy(0.45)
+            }
         }
     }
     
@@ -65,7 +83,6 @@ class ProfileViewController: UIViewController {
                 if !self.profileView.frame.contains(tapLocation) {
                     self.backToMapVC
                 }
-                
             })
             .disposed(by: disposeBag)
         
@@ -91,24 +108,11 @@ extension ProfileViewController {
     
     // 自動的に回転を許可するか（デフォルト値: true）
     override var shouldAutorotate: Bool {
-       return !isFromStudyRoomVC
+       return true
     }
     
     // 回転の向き
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return isFromStudyRoomVC ? .landscapeRight : .portrait
+        return orientation == .portrait ? .portrait : .landscape
     }
 }
-
-//struct ViewControllerPreview: PreviewProvider {
-//    struct Wrapper: UIViewControllerRepresentable {
-//        func makeUIViewController(context: Context) -> some UIViewController {
-//            UINavigationController(rootViewController: ProfileViewController())
-//        }
-//        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-//        }
-//    }
-//    static var previews: some View {
-//        Wrapper()
-//    }
-//}

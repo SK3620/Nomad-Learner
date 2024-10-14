@@ -28,6 +28,11 @@ class StudyRoomViewController: UIViewController {
         Router.dismissModal(vc: self)
     }
     
+    // ProfileVC（プロフィール画面）へ遷移
+    private var toProfileVC: Void {
+        Router.showProfile(vc: self)
+    }
+    
     // contentLabelが使用可能な最大横幅 lazyで再取得を防ぐ
     private lazy var contentLabelMaxWidth: CGFloat  = {
         return self.chatCollectionView.bounds.width * 0.6
@@ -100,6 +105,16 @@ extension StudyRoomViewController {
             cell.configure(with: item, maxWidth: self.contentLabelMaxWidth)
         }
         .disposed(by: disposeBag)
+        
+        // profileCollectionViewCellタップ検知
+        profileCollectionView.rx.itemSelected
+            .subscribe(onNext: { [weak self] indexPath in
+                guard let self = self else { return }
+                viewModel.tappedProfile(at: indexPath)
+                // ProfileVC（プロフィール画面）へ遷移
+                self.toProfileVC
+            })
+            .disposed(by: disposeBag)
     }
 }
 

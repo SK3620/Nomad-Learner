@@ -30,15 +30,15 @@ class EditProfileViewController: UIViewController {
     }
     
     private func setupUI() {
-        view.backgroundColor = .clear
+        view.backgroundColor = ColorCodes.primaryPurple.color()
         
         view.addGestureRecognizer(tapGesture)
         view.addSubview(editProfileView)
         
         editProfileView.snp.makeConstraints {
-            $0.center.equalToSuperview()
-            $0.horizontalEdges.equalToSuperview().inset(UIConstants.Layout.standardPadding)
-            $0.height.equalTo(650)
+            $0.horizontalEdges.equalToSuperview()
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
     }
     
@@ -66,15 +66,16 @@ class EditProfileViewController: UIViewController {
     }
 }
 
-//struct ViewControllerPreview: PreviewProvider {
-//    struct Wrapper: UIViewControllerRepresentable {
-//        func makeUIViewController(context: Context) -> some UIViewController {
-//            UINavigationController(rootViewController: EditProfileViewController())
-//        }
-//        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-//        }
-//    }
-//    static var previews: some View {
-//        Wrapper()
-//    }
-//}
+extension EditProfileViewController {
+    
+    // 自動的に回転を許可するか（デフォルト値: true）
+    override var shouldAutorotate: Bool {
+       return true
+    }
+    
+    // 回転の向き
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
+}
+

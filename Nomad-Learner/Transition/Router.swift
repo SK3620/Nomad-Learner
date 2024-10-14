@@ -10,12 +10,18 @@ import UIKit
 import Firebase
 import FirebaseAuth
 
+// 画面の向き
+enum ScreenOrientation {
+    case portrait // 縦向き
+    case landscape // 横向き
+}
+
 protocol RouterProtocol {
     // 初期画面表示
     static func showRoot(window: UIWindow)
     // AuthVC（認証画面）→ MapVC（マップ画面）
     static func showMap(vc: UIViewController)
-    // MapVC（マップ画面）→ ProfileVC（プロフィール画面）
+    // MapVC（マップ画面）/ StudyRoomVC（勉強部屋画面）→ ProfileVC（プロフィール画面）
     static func showProfile(vc: UIViewController)
     // ProfileVC → EditProfileVC（プロフィール編集画面）
     static func showEditProfile(vc: UIViewController)
@@ -74,9 +80,9 @@ extension Router: RouterProtocol {
         modal(from: vc, to: navigationController)
     }
     
-    // MapVC（マップ画面）→ ProfileVC（プロフィール画面）
+    // MapVC（マップ画面）/ StudyRoomVC（勉強部屋画面）→ ProfileVC（プロフィール画面）
     static func showProfile(vc: UIViewController) {
-        let profileViewController = ProfileViewController()
+        let profileViewController = ProfileViewController(orientation: orientation(vc))
         profileViewController.modalPresentationStyle = .overFullScreen
         profileViewController.modalTransitionStyle = .crossDissolve
         modal(from: vc, to: profileViewController)
@@ -116,5 +122,12 @@ extension Router: RouterProtocol {
     static func navigationBack(vc: UIViewController) {
         guard let nav = vc.navigationController else { return }
         pushBack(from: nav)
+    }
+}
+
+extension Router {
+    // 遷移元画面に応じて画面を縦向きか横向きにするか判定
+    private static func orientation(_ vc: UIViewController) -> ScreenOrientation {
+        return vc is StudyRoomViewController ? .landscape : .portrait
     }
 }

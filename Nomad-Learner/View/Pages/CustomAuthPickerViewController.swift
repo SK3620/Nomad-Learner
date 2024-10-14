@@ -107,9 +107,20 @@ extension CustomAuthPickerViewController: ErrorAlertEnabled, KRProgressHUDEnable
                     authButtonTaps: authStackView.authButton.rx.tap.asSignal(),
                     authModeToggleTaps: authStackView.authModeToggleButton.rx.tap.asSignal()
                 ),
-            authService: AuthService.shared
+            authService: AuthService.shared,
+            keyChainManager: KeyChainManager.shared
         )
         
+        // emailとpassword入力欄にキーチェーンに保存した認証情報を表示
+        viewModel.savedEmail
+            .drive(authStackView.emailTextField.rx.text)
+            .disposed(by: disposeBag)
+        
+        viewModel.savedPassword
+            .drive(authStackView.passwordTextField.rx.text)
+            .disposed(by: disposeBag)
+        
+        // 各入力欄の真下にバリデーションメッセージを表示
         viewModel.usernameValidation
             .drive(authStackView.usernameValidation.rx.validationResult)
             .disposed(by: disposeBag)

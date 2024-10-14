@@ -14,7 +14,6 @@
 		835BD2F32CA413560088CA02 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835BD2F22CA413560088CA02 /* SceneDelegate.swift */; };
 		835BD2FA2CA413570088CA02 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 835BD2F92CA413570088CA02 /* Assets.xcassets */; };
 		835BD2FD2CA413570088CA02 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 835BD2FC2CA413570088CA02 /* Base */; };
-		835BD3072CA423FB0088CA02 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835BD3062CA423FB0088CA02 /* APIKeys.swift */; };
 		836180E12CBB68490059937E /* ProfileCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836180E02CBB68490059937E /* ProfileCollectionView.swift */; };
 		836180E32CBB7E220059937E /* StudyRoomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836180E22CBB7E220059937E /* StudyRoomNavigationBar.swift */; };
 		836180E62CBB81E80059937E /* ScreenSizeProvidable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836180E52CBB81E80059937E /* ScreenSizeProvidable.swift */; };
@@ -94,7 +93,6 @@
 		835BD2F92CA413570088CA02 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		835BD2FC2CA413570088CA02 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		835BD2FE2CA413570088CA02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		835BD3062CA423FB0088CA02 /* APIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
 		836180E02CBB68490059937E /* ProfileCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCollectionView.swift; sourceTree = "<group>"; };
 		836180E22CBB7E220059937E /* StudyRoomNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyRoomNavigationBar.swift; sourceTree = "<group>"; };
 		836180E52CBB81E80059937E /* ScreenSizeProvidable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenSizeProvidable.swift; sourceTree = "<group>"; };
@@ -268,20 +266,11 @@
 				835BD30D2CA4EB920088CA02 /* Configurations */,
 				835BD2F02CA413560088CA02 /* AppDelegate.swift */,
 				835BD2F22CA413560088CA02 /* SceneDelegate.swift */,
-				835BD3082CA424020088CA02 /* APIKeys */,
 				835BD2F92CA413570088CA02 /* Assets.xcassets */,
 				835BD2FB2CA413570088CA02 /* LaunchScreen.storyboard */,
 				835BD2FE2CA413570088CA02 /* Info.plist */,
 			);
 			path = "Nomad-Learner";
-			sourceTree = "<group>";
-		};
-		835BD3082CA424020088CA02 /* APIKeys */ = {
-			isa = PBXGroup;
-			children = (
-				835BD3062CA423FB0088CA02 /* APIKeys.swift */,
-			);
-			path = APIKeys;
 			sourceTree = "<group>";
 		};
 		835BD30D2CA4EB920088CA02 /* Configurations */ = {
@@ -656,7 +645,6 @@
 				83A6D7C42CB6630700D18A30 /* ProfileNavigationBar.swift in Sources */,
 				836180F22CBC9D850059937E /* Message.swift in Sources */,
 				83A6D7BB2CB6195E00D18A30 /* ProfileViewController.swift in Sources */,
-				835BD3072CA423FB0088CA02 /* APIKeys.swift in Sources */,
 				836180EA2CBBC1FF0059937E /* ProfileCollectionViewCell.swift in Sources */,
 				835BD2F32CA413560088CA02 /* SceneDelegate.swift in Sources */,
 				838753D22CABE9A3001EE8F1 /* AuthViewModel.swift in Sources */,

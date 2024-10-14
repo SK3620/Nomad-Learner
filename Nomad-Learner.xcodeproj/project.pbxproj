@@ -15,9 +15,15 @@
 		835BD2FA2CA413570088CA02 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 835BD2F92CA413570088CA02 /* Assets.xcassets */; };
 		835BD2FD2CA413570088CA02 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 835BD2FC2CA413570088CA02 /* Base */; };
 		835BD3072CA423FB0088CA02 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835BD3062CA423FB0088CA02 /* APIKeys.swift */; };
-		836180E12CBB68490059937E /* StudyRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836180E02CBB68490059937E /* StudyRoomView.swift */; };
+		836180E12CBB68490059937E /* ProfileCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836180E02CBB68490059937E /* ProfileCollectionView.swift */; };
 		836180E32CBB7E220059937E /* StudyRoomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836180E22CBB7E220059937E /* StudyRoomNavigationBar.swift */; };
 		836180E62CBB81E80059937E /* ScreenSizeProvidable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836180E52CBB81E80059937E /* ScreenSizeProvidable.swift */; };
+		836180E82CBBA1620059937E /* ChatCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836180E72CBBA1620059937E /* ChatCollectionView.swift */; };
+		836180EA2CBBC1FF0059937E /* ProfileCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836180E92CBBC1FF0059937E /* ProfileCollectionViewCell.swift */; };
+		836180EC2CBBC20A0059937E /* ChatCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836180EB2CBBC20A0059937E /* ChatCollectionViewCell.swift */; };
+		836180EE2CBBE2820059937E /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836180ED2CBBE2820059937E /* PaddingLabel.swift */; };
+		836180F02CBC93900059937E /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836180EF2CBC93900059937E /* Profile.swift */; };
+		836180F22CBC9D850059937E /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836180F12CBC9D850059937E /* Message.swift */; };
 		837DE58E2CBA2FDE00819964 /* SafeAreaHeightProvidable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837DE58D2CBA2FDE00819964 /* SafeAreaHeightProvidable.swift */; };
 		837DE5902CBA564A00819964 /* TicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837DE58F2CBA564A00819964 /* TicketView.swift */; };
 		837DE5952CBAD11500819964 /* StudyRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837DE5942CBAD11500819964 /* StudyRoomViewController.swift */; };
@@ -89,9 +95,15 @@
 		835BD2FC2CA413570088CA02 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		835BD2FE2CA413570088CA02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		835BD3062CA423FB0088CA02 /* APIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
-		836180E02CBB68490059937E /* StudyRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyRoomView.swift; sourceTree = "<group>"; };
+		836180E02CBB68490059937E /* ProfileCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCollectionView.swift; sourceTree = "<group>"; };
 		836180E22CBB7E220059937E /* StudyRoomNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyRoomNavigationBar.swift; sourceTree = "<group>"; };
 		836180E52CBB81E80059937E /* ScreenSizeProvidable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenSizeProvidable.swift; sourceTree = "<group>"; };
+		836180E72CBBA1620059937E /* ChatCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCollectionView.swift; sourceTree = "<group>"; };
+		836180E92CBBC1FF0059937E /* ProfileCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCollectionViewCell.swift; sourceTree = "<group>"; };
+		836180EB2CBBC20A0059937E /* ChatCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCollectionViewCell.swift; sourceTree = "<group>"; };
+		836180ED2CBBE2820059937E /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
+		836180EF2CBC93900059937E /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		836180F12CBC9D850059937E /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		837DE58D2CBA2FDE00819964 /* SafeAreaHeightProvidable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeAreaHeightProvidable.swift; sourceTree = "<group>"; };
 		837DE58F2CBA564A00819964 /* TicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketView.swift; sourceTree = "<group>"; };
 		837DE5942CBAD11500819964 /* StudyRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyRoomViewController.swift; sourceTree = "<group>"; };
@@ -188,6 +200,9 @@
 		8304A0DE2CA50E3700061B33 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				836180EF2CBC93900059937E /* Profile.swift */,
+				836180F12CBC9D850059937E /* Message.swift */,
+				83A6D7B02CB3F39300D18A30 /* LocationCategory.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -299,7 +314,11 @@
 			children = (
 				837DE5992CBAD8D400819964 /* NavigationControllerForStudyVC.swift */,
 				836180E22CBB7E220059937E /* StudyRoomNavigationBar.swift */,
-				836180E02CBB68490059937E /* StudyRoomView.swift */,
+				836180E02CBB68490059937E /* ProfileCollectionView.swift */,
+				836180E72CBBA1620059937E /* ChatCollectionView.swift */,
+				836180E92CBBC1FF0059937E /* ProfileCollectionViewCell.swift */,
+				836180EB2CBBC20A0059937E /* ChatCollectionViewCell.swift */,
+				836180ED2CBBE2820059937E /* PaddingLabel.swift */,
 			);
 			path = StudyRoom;
 			sourceTree = "<group>";
@@ -390,7 +409,6 @@
 				83AFB3AD2CB2ABD300501FEE /* LocationDetailView.swift */,
 				83A6D7B62CB4D3CF00D18A30 /* LocationCategoryCollectionView.swift */,
 				83A6D7AA2CB3D93E00D18A30 /* LocationLabel.swift */,
-				83A6D7B02CB3F39300D18A30 /* LocationCategory.swift */,
 				83A6D7B22CB3F3E100D18A30 /* LocationCategoryCollectionViewCell.swift */,
 			);
 			path = Map;
@@ -614,6 +632,7 @@
 				838753DE2CAED385001EE8F1 /* ValidationLabel.swift in Sources */,
 				83A6D7B32CB3F3E200D18A30 /* LocationCategoryCollectionViewCell.swift in Sources */,
 				83C9F3B62CA907B900CF0D73 /* ColorCodes.swift in Sources */,
+				836180EC2CBBC20A0059937E /* ChatCollectionViewCell.swift in Sources */,
 				83C9F3BC2CA931F400CF0D73 /* KeyboardManager.swift in Sources */,
 				83A6D7DD2CB8195C00D18A30 /* EditProfileTextView.swift in Sources */,
 				837DE5972CBAD12E00819964 /* StudyRoomViewModel.swift in Sources */,
@@ -630,23 +649,28 @@
 				83A9C2BE2CA7BF2200898F0B /* CustomAuthPickerViewController.swift in Sources */,
 				837DE58E2CBA2FDE00819964 /* SafeAreaHeightProvidable.swift in Sources */,
 				836180E32CBB7E220059937E /* StudyRoomNavigationBar.swift in Sources */,
+				836180F02CBC93900059937E /* Profile.swift in Sources */,
 				838753D62CAC19D1001EE8F1 /* AuthInputValidator.swift in Sources */,
 				838753D42CABFDB7001EE8F1 /* AuthInputValidation.swift in Sources */,
 				83A6D7C62CB682D600D18A30 /* ProfileTopView.swift in Sources */,
 				83A6D7C42CB6630700D18A30 /* ProfileNavigationBar.swift in Sources */,
+				836180F22CBC9D850059937E /* Message.swift in Sources */,
 				83A6D7BB2CB6195E00D18A30 /* ProfileViewController.swift in Sources */,
 				835BD3072CA423FB0088CA02 /* APIKeys.swift in Sources */,
+				836180EA2CBBC1FF0059937E /* ProfileCollectionViewCell.swift in Sources */,
 				835BD2F32CA413560088CA02 /* SceneDelegate.swift in Sources */,
 				838753D22CABE9A3001EE8F1 /* AuthViewModel.swift in Sources */,
+				836180EE2CBBE2820059937E /* PaddingLabel.swift in Sources */,
 				83A6D7C22CB61E6B00D18A30 /* ProfileView.swift in Sources */,
 				83AFB3AC2CB29AC500501FEE /* NavigationBoxBar.swift in Sources */,
 				83A6D7C82CB68A7700D18A30 /* StudyTimeLabel.swift in Sources */,
 				83A9C2C92CA8378C00898F0B /* UIConstants.swift in Sources */,
 				83A6D7B52CB4BF2500D18A30 /* Observable.swift in Sources */,
-				836180E12CBB68490059937E /* StudyRoomView.swift in Sources */,
+				836180E12CBB68490059937E /* ProfileCollectionView.swift in Sources */,
 				83A9C2C02CA7C9B700898F0B /* AuthStackView.swift in Sources */,
 				83A6D7BD2CB61A8000D18A30 /* ProfileViewModel.swift in Sources */,
 				83A9C2C52CA7DA5000898F0B /* UILabel.swift in Sources */,
+				836180E82CBBA1620059937E /* ChatCollectionView.swift in Sources */,
 				838753DA2CACF2D1001EE8F1 /* KRProgressHUDEnabled.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

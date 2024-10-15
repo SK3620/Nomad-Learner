@@ -17,7 +17,7 @@ class StudyRoomViewController: UIViewController {
         $0.image = UIImage(named: "grassland")
     }
     
-    private let studyRoomNavigationBar: StudyRoomNavigationBar = StudyRoomNavigationBar()
+     let studyRoomNavigationBar: StudyRoomNavigationBar = StudyRoomNavigationBar()
     
     private let chatCollectionView: ChatCollectionView = ChatCollectionView()
     
@@ -78,7 +78,7 @@ class StudyRoomViewController: UIViewController {
         profileCollectionView.snp.makeConstraints {
             $0.top.equalTo(studyRoomNavigationBar.snp.bottom)
             $0.left.equalTo(view.safeAreaLayoutGuide.snp.left)
-            $0.right.equalTo(chatCollectionView.snp.left).inset(-UIConstants.Layout.standardPadding)
+            $0.right.equalTo(chatCollectionView.snp.left).inset(-UIConstants.Layout.smallPadding)
             $0.bottom.equalToSuperview()
         }
     }
@@ -95,6 +95,9 @@ extension StudyRoomViewController {
         
         let viewModel = StudyRoomViewModel()
         
+        // ViewModelへイベントを流す
+        publishEvent(to: viewModel)
+        
         viewModel.profiles.drive(profileCollectionView.rx.items(cellIdentifier: ProfileCollectionViewCell.identifier, cellType: ProfileCollectionViewCell.self)) { row, item, cell in
             cell.configure(with: item)
         }
@@ -107,43 +110,69 @@ extension StudyRoomViewController {
         .disposed(by: disposeBag)
         
         // profileCollectionViewCellタップ検知
-        profileCollectionView.rx.itemSelected
-            .subscribe(onNext: { [weak self] indexPath in
+        profileCollectionView.rx.itemSelected.asDriver()
+            .drive(onNext: { [weak self] indexPath in
                 guard let self = self else { return }
                 viewModel.tappedProfile(at: indexPath)
                 // ProfileVC（プロフィール画面）へ遷移
                 self.toProfileVC
             })
             .disposed(by: disposeBag)
+        
+        // 画面レイアウト切り替えイベント購読
+        viewModel.roomLayout
+            .drive(updateLayoutBinder)
+            .disposed(by: disposeBag)
+        
+        // UIMenuActionイベントを購読
+        viewModel.menuAction
+            .drive(onNext: { action in
+                print("メニューアクションは何？: \(action)")
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    // 各イベントをViewModelへ流す
+    private func publishEvent(to viewModel: StudyRoomViewModel) {
+        // 画面レイアウト切り替えイベントを流す
+        studyRoomNavigationBar.switchLayoutButton.rx.tap.asDriver()
+            .drive(onNext: { _ in viewModel.switchRoomLayout() })
+            .disposed(by: disposeBag)
+        
+        // 押下されたMenuActionイベントを流す
+        studyRoomNavigationBar.menuActionHandler = { action in
+            viewModel.handleMenuAction(action: action)
+        }
     }
 }
 
-/*
- extension MapViewController {
-     private func bind() {
-
-         let viewModel = MapViewModel()
-         let collectionView = locationDetailView.locationCategoryCollectionView
-         
-         // カテゴリーをセルに表示
-         viewModel.categories
-             .drive(collectionView.rx.items(cellIdentifier: LocationCategoryCollectionViewCell.identifier, cellType: LocationCategoryCollectionViewCell.self)) { row, item, cell in
-                 // 選択されたセルかどうか
-                 let isSelected = viewModel.selectedIndex.value?.row == row
-                 cell.configure(with: item, isSelected: isSelected)
-                 cell.bind(indexPath: IndexPath(row: row, section: 0), viewModel: viewModel)
-             }
-             .disposed(by: disposeBag)
-         
-         viewModel.selectedIndex
-             .drive(onNext:  { indexPath in
-                 collectionView.reloadData()
-                 collectionView.scrollToCenter(indexPath: indexPath)
-             })
-             .disposed(by: disposeBag)
-     }
- }
- */
+extension StudyRoomViewController {
+    // 画面レイアウト切り替え
+    private var updateLayoutBinder: Binder<StudyRoomViewModel.RoomLayout> {
+        return Binder(self) { base, layout in
+            let isProfileHidden: Bool
+            let isChatHidden: Bool
+            
+            switch layout {
+            case .displayAll:
+                isProfileHidden = false
+                isChatHidden = false
+            case .hideProfile:
+                isProfileHidden = true
+                isChatHidden = false
+            case .hideChat:
+                isProfileHidden = false
+                isChatHidden = true
+            case .hideAll:
+                isProfileHidden = true
+                isChatHidden = true
+            }
+            // UIの更新を一箇所で行う
+            base.profileCollectionView.isHidden = isProfileHidden
+            base.chatCollectionView.isHidden = isChatHidden
+        }
+    }
+}
 
 extension StudyRoomViewController {
     
@@ -170,4 +199,5 @@ struct ViewControllerPreview: PreviewProvider {
         Wrapper()
     }
 }
+
 

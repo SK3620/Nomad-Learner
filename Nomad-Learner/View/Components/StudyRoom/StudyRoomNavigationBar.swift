@@ -12,16 +12,18 @@ import Then
 class StudyRoomNavigationBar: UIView {
     
     // ナビゲーションバーレイアウト変更ボタン
-    private let switchLayoutButton = UIButton().then {
+    public let switchLayoutButton = UIButton().then {
         $0.setImage(UIImage(systemName: "repeat"), for: .normal)
         $0.tintColor = ColorCodes.primaryPurple.color()
+        $0.backgroundColor = UIColor(white: 1.0, alpha: 0.3)
+        $0.layer.cornerRadius = 24 / 2
     }
     
     // 合計時間ラベル
     private let timeLabel: UILabel = UILabel().then {
         $0.text = "合計時間 01:38:45"
-        $0.font = .systemFont(ofSize: 16)
-        $0.textColor = .black
+        $0.font = .systemFont(ofSize: UIConstants.TextSize.small)
+        $0.textColor = .lightGray
     }
     
     // メニュー表示ボタン
@@ -29,13 +31,15 @@ class StudyRoomNavigationBar: UIView {
         $0.setImage(UIImage(systemName: "ellipsis"), for: .normal)
         $0.tintColor = ColorCodes.primaryPurple.color()
         $0.showsMenuAsPrimaryAction = true
+        $0.backgroundColor = UIColor(white: 1.0, alpha: 0.3)
+        $0.layer.cornerRadius = 24 / 2
     }
     
     // 現在地ラベル
     private let currentPositionLabel: UILabel = UILabel().then {
         $0.text = "The Great Barrier Reef / United Kingdom / South West England"
-        $0.font = .systemFont(ofSize: 14)
-        $0.textColor = .gray
+        $0.font = .systemFont(ofSize: UIConstants.TextSize.small)
+        $0.textColor = .lightGray
     }
     
     // 現在地ラベルスクロールビュー
@@ -46,22 +50,24 @@ class StudyRoomNavigationBar: UIView {
         $0.backgroundColor = .clear
         // スクロール範囲
         $0.contentSize.width = self.currentPositionLabel.contentSizeHeight()
-        $0.isHidden = true
     }
     
     // UIMenuを生成
     private lazy var menu: UIMenu = {
         let breakAction = UIAction(title: "休憩", image: UIImage(systemName: "cup.and.saucer")) { _ in
-            print("休憩")
-        }
-        let exitAction = UIAction(title: "退出", image: UIImage(systemName: "door.left.hand.open")) { _ in
-            print("退出")
+            self.menuActionHandler?((.breakTime))
         }
         let communityAction = UIAction(title: "コミュニティ", image: UIImage(systemName: "person.3")) { _ in
-            print("コミュニティ")
+            self.menuActionHandler?((.community))
         }
-        return UIMenu(title: "", children: [breakAction, exitAction, communityAction])
+        let exitAction = UIAction(title: "退出", image: UIImage(systemName: "door.left.hand.open")) { _ in
+            self.menuActionHandler?((.exitRoom))
+        }
+        return UIMenu(title: "", children: [breakAction, communityAction, exitAction])
     }()
+    
+    // UIActionでのメニュー選択通知用のクロージャ
+    public var menuActionHandler: ((StudyRoomViewModel.MenuAction) -> Void)?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -79,37 +85,38 @@ class StudyRoomNavigationBar: UIView {
         
         // ビューに各要素を追加
         addSubview(switchLayoutButton)
+        addSubview(ellipsisButton)
         addSubview(timeLabel)
         currentPositionScrollView.addSubview(currentPositionLabel)
         addSubview(currentPositionScrollView)
-        addSubview(ellipsisButton)
         
-        // レイアウトの設定
         switchLayoutButton.snp.makeConstraints {
             $0.left.equalToSuperview()
             $0.centerY.equalToSuperview()
             $0.size.equalTo(24)
         }
         
-        timeLabel.snp.makeConstraints {
+        ellipsisButton.snp.makeConstraints {
             $0.left.equalTo(switchLayoutButton.snp.right).offset(UIConstants.Layout.standardPadding)
+            $0.centerY.equalToSuperview()
+            $0.size.equalTo(24)
+        }
+        
+        timeLabel.snp.makeConstraints {
+            $0.left.equalTo(ellipsisButton.snp.right).offset(UIConstants.Layout.standardPadding)
             $0.centerY.equalToSuperview()
         }
         
-//        currentPositionScrollView.snp.makeConstraints {
-//            $0.left.equalTo(switchLayoutButton.snp.right).offset(UIConstants.Layout.standardPadding)
-//            $0.centerY.equalToSuperview()
-//            $0.height.equalToSuperview()
-//            $0.width.equalTo(200)
-//        }
-        
-        currentPositionLabel.backgroundColor = .red
-        currentPositionScrollView.backgroundColor = .green
-        
-        ellipsisButton.snp.makeConstraints {
-            $0.right.equalToSuperview().inset(UIConstants.Layout.standardPadding)
+        currentPositionScrollView.snp.makeConstraints {
+            $0.left.equalTo(timeLabel.snp.right).offset(UIConstants.Layout.standardPadding)
             $0.centerY.equalToSuperview()
-            $0.size.equalTo(24)
+            $0.height.equalToSuperview()
+            $0.right.equalToSuperview()
+        }
+        
+        currentPositionLabel.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+            $0.centerY.equalToSuperview()
         }
         
         // メニューを設定

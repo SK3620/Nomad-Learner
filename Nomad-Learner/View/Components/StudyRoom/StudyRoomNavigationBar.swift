@@ -53,21 +53,22 @@ class StudyRoomNavigationBar: UIView {
     }
     
     // UIMenuを生成
-    private lazy var menu: UIMenu = {
-        let breakAction = UIAction(title: "休憩", image: UIImage(systemName: "cup.and.saucer")) { _ in
+    private lazy var menuActions: [UIAction] = {
+        let breakAction = UIAction(title: "Take a break", image: UIImage(systemName: "cup.and.saucer")) { _ in
             self.menuActionHandler?((.breakTime))
         }
-        let communityAction = UIAction(title: "コミュニティ", image: UIImage(systemName: "person.3")) { _ in
+        let communityAction = UIAction(title: "Community", image: UIImage(systemName: "person.3")) { _ in
             self.menuActionHandler?((.community))
         }
-        let exitAction = UIAction(title: "退出", image: UIImage(systemName: "door.left.hand.open")) { _ in
+        let exitAction = UIAction(title: "Exit room", image: UIImage(systemName: "door.left.hand.open")) { _ in
             self.menuActionHandler?((.exitRoom))
         }
-        return UIMenu(title: "", children: [breakAction, communityAction, exitAction])
+        
+        return [breakAction ,communityAction, exitAction]
     }()
     
     // UIActionでのメニュー選択通知用のクロージャ
-    public var menuActionHandler: ((StudyRoomViewModel.MenuAction) -> Void)?
+    var menuActionHandler: ((StudyRoomViewModel.MenuAction) -> Void)?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -119,7 +120,38 @@ class StudyRoomNavigationBar: UIView {
             $0.centerY.equalToSuperview()
         }
         
-        // メニューを設定
-        ellipsisButton.menu = menu
+        // ellipsisボタンにメニューを設定
+        ellipsisButton.menu = UIMenu(title: "", children: menuActions)
+    }
+}
+
+extension StudyRoomNavigationBar {
+    
+    // 休憩中 または 勉強再開 を交互に切り替える
+    func switchBreakOrRestartAction(_ action: StudyRoomViewModel.MenuAction = .restart) {
+        let actionInfo: (title: String, image: UIImage)
+        
+        switch action {
+        case .breakTime:
+            actionInfo = ("Restart", UIImage(systemName: "restart")!)
+        case .restart:
+            actionInfo = ("Take a break", UIImage(systemName: "cup.and.saucer")!)
+        default:
+            return
+        }
+        
+        let breakOrRestartAction = UIAction(
+            title: actionInfo.title,
+            image: actionInfo.image,
+            handler: { [weak self] _ in
+                guard let self = self else { return }
+                let newAction: StudyRoomViewModel.MenuAction = (action == .breakTime) ? .restart : .breakTime
+                self.menuActionHandler?(newAction)
+            }
+        )
+        // 休憩中or勉強再開メニューボタンを挿入し、新しいメニューを設定
+        menuActions.remove(at: 0)
+        menuActions.insert(breakOrRestartAction, at: 0)
+        ellipsisButton.menu = UIMenu(title: "", children: menuActions)
     }
 }

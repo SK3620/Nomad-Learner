@@ -22,6 +22,7 @@ class StudyRoomViewModel {
     // UIメニューアクション
     enum MenuAction {
         case breakTime // 休憩
+        case restart // 勉強再開
         case community // コミュニティ
         case exitRoom // 退出
     }
@@ -88,6 +89,8 @@ extension StudyRoomViewModel {
         switch action {
         case .breakTime:
             menuActionRelay.accept(.breakTime)
+        case .restart:
+            menuActionRelay.accept(.restart)
         case .community:
             menuActionRelay.accept(.community)
         case .exitRoom:

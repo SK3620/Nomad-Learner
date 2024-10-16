@@ -13,15 +13,32 @@ import RxCocoa
 
 class StudyRoomViewController: UIViewController {
     
+    // 背景画像
     private let backgroundImageView: UIImageView = UIImageView().then {
         $0.image = UIImage(named: "grassland")
     }
     
+    // 休憩中に表示する背景View
+    private let breakTimeView: UIView = UIView().then {
+        $0.backgroundColor = UIColor(white: 0.1, alpha: 0.8)
+        $0.isHidden = true
+        // 休憩コーヒーアイコン
+        let imageView = UIImageView(image: UIImage(systemName: "cup.and.saucer"))
+        imageView.tintColor = .white
+        $0.addSubview(imageView)
+        imageView.snp.makeConstraints {
+            $0.center.equalToSuperview()
+            $0.size.equalTo(250)
+        }
+    }
+    
     private let studyRoomNavigationBar: StudyRoomNavigationBar = StudyRoomNavigationBar()
     
-     let chatCollectionView: ChatCollectionView = ChatCollectionView()
+    // チャット欄
+    private let chatCollectionView: ChatCollectionView = ChatCollectionView()
     
-    fileprivate let profileCollectionView: ProfileCollectionView = ProfileCollectionView()
+    // プロフィール欄
+    private let profileCollectionView: ProfileCollectionView = ProfileCollectionView()
         
     // MapVC（マップ画面）に戻る
     private var backToMapVC: Void {
@@ -53,11 +70,16 @@ class StudyRoomViewController: UIViewController {
         view.backgroundColor = .clear
                 
         view.addSubview(backgroundImageView)
+        view.addSubview(breakTimeView)
         view.addSubview(studyRoomNavigationBar)
         view.addSubview(chatCollectionView)
         view.addSubview(profileCollectionView)
         
         backgroundImageView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
+        breakTimeView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
         
@@ -121,7 +143,7 @@ extension StudyRoomViewController {
         
         // 画面レイアウト切り替えイベント購読
         viewModel.roomLayout
-            .drive(updateLayoutBinder)
+            .drive(updateRoomLayoutBinder)
             .disposed(by: disposeBag)
         
         // UIMenuActionイベントを購読
@@ -148,7 +170,7 @@ extension StudyRoomViewController {
 // MARK: -StudyRoomViewController + Bindings
 extension StudyRoomViewController: AlertEnabled {
     // 画面レイアウト切り替え
-    private var updateLayoutBinder: Binder<StudyRoomViewModel.RoomLayout> {
+    private var updateRoomLayoutBinder: Binder<StudyRoomViewModel.RoomLayout> {
         return Binder(self) { base, layout in
             let isProfileHidden: Bool
             let isChatHidden: Bool
@@ -173,14 +195,16 @@ extension StudyRoomViewController: AlertEnabled {
         }
     }
     
-    // UIMenuAction（休憩 コミュニティ 退出）
+    // UIMenuAction（休憩or勉強再開 コミュニティ 退出）
     private var handleMenuAction: Binder<StudyRoomViewModel.MenuAction> {
         return Binder(self) { base, action in
             switch action {
-            case .breakTime:
-                print("休憩開始")
+            case .breakTime, .restart:
+                let isBreakTime = action == .breakTime
+                base.breakTimeView.isHidden = !isBreakTime
+                base.studyRoomNavigationBar.switchBreakOrRestartAction(action)
             case .community:
-                print("コミュニティ閲覧")
+                print("Coming Soon")
             case .exitRoom:
                 let alertActionType: AlertActionType = .exitRoom(
                     onConfirm: { base.backToMapVC }

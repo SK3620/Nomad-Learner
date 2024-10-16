@@ -27,7 +27,9 @@ protocol RouterProtocol {
     static func showEditProfile(vc: UIViewController)
     // MapVC（マップ画面）→ DepartVC（出発画面）
     static func showDepartVC(vc: UIViewController)
-    // DepartVC（出発画面）→ StudyRoomVC（勉強部屋画面）
+    // DepartVC（出発画面）→ OnFlightVC（飛行中画面）
+    static func showOnFlightVC(vc: UIViewController)
+    // OnFlightVC（飛行中画面）→ StudyRoomVC（勉強部屋画面）
     static func showStudyRoomVC(vc: UIViewController)
     
     // StudyRoomVC（勉強部屋画面）→ MapVC（マップ画面）
@@ -108,6 +110,14 @@ extension Router: RouterProtocol {
     }
     
     // DepartVC（出発画面）→ StudyRoomVC（勉強部屋画面）
+    static func showOnFlightVC(vc: UIViewController) {
+        let onFlightViewController = OnFlightViewController()
+        onFlightViewController.modalPresentationStyle = .overFullScreen
+        onFlightViewController.modalTransitionStyle = .crossDissolve
+        modal(from: vc, to: onFlightViewController)
+    }
+    
+    // OnFlightVC（飛行中画面）→ StudyRoomVC（勉強部屋画面）
     static func showStudyRoomVC(vc: UIViewController) {
         let studyRoomViewController = StudyRoomViewController()
         let navigationController = NavigationControllerForStudyRoomVC(rootViewController: studyRoomViewController)
@@ -118,8 +128,8 @@ extension Router: RouterProtocol {
     
     // StudyRoomVC（勉強部屋画面）→ MapVC（マップ画面）
     static func backToMapVC(vc: UIViewController) {
-        if let mapViewController = vc.presentingViewController?.presentingViewController {
-            dismissModal(vc: mapViewController)
+        if let navigationControllerForMapVC = vc.presentingViewController?.presentingViewController?.presentingViewController {
+            dismissModal(vc: navigationControllerForMapVC)
         }
     }
     

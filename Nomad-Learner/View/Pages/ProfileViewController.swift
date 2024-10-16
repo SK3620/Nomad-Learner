@@ -108,7 +108,7 @@ extension ProfileViewController {
     
     // 自動的に回転を許可するか（デフォルト値: true）
     override var shouldAutorotate: Bool {
-       return true
+       return false
     }
     
     // 回転の向き

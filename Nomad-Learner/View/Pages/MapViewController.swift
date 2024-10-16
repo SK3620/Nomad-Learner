@@ -70,6 +70,7 @@ class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // UIのセットアップ
         setupUI()
         // viewModelとのバインディング
@@ -101,11 +102,11 @@ class MapViewController: UIViewController {
             $0.width.top.equalToSuperview()
             $0.height.equalTo(180)
         }
-        
+                
         locationDetailView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.width.equalToSuperview().inset(UIConstants.Layout.standardPadding)
-            $0.top.equalToSuperview().offset(NavigationHeightProvidable.totalTopBarHeight(navigationController: navigationController))
+            $0.top.equalToSuperview().inset(NavigationHeightProvidable.totalTopBarHeight(navigationController: navigationController))
             $0.height.equalTo(180)
         }
         
@@ -168,7 +169,7 @@ extension MapViewController {
 
 extension MapViewController {
     override var shouldAutorotate: Bool {
-        return true
+        return false
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {

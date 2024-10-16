@@ -76,6 +76,8 @@
 		83AFB3B12CB2B75F00501FEE /* NavigationHeightProvidable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AFB3B02CB2B75F00501FEE /* NavigationHeightProvidable.swift */; };
 		83C5E1312CBF7AFE001C27E1 /* NavigationControllerForMapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C5E1302CBF7AFE001C27E1 /* NavigationControllerForMapVC.swift */; };
 		83C5E1332CBF851D001C27E1 /* NavigationControllerForAuthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C5E1322CBF851D001C27E1 /* NavigationControllerForAuthVC.swift */; };
+		83C5E1352CBFB019001C27E1 /* OnFlightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C5E1342CBFB019001C27E1 /* OnFlightViewController.swift */; };
+		83C5E13C2CBFBCC2001C27E1 /* OnFlightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C5E13B2CBFBCC2001C27E1 /* OnFlightView.swift */; };
 		83C9F3B42CA85BC300CF0D73 /* SeparatorWithLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C9F3B32CA85BC300CF0D73 /* SeparatorWithLabelView.swift */; };
 		83C9F3B62CA907B900CF0D73 /* ColorCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C9F3B52CA907B900CF0D73 /* ColorCodes.swift */; };
 		83C9F3BA2CA9161300CF0D73 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C9F3B92CA9161300CF0D73 /* UITextField.swift */; };
@@ -157,6 +159,8 @@
 		83AFB3B02CB2B75F00501FEE /* NavigationHeightProvidable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationHeightProvidable.swift; sourceTree = "<group>"; };
 		83C5E1302CBF7AFE001C27E1 /* NavigationControllerForMapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationControllerForMapVC.swift; sourceTree = "<group>"; };
 		83C5E1322CBF851D001C27E1 /* NavigationControllerForAuthVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationControllerForAuthVC.swift; sourceTree = "<group>"; };
+		83C5E1342CBFB019001C27E1 /* OnFlightViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnFlightViewController.swift; sourceTree = "<group>"; };
+		83C5E13B2CBFBCC2001C27E1 /* OnFlightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnFlightView.swift; sourceTree = "<group>"; };
 		83C9F3B32CA85BC300CF0D73 /* SeparatorWithLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorWithLabelView.swift; sourceTree = "<group>"; };
 		83C9F3B52CA907B900CF0D73 /* ColorCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCodes.swift; sourceTree = "<group>"; };
 		83C9F3B92CA9161300CF0D73 /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
@@ -219,6 +223,7 @@
 				83A6D7BA2CB6195E00D18A30 /* ProfileViewController.swift */,
 				83A6D7D32CB807F100D18A30 /* EditProfileViewController.swift */,
 				83A6D7DF2CB8DA8600D18A30 /* DepartViewController.swift */,
+				83C5E1342CBFB019001C27E1 /* OnFlightViewController.swift */,
 			);
 			path = Pages;
 			sourceTree = "<group>";
@@ -226,6 +231,7 @@
 		8304A0E02CA5118700061B33 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				83C5E1362CBFB021001C27E1 /* OnFlight */,
 				837DE5932CBAD0F400819964 /* StudyRoom */,
 				83A6D7DE2CB8DA2500D18A30 /* Depart */,
 				83A6D7D52CB8082100D18A30 /* EditProfile */,
@@ -417,6 +423,14 @@
 			path = NavigationHeightProvidable;
 			sourceTree = "<group>";
 		};
+		83C5E1362CBFB021001C27E1 /* OnFlight */ = {
+			isa = PBXGroup;
+			children = (
+				83C5E13B2CBFBCC2001C27E1 /* OnFlightView.swift */,
+			);
+			path = OnFlight;
+			sourceTree = "<group>";
+		};
 		83C9F3B82CA915EF00CF0D73 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
@@ -602,12 +616,14 @@
 				83AFB3B12CB2B75F00501FEE /* NavigationHeightProvidable.swift in Sources */,
 				835BD2F12CA413560088CA02 /* AppDelegate.swift in Sources */,
 				83A6D7D42CB807F100D18A30 /* EditProfileViewController.swift in Sources */,
+				83C5E1352CBFB019001C27E1 /* OnFlightViewController.swift in Sources */,
 				83AFB3AE2CB2ABD300501FEE /* LocationDetailView.swift in Sources */,
 				83A6D7E02CB8DA8600D18A30 /* DepartViewController.swift in Sources */,
 				837DE5952CBAD11500819964 /* StudyRoomViewController.swift in Sources */,
 				83A6D7CC2CB6B85A00D18A30 /* ProfileTableViewCell.swift in Sources */,
 				83A6D7CA2CB6B4FC00D18A30 /* ProfileBottomView.swift in Sources */,
 				838753DC2CAD33E2001EE8F1 /* AuthServiceProtocol.swift in Sources */,
+				83C5E13C2CBFBCC2001C27E1 /* OnFlightView.swift in Sources */,
 				8304A0E22CA5123300061B33 /* AuthViewController.swift in Sources */,
 				838753D82CACE930001EE8F1 /* ActivityIndicator.swift in Sources */,
 				837DE5902CBA564A00819964 /* TicketView.swift in Sources */,

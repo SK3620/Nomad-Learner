@@ -21,7 +21,8 @@ class DepartViewController: UIViewController {
     
     // DepartVC（出発画面）→ StudyRoomVC（勉強部屋画面）
     private func toStudyRoomVC() {
-        Router.showStudyRoomVC(vc: self)
+        // Router.showStudyRoomVC(vc: self)
+        Router.showOnFlightVC(vc: self)
     }
     
     // 出発View
@@ -105,7 +106,7 @@ extension DepartViewController {
     
     // 自動的に回転を許可しない
     override var shouldAutorotate: Bool {
-        return true
+        return false
     }
     
     // 回転の向き

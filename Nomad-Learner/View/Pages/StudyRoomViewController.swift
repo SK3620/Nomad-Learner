@@ -56,7 +56,6 @@ class StudyRoomViewController: UIViewController {
     }()
     
     private let disposeBag = DisposeBag()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -226,21 +225,21 @@ extension StudyRoomViewController {
     
     // 回転の向き
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .landscape
+        return .landscapeRight
     }
 }
 
-struct ViewControllerPreview: PreviewProvider {
-    struct Wrapper: UIViewControllerRepresentable {
-        func makeUIViewController(context: Context) -> some UIViewController {
-            NavigationControllerForStudyRoomVC(rootViewController: StudyRoomViewController())
-        }
-        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-        }
-    }
-    static var previews: some View {
-        Wrapper()
-    }
-}
-
-
+//struct ViewControllerPreview: PreviewProvider {
+//    struct Wrapper: UIViewControllerRepresentable {
+//        func makeUIViewController(context: Context) -> some UIViewController {
+//            NavigationControllerForStudyRoomVC(rootViewController: StudyRoomViewController())
+//        }
+//        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+//        }
+//    }
+//    static var previews: some View {
+//        Wrapper()
+//    }
+//}
+//
+//

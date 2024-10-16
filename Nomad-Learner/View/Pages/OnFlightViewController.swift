@@ -30,9 +30,7 @@ class OnFlightViewController: UIViewController {
         view.addSubview(onFlightView)
         
         onFlightView.snp.makeConstraints {
-            $0.center.equalToSuperview()
-            $0.horizontalEdges.equalTo(view.safeAreaLayoutGuide.snp.horizontalEdges)
-            $0.height.equalTo(200)
+            $0.edges.equalToSuperview()
         }
     }
 }

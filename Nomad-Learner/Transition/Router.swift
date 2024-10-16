@@ -25,10 +25,13 @@ protocol RouterProtocol {
     static func showProfile(vc: UIViewController)
     // ProfileVC → EditProfileVC（プロフィール編集画面）
     static func showEditProfile(vc: UIViewController)
-    // MacVC（マップ画面）→ DepartVC（出発画面）
+    // MapVC（マップ画面）→ DepartVC（出発画面）
     static func showDepartVC(vc: UIViewController)
     // DepartVC（出発画面）→ StudyRoomVC（勉強部屋画面）
     static func showStudyRoomVC(vc: UIViewController)
+    
+    // StudyRoomVC（勉強部屋画面）→ MapVC（マップ画面）
+    static func backToMapVC(vc: UIViewController)
     
     // UINavigationを通して戻る
     static func navigationBack(vc: UIViewController)
@@ -111,6 +114,13 @@ extension Router: RouterProtocol {
         navigationController.modalPresentationStyle = .overFullScreen
         navigationController.modalTransitionStyle = .crossDissolve
         modal(from: vc, to: navigationController)
+    }
+    
+    // StudyRoomVC（勉強部屋画面）→ MapVC（マップ画面）
+    static func backToMapVC(vc: UIViewController) {
+        if let mapViewController = vc.presentingViewController?.presentingViewController as? MapViewController {
+            dismissModal(vc: mapViewController)
+        }
     }
     
     // モーダルで戻る

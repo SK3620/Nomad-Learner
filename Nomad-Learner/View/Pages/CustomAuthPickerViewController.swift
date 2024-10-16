@@ -96,7 +96,7 @@ class CustomAuthPickerViewController: FUIAuthPickerViewController, UITextFieldDe
     }
 }
 
-extension CustomAuthPickerViewController: ErrorAlertEnabled, KRProgressHUDEnabled {
+extension CustomAuthPickerViewController: AlertEnabled, KRProgressHUDEnabled {
     private func bind() {
         self.viewModel = AuthViewModel(
             input:
@@ -168,7 +168,8 @@ extension CustomAuthPickerViewController: ErrorAlertEnabled, KRProgressHUDEnable
         
         // 認証エラーアラート表示
         viewModel.authError
-            .drive(self.rx.showErrorAlert)
+            .map { AlertActionType.error($0)}
+            .drive(self.rx.showAlert)
             .disposed(by: disposeBag)
     }
 }

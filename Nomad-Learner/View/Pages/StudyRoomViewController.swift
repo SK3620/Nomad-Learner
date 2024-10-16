@@ -17,15 +17,15 @@ class StudyRoomViewController: UIViewController {
         $0.image = UIImage(named: "grassland")
     }
     
-     let studyRoomNavigationBar: StudyRoomNavigationBar = StudyRoomNavigationBar()
+    private let studyRoomNavigationBar: StudyRoomNavigationBar = StudyRoomNavigationBar()
     
-    private let chatCollectionView: ChatCollectionView = ChatCollectionView()
+     let chatCollectionView: ChatCollectionView = ChatCollectionView()
     
-    private let profileCollectionView: ProfileCollectionView = ProfileCollectionView()
+    fileprivate let profileCollectionView: ProfileCollectionView = ProfileCollectionView()
         
     // MapVC（マップ画面）に戻る
     private var backToMapVC: Void {
-        Router.dismissModal(vc: self)
+        Router.backToMapVC(vc: self)
     }
     
     // ProfileVC（プロフィール画面）へ遷移
@@ -126,9 +126,8 @@ extension StudyRoomViewController {
         
         // UIMenuActionイベントを購読
         viewModel.menuAction
-            .drive(onNext: { action in
-                print("メニューアクションは何？: \(action)")
-            })
+            .compactMap { $0 } // nilを排除
+            .drive(handleMenuAction)
             .disposed(by: disposeBag)
     }
     
@@ -146,7 +145,8 @@ extension StudyRoomViewController {
     }
 }
 
-extension StudyRoomViewController {
+// MARK: -StudyRoomViewController + Bindings
+extension StudyRoomViewController: AlertEnabled {
     // 画面レイアウト切り替え
     private var updateLayoutBinder: Binder<StudyRoomViewModel.RoomLayout> {
         return Binder(self) { base, layout in
@@ -170,6 +170,25 @@ extension StudyRoomViewController {
             // UIの更新を一箇所で行う
             base.profileCollectionView.isHidden = isProfileHidden
             base.chatCollectionView.isHidden = isChatHidden
+        }
+    }
+    
+    // UIMenuAction（休憩 コミュニティ 退出）
+    private var handleMenuAction: Binder<StudyRoomViewModel.MenuAction> {
+        return Binder(self) { base, action in
+            switch action {
+            case .breakTime:
+                print("休憩開始")
+            case .community:
+                print("コミュニティ閲覧")
+            case .exitRoom:
+                let alertActionType: AlertActionType = .exitRoom(
+                    onConfirm: { base.backToMapVC }
+                )
+                Driver.just(alertActionType)
+                    .drive(base.rx.showAlert)
+                    .disposed(by: base.disposeBag)
+            }
         }
     }
 }

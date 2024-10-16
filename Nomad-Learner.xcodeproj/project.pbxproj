@@ -35,7 +35,7 @@
 		838753DA2CACF2D1001EE8F1 /* KRProgressHUDEnabled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753D92CACF2D0001EE8F1 /* KRProgressHUDEnabled.swift */; };
 		838753DC2CAD33E2001EE8F1 /* AuthServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753DB2CAD33E2001EE8F1 /* AuthServiceProtocol.swift */; };
 		838753DE2CAED385001EE8F1 /* ValidationLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753DD2CAED385001EE8F1 /* ValidationLabel.swift */; };
-		838753E22CAF9E53001EE8F1 /* ErrorAlertEnabled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753E12CAF9E53001EE8F1 /* ErrorAlertEnabled.swift */; };
+		838753E22CAF9E53001EE8F1 /* AlertEnabled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753E12CAF9E53001EE8F1 /* AlertEnabled.swift */; };
 		838753E42CB00A4B001EE8F1 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753E32CB00A4B001EE8F1 /* MapViewController.swift */; };
 		838753E82CB02B42001EE8F1 /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753E72CB02B42001EE8F1 /* CurrentUser.swift */; };
 		838753ED2CB0EEED001EE8F1 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753EC2CB0EEED001EE8F1 /* Router.swift */; };
@@ -114,7 +114,7 @@
 		838753D92CACF2D0001EE8F1 /* KRProgressHUDEnabled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KRProgressHUDEnabled.swift; sourceTree = "<group>"; };
 		838753DB2CAD33E2001EE8F1 /* AuthServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthServiceProtocol.swift; sourceTree = "<group>"; };
 		838753DD2CAED385001EE8F1 /* ValidationLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationLabel.swift; sourceTree = "<group>"; };
-		838753E12CAF9E53001EE8F1 /* ErrorAlertEnabled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAlertEnabled.swift; sourceTree = "<group>"; };
+		838753E12CAF9E53001EE8F1 /* AlertEnabled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertEnabled.swift; sourceTree = "<group>"; };
 		838753E32CB00A4B001EE8F1 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		838753E72CB02B42001EE8F1 /* CurrentUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUser.swift; sourceTree = "<group>"; };
 		838753EC2CB0EEED001EE8F1 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
@@ -320,7 +320,7 @@
 				838753D72CACE930001EE8F1 /* ActivityIndicator.swift */,
 				838753D92CACF2D0001EE8F1 /* KRProgressHUDEnabled.swift */,
 				838753DB2CAD33E2001EE8F1 /* AuthServiceProtocol.swift */,
-				838753E12CAF9E53001EE8F1 /* ErrorAlertEnabled.swift */,
+				838753E12CAF9E53001EE8F1 /* AlertEnabled.swift */,
 				838753E72CB02B42001EE8F1 /* CurrentUser.swift */,
 			);
 			path = Protocols;
@@ -632,7 +632,7 @@
 				838753ED2CB0EEED001EE8F1 /* Router.swift in Sources */,
 				83A6D7D92CB80C8F00D18A30 /* EditProfileView.swift in Sources */,
 				83A6D7AB2CB3D93E00D18A30 /* LocationLabel.swift in Sources */,
-				838753E22CAF9E53001EE8F1 /* ErrorAlertEnabled.swift in Sources */,
+				838753E22CAF9E53001EE8F1 /* AlertEnabled.swift in Sources */,
 				83A6D7E22CB8F88500D18A30 /* DepartViewModel.swift in Sources */,
 				837DE59A2CBAD8D400819964 /* NavigationControllerForStudyVC.swift in Sources */,
 				83A9C2BE2CA7BF2200898F0B /* CustomAuthPickerViewController.swift in Sources */,

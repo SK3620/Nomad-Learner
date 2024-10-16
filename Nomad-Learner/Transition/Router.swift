@@ -118,7 +118,7 @@ extension Router: RouterProtocol {
     
     // StudyRoomVC（勉強部屋画面）→ MapVC（マップ画面）
     static func backToMapVC(vc: UIViewController) {
-        if let mapViewController = vc.presentingViewController?.presentingViewController as? MapViewController {
+        if let mapViewController = vc.presentingViewController?.presentingViewController {
             dismissModal(vc: mapViewController)
         }
     }

@@ -27,7 +27,7 @@
 		837DE5902CBA564A00819964 /* TicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837DE58F2CBA564A00819964 /* TicketView.swift */; };
 		837DE5952CBAD11500819964 /* StudyRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837DE5942CBAD11500819964 /* StudyRoomViewController.swift */; };
 		837DE5972CBAD12E00819964 /* StudyRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837DE5962CBAD12E00819964 /* StudyRoomViewModel.swift */; };
-		837DE59A2CBAD8D400819964 /* NavigationControllerForStudyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837DE5992CBAD8D400819964 /* NavigationControllerForStudyVC.swift */; };
+		837DE59A2CBAD8D400819964 /* NavigationControllerForStudyRoomVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837DE5992CBAD8D400819964 /* NavigationControllerForStudyRoomVC.swift */; };
 		838753D22CABE9A3001EE8F1 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753D12CABE9A3001EE8F1 /* AuthViewModel.swift */; };
 		838753D42CABFDB7001EE8F1 /* AuthInputValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753D32CABFDB7001EE8F1 /* AuthInputValidation.swift */; };
 		838753D62CAC19D1001EE8F1 /* AuthInputValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753D52CAC19D1001EE8F1 /* AuthInputValidator.swift */; };
@@ -74,6 +74,7 @@
 		83AFB3AC2CB29AC500501FEE /* NavigationBoxBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AFB3AB2CB29AC500501FEE /* NavigationBoxBar.swift */; };
 		83AFB3AE2CB2ABD300501FEE /* LocationDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AFB3AD2CB2ABD300501FEE /* LocationDetailView.swift */; };
 		83AFB3B12CB2B75F00501FEE /* NavigationHeightProvidable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AFB3B02CB2B75F00501FEE /* NavigationHeightProvidable.swift */; };
+		83C5E1312CBF7AFE001C27E1 /* NavigationControllerForMapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C5E1302CBF7AFE001C27E1 /* NavigationControllerForMapVC.swift */; };
 		83C9F3B42CA85BC300CF0D73 /* SeparatorWithLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C9F3B32CA85BC300CF0D73 /* SeparatorWithLabelView.swift */; };
 		83C9F3B62CA907B900CF0D73 /* ColorCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C9F3B52CA907B900CF0D73 /* ColorCodes.swift */; };
 		83C9F3BA2CA9161300CF0D73 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C9F3B92CA9161300CF0D73 /* UITextField.swift */; };
@@ -106,7 +107,7 @@
 		837DE58F2CBA564A00819964 /* TicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketView.swift; sourceTree = "<group>"; };
 		837DE5942CBAD11500819964 /* StudyRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyRoomViewController.swift; sourceTree = "<group>"; };
 		837DE5962CBAD12E00819964 /* StudyRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyRoomViewModel.swift; sourceTree = "<group>"; };
-		837DE5992CBAD8D400819964 /* NavigationControllerForStudyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationControllerForStudyVC.swift; sourceTree = "<group>"; };
+		837DE5992CBAD8D400819964 /* NavigationControllerForStudyRoomVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationControllerForStudyRoomVC.swift; sourceTree = "<group>"; };
 		838753D12CABE9A3001EE8F1 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		838753D32CABFDB7001EE8F1 /* AuthInputValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInputValidation.swift; sourceTree = "<group>"; };
 		838753D52CAC19D1001EE8F1 /* AuthInputValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInputValidator.swift; sourceTree = "<group>"; };
@@ -153,6 +154,7 @@
 		83AFB3AB2CB29AC500501FEE /* NavigationBoxBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBoxBar.swift; sourceTree = "<group>"; };
 		83AFB3AD2CB2ABD300501FEE /* LocationDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDetailView.swift; sourceTree = "<group>"; };
 		83AFB3B02CB2B75F00501FEE /* NavigationHeightProvidable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationHeightProvidable.swift; sourceTree = "<group>"; };
+		83C5E1302CBF7AFE001C27E1 /* NavigationControllerForMapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationControllerForMapVC.swift; sourceTree = "<group>"; };
 		83C9F3B32CA85BC300CF0D73 /* SeparatorWithLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorWithLabelView.swift; sourceTree = "<group>"; };
 		83C9F3B52CA907B900CF0D73 /* ColorCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCodes.swift; sourceTree = "<group>"; };
 		83C9F3B92CA9161300CF0D73 /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
@@ -301,7 +303,7 @@
 		837DE5932CBAD0F400819964 /* StudyRoom */ = {
 			isa = PBXGroup;
 			children = (
-				837DE5992CBAD8D400819964 /* NavigationControllerForStudyVC.swift */,
+				837DE5992CBAD8D400819964 /* NavigationControllerForStudyRoomVC.swift */,
 				836180E22CBB7E220059937E /* StudyRoomNavigationBar.swift */,
 				836180E02CBB68490059937E /* ProfileCollectionView.swift */,
 				836180E72CBBA1620059937E /* ChatCollectionView.swift */,
@@ -399,6 +401,7 @@
 				83A6D7B62CB4D3CF00D18A30 /* LocationCategoryCollectionView.swift */,
 				83A6D7AA2CB3D93E00D18A30 /* LocationLabel.swift */,
 				83A6D7B22CB3F3E100D18A30 /* LocationCategoryCollectionViewCell.swift */,
+				83C5E1302CBF7AFE001C27E1 /* NavigationControllerForMapVC.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -616,6 +619,7 @@
 				83C9F3B42CA85BC300CF0D73 /* SeparatorWithLabelView.swift in Sources */,
 				838753E42CB00A4B001EE8F1 /* MapViewController.swift in Sources */,
 				83A6D7B92CB56C7400D18A30 /* KeyChainManager.swift in Sources */,
+				83C5E1312CBF7AFE001C27E1 /* NavigationControllerForMapVC.swift in Sources */,
 				83A6D7B72CB4D3CF00D18A30 /* LocationCategoryCollectionView.swift in Sources */,
 				836180E62CBB81E80059937E /* ScreenSizeProvidable.swift in Sources */,
 				838753DE2CAED385001EE8F1 /* ValidationLabel.swift in Sources */,
@@ -634,7 +638,7 @@
 				83A6D7AB2CB3D93E00D18A30 /* LocationLabel.swift in Sources */,
 				838753E22CAF9E53001EE8F1 /* AlertEnabled.swift in Sources */,
 				83A6D7E22CB8F88500D18A30 /* DepartViewModel.swift in Sources */,
-				837DE59A2CBAD8D400819964 /* NavigationControllerForStudyVC.swift in Sources */,
+				837DE59A2CBAD8D400819964 /* NavigationControllerForStudyRoomVC.swift in Sources */,
 				83A9C2BE2CA7BF2200898F0B /* CustomAuthPickerViewController.swift in Sources */,
 				837DE58E2CBA2FDE00819964 /* SafeAreaHeightProvidable.swift in Sources */,
 				836180E32CBB7E220059937E /* StudyRoomNavigationBar.swift in Sources */,

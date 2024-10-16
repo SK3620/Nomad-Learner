@@ -166,6 +166,15 @@ extension MapViewController {
     }
 }
 
+extension MapViewController {
+    override var shouldAutorotate: Bool {
+        return true
+    }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
+}
 /*
  struct ViewControllerPreview: PreviewProvider {
  struct Wrapper: UIViewControllerRepresentable {

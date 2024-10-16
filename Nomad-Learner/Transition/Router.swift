@@ -77,7 +77,7 @@ extension Router: RouterProtocol {
     // AuthVC（認証画面）→ MapVC（マップ画面）
     static func showMap(vc: UIViewController) {
         let mapViewController = MapViewController()
-        let navigationController = UINavigationController(rootViewController: mapViewController)
+        let navigationController = NavigationControllerMapVC(rootViewController: mapViewController)
         navigationController.modalTransitionStyle = .crossDissolve
         navigationController.modalPresentationStyle = .fullScreen
         modal(from: vc, to: navigationController)
@@ -110,7 +110,7 @@ extension Router: RouterProtocol {
     // DepartVC（出発画面）→ StudyRoomVC（勉強部屋画面）
     static func showStudyRoomVC(vc: UIViewController) {
         let studyRoomViewController = StudyRoomViewController()
-        let navigationController = NavigationControllerForStudyVC(rootViewController: studyRoomViewController)
+        let navigationController = NavigationControllerForStudyRoomVC(rootViewController: studyRoomViewController)
         navigationController.modalPresentationStyle = .overFullScreen
         navigationController.modalTransitionStyle = .crossDissolve
         modal(from: vc, to: navigationController)

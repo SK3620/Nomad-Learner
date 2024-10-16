@@ -233,7 +233,7 @@ extension StudyRoomViewController {
 struct ViewControllerPreview: PreviewProvider {
     struct Wrapper: UIViewControllerRepresentable {
         func makeUIViewController(context: Context) -> some UIViewController {
-            NavigationControllerForStudyVC(rootViewController: StudyRoomViewController())
+            NavigationControllerForStudyRoomVC(rootViewController: StudyRoomViewController())
         }
         func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
         }

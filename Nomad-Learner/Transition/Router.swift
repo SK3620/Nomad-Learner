@@ -70,14 +70,14 @@ extension Router: RouterProtocol {
     // 初期画面を表示するメソッド
     static func showRoot(window: UIWindow) {
         let authViewController = AuthViewController()
-        window.rootViewController = UINavigationController(rootViewController: authViewController)
+        window.rootViewController = NavigationControllerForAuthVC(rootViewController: authViewController)
         window.makeKeyAndVisible()
     }
     
     // AuthVC（認証画面）→ MapVC（マップ画面）
     static func showMap(vc: UIViewController) {
         let mapViewController = MapViewController()
-        let navigationController = NavigationControllerMapVC(rootViewController: mapViewController)
+        let navigationController = NavigationControllerForMapVC(rootViewController: mapViewController)
         navigationController.modalTransitionStyle = .crossDissolve
         navigationController.modalPresentationStyle = .fullScreen
         modal(from: vc, to: navigationController)

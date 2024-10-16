@@ -101,17 +101,15 @@ extension DepartViewController {
     }
 }
 
-/*
- struct ViewControllerPreview: PreviewProvider {
- struct Wrapper: UIViewControllerRepresentable {
- func makeUIViewController(context: Context) -> some UIViewController {
- UINavigationController(rootViewController: DepartViewController())
- }
- func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
- }
- }
- static var previews: some View {
- Wrapper()
- }
- }
- */
+extension DepartViewController {
+    
+    // 自動的に回転を許可しない
+    override var shouldAutorotate: Bool {
+        return true
+    }
+    
+    // 回転の向き
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
+}

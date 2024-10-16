@@ -75,6 +75,7 @@
 		83AFB3AE2CB2ABD300501FEE /* LocationDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AFB3AD2CB2ABD300501FEE /* LocationDetailView.swift */; };
 		83AFB3B12CB2B75F00501FEE /* NavigationHeightProvidable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AFB3B02CB2B75F00501FEE /* NavigationHeightProvidable.swift */; };
 		83C5E1312CBF7AFE001C27E1 /* NavigationControllerForMapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C5E1302CBF7AFE001C27E1 /* NavigationControllerForMapVC.swift */; };
+		83C5E1332CBF851D001C27E1 /* NavigationControllerForAuthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C5E1322CBF851D001C27E1 /* NavigationControllerForAuthVC.swift */; };
 		83C9F3B42CA85BC300CF0D73 /* SeparatorWithLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C9F3B32CA85BC300CF0D73 /* SeparatorWithLabelView.swift */; };
 		83C9F3B62CA907B900CF0D73 /* ColorCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C9F3B52CA907B900CF0D73 /* ColorCodes.swift */; };
 		83C9F3BA2CA9161300CF0D73 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C9F3B92CA9161300CF0D73 /* UITextField.swift */; };
@@ -155,6 +156,7 @@
 		83AFB3AD2CB2ABD300501FEE /* LocationDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDetailView.swift; sourceTree = "<group>"; };
 		83AFB3B02CB2B75F00501FEE /* NavigationHeightProvidable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationHeightProvidable.swift; sourceTree = "<group>"; };
 		83C5E1302CBF7AFE001C27E1 /* NavigationControllerForMapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationControllerForMapVC.swift; sourceTree = "<group>"; };
+		83C5E1322CBF851D001C27E1 /* NavigationControllerForAuthVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationControllerForAuthVC.swift; sourceTree = "<group>"; };
 		83C9F3B32CA85BC300CF0D73 /* SeparatorWithLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorWithLabelView.swift; sourceTree = "<group>"; };
 		83C9F3B52CA907B900CF0D73 /* ColorCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCodes.swift; sourceTree = "<group>"; };
 		83C9F3B92CA9161300CF0D73 /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
@@ -376,6 +378,7 @@
 				83A9C2C12CA7D08500898F0B /* AuthTextField.swift */,
 				838753DD2CAED385001EE8F1 /* ValidationLabel.swift */,
 				83C9F3B32CA85BC300CF0D73 /* SeparatorWithLabelView.swift */,
+				83C5E1322CBF851D001C27E1 /* NavigationControllerForAuthVC.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -646,6 +649,7 @@
 				838753D62CAC19D1001EE8F1 /* AuthInputValidator.swift in Sources */,
 				838753D42CABFDB7001EE8F1 /* AuthInputValidation.swift in Sources */,
 				83A6D7C62CB682D600D18A30 /* ProfileTopView.swift in Sources */,
+				83C5E1332CBF851D001C27E1 /* NavigationControllerForAuthVC.swift in Sources */,
 				83A6D7C42CB6630700D18A30 /* ProfileNavigationBar.swift in Sources */,
 				836180F22CBC9D850059937E /* Message.swift in Sources */,
 				83A6D7BB2CB6195E00D18A30 /* ProfileViewController.swift in Sources */,

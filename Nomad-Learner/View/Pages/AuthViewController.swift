@@ -72,3 +72,13 @@ extension AuthViewController {
         }
     }
 }
+
+extension AuthViewController {
+    override var shouldAutorotate: Bool {
+        return true
+    }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
+}

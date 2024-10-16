@@ -1,5 +1,5 @@
 //
-//  NavigationControllerForMapVC.swift
+//  NavigationControllerForAuthVC.swift
 //  Nomad-Learner
 //
 //  Created by 鈴木 健太 on 2024/10/16.
@@ -7,9 +7,8 @@
 
 import UIKit
 
-// StudyRoomVC用のナビゲーションコントローラー
-class NavigationControllerForMapVC: UINavigationController {
-    
+class NavigationControllerForAuthVC: UINavigationController {
+
     // 自動回転の許可を制御
     override var shouldAutorotate: Bool {
         // 現在表示中のビューコントローラーがあれば、その設定に従う

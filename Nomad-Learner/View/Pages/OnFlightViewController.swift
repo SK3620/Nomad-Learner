@@ -11,21 +11,28 @@ import SnapKit
 import SwiftUI
 
 class OnFlightViewController: UIViewController {
+    
+    private let onFlightView: OnFlightView = OnFlightView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        setupUI()
+        
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+//            Router.showStudyRoomVC(vc: self)
+//        }
+    }
+    
+    private func setupUI() {
         view.backgroundColor = .white
+
+        view.addSubview(onFlightView)
         
-        let imageView = UIImageView(image: UIImage(systemName: "person"))
-        view.addSubview(imageView)
-        imageView.snp.makeConstraints {
+        onFlightView.snp.makeConstraints {
             $0.center.equalToSuperview()
-            $0.size.equalTo(80)
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-            Router.showStudyRoomVC(vc: self)
+            $0.horizontalEdges.equalTo(view.safeAreaLayoutGuide.snp.horizontalEdges)
+            $0.height.equalTo(200)
         }
     }
 }

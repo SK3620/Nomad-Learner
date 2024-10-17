@@ -15,7 +15,7 @@ class TicketView: UIView {
     private let dashPointX: CGFloat = 80
     // ダッシュ線の幅
     private let dashWidth: CGFloat = 8
-
+    
     // 現在地の国旗と目的地の国旗をまとめる背景View
     private lazy var nationalFlagBackgroundView: UIView = UIView().then {
         $0.backgroundColor = .white
@@ -46,7 +46,7 @@ class TicketView: UIView {
     }
     
     // 距離アイコンとコインアイコンをまとめる背景View
-    private let roundedBackgroundView1: UIView = UIView().then {
+    private let backgroundViewForDistanceAndCoin: UIView = UIView().then {
         $0.backgroundColor = UIColor(red: 240/255, green: 224/255, blue: 207/255, alpha: 1)
         $0.layer.cornerRadius = 35 / 2
     }
@@ -75,6 +75,11 @@ class TicketView: UIView {
         $0.textAlignment = .left
     }
     
+    // 距離とコインの下線
+    private let distanceAndCoinUnderline: UIView = UIView().then {
+        $0.backgroundColor = UIColor(red: 240/255, green: 224/255, blue: 207/255, alpha: 1)
+    }
+    
     // 目的地label
     private lazy var destinationLabel: UILabel = UILabel().then {
         $0.textColor = ColorCodes.primaryPurple.color()
@@ -93,34 +98,46 @@ class TicketView: UIView {
         $0.textAlignment = .center
     }
     
-    // お財布アイコンの背景View
-    private let roundedBackgroundView2: UIView = UIView().then {
+    // ミッションアイコン背景View
+    private let backgroundViewForMission: UIView = UIView().then {
         $0.backgroundColor = UIColor(red: 240/255, green: 224/255, blue: 207/255, alpha: 1)
         $0.layer.cornerRadius = 35 / 2
     }
     
-    // お財布のアイコン
-    private let walletImageView: UIImageView = UIImageView().then {
-        $0.image = UIImage(named: "wallet")
-    }
+    // ミッションのアイコン
+    private let missionImageView: UIImageView = UIImageView(image: UIImage(named: "Quest"))
     
-    // ユーザーが持つ現在の所持金
-    private let currentCoinLabel: UILabel = UILabel().then {
+    // ミッションlabel
+    private let missionLabel: UILabel = UILabel().then {
         $0.textColor = .darkGray
         $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.large)
-        $0.text = "1000000"
+        $0.text = "total 21h study"
     }
     
-    // 右矢印アイコン
-    private let arrowRightImageView: UIImageView = UIImageView().then {
-        $0.image = UIImage(systemName: "arrow.right")
+    // ミッション下線
+    private let missionUnderline: UIView = UIView().then {
+        $0.backgroundColor = UIColor(red: 240/255, green: 224/255, blue: 207/255, alpha: 1)
     }
     
-    // 旅費支払い後の残高
-    private let remainingCoinLabel: UILabel = UILabel().then {
-        $0.textColor = .darkGray
+    // 報酬アイコン背景View
+    private let backgroundViewForReward: UIView = UIView().then {
+        $0.backgroundColor = UIColor(red: 240/255, green: 224/255, blue: 207/255, alpha: 1)
+        $0.layer.cornerRadius = 35 / 2
+    }
+    
+    // 報酬のアイコン
+    private let rewardImageView: UIImageView = UIImageView(image: UIImage(named: "Reward"))
+    
+    // 報酬label
+    private let rewardLabel: UILabel = UILabel().then {
+        $0.textColor = .yellow
         $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.large)
-        $0.text = "500000"
+        $0.text = "22500＋"
+    }
+    
+    // 報酬の下線
+    private let rewardUnderline: UIView = UIView().then {
+        $0.backgroundColor = UIColor(red: 240/255, green: 224/255, blue: 207/255, alpha: 1)
     }
     
     override init(frame: CGRect) {
@@ -128,11 +145,11 @@ class TicketView: UIView {
         
         setupUI()
     }
-
+    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-
+    
     // チケットの枠を設定
     private func setupUI() {
         self.backgroundColor = UIColor(red: 220/255, green: 194/255, blue: 177/255, alpha: 1)
@@ -144,26 +161,24 @@ class TicketView: UIView {
         addSubview(destinationNationalFlag)
         addSubview(arrowImageView)
         
-        roundedBackgroundView1.addSubview(distanceImageView)
-        roundedBackgroundView1.addSubview(IconImageDivider)
-        roundedBackgroundView1.addSubview(coinImageView)
-        addSubview(roundedBackgroundView1)
+        backgroundViewForDistanceAndCoin.addSubview(distanceImageView)
+        backgroundViewForDistanceAndCoin.addSubview(IconImageDivider)
+        backgroundViewForDistanceAndCoin.addSubview(coinImageView)
+        addSubview(backgroundViewForDistanceAndCoin)
         addSubview(distanceAndCoinValueLabel)
+        addSubview(distanceAndCoinUnderline)
         
-        let stackView = UIStackView(arrangedSubviews: [
-            destinationLabel, regionLabel
-        ])
-        stackView.axis = .vertical
-        stackView.spacing = 0
-        stackView.alignment = .center
-        stackView.distribution = .fillProportionally
+        addSubview(destinationLabel)
+        addSubview(regionLabel)
         
-        addSubview(stackView)
-        roundedBackgroundView2.addSubview(walletImageView)
-        addSubview(roundedBackgroundView2)
-        addSubview(currentCoinLabel)
-        addSubview(arrowRightImageView)
-        addSubview(remainingCoinLabel)
+        backgroundViewForMission.addSubview(missionImageView)
+        addSubview(backgroundViewForMission)
+        addSubview(missionLabel)
+        addSubview(missionUnderline)
+        backgroundViewForReward.addSubview(rewardImageView)
+        addSubview(backgroundViewForReward)
+        addSubview(rewardLabel)
+        addSubview(rewardUnderline)
         
         // 現在地の国旗と目的地の国旗をまとめる背景View
         nationalFlagBackgroundView.snp.makeConstraints {
@@ -193,7 +208,7 @@ class TicketView: UIView {
         }
         
         // 距離アイコンとコインアイコンをまとめる背景View
-        roundedBackgroundView1.snp.makeConstraints {
+        backgroundViewForDistanceAndCoin.snp.makeConstraints {
             $0.left.equalToSuperview().inset(dashPointX + dashWidth + UIConstants.Layout.standardPadding)
             $0.right.equalTo(coinImageView).offset(UIConstants.Layout.semiSmallPadding)
             $0.height.equalTo(35)
@@ -223,49 +238,87 @@ class TicketView: UIView {
         
         // 距離とコインの値
         distanceAndCoinValueLabel.snp.makeConstraints {
-            $0.left.equalTo(roundedBackgroundView1.snp.right).offset(UIConstants.Layout.standardPadding)
+            $0.left.equalTo(backgroundViewForDistanceAndCoin.snp.right).offset(UIConstants.Layout.standardPadding)
             $0.centerY.equalTo(distanceImageView).offset(3) // 微調整
         }
-       
-        // 目的地labelと地域・国label
-        stackView.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.left.equalTo(distanceImageView)
-            $0.right.equalToSuperview().inset(UIConstants.Layout.standardPadding)
+        
+        // 距離とアイコンの下線
+        distanceAndCoinUnderline.snp.makeConstraints {
+            $0.height.equalTo(3)
+            $0.bottom.equalTo(backgroundViewForDistanceAndCoin)
+            $0.left.equalTo(backgroundViewForDistanceAndCoin.snp.centerX)
+            $0.right.equalTo(distanceAndCoinValueLabel)
         }
-       
+        
         // 目的地label
         destinationLabel.snp.makeConstraints {
-            $0.right.left.equalToSuperview()
-            $0.bottom.equalTo(regionLabel.snp.top)
+            $0.top.equalTo(backgroundViewForDistanceAndCoin.snp.bottom).inset(-UIConstants.Layout.standardPadding)
+            $0.left.equalToSuperview().inset(dashPointX + dashWidth + UIConstants.Layout.standardPadding)
+            $0.right.equalToSuperview().inset(UIConstants.Layout.smallPadding)
         }
         
         // 地域・国label
         regionLabel.snp.makeConstraints {
-            $0.right.left.equalToSuperview()
-            $0.bottom.equalToSuperview()
+            $0.top.equalTo(destinationLabel.snp.bottom)
+            $0.right.left.equalTo(destinationLabel)
+            $0.bottom.equalTo(backgroundViewForMission.snp.top).inset(-UIConstants.Layout.standardPadding)
         }
         
-        // お財布アイコンの背景View
-        roundedBackgroundView2.snp.makeConstraints {
+        // ミッションアイコン背景View
+        backgroundViewForMission.snp.makeConstraints {
+            $0.size.equalTo(35)
+            $0.left.equalToSuperview().inset(dashPointX + dashWidth + UIConstants.Layout.standardPadding)
+            $0.bottom.equalTo(backgroundViewForReward.snp.top).offset(-UIConstants.Layout.semiSmallPadding)
+        }
+        
+        // ミッションアイコン
+        missionImageView.snp.makeConstraints {
+            $0.size.equalTo(20)
+            $0.center.equalToSuperview()
+        }
+        
+        // ミッションlabel
+        missionLabel.snp.makeConstraints {
+            $0.bottom.equalTo(backgroundViewForMission)
+            $0.left.equalTo(backgroundViewForMission.snp.right).offset(UIConstants.Layout.standardPadding)
+        }
+        
+        // ミッションの下線
+        missionUnderline.snp.makeConstraints {
+            $0.height.equalTo(3)
+            $0.bottom.equalTo(backgroundViewForMission)
+            $0.left.equalTo(backgroundViewForMission.snp.centerX)
+            $0.right.equalTo(missionLabel)
+        }
+        
+        // 報酬アイコン背景View
+        backgroundViewForReward.snp.makeConstraints {
             $0.size.equalTo(35)
             $0.left.equalToSuperview().inset(dashPointX + dashWidth + UIConstants.Layout.standardPadding)
             $0.bottom.equalToSuperview().inset(UIConstants.Layout.semiStandardPadding)
         }
         
-        // お財布アイコン
-        walletImageView.snp.makeConstraints {
-            $0.size.equalTo(20)
+        // 報酬アイコン
+        rewardImageView.snp.makeConstraints {
+            $0.size.equalTo(25)
             $0.center.equalToSuperview()
         }
         
-        // 現在の所持金
-        currentCoinLabel.snp.makeConstraints {
-            $0.bottom.equalTo(roundedBackgroundView2)
-            $0.left.equalTo(roundedBackgroundView2.snp.right).offset(UIConstants.Layout.standardPadding)
+        // 報酬label
+        rewardLabel.snp.makeConstraints {
+            $0.bottom.equalTo(backgroundViewForReward)
+            $0.left.equalTo(backgroundViewForReward.snp.right).offset(UIConstants.Layout.standardPadding)
+        }
+        
+        // ミッションの下線
+        rewardUnderline.snp.makeConstraints {
+            $0.height.equalTo(3)
+            $0.bottom.equalTo(backgroundViewForReward)
+            $0.left.equalTo(backgroundViewForReward.snp.centerX)
+            $0.right.equalTo(missionLabel)
         }
     }
-
+    
     override func draw(_ rect: CGRect) {
         super.draw(rect)
         
@@ -284,10 +337,10 @@ extension TicketView {
         
         // ダッシュの数 + 1（最下辺まで表示させる）
         let numberOfDashes = Int(rect.height / (dashHeight + dashSpacing) + 1)
-
+        
         for i in 0..<numberOfDashes {
             let yPosition = CGFloat(i) * (dashHeight + dashSpacing)
-
+            
             let dashRect = CGRect(x: dashPointX, // X位置を中央に調整
                                   y: yPosition,
                                   width: dashWidth,

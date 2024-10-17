@@ -67,7 +67,7 @@ class DepartViewController: UIViewController {
         }
         
         departView.snp.makeConstraints {
-            $0.height.equalToSuperview().multipliedBy(0.85)
+            $0.height.equalToSuperview().multipliedBy(0.75)
             $0.right.left.equalToSuperview()
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
         }
@@ -114,3 +114,19 @@ extension DepartViewController {
         return .portrait
     }
 }
+
+
+struct ViewControllerPreview: PreviewProvider {
+    struct Wrapper: UIViewControllerRepresentable {
+        func makeUIViewController(context: Context) -> some UIViewController {
+            DepartViewController()
+        }
+        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+        }
+    }
+    static var previews: some View {
+        Wrapper()
+    }
+}
+
+

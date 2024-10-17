@@ -54,7 +54,7 @@ class DepartView: UIView {
         let stackView = UIStackView(arrangedSubviews: [createChevronImageView(), createChevronImageView(), createChevronImageView()])
         stackView.axis = .vertical
         stackView.alignment = .center
-        stackView.spacing = UIConstants.Layout.extraSmallPadding
+        stackView.spacing = 0
         return stackView
     }()
     
@@ -79,6 +79,39 @@ class DepartView: UIView {
     // チケット
     private let ticketFrame: TicketView = TicketView()
     
+    // お財布アイコンの背景View
+    private let backgroundViewForWallet: UIView = UIView().then {
+        $0.backgroundColor = UIColor(red: 240/255, green: 224/255, blue: 207/255, alpha: 1)
+        $0.layer.cornerRadius = 35 / 2
+    }
+    
+    // お財布のアイコン
+    private let walletImageView: UIImageView = UIImageView().then {
+        $0.image = UIImage(named: "wallet")
+    }
+    
+    // ユーザーが持つ現在の所持金
+    private let currentCoinLabel: UILabel = UILabel().then {
+        $0.textColor = .darkGray
+        $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.large)
+        $0.text = "1000000"
+    }
+    
+    // 右矢印アイコン
+    private let arrowRightImageView: UIImageView = UIImageView().then {
+        let configuration = UIImage.SymbolConfiguration(weight: .bold)
+        $0.image = UIImage(systemName: "arrowtriangle.forward", withConfiguration: configuration)
+        $0.tintColor = .lightGray
+    }
+    
+    // 旅費支払い後の残高
+    private let remainingCoinLabel: UILabel = UILabel().then {
+        $0.textColor = .darkGray
+        $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.large)
+        $0.text = "81900"
+        $0.textColor = .orange
+    }
+    
     public init(toStudyRoomVC: @escaping () -> Void) {
         self.toStudyRoomVC = toStudyRoomVC
         super.init(frame: .zero)
@@ -94,6 +127,13 @@ class DepartView: UIView {
         knobBackgroundView.addSubview(chevronStackView)
         knobBackgroundView.addSubview(knobImageButton)
         addSubview(ticketFrame)
+        backgroundViewForWallet.addSubview(walletImageView)
+        addSubview(backgroundViewForWallet)
+        addSubview(currentCoinLabel)
+        addSubview(arrowRightImageView)
+        addSubview(remainingCoinLabel)
+        
+       
         
         ticketView.snp.makeConstraints {
             $0.height.equalToSuperview().multipliedBy(0.75)
@@ -125,14 +165,39 @@ class DepartView: UIView {
         }
         
         chevronStackView.snp.makeConstraints {
-            $0.center.equalToSuperview()  // knobBackgroundViewの中心
+            $0.center.equalToSuperview()
         }
         
         ticketFrame.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.centerY.equalTo(ticketView.snp.bottom)
             $0.horizontalEdges.equalToSuperview().inset(UIConstants.Layout.largePadding)
-            $0.height.equalTo(227)
+        }
+        
+        backgroundViewForWallet.snp.makeConstraints {
+            $0.size.equalTo(35)
+            $0.top.equalTo(ticketFrame.snp.bottom).offset(UIConstants.Layout.standardPadding)
+            $0.left.equalTo(ticketFrame).inset(UIConstants.Layout.standardPadding)
+        }
+        
+        walletImageView.snp.makeConstraints {
+            $0.center.equalToSuperview()
+            $0.size.equalTo(20)
+        }
+        
+        currentCoinLabel.snp.makeConstraints {
+            $0.bottom.equalTo(backgroundViewForWallet)
+            $0.left.equalTo(backgroundViewForWallet.snp.right).offset(UIConstants.Layout.standardPadding)
+        }
+        
+        arrowRightImageView.snp.makeConstraints {
+            $0.top.equalTo(currentCoinLabel)
+            $0.left.equalTo(currentCoinLabel.snp.right).offset(UIConstants.Layout.standardPadding)
+        }
+        
+        remainingCoinLabel.snp.makeConstraints {
+            $0.bottom.equalTo(backgroundViewForWallet)
+            $0.left.equalTo(arrowRightImageView.snp.right).offset(UIConstants.Layout.standardPadding)
         }
     }
     

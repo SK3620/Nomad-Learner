@@ -4,6 +4,7 @@ Pods/*
 GoogleService-Info.plist
 
 APIKeys.swift
+GoogleMapID.swift
 
 .DS_Store
 

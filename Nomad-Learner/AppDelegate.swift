@@ -10,6 +10,7 @@ import FirebaseCore
 import FirebaseFirestore
 import FirebaseAuth
 import FirebaseAuthUI
+import GoogleMaps
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -24,6 +25,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UILabel.appearance().substituteFontName = "AppleSDGothicNeo-Bold"
         // 指定したフォントを全画面のUITextFieldに適用
         UITextField.appearance().substituteFontName = "AppleSDGothicNeo-Bold"
+        
+        // GoogleMapSDKとiOSとの紐付け
+        let googleMapAPIKey = APIKeys.googleMapAPIKey
+        GMSServices.provideAPIKey(googleMapAPIKey)
                 
         return true
     }

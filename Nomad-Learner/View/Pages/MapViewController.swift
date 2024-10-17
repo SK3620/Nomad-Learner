@@ -9,12 +9,17 @@ import UIKit
 import SwiftUI
 import RxSwift
 import RxCocoa
+import GoogleMaps
+import CoreLocation
 
 class MapViewController: UIViewController {
     
     private lazy var navigationBoxBar: NavigationBoxBar = NavigationBoxBar()
     
     private lazy var locationDetailView: LocationDetailView = LocationDetailView()
+    
+    // マップ
+    private var mapView: MapView!
     
     // タブバー
     private lazy var mapTabBar: MapTabBar = MapTabBar()
@@ -70,7 +75,6 @@ class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // UIのセットアップ
         setupUI()
         // viewModelとのバインディング
@@ -89,11 +93,16 @@ class MapViewController: UIViewController {
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
         
+        // マップのセットアップ
+        let options = GMSMapViewOptions()
+        self.mapView = MapView(options: options)
+        
         // ナビゲーションバーボタンアイテムの設定
         navigationItem.leftBarButtonItem = backBarButtonItem
         navigationItem.rightBarButtonItem = profileBarButtonItem
         navigationItem.titleView = walletStackView
         
+        view.addSubview(mapView)
         view.addSubview(navigationBoxBar)
         view.addSubview(locationDetailView)
         view.addSubview(mapTabBar)
@@ -101,6 +110,11 @@ class MapViewController: UIViewController {
         navigationBoxBar.snp.makeConstraints {
             $0.width.top.equalToSuperview()
             $0.height.equalTo(180)
+        }
+        
+        mapView.snp.makeConstraints {
+            $0.top.equalTo(navigationBoxBar.snp.bottom).inset(UIConstants.Layout.semiMediumPadding)
+            $0.right.left.bottom.equalToSuperview()
         }
                 
         locationDetailView.snp.makeConstraints {
@@ -180,7 +194,7 @@ extension MapViewController {
 struct ViewControllerPreview: PreviewProvider {
     struct Wrapper: UIViewControllerRepresentable {
         func makeUIViewController(context: Context) -> some UIViewController {
-            UINavigationController(rootViewController: MapViewController())
+            NavigationControllerForMapVC(rootViewController: MapViewController())
         }
         func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
         }

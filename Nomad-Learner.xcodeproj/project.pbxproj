@@ -78,6 +78,8 @@
 		83C5E1332CBF851D001C27E1 /* NavigationControllerForAuthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C5E1322CBF851D001C27E1 /* NavigationControllerForAuthVC.swift */; };
 		83C5E1352CBFB019001C27E1 /* OnFlightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C5E1342CBFB019001C27E1 /* OnFlightViewController.swift */; };
 		83C5E13C2CBFBCC2001C27E1 /* OnFlightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C5E13B2CBFBCC2001C27E1 /* OnFlightView.swift */; };
+		83C5E13E2CC0BEFC001C27E1 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C5E13D2CC0BEFC001C27E1 /* MapView.swift */; };
+		83C5E1422CC0C0EF001C27E1 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C5E1412CC0C0EF001C27E1 /* APIKeys.swift */; };
 		83C9F3B42CA85BC300CF0D73 /* SeparatorWithLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C9F3B32CA85BC300CF0D73 /* SeparatorWithLabelView.swift */; };
 		83C9F3B62CA907B900CF0D73 /* ColorCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C9F3B52CA907B900CF0D73 /* ColorCodes.swift */; };
 		83C9F3BA2CA9161300CF0D73 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C9F3B92CA9161300CF0D73 /* UITextField.swift */; };
@@ -161,6 +163,8 @@
 		83C5E1322CBF851D001C27E1 /* NavigationControllerForAuthVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationControllerForAuthVC.swift; sourceTree = "<group>"; };
 		83C5E1342CBFB019001C27E1 /* OnFlightViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnFlightViewController.swift; sourceTree = "<group>"; };
 		83C5E13B2CBFBCC2001C27E1 /* OnFlightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnFlightView.swift; sourceTree = "<group>"; };
+		83C5E13D2CC0BEFC001C27E1 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		83C5E1412CC0C0EF001C27E1 /* APIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
 		83C9F3B32CA85BC300CF0D73 /* SeparatorWithLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorWithLabelView.swift; sourceTree = "<group>"; };
 		83C9F3B52CA907B900CF0D73 /* ColorCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCodes.swift; sourceTree = "<group>"; };
 		83C9F3B92CA9161300CF0D73 /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
@@ -263,6 +267,7 @@
 		835BD2EF2CA413560088CA02 /* Nomad-Learner */ = {
 			isa = PBXGroup;
 			children = (
+				83C5E1402CC0C0DE001C27E1 /* APIKeys */,
 				836180E42CBB81C80059937E /* ScreenSizeProvidable */,
 				837DE58C2CBA2FB200819964 /* SafeAreaHeightProvidable */,
 				83AFB3AF2CB2B6F900501FEE /* NavigationHeightProvidable */,
@@ -405,6 +410,7 @@
 			isa = PBXGroup;
 			children = (
 				83AFB3A72CB1A94400501FEE /* MapTabBar.swift */,
+				83C5E13D2CC0BEFC001C27E1 /* MapView.swift */,
 				83AFB3AB2CB29AC500501FEE /* NavigationBoxBar.swift */,
 				83AFB3AD2CB2ABD300501FEE /* LocationDetailView.swift */,
 				83A6D7B62CB4D3CF00D18A30 /* LocationCategoryCollectionView.swift */,
@@ -429,6 +435,14 @@
 				83C5E13B2CBFBCC2001C27E1 /* OnFlightView.swift */,
 			);
 			path = OnFlight;
+			sourceTree = "<group>";
+		};
+		83C5E1402CC0C0DE001C27E1 /* APIKeys */ = {
+			isa = PBXGroup;
+			children = (
+				83C5E1412CC0C0EF001C27E1 /* APIKeys.swift */,
+			);
+			path = APIKeys;
 			sourceTree = "<group>";
 		};
 		83C9F3B82CA915EF00CF0D73 /* Extension */ = {
@@ -637,7 +651,9 @@
 				83AFB3AA2CB2902C00501FEE /* UIView.swift in Sources */,
 				83C9F3B42CA85BC300CF0D73 /* SeparatorWithLabelView.swift in Sources */,
 				838753E42CB00A4B001EE8F1 /* MapViewController.swift in Sources */,
+				83C5E1422CC0C0EF001C27E1 /* APIKeys.swift in Sources */,
 				83A6D7B92CB56C7400D18A30 /* KeyChainManager.swift in Sources */,
+				83C5E13E2CC0BEFC001C27E1 /* MapView.swift in Sources */,
 				83C5E1312CBF7AFE001C27E1 /* NavigationControllerForMapVC.swift in Sources */,
 				83A6D7B72CB4D3CF00D18A30 /* LocationCategoryCollectionView.swift in Sources */,
 				836180E62CBB81E80059937E /* ScreenSizeProvidable.swift in Sources */,

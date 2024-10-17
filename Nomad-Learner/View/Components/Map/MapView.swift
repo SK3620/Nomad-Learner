@@ -6,15 +6,33 @@
 //
 
 import UIKit
+import GoogleMaps
 
-class MapView: UIView {
-
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+class MapView: GMSMapView {
+        
+    override init(options: GMSMapViewOptions) {
+        let mapID = GMSMapID(identifier: "dd08da584c0df7f7")
+        let camera = GMSCameraPosition(latitude: 47.0169, longitude: -122.336471, zoom: 12)
+        options.mapID = mapID
+        options.camera = camera
+        super.init(options: options)
     }
-    */
-
+    
+    private func setupMap() {
+    }
+   
+    /*
+    private func setupMap() {
+        // Set initial camera position to Sydney, Australia
+        let sydney = CLLocationCoordinate2D(latitude: -33.8688, longitude: 151.2093)
+        let camera = GMSCameraPosition.camera(withTarget: sydney, zoom: 10)
+        self.camera = camera
+        
+        // Create and add a marker at Sydney
+        let marker = GMSMarker(position: sydney)
+        marker.title = "Sydney"
+        marker.snippet = "Australia"
+        marker.map = self
+    }
+     */
 }

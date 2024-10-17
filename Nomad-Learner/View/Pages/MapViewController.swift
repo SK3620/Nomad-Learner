@@ -27,7 +27,7 @@ class MapViewController: UIViewController {
     }
     // プロフィール画面遷移ボタン
     private lazy var profileBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person"), style: .plain, target: nil, action: nil).then {
-        $0.tintColor = .lightGray
+        $0.tintColor = ColorCodes.primaryPurple.color()
     }
     
     // お財布アイコンと所持金ラベルのスタックビュー
@@ -176,17 +176,16 @@ extension MapViewController {
         return .portrait
     }
 }
-/*
- struct ViewControllerPreview: PreviewProvider {
- struct Wrapper: UIViewControllerRepresentable {
- func makeUIViewController(context: Context) -> some UIViewController {
- UINavigationController(rootViewController: MapViewController())
- }
- func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
- }
- }
- static var previews: some View {
- Wrapper()
- }
- }
- */
+
+struct ViewControllerPreview: PreviewProvider {
+    struct Wrapper: UIViewControllerRepresentable {
+        func makeUIViewController(context: Context) -> some UIViewController {
+            UINavigationController(rootViewController: MapViewController())
+        }
+        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+        }
+    }
+    static var previews: some View {
+        Wrapper()
+    }
+}

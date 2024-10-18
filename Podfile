@@ -24,4 +24,5 @@ pod 'FirebaseUI/Auth', '~> 14.2.0'
 pod 'FirebaseUI/Google', '~> 14.2.0'
 pod 'FirebaseUI/Facebook', '~> 14.2.0'
 pod 'FirebaseUI/OAuth', '~> 14.2.0'
+pod 'Google-Maps-iOS-Utils', '6.0.0'
 end

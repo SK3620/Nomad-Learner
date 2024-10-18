@@ -173,6 +173,8 @@ PODS:
     - FirebasePhoneAuthUI (~> 14.2)
   - FirebaseUI/Storage (14.2.0):
     - FirebaseStorageUI (~> 14.2)
+  - Google-Maps-iOS-Utils (6.0.0):
+    - GoogleMaps (~> 9.0)
   - GoogleAppMeasurement (11.2.0):
     - GoogleAppMeasurement/AdIdSupport (= 11.2.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 8.0)
@@ -268,6 +270,7 @@ DEPENDENCIES:
   - FirebaseUI/Facebook (~> 14.2.0)
   - FirebaseUI/Google (~> 14.2.0)
   - FirebaseUI/OAuth (~> 14.2.0)
+  - Google-Maps-iOS-Utils (= 6.0.0)
   - GoogleMaps (~> 9.1.1)
   - KRProgressHUD (~> 3.4.8)
   - RxCocoa (~> 6.5.0)
@@ -312,6 +315,7 @@ SPEC REPOS:
     - FirebaseStorage
     - FirebaseStorageUI
     - FirebaseUI
+    - Google-Maps-iOS-Utils
     - GoogleAppMeasurement
     - GoogleMaps
     - GoogleSignIn
@@ -378,6 +382,7 @@ SPEC CHECKSUMS:
   FirebaseStorage: 9353f926690b2329957860abfcbc8b4074fe45e8
   FirebaseStorageUI: 22fcea916105f65d47d38a3108b540282cab229d
   FirebaseUI: 3909853fc34f316c822e195376f144b1b0c6ca15
+  Google-Maps-iOS-Utils: cfe6a0239c7ca634b7e001ad059a6707143dc8dc
   GoogleAppMeasurement: 76d4f8b36b03bd8381fa9a7fe2cc7f99c0a2e93a
   GoogleMaps: 80ea184ed6bf44139f383a8b0e248ba3ec1cc8c9
   GoogleSignIn: d4281ab6cf21542b1cfaff85c191f230b399d2db
@@ -397,6 +402,6 @@ SPEC CHECKSUMS:
   SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
   Then: 844265ae87834bbe1147d91d5d41a404da2ec27d
 
-PODFILE CHECKSUM: f7e9355d7e8870df9544b359530b3aa8400c8fee
+PODFILE CHECKSUM: b51f01a351ec762fb4637eac57a87c761f222772
 
 COCOAPODS: 1.15.2

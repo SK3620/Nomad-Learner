@@ -10,6 +10,8 @@
 		8304A0E22CA5123300061B33 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8304A0E12CA5123300061B33 /* AuthViewController.swift */; };
 		8304A0E42CA5437800061B33 /* GoogleService-Info-Nomad-LearnerDev.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8304A0E32CA5437800061B33 /* GoogleService-Info-Nomad-LearnerDev.plist */; };
 		8304A0E62CA546F700061B33 /* GoogleService-Info-Nomad-Learner.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8304A0E52CA546F700061B33 /* GoogleService-Info-Nomad-Learner.plist */; };
+		831E5C6F2CC13205001A90C4 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831E5C6E2CC13205001A90C4 /* Location.swift */; };
+		831E5C712CC136E0001A90C4 /* GoogleMapID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831E5C702CC136E0001A90C4 /* GoogleMapID.swift */; };
 		835BD2F12CA413560088CA02 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835BD2F02CA413560088CA02 /* AppDelegate.swift */; };
 		835BD2F32CA413560088CA02 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835BD2F22CA413560088CA02 /* SceneDelegate.swift */; };
 		835BD2FA2CA413570088CA02 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 835BD2F92CA413570088CA02 /* Assets.xcassets */; };
@@ -93,6 +95,8 @@
 		8304A0E12CA5123300061B33 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		8304A0E32CA5437800061B33 /* GoogleService-Info-Nomad-LearnerDev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Nomad-LearnerDev.plist"; sourceTree = "<group>"; };
 		8304A0E52CA546F700061B33 /* GoogleService-Info-Nomad-Learner.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Nomad-Learner.plist"; sourceTree = "<group>"; };
+		831E5C6E2CC13205001A90C4 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		831E5C702CC136E0001A90C4 /* GoogleMapID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapID.swift; sourceTree = "<group>"; };
 		835BD2ED2CA413560088CA02 /* Nomad-Learner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Nomad-Learner.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		835BD2F02CA413560088CA02 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		835BD2F22CA413560088CA02 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -267,7 +271,7 @@
 		835BD2EF2CA413560088CA02 /* Nomad-Learner */ = {
 			isa = PBXGroup;
 			children = (
-				83C5E1402CC0C0DE001C27E1 /* APIKeys */,
+				83C5E1402CC0C0DE001C27E1 /* Identifiers */,
 				836180E42CBB81C80059937E /* ScreenSizeProvidable */,
 				837DE58C2CBA2FB200819964 /* SafeAreaHeightProvidable */,
 				83AFB3AF2CB2B6F900501FEE /* NavigationHeightProvidable */,
@@ -410,13 +414,14 @@
 			isa = PBXGroup;
 			children = (
 				83AFB3A72CB1A94400501FEE /* MapTabBar.swift */,
-				83C5E13D2CC0BEFC001C27E1 /* MapView.swift */,
 				83AFB3AB2CB29AC500501FEE /* NavigationBoxBar.swift */,
 				83AFB3AD2CB2ABD300501FEE /* LocationDetailView.swift */,
 				83A6D7B62CB4D3CF00D18A30 /* LocationCategoryCollectionView.swift */,
 				83A6D7AA2CB3D93E00D18A30 /* LocationLabel.swift */,
 				83A6D7B22CB3F3E100D18A30 /* LocationCategoryCollectionViewCell.swift */,
 				83C5E1302CBF7AFE001C27E1 /* NavigationControllerForMapVC.swift */,
+				83C5E13D2CC0BEFC001C27E1 /* MapView.swift */,
+				831E5C6E2CC13205001A90C4 /* Location.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -437,12 +442,13 @@
 			path = OnFlight;
 			sourceTree = "<group>";
 		};
-		83C5E1402CC0C0DE001C27E1 /* APIKeys */ = {
+		83C5E1402CC0C0DE001C27E1 /* Identifiers */ = {
 			isa = PBXGroup;
 			children = (
 				83C5E1412CC0C0EF001C27E1 /* APIKeys.swift */,
+				831E5C702CC136E0001A90C4 /* GoogleMapID.swift */,
 			);
-			path = APIKeys;
+			path = Identifiers;
 			sourceTree = "<group>";
 		};
 		83C9F3B82CA915EF00CF0D73 /* Extension */ = {
@@ -672,6 +678,7 @@
 				83A6D7D92CB80C8F00D18A30 /* EditProfileView.swift in Sources */,
 				83A6D7AB2CB3D93E00D18A30 /* LocationLabel.swift in Sources */,
 				838753E22CAF9E53001EE8F1 /* AlertEnabled.swift in Sources */,
+				831E5C712CC136E0001A90C4 /* GoogleMapID.swift in Sources */,
 				83A6D7E22CB8F88500D18A30 /* DepartViewModel.swift in Sources */,
 				837DE59A2CBAD8D400819964 /* NavigationControllerForStudyRoomVC.swift in Sources */,
 				83A9C2BE2CA7BF2200898F0B /* CustomAuthPickerViewController.swift in Sources */,
@@ -679,6 +686,7 @@
 				836180E32CBB7E220059937E /* StudyRoomNavigationBar.swift in Sources */,
 				836180F02CBC93900059937E /* Profile.swift in Sources */,
 				838753D62CAC19D1001EE8F1 /* AuthInputValidator.swift in Sources */,
+				831E5C6F2CC13205001A90C4 /* Location.swift in Sources */,
 				838753D42CABFDB7001EE8F1 /* AuthInputValidation.swift in Sources */,
 				83A6D7C62CB682D600D18A30 /* ProfileTopView.swift in Sources */,
 				83C5E1332CBF851D001C27E1 /* NavigationControllerForAuthVC.swift in Sources */,

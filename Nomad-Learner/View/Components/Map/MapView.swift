@@ -7,19 +7,58 @@
 
 import UIKit
 import GoogleMaps
+import GoogleMapsUtils
 
 class MapView: GMSMapView {
+    
+    // GoogleMap ID
+    private let googleMapID = GMSMapID(identifier: GoogleMapID.googleMapID)
+    // 初期位置 縮小具合
+    private let initialCamera = GMSCameraPosition(latitude: 47.0169, longitude: -122.336471, zoom: 12)
+    
+    // location
+    private var locations: [Location] = []
+    // locationのマーカー
+    lazy var markerArray: [GMSMarker] = {
+        return self.addMarkersForLocations()
+    }()
         
     override init(options: GMSMapViewOptions) {
-        let mapID = GMSMapID(identifier: "dd08da584c0df7f7")
-        let camera = GMSCameraPosition(latitude: 47.0169, longitude: -122.336471, zoom: 12)
-        options.mapID = mapID
-        options.camera = camera
+        // セットアップ
+        options.mapID = googleMapID
+        options.camera = initialCamera
         super.init(options: options)
     }
     
-    private func setupMap() {
+    // 場所にマーカーを立てる
+    private func addMarkersForLocations() -> [GMSMarker] {
+        // 登録したlocation全て取得
+        self.locations = Location.all
+        // locationのマーカーを格納
+        var markerArray: [GMSMarker] = []
+        
+        for location in locations {
+            let marker = GMSMarker()
+            marker.position = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
+            marker.icon = GMSMarker.markerImage(with: generateRandomColor())
+            marker.title = location.name
+            marker.snippet = "\(location.region), \(location.country)"
+            // marker.map = self
+            markerArray.append(marker)
+        }
+        
+        return markerArray
     }
+    
+    // ランダムなUIColorを生成する関数
+    private func generateRandomColor() -> UIColor {
+        let red = CGFloat(arc4random_uniform(256)) / 255.0
+        let green = CGFloat(arc4random_uniform(256)) / 255.0
+        let blue = CGFloat(arc4random_uniform(256)) / 255.0
+        return UIColor(red: red, green: green, blue: blue, alpha: 1.0)
+    }
+    
+  
    
     /*
     private func setupMap() {

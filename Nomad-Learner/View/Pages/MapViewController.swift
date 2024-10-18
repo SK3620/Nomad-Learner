@@ -11,8 +11,9 @@ import RxSwift
 import RxCocoa
 import GoogleMaps
 import CoreLocation
+import GoogleMapsUtils
 
-class MapViewController: UIViewController {
+class MapViewController: UIViewController, GMSMapViewDelegate {
     
     private lazy var navigationBoxBar: NavigationBoxBar = NavigationBoxBar()
     
@@ -20,6 +21,8 @@ class MapViewController: UIViewController {
     
     // マップ
     private var mapView: MapView!
+    // マーカーのクラスタリング
+    private var clusterManager: GMUClusterManager!
     
     // タブバー
     private lazy var mapTabBar: MapTabBar = MapTabBar()
@@ -75,16 +78,29 @@ class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // マップのセットアップ
+        setupMap()
         // UIのセットアップ
         setupUI()
         // viewModelとのバインディング
         bind()
     }
     
-    override func viewDidLayoutSubviews() {
-        // 子ビューのレイアウト完了後にcollectionViewのitemSizeを決定する
-        let layout = locationDetailView.locationCategoryCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
-        layout.itemSize = CGSize(width: locationDetailView.bounds.width / 4, height: locationDetailView.bounds.height / 2)
+    private func setupMap() {
+        // マップのセットアップ
+        let options = GMSMapViewOptions()
+        self.mapView = MapView(options: options)
+        
+        // クラスター管理の初期化
+        let iconGenerator = GMUDefaultClusterIconGenerator()
+        let algorithm = GMUNonHierarchicalDistanceBasedAlgorithm()
+        let renderer = GMUDefaultClusterRenderer(mapView: mapView, clusterIconGenerator: iconGenerator)
+        clusterManager = GMUClusterManager(map: mapView, algorithm: algorithm, renderer: renderer)
+        // MapViewDelegate設定
+        clusterManager.setMapDelegate(self)
+        // 全てのlocationのマーカーを追加
+        clusterManager.add(mapView.markerArray)
+        clusterManager.cluster()
     }
     
     private func setupUI() {
@@ -92,10 +108,6 @@ class MapViewController: UIViewController {
         // ナビゲーションバーの設定
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
-        
-        // マップのセットアップ
-        let options = GMSMapViewOptions()
-        self.mapView = MapView(options: options)
         
         // ナビゲーションバーボタンアイテムの設定
         navigationItem.leftBarButtonItem = backBarButtonItem
@@ -116,7 +128,7 @@ class MapViewController: UIViewController {
             $0.top.equalTo(navigationBoxBar.snp.bottom).inset(UIConstants.Layout.semiMediumPadding)
             $0.right.left.bottom.equalToSuperview()
         }
-                
+        
         locationDetailView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.width.equalToSuperview().inset(UIConstants.Layout.standardPadding)
@@ -129,6 +141,12 @@ class MapViewController: UIViewController {
             $0.horizontalEdges.equalToSuperview().inset(UIConstants.Layout.standardPadding)
             $0.bottom.equalToSuperview().inset(UIConstants.Layout.semiMediumPadding)
         }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        // 子ビューのレイアウト完了後にcollectionViewのitemSizeを決定する
+        let layout = locationDetailView.locationCategoryCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        layout.itemSize = CGSize(width: locationDetailView.bounds.width / 4, height: locationDetailView.bounds.height / 2)
     }
 }
 
@@ -179,6 +197,10 @@ extension MapViewController {
             })
             .disposed(by: disposeBag)
     }
+}
+
+extension MapViewController {
+    
 }
 
 extension MapViewController {

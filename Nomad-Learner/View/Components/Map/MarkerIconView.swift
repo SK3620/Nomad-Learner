@@ -15,11 +15,22 @@ class MarkerIconView: UIView {
         $0.tintColor = .red
     }
     
-    // チェックアイコン
+    // チェックアイコン（完了）
     private let checkmarkImageView: UIImageView = UIImageView().then {
         let configuration = UIImage.SymbolConfiguration(weight: .bold)
-        $0.image = UIImage(systemName: "checkmark", withConfiguration: configuration)
-        $0.tintColor = .green
+        $0.image = UIImage(systemName: "checkmark.circle.fill", withConfiguration: configuration)
+        $0.tintColor = UIColor(red: 0.0/255.0, green: 100.0/255.0, blue: 0.0/255.0, alpha: 1.0)
+        $0.backgroundColor = .white
+        $0.layer.cornerRadius = 7
+    }
+    
+    // マイナスアイコン（途中）
+    private let minusImageView: UIImageView = UIImageView().then {
+        let configuration = UIImage.SymbolConfiguration(weight: .bold)
+        $0.image = UIImage(systemName: "minus.circle.fill", withConfiguration: configuration)
+        $0.tintColor = .yellow
+        $0.backgroundColor = .black
+        $0.layer.cornerRadius = 7
     }
     
     // 人のアイコン
@@ -28,7 +39,7 @@ class MarkerIconView: UIView {
         $0.tintColor = .black
     }
     
-    // 人数
+    // 勉強中の人数
     private let peopleCountLabel: UILabel = UILabel().then {
         $0.textColor = .black
         $0.text = "20"
@@ -40,19 +51,27 @@ class MarkerIconView: UIView {
         
         addSubview(markerIconImageView)
         addSubview(checkmarkImageView)
+//        addSubview(minusImageView)
 //        addSubview(personImageView)
         addSubview(peopleCountLabel)
         
         markerIconImageView.snp.makeConstraints {
             $0.left.top.equalToSuperview()
-            $0.size.equalTo(24)
+            $0.size.equalTo(30)
         }
         
         checkmarkImageView.snp.makeConstraints {
-            $0.size.equalTo(24)
-            $0.center.equalTo(markerIconImageView)
+            $0.size.equalTo(14)
+            $0.left.equalTo(markerIconImageView.snp.right)
+            $0.top.equalTo(markerIconImageView)
         }
         
+//        minusImageView.snp.makeConstraints {
+//            $0.size.equalTo(14)
+//            $0.left.equalTo(markerIconImageView.snp.right)
+//            $0.top.equalTo(markerIconImageView)
+//        }
+                
 //        personImageView.snp.makeConstraints {
 //            $0.bottom.equalTo(markerIconImageView.snp.bottom)
 //            $0.left.equalTo(markerIconImageView.snp.right)

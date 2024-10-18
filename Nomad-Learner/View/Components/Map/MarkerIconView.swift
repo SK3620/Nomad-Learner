@@ -15,6 +15,13 @@ class MarkerIconView: UIView {
         $0.tintColor = .red
     }
     
+    // チェックアイコン
+    private let checkmarkImageView: UIImageView = UIImageView().then {
+        let configuration = UIImage.SymbolConfiguration(weight: .bold)
+        $0.image = UIImage(systemName: "checkmark", withConfiguration: configuration)
+        $0.tintColor = .green
+    }
+    
     // 人のアイコン
     private let personImageView: UIImageView = UIImageView().then {
         $0.image = UIImage(systemName: "person")
@@ -32,12 +39,18 @@ class MarkerIconView: UIView {
         super.init(frame: frame)
         
         addSubview(markerIconImageView)
+        addSubview(checkmarkImageView)
 //        addSubview(personImageView)
         addSubview(peopleCountLabel)
         
         markerIconImageView.snp.makeConstraints {
             $0.left.top.equalToSuperview()
             $0.size.equalTo(24)
+        }
+        
+        checkmarkImageView.snp.makeConstraints {
+            $0.size.equalTo(24)
+            $0.center.equalTo(markerIconImageView)
         }
         
 //        personImageView.snp.makeConstraints {

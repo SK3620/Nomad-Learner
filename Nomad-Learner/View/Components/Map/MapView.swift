@@ -14,7 +14,7 @@ class MapView: GMSMapView {
     // GoogleMap ID
     private let googleMapID = GMSMapID(identifier: GoogleMapID.googleMapID)
     // 初期位置 縮小具合
-    private let initialCamera = GMSCameraPosition(latitude: 47.0169, longitude: -122.336471, zoom: 12)
+    private let initialCamera = GMSCameraPosition(latitude: -33.857, longitude: 151.215, zoom: 1.0)
     
     // location
     private var locations: [Location] = []
@@ -22,7 +22,7 @@ class MapView: GMSMapView {
     lazy var markerArray: [GMSMarker] = {
         return self.addMarkersForLocations()
     }()
-        
+    
     override init(options: GMSMapViewOptions) {
         // セットアップ
         options.mapID = googleMapID
@@ -40,10 +40,8 @@ class MapView: GMSMapView {
         for location in locations {
             let marker = GMSMarker()
             marker.position = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
-            marker.icon = GMSMarker.markerImage(with: generateRandomColor())
-            marker.title = location.name
-            marker.snippet = "\(location.region), \(location.country)"
-            // marker.map = self
+            let markerIconView = MarkerIconView(frame: CGRect(origin: .zero, size: CGSize(width: 40, height: 30) ))
+            marker.iconView = markerIconView
             markerArray.append(marker)
         }
         
@@ -57,21 +55,4 @@ class MapView: GMSMapView {
         let blue = CGFloat(arc4random_uniform(256)) / 255.0
         return UIColor(red: red, green: green, blue: blue, alpha: 1.0)
     }
-    
-  
-   
-    /*
-    private func setupMap() {
-        // Set initial camera position to Sydney, Australia
-        let sydney = CLLocationCoordinate2D(latitude: -33.8688, longitude: 151.2093)
-        let camera = GMSCameraPosition.camera(withTarget: sydney, zoom: 10)
-        self.camera = camera
-        
-        // Create and add a marker at Sydney
-        let marker = GMSMarker(position: sydney)
-        marker.title = "Sydney"
-        marker.snippet = "Australia"
-        marker.map = self
-    }
-     */
 }

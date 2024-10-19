@@ -105,13 +105,21 @@ class TicketView: UIView {
     }
     
     // ミッションのアイコン
-    private let missionImageView: UIImageView = UIImageView(image: UIImage(named: "Quest"))
+    private let missionImageView: UIImageView = UIImageView(image: UIImage(named: "Study2"))
     
     // ミッションlabel
     private let missionLabel: UILabel = UILabel().then {
+        $0.textColor = .black
+        $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.semiSuperLarge)
+        $0.text = "21 "
+    }
+    
+    // ミッションサブlabel
+    private let missionSubLabel: UILabel = UILabel().then {
         $0.textColor = .darkGray
-        $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.large)
-        $0.text = "total 21h study"
+        $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.semiMedium)
+        $0.text = "/ 30 hours"
+        $0.textAlignment = .right
     }
     
     // ミッション下線
@@ -130,9 +138,10 @@ class TicketView: UIView {
     
     // 報酬label
     private let rewardLabel: UILabel = UILabel().then {
-        $0.textColor = .yellow
-        $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.large)
+        $0.textColor = .black
+        $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.semiSuperLarge)
         $0.text = "22500＋"
+        $0.textAlignment = .left
     }
     
     // 報酬の下線
@@ -174,6 +183,7 @@ class TicketView: UIView {
         backgroundViewForMission.addSubview(missionImageView)
         addSubview(backgroundViewForMission)
         addSubview(missionLabel)
+        addSubview(missionSubLabel)
         addSubview(missionUnderline)
         backgroundViewForReward.addSubview(rewardImageView)
         addSubview(backgroundViewForReward)
@@ -273,7 +283,7 @@ class TicketView: UIView {
         
         // ミッションアイコン
         missionImageView.snp.makeConstraints {
-            $0.size.equalTo(20)
+            $0.size.equalTo(25)
             $0.center.equalToSuperview()
         }
         
@@ -283,12 +293,19 @@ class TicketView: UIView {
             $0.left.equalTo(backgroundViewForMission.snp.right).offset(UIConstants.Layout.standardPadding)
         }
         
+        // ミッションサブlabel
+        missionSubLabel.snp.makeConstraints {
+            $0.left.equalTo(missionLabel.snp.right)
+            $0.bottom.equalTo(missionLabel).inset(3) // 微調整
+            $0.right.equalToSuperview().inset(UIConstants.Layout.standardPadding)
+        }
+        
         // ミッションの下線
         missionUnderline.snp.makeConstraints {
             $0.height.equalTo(3)
             $0.bottom.equalTo(backgroundViewForMission)
             $0.left.equalTo(backgroundViewForMission.snp.centerX)
-            $0.right.equalTo(missionLabel)
+            $0.right.equalTo(missionSubLabel)
         }
         
         // 報酬アイコン背景View
@@ -308,6 +325,7 @@ class TicketView: UIView {
         rewardLabel.snp.makeConstraints {
             $0.bottom.equalTo(backgroundViewForReward)
             $0.left.equalTo(backgroundViewForReward.snp.right).offset(UIConstants.Layout.standardPadding)
+            $0.right.equalToSuperview().inset(UIConstants.Layout.standardPadding)
         }
         
         // ミッションの下線
@@ -315,7 +333,7 @@ class TicketView: UIView {
             $0.height.equalTo(3)
             $0.bottom.equalTo(backgroundViewForReward)
             $0.left.equalTo(backgroundViewForReward.snp.centerX)
-            $0.right.equalTo(missionLabel)
+            $0.right.equalTo(rewardLabel)
         }
     }
     

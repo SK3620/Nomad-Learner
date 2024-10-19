@@ -133,7 +133,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
             $0.centerX.equalToSuperview()
             $0.width.equalToSuperview().inset(UIConstants.Layout.standardPadding)
             $0.top.equalToSuperview().inset(NavigationHeightProvidable.totalTopBarHeight(navigationController: navigationController))
-            $0.height.equalTo(180)
+            $0.height.equalTo(195)
         }
         
         mapTabBar.snp.makeConstraints {

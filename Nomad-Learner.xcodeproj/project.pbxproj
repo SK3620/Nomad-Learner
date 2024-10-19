@@ -14,6 +14,10 @@
 		831E5C712CC136E0001A90C4 /* GoogleMapID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831E5C702CC136E0001A90C4 /* GoogleMapID.swift */; };
 		831E5C732CC271EF001A90C4 /* MarkerIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831E5C722CC271EF001A90C4 /* MarkerIconView.swift */; };
 		831E5C752CC2740A001A90C4 /* MarkerInfoWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831E5C742CC2740A001A90C4 /* MarkerInfoWindow.swift */; };
+		831E5C7E2CC4494F001A90C4 /* Nuke in Frameworks */ = {isa = PBXBuildFile; productRef = 831E5C7D2CC4494F001A90C4 /* Nuke */; };
+		831E5C802CC4494F001A90C4 /* NukeExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 831E5C7F2CC4494F001A90C4 /* NukeExtensions */; };
+		831E5C822CC4494F001A90C4 /* NukeUI in Frameworks */ = {isa = PBXBuildFile; productRef = 831E5C812CC4494F001A90C4 /* NukeUI */; };
+		831E5C842CC4494F001A90C4 /* NukeVideo in Frameworks */ = {isa = PBXBuildFile; productRef = 831E5C832CC4494F001A90C4 /* NukeVideo */; };
 		835BD2F12CA413560088CA02 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835BD2F02CA413560088CA02 /* AppDelegate.swift */; };
 		835BD2F32CA413560088CA02 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835BD2F22CA413560088CA02 /* SceneDelegate.swift */; };
 		835BD2FA2CA413570088CA02 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 835BD2F92CA413570088CA02 /* Assets.xcassets */; };
@@ -187,6 +191,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				E1B4908C044C675F5B284480 /* Pods_Nomad_Learner.framework in Frameworks */,
+				831E5C7E2CC4494F001A90C4 /* Nuke in Frameworks */,
+				831E5C842CC4494F001A90C4 /* NukeVideo in Frameworks */,
+				831E5C802CC4494F001A90C4 /* NukeExtensions in Frameworks */,
+				831E5C822CC4494F001A90C4 /* NukeUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -506,6 +514,12 @@
 			dependencies = (
 			);
 			name = "Nomad-Learner";
+			packageProductDependencies = (
+				831E5C7D2CC4494F001A90C4 /* Nuke */,
+				831E5C7F2CC4494F001A90C4 /* NukeExtensions */,
+				831E5C812CC4494F001A90C4 /* NukeUI */,
+				831E5C832CC4494F001A90C4 /* NukeVideo */,
+			);
 			productName = "Nomad-Learner";
 			productReference = 835BD2ED2CA413560088CA02 /* Nomad-Learner.app */;
 			productType = "com.apple.product-type.application";
@@ -534,6 +548,9 @@
 				Base,
 			);
 			mainGroup = 835BD2E42CA413560088CA02;
+			packageReferences = (
+				831E5C7C2CC4494F001A90C4 /* XCRemoteSwiftPackageReference "Nuke" */,
+			);
 			productRefGroup = 835BD2EE2CA413560088CA02 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -945,6 +962,40 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		831E5C7C2CC4494F001A90C4 /* XCRemoteSwiftPackageReference "Nuke" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kean/Nuke";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.8.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		831E5C7D2CC4494F001A90C4 /* Nuke */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 831E5C7C2CC4494F001A90C4 /* XCRemoteSwiftPackageReference "Nuke" */;
+			productName = Nuke;
+		};
+		831E5C7F2CC4494F001A90C4 /* NukeExtensions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 831E5C7C2CC4494F001A90C4 /* XCRemoteSwiftPackageReference "Nuke" */;
+			productName = NukeExtensions;
+		};
+		831E5C812CC4494F001A90C4 /* NukeUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 831E5C7C2CC4494F001A90C4 /* XCRemoteSwiftPackageReference "Nuke" */;
+			productName = NukeUI;
+		};
+		831E5C832CC4494F001A90C4 /* NukeVideo */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 831E5C7C2CC4494F001A90C4 /* XCRemoteSwiftPackageReference "Nuke" */;
+			productName = NukeVideo;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 835BD2E52CA413560088CA02 /* Project object */;
 }

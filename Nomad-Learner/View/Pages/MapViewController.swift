@@ -201,6 +201,11 @@ extension MapViewController {
 
 extension MapViewController {
     
+    func mapView(_ mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView? {
+        // width, heightは固定
+        let window = MarkerInfoWindow(frame: CGRect.init(x: 0, y: 0, width: 250, height: 50))
+        return window
+    }
 }
 
 extension MapViewController {

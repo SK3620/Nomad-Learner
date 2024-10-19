@@ -40,7 +40,7 @@ class MapView: GMSMapView {
         for location in locations {
             let marker = GMSMarker()
             marker.position = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
-            let markerIconView = MarkerIconView(frame: CGRect(origin: .zero, size: CGSize(width: 40, height: 30) ))
+            let markerIconView = MarkerIconView(frame: CGRect(origin: .zero, size: CGSize(width: 45, height: 33) ))
             marker.iconView = markerIconView
             markerArray.append(marker)
         }

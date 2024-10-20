@@ -83,12 +83,6 @@ class CustomAuthPickerViewController: FUIAuthPickerViewController, UITextFieldDe
         }
     }
     
-    // リターンがタップされた時にキーボードを閉じる
-//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-//        textField.resignFirstResponder()
-//        return true
-//    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // タイトルなし
@@ -107,18 +101,8 @@ extension CustomAuthPickerViewController: AlertEnabled, KRProgressHUDEnabled {
                     authButtonTaps: authStackView.authButton.rx.tap.asSignal(),
                     authModeToggleTaps: authStackView.authModeToggleButton.rx.tap.asSignal()
                 ),
-            authService: AuthService.shared,
-            keyChainManager: KeyChainManager.shared
+            authService: AuthService.shared
         )
-        
-        // emailとpassword入力欄にキーチェーンに保存した認証情報を表示
-        viewModel.savedEmail
-            .drive(authStackView.emailTextField.rx.text)
-            .disposed(by: disposeBag)
-        
-        viewModel.savedPassword
-            .drive(authStackView.passwordTextField.rx.text)
-            .disposed(by: disposeBag)
         
         // 各入力欄の真下にバリデーションメッセージを表示
         viewModel.usernameValidation
@@ -151,14 +135,12 @@ extension CustomAuthPickerViewController: AlertEnabled, KRProgressHUDEnabled {
         
         // 認証完了
         viewModel.didAuthenticate
-            .drive(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                self.authStackView.apply(.clearTextField)
-                // 暫定でdismissを呼ぶ（なぜか認証成功時ProgressHudが非表示にならない）
-                KRProgressHUD.dismiss()
-                // 画面遷移
-                self.toMapVC
-            })
+            .drive(processWhenAutheticated)
+            .disposed(by: disposeBag)
+        
+        // 自動ログイン（ログイン中かどうか）
+        viewModel.alreadyLoggedIn
+            .drive(processWhenAutheticated)
             .disposed(by: disposeBag)
         
         // ローディング
@@ -171,6 +153,19 @@ extension CustomAuthPickerViewController: AlertEnabled, KRProgressHUDEnabled {
             .map { AlertActionType.error($0)}
             .drive(self.rx.showAlert)
             .disposed(by: disposeBag)
+    }
+}
+
+extension CustomAuthPickerViewController {
+    private var processWhenAutheticated: Binder<Bool> {
+        return Binder(self) { base, authenticated in
+            guard authenticated else { return }
+            base.authStackView.apply(.clearTextField)
+            // 暫定でdismissを呼ぶ（なぜか認証成功時ProgressHudが非表示にならない）
+            KRProgressHUD.dismiss()
+            // 画面遷移
+            base.toMapVC
+        }
     }
 }
 

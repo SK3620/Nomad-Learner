@@ -16,9 +16,9 @@ protocol AuthServiceProtocol {
     // ログイン状態の確認リスナー破棄
     func removeStateDidChangeListener()
     // サインイン
-    func signIn(email: String, password: String) -> Observable<User?>
+    func signIn(email: String, password: String) -> Observable<FirebaseAuth.User>
     // サインアップ
-    func signUp(username: String, email: String, password: String) -> Observable<User?>
+    func signUp(username: String, email: String, password: String) -> Observable<FirebaseAuth.User>
     // パスワード再設定メール
     func sendPasswordRest(with email: String) -> Observable<Void>
 }
@@ -57,8 +57,8 @@ final class AuthService: AuthServiceProtocol {
     }
     
     // サインアップ
-    func signUp(username: String, email: String, password: String) -> Observable<User?> {
-        return Observable<User?>.create { observer in
+    func signUp(username: String, email: String, password: String) -> Observable<FirebaseAuth.User> {
+        return Observable<FirebaseAuth.User>.create { observer in
             Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
                 if let user = authResult?.user {
                     // usernameをuserに保存する
@@ -83,8 +83,8 @@ final class AuthService: AuthServiceProtocol {
     }
     
     // サインイン
-    func signIn(email: String, password: String) -> Observable<User?> {
-        return Observable<User?>.create { observer in
+    func signIn(email: String, password: String) -> Observable<FirebaseAuth.User> {
+        return Observable<FirebaseAuth.User>.create { observer in
             Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
                 if let user = authResult?.user {
                     observer.onNext(user)

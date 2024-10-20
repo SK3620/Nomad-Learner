@@ -18,6 +18,10 @@
 		831E5C802CC4494F001A90C4 /* NukeExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 831E5C7F2CC4494F001A90C4 /* NukeExtensions */; };
 		831E5C822CC4494F001A90C4 /* NukeUI in Frameworks */ = {isa = PBXBuildFile; productRef = 831E5C812CC4494F001A90C4 /* NukeUI */; };
 		831E5C842CC4494F001A90C4 /* NukeVideo in Frameworks */ = {isa = PBXBuildFile; productRef = 831E5C832CC4494F001A90C4 /* NukeVideo */; };
+		831E5C862CC4AAC3001A90C4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831E5C852CC4AAC3001A90C4 /* User.swift */; };
+		831E5C882CC4B493001A90C4 /* VisitedLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831E5C872CC4B493001A90C4 /* VisitedLocation.swift */; };
+		831E5C8A2CC4B4C1001A90C4 /* StudyRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831E5C892CC4B4C1001A90C4 /* StudyRoom.swift */; };
+		831E5C8C2CC4B4F6001A90C4 /* FixedLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831E5C8B2CC4B4F6001A90C4 /* FixedLocation.swift */; };
 		835BD2F12CA413560088CA02 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835BD2F02CA413560088CA02 /* AppDelegate.swift */; };
 		835BD2F32CA413560088CA02 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835BD2F22CA413560088CA02 /* SceneDelegate.swift */; };
 		835BD2FA2CA413570088CA02 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 835BD2F92CA413570088CA02 /* Assets.xcassets */; };
@@ -105,6 +109,10 @@
 		831E5C702CC136E0001A90C4 /* GoogleMapID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapID.swift; sourceTree = "<group>"; };
 		831E5C722CC271EF001A90C4 /* MarkerIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerIconView.swift; sourceTree = "<group>"; };
 		831E5C742CC2740A001A90C4 /* MarkerInfoWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerInfoWindow.swift; sourceTree = "<group>"; };
+		831E5C852CC4AAC3001A90C4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		831E5C872CC4B493001A90C4 /* VisitedLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisitedLocation.swift; sourceTree = "<group>"; };
+		831E5C892CC4B4C1001A90C4 /* StudyRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyRoom.swift; sourceTree = "<group>"; };
+		831E5C8B2CC4B4F6001A90C4 /* FixedLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedLocation.swift; sourceTree = "<group>"; };
 		835BD2ED2CA413560088CA02 /* Nomad-Learner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Nomad-Learner.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		835BD2F02CA413560088CA02 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		835BD2F22CA413560088CA02 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -229,6 +237,10 @@
 				836180EF2CBC93900059937E /* Profile.swift */,
 				836180F12CBC9D850059937E /* Message.swift */,
 				83A6D7B02CB3F39300D18A30 /* LocationCategory.swift */,
+				831E5C852CC4AAC3001A90C4 /* User.swift */,
+				831E5C872CC4B493001A90C4 /* VisitedLocation.swift */,
+				831E5C892CC4B4C1001A90C4 /* StudyRoom.swift */,
+				831E5C8B2CC4B4F6001A90C4 /* FixedLocation.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -656,6 +668,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				831E5C8A2CC4B4C1001A90C4 /* StudyRoom.swift in Sources */,
 				83AFB3B12CB2B75F00501FEE /* NavigationHeightProvidable.swift in Sources */,
 				835BD2F12CA413560088CA02 /* AppDelegate.swift in Sources */,
 				83A6D7D42CB807F100D18A30 /* EditProfileViewController.swift in Sources */,
@@ -682,6 +695,7 @@
 				838753E42CB00A4B001EE8F1 /* MapViewController.swift in Sources */,
 				83C5E1422CC0C0EF001C27E1 /* APIKeys.swift in Sources */,
 				83A6D7B92CB56C7400D18A30 /* KeyChainManager.swift in Sources */,
+				831E5C862CC4AAC3001A90C4 /* User.swift in Sources */,
 				831E5C752CC2740A001A90C4 /* MarkerInfoWindow.swift in Sources */,
 				83C5E13E2CC0BEFC001C27E1 /* MapView.swift in Sources */,
 				83C5E1312CBF7AFE001C27E1 /* NavigationControllerForMapVC.swift in Sources */,
@@ -696,6 +710,7 @@
 				837DE5972CBAD12E00819964 /* StudyRoomViewModel.swift in Sources */,
 				831E5C732CC271EF001A90C4 /* MarkerIconView.swift in Sources */,
 				83A6D7A92CB3D7B000D18A30 /* UIScrollView.swift in Sources */,
+				831E5C882CC4B493001A90C4 /* VisitedLocation.swift in Sources */,
 				83A6D7D72CB80C5D00D18A30 /* EditProfileViewModel.swift in Sources */,
 				83AFB3A82CB1A94400501FEE /* MapTabBar.swift in Sources */,
 				83A6D7AF2CB3F0F800D18A30 /* MapViewModel.swift in Sources */,
@@ -721,6 +736,7 @@
 				836180EA2CBBC1FF0059937E /* ProfileCollectionViewCell.swift in Sources */,
 				835BD2F32CA413560088CA02 /* SceneDelegate.swift in Sources */,
 				838753D22CABE9A3001EE8F1 /* AuthViewModel.swift in Sources */,
+				831E5C8C2CC4B4F6001A90C4 /* FixedLocation.swift in Sources */,
 				836180EE2CBBE2820059937E /* PaddingLabel.swift in Sources */,
 				83A6D7C22CB61E6B00D18A30 /* ProfileView.swift in Sources */,
 				83AFB3AC2CB29AC500501FEE /* NavigationBoxBar.swift in Sources */,

@@ -8,11 +8,11 @@
 import Foundation
 
 struct FixedLocation {
-    let locationID: Int
     let details: [LocationDetail]
 }
 
 struct LocationDetail {
+    let locationId: String
     let name: String
     let country: String
     let region: String

@@ -245,6 +245,11 @@ PODS:
   - nanopb/decode (3.30910.0)
   - nanopb/encode (3.30910.0)
   - PromisesObjC (2.4.0)
+  - Realm (10.54.0):
+    - Realm/Headers (= 10.54.0)
+  - Realm/Headers (10.54.0)
+  - RealmSwift (10.54.0):
+    - Realm (= 10.54.0)
   - RecaptchaInterop (100.0.0)
   - RxCocoa (6.5.0):
     - RxRelay (= 6.5.0)
@@ -273,6 +278,7 @@ DEPENDENCIES:
   - Google-Maps-iOS-Utils (= 6.0.0)
   - GoogleMaps (~> 9.1.1)
   - KRProgressHUD (~> 3.4.8)
+  - RealmSwift (~> 10)
   - RxCocoa (~> 6.5.0)
   - RxSwift (~> 6.5.0)
   - SnapKit (~> 5.7.0)
@@ -327,6 +333,8 @@ SPEC REPOS:
     - leveldb-library
     - nanopb
     - PromisesObjC
+    - Realm
+    - RealmSwift
     - RecaptchaInterop
     - RxCocoa
     - RxRelay
@@ -394,6 +402,8 @@ SPEC CHECKSUMS:
   leveldb-library: e8eadf9008a61f9e1dde3978c086d2b6d9b9dc28
   nanopb: fad817b59e0457d11a5dfbde799381cd727c1275
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
+  Realm: 5befa97f79486c8f16241387a973fb06f0325171
+  RealmSwift: c975aa89bda0a1a8a8ab73efaad4faa9ef78719b
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
   RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
   RxRelay: 1de1523e604c72b6c68feadedd1af3b1b4d0ecbd
@@ -402,6 +412,6 @@ SPEC CHECKSUMS:
   SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
   Then: 844265ae87834bbe1147d91d5d41a404da2ec27d
 
-PODFILE CHECKSUM: b51f01a351ec762fb4637eac57a87c761f222772
+PODFILE CHECKSUM: 665638f62e8b548192e7832521fb262f7bfca3f5
 
 COCOAPODS: 1.15.2

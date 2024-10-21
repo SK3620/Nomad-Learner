@@ -6,7 +6,9 @@
 //
 
 import Foundation
+import RealmSwift
 
+/*
 struct FixedLocation {
     let details: [LocationDetail]
 }
@@ -18,4 +20,16 @@ struct LocationDetail {
     let region: String
     let coordinates: GeoPoint
     let imageUrls: [String]
+}
+ */
+
+
+class FixedLocation: Object {
+    @Persisted var locationId: String
+    @Persisted var name: String
+    @Persisted var country: String
+    @Persisted var region: String
+    @Persisted var latitude: Double
+    @Persisted var longitude: Double
+    @Persisted var imageUrls: List<String>
 }

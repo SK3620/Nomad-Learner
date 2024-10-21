@@ -21,15 +21,17 @@ protocol AuthServiceProtocol {
     func signUp(username: String, email: String, password: String) -> Observable<FirebaseAuth.User>
     // パスワード再設定メール
     func sendPasswordRest(with email: String) -> Observable<Void>
+    // アカウント削除
+    func deleteAccount(email: String, password: String) -> Observable<Bool>
 }
 
 final class AuthService: AuthServiceProtocol {
     
     public static let shared = AuthService()
-
+    
     // ログイン状態確認リスナー
     private var handler: AuthStateDidChangeListenerHandle?
-
+    
     private init() {}
     
     // ログイン状態確認リスナー破棄
@@ -66,16 +68,16 @@ final class AuthService: AuthServiceProtocol {
                     req.displayName = username
                     req.commitChanges(completion: { (error) in
                         if let error = error {
-                            observer.onError(error)
+                            observer.onError(MyAppError.signInFailed(error))
                         } else {
                             observer.onNext(user)
                             observer.onCompleted()
                         }
                     })
                 } else if let error = error {
-                    observer.onError(error)
+                    observer.onError(MyAppError.signInFailed(error))
                 } else {
-                    observer.onError(MyError.unknown)
+                    observer.onError(MyAppError.unknown)
                 }
             }
             return Disposables.create()
@@ -88,10 +90,11 @@ final class AuthService: AuthServiceProtocol {
             Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
                 if let user = authResult?.user {
                     observer.onNext(user)
+                    observer.onCompleted()
                 } else if let error = error {
-                    observer.onError(error)
+                    observer.onError(MyAppError.signUpFailed(error))
                 } else {
-                    observer.onError(MyError.unknown)
+                    observer.onError(MyAppError.unknown)
                 }
             }
             return Disposables.create()
@@ -108,6 +111,42 @@ final class AuthService: AuthServiceProtocol {
                     observer.onCompleted()
                 }
             })
+            return Disposables.create()
+        }
+    }
+    
+    // アカウント削除
+    func deleteAccount(email: String, password: String) -> Observable<Bool> {
+        return Observable<Bool>.create { observer in
+            guard !email.isEmpty, !password.isEmpty else {
+                observer.onError(MyAppError.userNotFound(nil))
+                return Disposables.create()
+            }
+            
+            guard let user = Auth.auth().currentUser else {
+                observer.onError(MyAppError.userNotFound(nil))
+                return Disposables.create()
+            }
+            
+            // 再認証用の資格情報を作成
+            let credential = EmailAuthProvider.credential(withEmail: email, password: password)
+            
+            // 再認証を実行
+            user.reauthenticate(with: credential) { result, error in
+                if let error = error {
+                    observer.onError(MyAppError.deleteAccountFailed(error))
+                    return
+                }
+                // アカウントの削除を実行
+                user.delete { error in
+                    if let error = error {
+                        observer.onError(MyAppError.deleteAccountFailed(error))
+                    } else {
+                        observer.onNext(true) // アカウント削除成功
+                        observer.onCompleted()
+                    }
+                }
+            }
             return Disposables.create()
         }
     }

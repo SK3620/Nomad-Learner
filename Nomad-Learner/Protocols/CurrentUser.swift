@@ -6,3 +6,9 @@
 //
 
 import Foundation
+import FirebaseAuth
+import Firebase
+
+class CurrentUser {
+    static let user = Auth.auth().currentUser
+}

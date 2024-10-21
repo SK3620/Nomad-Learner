@@ -153,6 +153,23 @@ extension CustomAuthPickerViewController: AlertEnabled, KRProgressHUDEnabled {
             .map { AlertActionType.error($0)}
             .drive(self.rx.showAlert)
             .disposed(by: disposeBag)
+        
+        // アカウント削除 アラート表示
+        authStackView.deleteAccountButton.rx.tap.asDriver()
+            .map { self.viewModel.willDeleteAccountActionType }
+            .drive(self.rx.showAlert)
+            .disposed(by: disposeBag)
+        
+        // アカウント削除成功
+        viewModel.didDeleteAccount
+            .drive(self.rx.showMessage)
+            .disposed(by: disposeBag)
+        
+        // アカウント削除失敗
+        viewModel.deleteAccountError
+            .map { AlertActionType.error($0)}
+            .drive(self.rx.showAlert)
+            .disposed(by: disposeBag)
     }
 }
 

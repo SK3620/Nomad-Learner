@@ -37,7 +37,7 @@ class AuthViewModel {
             }
         }
     }
-        
+    
     
     // MARK: - Input
     /*
@@ -56,11 +56,21 @@ class AuthViewModel {
     let authButtonEnabled: Driver<Bool>
     let didAuthenticate: Driver<Bool>
     let alreadyLoggedIn: Driver<Bool>
-    let authError: Driver<Error>
+    let authError: Driver<MyAppError>
     let authMode: Driver<AuthMode>
+    let deleteAccountError: Driver<MyAppError>
+    let didDeleteAccount: Driver<ProgressHUDMessage>
+    var deleteAccount: Driver<(email: String, password: String)>
     
     // MARK: - Private properties
+    private let deleteAccountRelay: BehaviorRelay<(email: String, password: String)>
     private let authService: AuthServiceProtocol
+    
+    lazy var willDeleteAccountActionType = AlertActionType.willDeleteAccount(
+        onConfirm: { email, password in self.deleteAccountRelay.accept((email: email!, password: password!))},
+        user: CurrentUser.user,
+        onCancel: {}
+    )
     
     init(input: (
         username: Driver<String>,
@@ -72,7 +82,11 @@ class AuthViewModel {
          authService: AuthServiceProtocol
     ) {
         self.authService = authService
-                
+        
+        // deleteAccountRelayの初期化
+        self.deleteAccountRelay = BehaviorRelay(value: (email: "", password: ""))
+        self.deleteAccount = deleteAccountRelay.asDriver(onErrorJustReturn: (email: "", password: ""))
+        
         // .skip() → 最初のバリデーションをスキップ
         // .startWith() → combineLatestを作動させるため、初期値を流す
         self.usernameValidation = input.username
@@ -140,8 +154,8 @@ class AuthViewModel {
         
         // 認証失敗
         self.authError = authResults
-            .compactMap { $0.event.error }
-            .asDriver(onErrorJustReturn: MyError.unknown)
+            .compactMap { $0.event.error as? MyAppError }
+            .asDriver(onErrorJustReturn: MyAppError.unknown)
         
         // 認証ボタンの非/活性判定
         self.authButtonEnabled = Driver.combineLatest(
@@ -158,5 +172,26 @@ class AuthViewModel {
                 return username.isValid && email.isValid && password.isValid && !isLoading
             }
         }
+        
+        // アカウント削除
+        let deleteAccountResult = self.deleteAccount
+            .asObservable()
+            .flatMapLatest { email, password in 
+                authService.deleteAccount(email: email, password: password)
+                    .materialize()
+                    .trackActivity(indicator)
+            }
+            .share(replay: 1)
+        
+        // アカウント削除処理完了
+        self.didDeleteAccount = deleteAccountResult
+            .filter { $0.event.element != nil }
+            .map { _ in .didDeleteAccount }
+            .asDriver(onErrorJustReturn: ProgressHUDMessage.none)
+        
+        // アカウント削除エラー
+        self.deleteAccountError = deleteAccountResult
+            .compactMap { $0.event.error as? MyAppError }
+            .asDriver(onErrorJustReturn: MyAppError.unknown)
     }
 }

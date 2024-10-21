@@ -58,11 +58,18 @@ class AuthStackView: UIStackView {
     // 区切り線
     private lazy var separator = SeparatorWithLabelView()
     
-    // Dont't you have an account? ボタン
+    // SignIn/SignUp画面切り替え
     lazy var authModeToggleButton = UIButton(type: .system).then {
         $0.titleLabel?.font = UIFont.systemFont(ofSize: UIConstants.Font.smallFont)
         $0.setTitle("Dont't you have an account?", for: .normal)
         $0.tintColor = ColorCodes.primaryPurple.color()
+    }
+    
+    // アカウント削除ボタン
+    let deleteAccountButton = UIButton(type: .system).then {
+        $0.titleLabel?.font = UIFont.systemFont(ofSize: UIConstants.Font.smallFont)
+        $0.setTitle("Delete an account", for: .normal)
+        $0.tintColor = .red
     }
     
     // 初期化処理
@@ -87,6 +94,7 @@ class AuthStackView: UIStackView {
         addArrangedSubview(providerButtonStackView)
         addArrangedSubview(separator)
         addArrangedSubview(authModeToggleButton)
+        addArrangedSubview(deleteAccountButton)
         
         self.addSubview(usernameValidation)
         self.addSubview(emailValidation)
@@ -149,6 +157,11 @@ class AuthStackView: UIStackView {
         
         // Dont't you have an account? ボタン
         authModeToggleButton.snp.makeConstraints {
+            $0.height.equalTo(UIConstants.StackViewElement.height)
+        }
+        
+        // アカウント削除ボタン
+        deleteAccountButton.snp.makeConstraints {
             $0.height.equalTo(UIConstants.StackViewElement.height)
         }
     }

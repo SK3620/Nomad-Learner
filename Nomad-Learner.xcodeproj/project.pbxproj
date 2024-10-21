@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		830498BF2CC5072C003973EC /* MyAppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830498BE2CC5072C003973EC /* MyAppError.swift */; };
 		8304A0E22CA5123300061B33 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8304A0E12CA5123300061B33 /* AuthViewController.swift */; };
 		8304A0E42CA5437800061B33 /* GoogleService-Info-Nomad-LearnerDev.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8304A0E32CA5437800061B33 /* GoogleService-Info-Nomad-LearnerDev.plist */; };
 		8304A0E62CA546F700061B33 /* GoogleService-Info-Nomad-Learner.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8304A0E52CA546F700061B33 /* GoogleService-Info-Nomad-Learner.plist */; };
@@ -101,6 +102,7 @@
 
 /* Begin PBXFileReference section */
 		04E2362154E42F3944BE8219 /* Pods-Nomad-Learner.develop.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nomad-Learner.develop.xcconfig"; path = "Target Support Files/Pods-Nomad-Learner/Pods-Nomad-Learner.develop.xcconfig"; sourceTree = "<group>"; };
+		830498BE2CC5072C003973EC /* MyAppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAppError.swift; sourceTree = "<group>"; };
 		8304A0D92CA4F83700061B33 /* Nomad-Learner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Nomad-Learner.entitlements"; sourceTree = "<group>"; };
 		8304A0E12CA5123300061B33 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		8304A0E32CA5437800061B33 /* GoogleService-Info-Nomad-LearnerDev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Nomad-LearnerDev.plist"; sourceTree = "<group>"; };
@@ -359,6 +361,7 @@
 			isa = PBXGroup;
 			children = (
 				838753D32CABFDB7001EE8F1 /* AuthInputValidation.swift */,
+				830498BE2CC5072C003973EC /* MyAppError.swift */,
 				838753D52CAC19D1001EE8F1 /* AuthInputValidator.swift */,
 				838753D72CACE930001EE8F1 /* ActivityIndicator.swift */,
 				838753D92CACF2D0001EE8F1 /* KRProgressHUDEnabled.swift */,
@@ -682,6 +685,7 @@
 				83C5E13C2CBFBCC2001C27E1 /* OnFlightView.swift in Sources */,
 				8304A0E22CA5123300061B33 /* AuthViewController.swift in Sources */,
 				838753D82CACE930001EE8F1 /* ActivityIndicator.swift in Sources */,
+				830498BF2CC5072C003973EC /* MyAppError.swift in Sources */,
 				837DE5902CBA564A00819964 /* TicketView.swift in Sources */,
 				83A9C2C22CA7D08500898F0B /* AuthTextField.swift in Sources */,
 				83A6D7D22CB7D7DD00D18A30 /* ProfileTextView.swift in Sources */,

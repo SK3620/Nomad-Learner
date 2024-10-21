@@ -24,3 +24,29 @@ extension Reactive where Base: KRProgressHUDEnabled {
         })
     }
 }
+
+extension Reactive where Base: KRProgressHUDEnabled {
+    var showMessage: Binder<ProgressHUDMessage> {
+        return Binder.init(self.base) { progress, value in
+            guard value != .none else { return }
+            // showProgressのdismiss()より後に実行
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                KRProgressHUD.showSuccess(withMessage: value.message)
+            }
+        }
+    }
+}
+
+enum ProgressHUDMessage {
+    case didDeleteAccount
+    case none
+    
+    var message: String {
+        switch self {
+        case .didDeleteAccount:
+            return "Account deleted successfully."
+        case .none:
+            return ""
+        }
+    }
+}

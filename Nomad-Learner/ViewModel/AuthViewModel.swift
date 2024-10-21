@@ -68,7 +68,6 @@ class AuthViewModel {
     
     lazy var willDeleteAccountActionType = AlertActionType.willDeleteAccount(
         onConfirm: { email, password in self.deleteAccountRelay.accept((email: email!, password: password!))},
-        user: CurrentUser.user,
         onCancel: {}
     )
     

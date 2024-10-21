@@ -72,7 +72,7 @@ extension Reactive where Base: AlertEnabled {
 
 enum AlertActionType {
     case error(MyAppError)
-    case willDeleteAccount(onConfirm: (String?, String?) -> Void, user: FirebaseAuth.User?, onCancel: () -> Void = {})
+    case willDeleteAccount(onConfirm: (String?, String?) -> Void, onCancel: () -> Void = {})
     case exitRoom(onConfirm: () -> Void, onCancel: () -> Void = {})
     case breakTime(onConfirm: () -> Void, onCancel: () -> Void = {})
     case community(onConfirm: () -> Void, onCancel: () -> Void = {})
@@ -109,8 +109,8 @@ enum AlertActionType {
         switch self {
         case .error(let error):
             return error.errorDescription ?? ""
-        case .willDeleteAccount(_, let user, _):
-            return user.loginStatusMessage
+        case .willDeleteAccount:
+            return "Are you sure you want to delete your account?"
         case .exitRoom:
             return "Do you really want to exit the room?"
         case .breakTime:
@@ -179,7 +179,7 @@ enum AlertActionType {
     // Confirm と Cancel のハンドラー
         var handlers: (onConfirm: (String?, String?) -> Void, onCancel: () -> Void) {
             switch self {
-            case .willDeleteAccount(let onConfirm, _, let onCancel):
+            case .willDeleteAccount(let onConfirm, let onCancel):
                 return (onConfirm: onConfirm, onCancel: onCancel)
             case .exitRoom(let onConfirm, let onCancel),
                  .breakTime(let onConfirm, let onCancel),
@@ -189,14 +189,4 @@ enum AlertActionType {
                 return (onConfirm: { _, _ in }, onCancel: {})
             }
         }
-}
-
-extension FirebaseAuth.User? {
-    var loginStatusMessage: String {
-        if let self = self {
-            return "Are you sure you want to delete your account? \n\nusername: \(self.displayName ?? "")\nemail: \(self.email ?? "")"
-        } else {
-            return "No logged-in user found."
-        }
-    }
 }

@@ -9,11 +9,6 @@ import RxSwift
 import RxCocoa
 import UIKit
 
-enum MyError: Error {
-    case notAuth
-    case unknown
-}
-
 enum AuthInputValidation {
     case initialValidating
     case ok(message: String)

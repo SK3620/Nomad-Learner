@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		830498BF2CC5072C003973EC /* MyAppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830498BE2CC5072C003973EC /* MyAppError.swift */; };
+		830498C62CC64F87003973EC /* FixedLocationsInfo.json in Sources */ = {isa = PBXBuildFile; fileRef = 830498C52CC64F87003973EC /* FixedLocationsInfo.json */; };
+		830498C82CC656EF003973EC /* MainServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830498C72CC656EF003973EC /* MainServiceProtocol.swift */; };
+		830498CA2CC661C5003973EC /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830498C92CC661C5003973EC /* Parser.swift */; };
+		830498CC2CC666DD003973EC /* RealmServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830498CB2CC666DD003973EC /* RealmServiceProtocol.swift */; };
+		830498CE2CC6A714003973EC /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830498CD2CC6A714003973EC /* UIImageView.swift */; };
 		8304A0E22CA5123300061B33 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8304A0E12CA5123300061B33 /* AuthViewController.swift */; };
 		8304A0E42CA5437800061B33 /* GoogleService-Info-Nomad-LearnerDev.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8304A0E32CA5437800061B33 /* GoogleService-Info-Nomad-LearnerDev.plist */; };
 		8304A0E62CA546F700061B33 /* GoogleService-Info-Nomad-Learner.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8304A0E52CA546F700061B33 /* GoogleService-Info-Nomad-Learner.plist */; };
@@ -103,6 +108,11 @@
 /* Begin PBXFileReference section */
 		04E2362154E42F3944BE8219 /* Pods-Nomad-Learner.develop.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nomad-Learner.develop.xcconfig"; path = "Target Support Files/Pods-Nomad-Learner/Pods-Nomad-Learner.develop.xcconfig"; sourceTree = "<group>"; };
 		830498BE2CC5072C003973EC /* MyAppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAppError.swift; sourceTree = "<group>"; };
+		830498C52CC64F87003973EC /* FixedLocationsInfo.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = FixedLocationsInfo.json; sourceTree = "<group>"; };
+		830498C72CC656EF003973EC /* MainServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainServiceProtocol.swift; sourceTree = "<group>"; };
+		830498C92CC661C5003973EC /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
+		830498CB2CC666DD003973EC /* RealmServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmServiceProtocol.swift; sourceTree = "<group>"; };
+		830498CD2CC6A714003973EC /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
 		8304A0D92CA4F83700061B33 /* Nomad-Learner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Nomad-Learner.entitlements"; sourceTree = "<group>"; };
 		8304A0E12CA5123300061B33 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		8304A0E32CA5437800061B33 /* GoogleService-Info-Nomad-LearnerDev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Nomad-LearnerDev.plist"; sourceTree = "<group>"; };
@@ -314,6 +324,7 @@
 				835BD2F92CA413570088CA02 /* Assets.xcassets */,
 				835BD2FB2CA413570088CA02 /* LaunchScreen.storyboard */,
 				835BD2FE2CA413570088CA02 /* Info.plist */,
+				830498C52CC64F87003973EC /* FixedLocationsInfo.json */,
 			);
 			path = "Nomad-Learner";
 			sourceTree = "<group>";
@@ -366,6 +377,9 @@
 				838753D72CACE930001EE8F1 /* ActivityIndicator.swift */,
 				838753D92CACF2D0001EE8F1 /* KRProgressHUDEnabled.swift */,
 				838753DB2CAD33E2001EE8F1 /* AuthServiceProtocol.swift */,
+				830498C72CC656EF003973EC /* MainServiceProtocol.swift */,
+				830498CB2CC666DD003973EC /* RealmServiceProtocol.swift */,
+				830498C92CC661C5003973EC /* Parser.swift */,
 				838753E12CAF9E53001EE8F1 /* AlertEnabled.swift */,
 				838753E72CB02B42001EE8F1 /* CurrentUser.swift */,
 			);
@@ -487,6 +501,7 @@
 				83C9F3B92CA9161300CF0D73 /* UITextField.swift */,
 				83AFB3A92CB2902C00501FEE /* UIView.swift */,
 				83A6D7A82CB3D7B000D18A30 /* UIScrollView.swift */,
+				830498CD2CC6A714003973EC /* UIImageView.swift */,
 				83A6D7B42CB4BF2500D18A30 /* Observable.swift */,
 			);
 			path = Extension;
@@ -677,6 +692,7 @@
 				83A6D7D42CB807F100D18A30 /* EditProfileViewController.swift in Sources */,
 				83C5E1352CBFB019001C27E1 /* OnFlightViewController.swift in Sources */,
 				83AFB3AE2CB2ABD300501FEE /* LocationDetailView.swift in Sources */,
+				830498C62CC64F87003973EC /* FixedLocationsInfo.json in Sources */,
 				83A6D7E02CB8DA8600D18A30 /* DepartViewController.swift in Sources */,
 				837DE5952CBAD11500819964 /* StudyRoomViewController.swift in Sources */,
 				83A6D7CC2CB6B85A00D18A30 /* ProfileTableViewCell.swift in Sources */,
@@ -710,6 +726,8 @@
 				83C9F3B62CA907B900CF0D73 /* ColorCodes.swift in Sources */,
 				836180EC2CBBC20A0059937E /* ChatCollectionViewCell.swift in Sources */,
 				83C9F3BC2CA931F400CF0D73 /* KeyboardManager.swift in Sources */,
+				830498C82CC656EF003973EC /* MainServiceProtocol.swift in Sources */,
+				830498CC2CC666DD003973EC /* RealmServiceProtocol.swift in Sources */,
 				83A6D7DD2CB8195C00D18A30 /* EditProfileTextView.swift in Sources */,
 				837DE5972CBAD12E00819964 /* StudyRoomViewModel.swift in Sources */,
 				831E5C732CC271EF001A90C4 /* MarkerIconView.swift in Sources */,
@@ -725,9 +743,11 @@
 				831E5C712CC136E0001A90C4 /* GoogleMapID.swift in Sources */,
 				83A6D7E22CB8F88500D18A30 /* DepartViewModel.swift in Sources */,
 				837DE59A2CBAD8D400819964 /* NavigationControllerForStudyRoomVC.swift in Sources */,
+				830498CA2CC661C5003973EC /* Parser.swift in Sources */,
 				83A9C2BE2CA7BF2200898F0B /* CustomAuthPickerViewController.swift in Sources */,
 				837DE58E2CBA2FDE00819964 /* SafeAreaHeightProvidable.swift in Sources */,
 				836180E32CBB7E220059937E /* StudyRoomNavigationBar.swift in Sources */,
+				830498CE2CC6A714003973EC /* UIImageView.swift in Sources */,
 				836180F02CBC93900059937E /* Profile.swift in Sources */,
 				838753D62CAC19D1001EE8F1 /* AuthInputValidator.swift in Sources */,
 				831E5C6F2CC13205001A90C4 /* Location.swift in Sources */,

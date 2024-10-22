@@ -17,6 +17,7 @@ enum MyAppError: Error {
     case signUpFailed(Error)
     case userNotFound(Error?)
     case deleteAccountFailed(Error)
+    case locationEmpty
     case unknown
     
     // MARK: - LocalizedError Implementation
@@ -39,6 +40,8 @@ enum MyAppError: Error {
             return NSLocalizedString("Unable to find user.", comment: "User does not exist")
         case.deleteAccountFailed:
             return NSLocalizedString("Unable to delete an account.", comment: "User does not exist")
+        case .locationEmpty:
+            return NSLocalizedString("Unable to retrive the location data.", comment: "FixedLocation data doesn't exist.")
         case .unknown:
             return NSLocalizedString("An unknown error occurred. Please try again.", comment: "Unknown error")
         }
@@ -55,6 +58,8 @@ enum MyAppError: Error {
             return "User not found. Error: \((error?.localizedDescription) ?? ""). Ensure the email is registered or sign up for a new account."
         case .deleteAccountFailed(let error):
             return "Account deletion failed due to error: \(error.localizedDescription). Ensure the credentials are correct and try again."
+        case .locationEmpty:
+            return NSLocalizedString("Unable to retrive the location data.", comment: "FixedLocation data doesn't exist.")
         case .unknown:
             return "An unknown error occurred. Please investigate further."
         }

@@ -17,11 +17,7 @@ class MapView: GMSMapView {
     private let initialCamera = GMSCameraPosition(latitude: -33.857, longitude: 151.215, zoom: 1.0)
     
     // location
-    private var locations: [Location] = []
-    // locationのマーカー
-    lazy var markerArray: [GMSMarker] = {
-        return self.addMarkersForLocations()
-    }()
+//    private var locations: [Location] = []
     
     override init(options: GMSMapViewOptions) {
         // セットアップ
@@ -31,17 +27,18 @@ class MapView: GMSMapView {
     }
     
     // 場所にマーカーを立てる
-    private func addMarkersForLocations() -> [GMSMarker] {
+    func addMarkersForLocations(fixedLocations: [FixedLocation]) -> [GMSMarker] {
         // 登録したlocation全て取得
-        self.locations = Location.all
+//        self.locations = Location.all
         // locationのマーカーを格納
         var markerArray: [GMSMarker] = []
         
-        for location in locations {
+        for location in fixedLocations {
             let marker = GMSMarker()
             marker.position = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
             let markerIconView = MarkerIconView(frame: CGRect(origin: .zero, size: CGSize(width: 45, height: 33) ))
             marker.iconView = markerIconView
+            marker.userData = location
             markerArray.append(marker)
         }
         

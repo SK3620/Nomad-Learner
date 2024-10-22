@@ -61,49 +61,18 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
         $0.snp.makeConstraints { $0.size.equalTo(26) }
     }
     
-    // ProfileVC（プロフィール画面）へ遷移
-    private var toProfileVC: Void {
-        Router.showProfile(vc: self)
-    }
-    
-    // DepartVC（出発画面）へ遷移
-    private var toDepartVC: Void {
-        Router.showDepartVC(vc: self)
-    }
-    
-    // AuthVC（認証画面）へ遷移
-    private var backToAuthVC: Void {
-        Router.dismissModal(vc: self)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // マップのセットアップ
-        setupMap()
         // UIのセットアップ
         setupUI()
         // viewModelとのバインディング
         bind()
     }
     
-    private func setupMap() {
-        // マップのセットアップ
+    private func setupUI() {
+        // マップを表示
         let options = GMSMapViewOptions()
         self.mapView = MapView(options: options)
-        
-        // クラスター管理の初期化
-        let iconGenerator = GMUDefaultClusterIconGenerator()
-        let algorithm = GMUNonHierarchicalDistanceBasedAlgorithm()
-        let renderer = GMUDefaultClusterRenderer(mapView: mapView, clusterIconGenerator: iconGenerator)
-        clusterManager = GMUClusterManager(map: mapView, algorithm: algorithm, renderer: renderer)
-        // MapViewDelegate設定
-        clusterManager.setMapDelegate(self)
-        // 全てのlocationのマーカーを追加
-        clusterManager.add(mapView.markerArray)
-        clusterManager.cluster()
-    }
-    
-    private func setupUI() {
         
         // ナビゲーションバーの設定
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
@@ -152,32 +121,25 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
 
 extension MapViewController {
     private func bind() {
-        
         // AuthVC（認証画面）へ遷移
         backBarButtonItem.rx.tap
-            .bind { [weak self] in
-                guard let self = self else { return }
-                self.backToAuthVC
-            }
+            .bind(to: backToAuthVC)
             .disposed(by: disposeBag)
         
         // ProfileVC（プロフィール画面）へ遷移
         profileBarButtonItem.rx.tap
-            .bind { [weak self] in
-                guard let self = self else { return }
-                self.toProfileVC
-            }
+            .bind(to: toProfileVC)
             .disposed(by: disposeBag)
         
         // DepartVC（出発画面）へ遷移
         mapTabBar.airplaneItem.rx.tap
-            .bind { [weak self] in
-                guard let self = self else { return }
-                self.toDepartVC
-            }
+            .bind(to: toDepartVC)
             .disposed(by: disposeBag)
 
-        let viewModel = MapViewModel()
+        let viewModel = MapViewModel(
+            mainService: MainService.shared,
+            realmService: RealmService.shared
+        )
         let collectionView = locationDetailView.locationCategoryCollectionView
         
         // カテゴリーをセルに表示
@@ -196,15 +158,60 @@ extension MapViewController {
                 collectionView.scrollToCenter(indexPath: indexPath)
             })
             .disposed(by: disposeBag)
+        
+        viewModel.fixedLocations
+            .drive(addMarkersForLocations)
+            .disposed(by: disposeBag)
     }
 }
 
 extension MapViewController {
     
+    // infoWindowを表示
     func mapView(_ mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView? {
         // width, heightは固定
         let window = MarkerInfoWindow(frame: CGRect.init(x: 0, y: 0, width: 250, height: 50))
+        if let location = marker.userData as? FixedLocation {
+            window.configure(location: location)
+        }
         return window
+    }
+    
+    // マーカータップ時
+    func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
+        
+    }
+}
+
+extension MapViewController {
+    // ProfileVC（プロフィール画面）へ遷移
+    private var toProfileVC: Binder<Void> {
+        return Binder(self) { base, _ in Router.showProfile(vc: base) }
+    }
+    // DepartVC（出発画面）へ遷移
+    private var toDepartVC: Binder<Void> {
+        return Binder(self) { base, _ in Router.showDepartVC(vc: base) }
+    }
+    // AuthVC（認証画面）へ遷移
+    private var backToAuthVC: Binder<Void> {
+        return Binder(self) { base, _ in Router.dismissModal(vc: base) }
+    }
+    // マップ上に取得したロケーションをマーカーとして配置
+    private var addMarkersForLocations: Binder<[FixedLocation]> {
+        return Binder(self) { base, locations in
+            // 画像をあらかじめ読み込んでおく
+            FixedLocation.prefetchImages(from: locations)
+            // クラスター管理の初期化
+            let iconGenerator = GMUDefaultClusterIconGenerator()
+            let algorithm = GMUNonHierarchicalDistanceBasedAlgorithm()
+            let renderer = GMUDefaultClusterRenderer(mapView: base.mapView, clusterIconGenerator: iconGenerator)
+            base.clusterManager = GMUClusterManager(map: base.mapView, algorithm: algorithm, renderer: renderer)
+            // MapViewDelegate設定
+            base.clusterManager.setMapDelegate(base)
+            // 全てのlocationのマーカーを追加
+            base.clusterManager.add(base.mapView.addMarkersForLocations(fixedLocations: locations))
+            base.clusterManager.cluster()
+        }
     }
 }
 
@@ -228,5 +235,19 @@ struct ViewControllerPreview: PreviewProvider {
     }
     static var previews: some View {
         Wrapper()
+    }
+}
+
+import Kingfisher
+class ImageCacheManager {
+    static let shared = ImageCacheManager()
+    private var imageCache = NSCache<NSString, UIImage>()
+
+    func loadImage(forKey key: String) -> UIImage? {
+        return imageCache.object(forKey: NSString(string: key))
+    }
+
+    func saveImage(_ image: UIImage, forKey key: String) {
+        imageCache.setObject(image, forKey: NSString(string: key))
     }
 }

@@ -6,12 +6,13 @@
 //
 
 import UIKit
+import GoogleMaps
+import RxSwift
 
 class MarkerInfoWindow: UIView {
     
     //　ロケーション画像
     private lazy var locationImageView = UIImageView().then {
-        $0.image = UIImage(named: "grassland")
         $0.layer.cornerRadius = (self.viewHeight - UIConstants.Layout.semiStandardPadding) / 2
         $0.layer.masksToBounds = true
         $0.layer.borderColor = UIColor.white.cgColor
@@ -44,13 +45,13 @@ class MarkerInfoWindow: UIView {
         // フォントサイズ自動調整
         $0.adjustsFontSizeToFitWidth = true
     }
-    
+        
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         setupUI()
     }
-    
+   
     private func setupUI() {
         backgroundColor = ColorCodes.primaryPurple.color()
         layer.cornerRadius = self.bounds.height / 2
@@ -73,5 +74,14 @@ class MarkerInfoWindow: UIView {
         
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension MarkerInfoWindow {
+    // windowにロケーション情報を表示
+    func configure(location: FixedLocation)  {         
+        locationImageView.setImage(with: location.imageUrlsArr[0])
+        destinationLabel.text = location.location
+        regionLabel.text = "\(location.country) / \(location.region)"
     }
 }

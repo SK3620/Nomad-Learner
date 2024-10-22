@@ -1,8 +1,53 @@
-//
-//  FixedLocationsInfo.swift
-//  Nomad-Learner
-//
-//  Created by 鈴木 健太 on 2024/10/21.
-//
+{
+  "locations": {
+    "sydney_opera_house": {
+      "location": "Sydney Opera House",
+      "country": "Australia",
+      "region": "Sydney",
+      "latitude": -33.857,
+      "longitude": 151.215,
+      "imageUrls": [
+        "https://images.pexels.com/photos/1619854/pexels-photo-1619854.jpeg?auto=compress&cs=tinysrgb&w=800",
+        "https://images.pexels.com/photos/995765/pexels-photo-995765.jpeg?auto=compress&cs=tinysrgb&w=800",
+        "https://images.pexels.com/photos/2193300/pexels-photo-2193300.jpeg?auto=compress&cs=tinysrgb&w=800"
+      ]
+    },
+    "mount_fuji": {
+      "location": "Mount Fuji",
+      "country": "Japan",
+      "region": "Yamanashi",
+      "latitude": 35.361,
+      "longitude": 138.727,
+      "imageUrls": [
+        "https://images.pexels.com/photos/1108701/pexels-photo-1108701.jpeg?auto=compress&cs=tinysrgb&w=800",
+        "https://images.pexels.com/photos/259772/pexels-photo-259772.jpeg?auto=compress&cs=tinysrgb&w=800",
+        "https://images.pexels.com/photos/3022942/pexels-photo-3022942.jpeg?auto=compress&cs=tinysrgb&w=800"
+      ]
+    },
+    "eiffel_tower": {
+      "location": "Eiffel Tower",
+      "country": "France",
+      "region": "Paris",
+      "latitude": 48.859,
+      "longitude": 2.294,
+      "imageUrls": [
+        "https://images.pexels.com/photos/161853/eiffel-tower-paris-france-tower-161853.jpeg?auto=compress&cs=tinysrgb&w=800",
+        "https://images.pexels.com/photos/338515/pexels-photo-338515.jpeg?auto=compress&cs=tinysrgb&w=800",
+        "https://images.pexels.com/photos/618752/pexels-photo-618752.jpeg?auto=compress&cs=tinysrgb&w=800"
+      ]
+    },
+    "niagara_falls": {
+      "location": "Niagara Falls",
+      "country": "Canada/USA",
+      "region": "Ontario/New York",
+      "latitude": 43.0966,
+      "longitude": -79.0377,
+      "imageUrls": [
+        "https://images.pexels.com/photos/1374585/pexels-photo-1374585.jpeg?auto=compress&cs=tinysrgb&w=800",
+        "https://images.pexels.com/photos/158398/niagara-falls-waterfall-horseshoe-158398.jpeg?auto=compress&cs=tinysrgb&w=800",
+        "https://images.pexels.com/photos/306381/pexels-photo-306381.jpeg?auto=compress&cs=tinysrgb&w=800"
+      ]
+    }
+  }
+}
 
-import Foundation

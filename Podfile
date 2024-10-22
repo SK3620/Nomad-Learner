@@ -26,4 +26,5 @@ pod 'FirebaseUI/Facebook', '~> 14.2.0'
 pod 'FirebaseUI/OAuth', '~> 14.2.0'
 pod 'Google-Maps-iOS-Utils', '6.0.0'
 pod 'RealmSwift', '~> 10'
+pod 'Kingfisher', '~> 8.0'
 end

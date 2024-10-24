@@ -22,9 +22,9 @@ protocol RouterProtocol {
     // AuthVC（認証画面）→ MapVC（マップ画面）
     static func showMap(vc: UIViewController)
     // MapVC（マップ画面）/ StudyRoomVC（勉強部屋画面）→ ProfileVC（プロフィール画面）
-    static func showProfile(vc: UIViewController)
+    static func showProfile(vc: UIViewController, with userProfile: User)
     // ProfileVC → EditProfileVC（プロフィール編集画面）
-    static func showEditProfile(vc: UIViewController)
+    static func showEditProfile(vc: UIViewController, with userProfile: User)
     // MapVC（マップ画面）→ DepartVC（出発画面）
     static func showDepartVC(vc: UIViewController)
     // DepartVC（出発画面）→ OnFlightVC（飛行中画面）
@@ -32,8 +32,8 @@ protocol RouterProtocol {
     // OnFlightVC（飛行中画面）→ StudyRoomVC（勉強部屋画面）
     static func showStudyRoomVC(vc: UIViewController)
     
-    // StudyRoomVC（勉強部屋画面）→ MapVC（マップ画面）
-    static func backToMapVC(vc: UIViewController)
+    // StudyRoomVC（勉強部屋画面）/ EditProfileVC（プロフィール編集画面）→ MapVC（マップ画面）
+    static func backToMapVC(vc: UIViewController, _ updatedUserProfile: User)
     
     // UINavigationを通して戻る
     static func navigationBack(vc: UIViewController)
@@ -86,16 +86,16 @@ extension Router: RouterProtocol {
     }
     
     // MapVC（マップ画面）/ StudyRoomVC（勉強部屋画面）→ ProfileVC（プロフィール画面）
-    static func showProfile(vc: UIViewController) {
-        let profileViewController = ProfileViewController(orientation: orientation(vc))
+    static func showProfile(vc: UIViewController, with userProfile: User) {
+        let profileViewController = ProfileViewController(orientation: orientation(vc), with: userProfile)
         profileViewController.modalPresentationStyle = .overFullScreen
         profileViewController.modalTransitionStyle = .crossDissolve
         modal(from: vc, to: profileViewController)
     }
     
     // ProfileVC（プロフィール画面）→ EditProfileVC（プロフィール編集画面）
-    static func showEditProfile(vc: UIViewController) {
-        let profileViewController = EditProfileViewController()
+    static func showEditProfile(vc: UIViewController, with userProfile: User) {
+        let profileViewController = EditProfileViewController(userProfile: userProfile)
         profileViewController.modalPresentationStyle = .overFullScreen
         profileViewController.modalTransitionStyle = .crossDissolve
         modal(from: vc, to: profileViewController)
@@ -126,11 +126,23 @@ extension Router: RouterProtocol {
         modal(from: vc, to: navigationController)
     }
     
-    // StudyRoomVC（勉強部屋画面）→ MapVC（マップ画面）
-    static func backToMapVC(vc: UIViewController) {
-        if let navigationControllerForMapVC = vc.presentingViewController?.presentingViewController?.presentingViewController {
-            dismissModal(vc: navigationControllerForMapVC)
+    // StudyRoomVC（勉強部屋画面）/ EditProfileVC（プロフィール編集画面）→ MapVC（マップ画面）
+    static func backToMapVC(vc: UIViewController, _ updatedUserProfile: User = User()) {
+        var nav: NavigationControllerForMapVC!
+        
+        // 現在の画面がプロフィール編集画面の場合
+        if vc is EditProfileViewController,
+            let navForMapVC = vc.presentingViewController?.presentingViewController as? NavigationControllerForMapVC, let mapVC = navForMapVC.viewControllers[0] as? MapViewController {
+            nav = navForMapVC
+            mapVC.userProfile = updatedUserProfile // ユーザープロフィール情報を渡す
         }
+        
+        // 現在の画面が勉強部屋画面の場合
+        else if vc is StudyRoomViewController, let navForMapVC = vc.presentingViewController?.presentingViewController?.presentingViewController as? NavigationControllerForMapVC, let mapVC = navForMapVC.navigationController?.viewControllers[0] as? MapViewController {
+            nav = navForMapVC
+            mapVC.userProfile = updatedUserProfile // ユーザープロフィール情報を渡す
+        }
+        dismissModal(vc: nav)
     }
     
     // モーダルで戻る

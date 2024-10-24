@@ -16,6 +16,13 @@ class EditProfileTextView: UITextView {
         self.backgroundColor = .clear
         self.font = UIFont.systemFont(ofSize: UIConstants.TextSize.medium, weight: .medium)
         self.textColor = .darkGray
+        // キーボードに完了ボタン表示
+        self.addDoneToolbar(onDone: (target: self, action: #selector(doneButtonTapped)))
+    }
+    
+    // キーボード閉じる
+    @objc func doneButtonTapped() {
+        self.endEditing(true)
     }
     
     required init?(coder: NSCoder) {

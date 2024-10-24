@@ -30,7 +30,7 @@ extension Reactive where Base: KRProgressHUDEnabled {
         return Binder.init(self.base) { progress, value in
             guard value != .none else { return }
             // showProgressのdismiss()より後に実行
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                 KRProgressHUD.showSuccess(withMessage: value.message)
             }
         }

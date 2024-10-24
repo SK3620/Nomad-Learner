@@ -14,28 +14,23 @@ import SnapKit
 
 class ProfileViewController: UIViewController {
     
+    // ユーザープロフィール情報
+    var userProfile: User
+    
     // 画面が縦向きか横向きか
     var orientation: ScreenOrientation
         
     private let tapGesture = UITapGestureRecognizer()
     
     private let disposeBag = DisposeBag()
-        
-    private lazy var profileView: ProfileView = ProfileView(frame: .zero)
-        
-    // MapVC（マップ画面）へ戻る
-    private var backToMapVC: Void {
-        Router.dismissModal(vc: self)
-    }
     
-    // EditProfileVC（プロフィール編集画面）へ遷移
-    private var toEditProfileVC: Void {
-        Router.showEditProfile(vc: self)
-    }
-    
+    // ユーザープロフィール情報を渡す
+    private lazy var profileView: ProfileView = ProfileView(userProfile: self.userProfile)
+        
     // カスタムイニシャライザ
-    init(orientation: ScreenOrientation = .portrait) {
+    init(orientation: ScreenOrientation = .portrait, with userProfile: User) {
         self.orientation = orientation
+        self.userProfile = userProfile
         super.init(nibName: nil, bundle: nil)
     }
         
@@ -75,32 +70,36 @@ class ProfileViewController: UIViewController {
         
         // MapVCへ戻る
         tapGesture.rx.event
-            .subscribe(onNext: { [weak self] sender in
-                guard let self = self else { return }
-                // タップ位置取得
-                let tapLocation = sender.location(in: self.view)
-                // profileView枠外のタップの場合、MapVCへ戻る
-                if !self.profileView.frame.contains(tapLocation) {
-                    self.backToMapVC
-                }
-            })
+            .map { [weak self] sender in
+                guard let self = self else { return false }
+                let tapLocation = sender.location(in: sender.view)
+                return !self.profileView.frame.contains(tapLocation)
+            }
+            .filter { $0 } // 枠外タップ（true）のみ処理
+            .map { _ in () }
+            .bind(to: backToMapVC)
             .disposed(by: disposeBag)
         
         // MapVCへ戻る
         profileView.navigationBar.closeButton.rx.tap
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                self.backToMapVC
-            })
+            .bind(to: self.backToMapVC)
             .disposed(by: disposeBag)
         
         // EditProfileVCへ遷移
         profileView.navigationBar.editButton.rx.tap
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                self.toEditProfileVC
-            })
+            .bind(to: self.toEditProfileVC)
             .disposed(by: disposeBag)
+    }
+}
+
+extension ProfileViewController {
+    // MapVC（マップ画面）へ戻る
+    private var backToMapVC: Binder<Void> {
+        return Binder(self) { base, _ in Router.dismissModal(vc: self) }
+    }
+    // EditProfileVC（編集画面）へ遷移
+    private var toEditProfileVC: Binder<Void> {
+        return Binder(self) { base, _ in Router.showEditProfile(vc: base, with: base.userProfile) }
     }
 }
 

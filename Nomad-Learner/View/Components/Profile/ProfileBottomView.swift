@@ -12,6 +12,8 @@ import SnapKit
 
 class ProfileBottomView: UIView {
     
+    var userProfile: User
+    
     // profileTableViewのアニメーション時のデフォルト位置
     private var defaultPositionY: CGFloat = CGFloat()
     
@@ -33,15 +35,17 @@ class ProfileBottomView: UIView {
         $0.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(userProfile: User) {
+        self.userProfile = userProfile
         
+        super.init(frame: .zero)
         backgroundColor = .white
         layer.cornerRadius = 20
         layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         layer.masksToBounds = true
-
+        
         setupUI()
+        update(with: userProfile)
     }
     
     private func setupUI() {
@@ -69,6 +73,11 @@ class ProfileBottomView: UIView {
         profileTableView.dataSource = self
     }
     
+    // ユーザープロフィール情報を受け取り、UI更新
+    private func update(with userProfile: User) {
+        usernameLabel.text = userProfile.username
+    }
+    
     override func draw(_ rect: CGRect) {
         super.draw(rect)
         
@@ -89,6 +98,9 @@ extension ProfileBottomView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ProfileTableViewCell.identifer, for: indexPath) as! ProfileTableViewCell
+        cell.livingPlaceAndWork.text = userProfile.livingPlaceAndWork
+        cell.studyContent.text = userProfile.studyContent
+        cell.goal.text = userProfile.goal
         return cell
     }
     
@@ -136,5 +148,3 @@ extension ProfileBottomView: UITableViewDelegate, UITableViewDataSource {
         }
     }
 }
-
-

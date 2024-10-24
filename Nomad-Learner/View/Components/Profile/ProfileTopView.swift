@@ -10,6 +10,8 @@ import UIKit
 
 class ProfileTopView: UIView {
     
+    var userProfile: User
+    
     // プロフィール画像の大きさ
     public let pictureSize: CGFloat = 80
     
@@ -19,12 +21,14 @@ class ProfileTopView: UIView {
         $0.layer.cornerRadius = self.pictureSize / 2
     }
     
-    // プロフィール画像の内枠
-    private lazy var pictureInsideView: UIView = UIView().then {
-        $0.backgroundColor = .white
-        $0.layer.cornerRadius = (self.pictureSize - UIConstants.Layout.semiStandardPadding) / 2
+    // プロフィール画像
+    private lazy var pictureImageView = UIImageView().then {
+        $0.tintColor = ColorCodes.primaryPurple.color()
+        $0.backgroundColor = UIColor(white: 0.85, alpha: 1)
         $0.layer.borderColor = ColorCodes.primaryPurple.color().cgColor
         $0.layer.borderWidth = 1
+        $0.layer.cornerRadius = (self.pictureSize - UIConstants.Layout.semiStandardPadding) / 2
+        $0.layer.masksToBounds = true
     }
     
     private let weeklyStudyTimeTitle: ProfileLabel = ProfileLabel(text: "weekly", fontSize: UIConstants.TextSize.semiMedium, textColor: ColorCodes.primaryPurple.color(), isRounded: true)
@@ -55,16 +59,19 @@ class ProfileTopView: UIView {
     }
     
     // 訪れた国の数のタイトル
-    private let countryCountTitle: ProfileLabel = ProfileLabel(text: "Visited Countries", fontSize: UIConstants.TextSize.semiMedium, textColor: ColorCodes.primaryPurple.color())
+    private let visitedCountriesTitle: ProfileLabel = ProfileLabel(text: "Visited Countries", fontSize: UIConstants.TextSize.semiMedium, textColor: ColorCodes.primaryPurple.color())
     
     // 訪れた国の数
-    private let countryCount: ProfileLabel = ProfileLabel(text: "23", fontSize: UIConstants.TextSize.medium, textColor: .darkGray)
+    private let visitedCountries: ProfileLabel = ProfileLabel(text: "23", fontSize: UIConstants.TextSize.medium, textColor: .darkGray)
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(userProfile: User) {
+        self.userProfile = userProfile
+        
+        super.init(frame: .zero)
         self.backgroundColor = ColorCodes.primaryPurple.color()
         
         setupUI()
+        update(with: userProfile)
     }
     
     private func setupUI() {
@@ -77,11 +84,10 @@ class ProfileTopView: UIView {
         studyTimeSummaryStackView.addArrangedSubview(totalStudyTimeStackView)
         
         addSubview(pictureOutsideView)
-        addSubview(pictureInsideView)
+        addSubview(pictureImageView)
         addSubview(studyTimeSummaryStackView)
-        addSubview(countryCountTitle)
-        addSubview(countryCount)
-        
+        addSubview(visitedCountriesTitle)
+        addSubview(visitedCountries)
         
         pictureOutsideView.snp.makeConstraints {
             $0.left.equalToSuperview().inset(UIConstants.Layout.standardPadding)
@@ -89,7 +95,7 @@ class ProfileTopView: UIView {
             $0.centerY.equalTo(self.snp.bottom)
         }
         
-        pictureInsideView.snp.makeConstraints {
+        pictureImageView.snp.makeConstraints {
             $0.center.equalTo(pictureOutsideView)
             $0.size.equalTo(pictureSize - UIConstants.Layout.semiStandardPadding)
         }
@@ -100,19 +106,36 @@ class ProfileTopView: UIView {
             $0.centerY.equalToSuperview()
         }
         
-        countryCountTitle.snp.makeConstraints {
+        visitedCountriesTitle.snp.makeConstraints {
             $0.left.equalTo(pictureOutsideView.snp.right).inset(-(UIConstants.Layout.standardPadding))
             $0.top.equalTo(self.snp.bottom).inset(-(UIConstants.Layout.smallPadding))
         }
         
-        countryCount.snp.makeConstraints {
-            $0.centerY.equalTo(countryCountTitle)
-            $0.left.equalTo(countryCountTitle.snp.right).inset(-(UIConstants.Layout.standardPadding))
+        visitedCountries.snp.makeConstraints {
+            $0.centerY.equalTo(visitedCountriesTitle)
+            $0.left.equalTo(visitedCountriesTitle.snp.right).inset(-(UIConstants.Layout.standardPadding))
         }
-        
+    }
+    
+    // ユーザープロフィール情報を受け取り、UI更新
+    private func update(with userProfile: User) {
+        if userProfile.profileImageUrl.isEmpty {
+            pictureImageView.image = UIImage(named: "Globe") // 空の場合はデフォルト画像
+        } else {
+            pictureImageView.setImage(with: userProfile.profileImageUrl)
+        }
+        weeklyStudyTime.text = userProfile.weeklyTime.toString
+        totalStudyTime.text = userProfile.totalTime.toString
+        visitedCountries.text = userProfile.visitedCountries.toString
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension Int {
+    var toString: String {
+        return String(self)
     }
 }

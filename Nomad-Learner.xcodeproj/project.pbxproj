@@ -20,14 +20,12 @@
 		831E5C712CC136E0001A90C4 /* GoogleMapID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831E5C702CC136E0001A90C4 /* GoogleMapID.swift */; };
 		831E5C732CC271EF001A90C4 /* MarkerIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831E5C722CC271EF001A90C4 /* MarkerIconView.swift */; };
 		831E5C752CC2740A001A90C4 /* MarkerInfoWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831E5C742CC2740A001A90C4 /* MarkerInfoWindow.swift */; };
-		831E5C7E2CC4494F001A90C4 /* Nuke in Frameworks */ = {isa = PBXBuildFile; productRef = 831E5C7D2CC4494F001A90C4 /* Nuke */; };
-		831E5C802CC4494F001A90C4 /* NukeExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 831E5C7F2CC4494F001A90C4 /* NukeExtensions */; };
-		831E5C822CC4494F001A90C4 /* NukeUI in Frameworks */ = {isa = PBXBuildFile; productRef = 831E5C812CC4494F001A90C4 /* NukeUI */; };
-		831E5C842CC4494F001A90C4 /* NukeVideo in Frameworks */ = {isa = PBXBuildFile; productRef = 831E5C832CC4494F001A90C4 /* NukeVideo */; };
 		831E5C862CC4AAC3001A90C4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831E5C852CC4AAC3001A90C4 /* User.swift */; };
 		831E5C882CC4B493001A90C4 /* VisitedLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831E5C872CC4B493001A90C4 /* VisitedLocation.swift */; };
 		831E5C8A2CC4B4C1001A90C4 /* StudyRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831E5C892CC4B4C1001A90C4 /* StudyRoom.swift */; };
 		831E5C8C2CC4B4F6001A90C4 /* FixedLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831E5C8B2CC4B4F6001A90C4 /* FixedLocation.swift */; };
+		834478612CCA4A680038C7B9 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834478602CCA4A680038C7B9 /* ImageCacheManager.swift */; };
+		834478632CCA65380038C7B9 /* UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834478622CCA65380038C7B9 /* UITextView.swift */; };
 		835BD2F12CA413560088CA02 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835BD2F02CA413560088CA02 /* AppDelegate.swift */; };
 		835BD2F32CA413560088CA02 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835BD2F22CA413560088CA02 /* SceneDelegate.swift */; };
 		835BD2FA2CA413570088CA02 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 835BD2F92CA413570088CA02 /* Assets.xcassets */; };
@@ -55,7 +53,7 @@
 		838753DE2CAED385001EE8F1 /* ValidationLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753DD2CAED385001EE8F1 /* ValidationLabel.swift */; };
 		838753E22CAF9E53001EE8F1 /* AlertEnabled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753E12CAF9E53001EE8F1 /* AlertEnabled.swift */; };
 		838753E42CB00A4B001EE8F1 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753E32CB00A4B001EE8F1 /* MapViewController.swift */; };
-		838753E82CB02B42001EE8F1 /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753E72CB02B42001EE8F1 /* CurrentUser.swift */; };
+		838753E82CB02B42001EE8F1 /* FBAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753E72CB02B42001EE8F1 /* FBAuth.swift */; };
 		838753ED2CB0EEED001EE8F1 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838753EC2CB0EEED001EE8F1 /* Router.swift */; };
 		83A6D7A92CB3D7B000D18A30 /* UIScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7A82CB3D7B000D18A30 /* UIScrollView.swift */; };
 		83A6D7AB2CB3D93E00D18A30 /* LocationLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7AA2CB3D93E00D18A30 /* LocationLabel.swift */; };
@@ -102,6 +100,7 @@
 		83C9F3B62CA907B900CF0D73 /* ColorCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C9F3B52CA907B900CF0D73 /* ColorCodes.swift */; };
 		83C9F3BA2CA9161300CF0D73 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C9F3B92CA9161300CF0D73 /* UITextField.swift */; };
 		83C9F3BC2CA931F400CF0D73 /* KeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C9F3BB2CA931F400CF0D73 /* KeyboardManager.swift */; };
+		83F315DB2CC7888D0003B7E2 /* FirebaseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F315DA2CC7888D0003B7E2 /* FirebaseConfig.swift */; };
 		E1B4908C044C675F5B284480 /* Pods_Nomad_Learner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4FC40ED509727A95F858024 /* Pods_Nomad_Learner.framework */; };
 /* End PBXBuildFile section */
 
@@ -125,6 +124,8 @@
 		831E5C872CC4B493001A90C4 /* VisitedLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisitedLocation.swift; sourceTree = "<group>"; };
 		831E5C892CC4B4C1001A90C4 /* StudyRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyRoom.swift; sourceTree = "<group>"; };
 		831E5C8B2CC4B4F6001A90C4 /* FixedLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedLocation.swift; sourceTree = "<group>"; };
+		834478602CCA4A680038C7B9 /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
+		834478622CCA65380038C7B9 /* UITextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextView.swift; sourceTree = "<group>"; };
 		835BD2ED2CA413560088CA02 /* Nomad-Learner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Nomad-Learner.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		835BD2F02CA413560088CA02 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		835BD2F22CA413560088CA02 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -154,7 +155,7 @@
 		838753DD2CAED385001EE8F1 /* ValidationLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationLabel.swift; sourceTree = "<group>"; };
 		838753E12CAF9E53001EE8F1 /* AlertEnabled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertEnabled.swift; sourceTree = "<group>"; };
 		838753E32CB00A4B001EE8F1 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		838753E72CB02B42001EE8F1 /* CurrentUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUser.swift; sourceTree = "<group>"; };
+		838753E72CB02B42001EE8F1 /* FBAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBAuth.swift; sourceTree = "<group>"; };
 		838753EC2CB0EEED001EE8F1 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		83A6D7A82CB3D7B000D18A30 /* UIScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScrollView.swift; sourceTree = "<group>"; };
 		83A6D7AA2CB3D93E00D18A30 /* LocationLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationLabel.swift; sourceTree = "<group>"; };
@@ -201,6 +202,7 @@
 		83C9F3B52CA907B900CF0D73 /* ColorCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCodes.swift; sourceTree = "<group>"; };
 		83C9F3B92CA9161300CF0D73 /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 		83C9F3BB2CA931F400CF0D73 /* KeyboardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardManager.swift; sourceTree = "<group>"; };
+		83F315DA2CC7888D0003B7E2 /* FirebaseConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseConfig.swift; sourceTree = "<group>"; };
 		A2D42D523F052595228AA30F /* Pods-Nomad-Learner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nomad-Learner.release.xcconfig"; path = "Target Support Files/Pods-Nomad-Learner/Pods-Nomad-Learner.release.xcconfig"; sourceTree = "<group>"; };
 		B4FC40ED509727A95F858024 /* Pods_Nomad_Learner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Nomad_Learner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -211,10 +213,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E1B4908C044C675F5B284480 /* Pods_Nomad_Learner.framework in Frameworks */,
-				831E5C7E2CC4494F001A90C4 /* Nuke in Frameworks */,
-				831E5C842CC4494F001A90C4 /* NukeVideo in Frameworks */,
-				831E5C802CC4494F001A90C4 /* NukeExtensions in Frameworks */,
-				831E5C822CC4494F001A90C4 /* NukeUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -379,9 +377,11 @@
 				838753DB2CAD33E2001EE8F1 /* AuthServiceProtocol.swift */,
 				830498C72CC656EF003973EC /* MainServiceProtocol.swift */,
 				830498CB2CC666DD003973EC /* RealmServiceProtocol.swift */,
+				83F315DA2CC7888D0003B7E2 /* FirebaseConfig.swift */,
 				830498C92CC661C5003973EC /* Parser.swift */,
 				838753E12CAF9E53001EE8F1 /* AlertEnabled.swift */,
-				838753E72CB02B42001EE8F1 /* CurrentUser.swift */,
+				838753E72CB02B42001EE8F1 /* FBAuth.swift */,
+				834478602CCA4A680038C7B9 /* ImageCacheManager.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -499,6 +499,7 @@
 			children = (
 				83A9C2C42CA7DA5000898F0B /* UILabel.swift */,
 				83C9F3B92CA9161300CF0D73 /* UITextField.swift */,
+				834478622CCA65380038C7B9 /* UITextView.swift */,
 				83AFB3A92CB2902C00501FEE /* UIView.swift */,
 				83A6D7A82CB3D7B000D18A30 /* UIScrollView.swift */,
 				830498CD2CC6A714003973EC /* UIImageView.swift */,
@@ -545,10 +546,6 @@
 			);
 			name = "Nomad-Learner";
 			packageProductDependencies = (
-				831E5C7D2CC4494F001A90C4 /* Nuke */,
-				831E5C7F2CC4494F001A90C4 /* NukeExtensions */,
-				831E5C812CC4494F001A90C4 /* NukeUI */,
-				831E5C832CC4494F001A90C4 /* NukeVideo */,
 			);
 			productName = "Nomad-Learner";
 			productReference = 835BD2ED2CA413560088CA02 /* Nomad-Learner.app */;
@@ -700,12 +697,13 @@
 				838753DC2CAD33E2001EE8F1 /* AuthServiceProtocol.swift in Sources */,
 				83C5E13C2CBFBCC2001C27E1 /* OnFlightView.swift in Sources */,
 				8304A0E22CA5123300061B33 /* AuthViewController.swift in Sources */,
+				83F315DB2CC7888D0003B7E2 /* FirebaseConfig.swift in Sources */,
 				838753D82CACE930001EE8F1 /* ActivityIndicator.swift in Sources */,
 				830498BF2CC5072C003973EC /* MyAppError.swift in Sources */,
 				837DE5902CBA564A00819964 /* TicketView.swift in Sources */,
 				83A9C2C22CA7D08500898F0B /* AuthTextField.swift in Sources */,
 				83A6D7D22CB7D7DD00D18A30 /* ProfileTextView.swift in Sources */,
-				838753E82CB02B42001EE8F1 /* CurrentUser.swift in Sources */,
+				838753E82CB02B42001EE8F1 /* FBAuth.swift in Sources */,
 				83A6D7DB2CB80D9100D18A30 /* EditProfileViewNavigationBar.swift in Sources */,
 				83A6D7E42CB8FD4E00D18A30 /* DepartView.swift in Sources */,
 				83A6D7B12CB3F39300D18A30 /* LocationCategory.swift in Sources */,
@@ -731,6 +729,7 @@
 				83A6D7DD2CB8195C00D18A30 /* EditProfileTextView.swift in Sources */,
 				837DE5972CBAD12E00819964 /* StudyRoomViewModel.swift in Sources */,
 				831E5C732CC271EF001A90C4 /* MarkerIconView.swift in Sources */,
+				834478612CCA4A680038C7B9 /* ImageCacheManager.swift in Sources */,
 				83A6D7A92CB3D7B000D18A30 /* UIScrollView.swift in Sources */,
 				831E5C882CC4B493001A90C4 /* VisitedLocation.swift in Sources */,
 				83A6D7D72CB80C5D00D18A30 /* EditProfileViewModel.swift in Sources */,
@@ -751,6 +750,7 @@
 				836180F02CBC93900059937E /* Profile.swift in Sources */,
 				838753D62CAC19D1001EE8F1 /* AuthInputValidator.swift in Sources */,
 				831E5C6F2CC13205001A90C4 /* Location.swift in Sources */,
+				834478632CCA65380038C7B9 /* UITextView.swift in Sources */,
 				838753D42CABFDB7001EE8F1 /* AuthInputValidation.swift in Sources */,
 				83A6D7C62CB682D600D18A30 /* ProfileTopView.swift in Sources */,
 				83C5E1332CBF851D001C27E1 /* NavigationControllerForAuthVC.swift in Sources */,
@@ -861,6 +861,8 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Nomad-Learner/Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "本アプリは、画像の投稿及び編集のため、カメラの使用許可を求めます。";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
@@ -960,6 +962,8 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Nomad-Learner/Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "本アプリは、画像の投稿及び編集のため、カメラの使用許可を求めます。";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
@@ -1013,29 +1017,6 @@
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		831E5C7D2CC4494F001A90C4 /* Nuke */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 831E5C7C2CC4494F001A90C4 /* XCRemoteSwiftPackageReference "Nuke" */;
-			productName = Nuke;
-		};
-		831E5C7F2CC4494F001A90C4 /* NukeExtensions */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 831E5C7C2CC4494F001A90C4 /* XCRemoteSwiftPackageReference "Nuke" */;
-			productName = NukeExtensions;
-		};
-		831E5C812CC4494F001A90C4 /* NukeUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 831E5C7C2CC4494F001A90C4 /* XCRemoteSwiftPackageReference "Nuke" */;
-			productName = NukeUI;
-		};
-		831E5C832CC4494F001A90C4 /* NukeVideo */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 831E5C7C2CC4494F001A90C4 /* XCRemoteSwiftPackageReference "Nuke" */;
-			productName = NukeVideo;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 835BD2E52CA413560088CA02 /* Project object */;
 }

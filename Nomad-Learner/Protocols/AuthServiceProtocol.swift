@@ -11,10 +11,6 @@ import Firebase
 import FirebaseAuth
 
 protocol AuthServiceProtocol {
-    // ログイン状態の確認
-    func addStateDidChangeListener() -> Observable<Bool>
-    // ログイン状態の確認リスナー破棄
-    func removeStateDidChangeListener()
     // サインイン
     func signIn(email: String, password: String) -> Observable<FirebaseAuth.User>
     // サインアップ
@@ -29,34 +25,7 @@ final class AuthService: AuthServiceProtocol {
     
     public static let shared = AuthService()
     
-    // ログイン状態確認リスナー
-    private var handler: AuthStateDidChangeListenerHandle?
-    
     private init() {}
-    
-    // ログイン状態確認リスナー破棄
-    deinit { removeStateDidChangeListener() }
-    
-    // ログイン状態確認
-    func addStateDidChangeListener() -> Observable<Bool> {
-        Observable<Bool>.create { observer in
-            self.handler = Auth.auth().addStateDidChangeListener { _, user in
-                if let _ = user {
-                    observer.onNext(true)
-                } else {
-                    observer.onNext(false)
-                }
-            }
-            return Disposables.create()
-        }
-    }
-    
-    // ログイン状態確認リスナー破棄
-    func removeStateDidChangeListener() {
-        if let handler = handler {
-            Auth.auth().removeStateDidChangeListener(handler)
-        }
-    }
     
     // サインアップ
     func signUp(username: String, email: String, password: String) -> Observable<FirebaseAuth.User> {
@@ -68,7 +37,7 @@ final class AuthService: AuthServiceProtocol {
                     req.displayName = username
                     req.commitChanges(completion: { (error) in
                         if let error = error {
-                            observer.onError(MyAppError.signInFailed(error))
+                            observer.onError(MyAppError.signUpFailed(error))
                         } else {
                             observer.onNext(user)
                             observer.onCompleted()
@@ -119,28 +88,28 @@ final class AuthService: AuthServiceProtocol {
     func deleteAccount(email: String, password: String) -> Observable<Bool> {
         return Observable<Bool>.create { observer in
             guard !email.isEmpty, !password.isEmpty else {
-                observer.onError(MyAppError.userNotFound(nil))
+                observer.onError(MyAppError.deleteAccount(.fieldEmpty))
                 return Disposables.create()
             }
             
-            guard let user = Auth.auth().currentUser else {
-                observer.onError(MyAppError.userNotFound(nil))
+            guard let user = FBAuth.currentUser else {
+                observer.onError(MyAppError.deleteAccount(.reSignInRequired))
                 return Disposables.create()
             }
-            
+                        
             // 再認証用の資格情報を作成
             let credential = EmailAuthProvider.credential(withEmail: email, password: password)
             
             // 再認証を実行
             user.reauthenticate(with: credential) { result, error in
                 if let error = error {
-                    observer.onError(MyAppError.deleteAccountFailed(error))
+                    observer.onError(MyAppError.deleteAccount(.deleteAccountFailed(error)))
                     return
                 }
                 // アカウントの削除を実行
                 user.delete { error in
                     if let error = error {
-                        observer.onError(MyAppError.deleteAccountFailed(error))
+                        observer.onError(MyAppError.deleteAccount(.deleteAccountFailed(error)))
                     } else {
                         observer.onNext(true) // アカウント削除成功
                         observer.onCompleted()

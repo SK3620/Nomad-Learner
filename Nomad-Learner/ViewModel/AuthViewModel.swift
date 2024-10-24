@@ -55,7 +55,6 @@ class AuthViewModel {
     let isLoading: Driver<Bool>
     let authButtonEnabled: Driver<Bool>
     let didAuthenticate: Driver<Bool>
-    let alreadyLoggedIn: Driver<Bool>
     let authError: Driver<MyAppError>
     let authMode: Driver<AuthMode>
     let deleteAccountError: Driver<MyAppError>
@@ -64,7 +63,6 @@ class AuthViewModel {
     
     // MARK: - Private properties
     private let deleteAccountRelay: BehaviorRelay<(email: String, password: String)>
-    private let authService: AuthServiceProtocol
     
     lazy var willDeleteAccountActionType = AlertActionType.willDeleteAccount(
         onConfirm: { email, password in self.deleteAccountRelay.accept((email: email!, password: password!))},
@@ -78,9 +76,9 @@ class AuthViewModel {
         authButtonTaps: Signal<Void>,
         authModeToggleTaps: Signal<Void>
     ),
-         authService: AuthServiceProtocol
+         authService: AuthServiceProtocol,
+         mainService: MainServiceProtocol
     ) {
-        self.authService = authService
         
         // deleteAccountRelayの初期化
         self.deleteAccountRelay = BehaviorRelay(value: (email: "", password: ""))
@@ -134,6 +132,14 @@ class AuthViewModel {
                         .trackActivity(indicator)
                 case .signUp:
                     authService.signUp(username: tuple.username, email: tuple.email, password: tuple.password)
+                        .flatMap { user in
+                            print("ユーザー名: \(user.displayName!) uid: \(user.uid)")
+                            // 保存するユーザー情報
+                            let userProfile = User(username: user.displayName!)
+                            // サインアップ後、ユーザープロフィール情報を保存
+                            return mainService.saveUserProfile(user: userProfile)
+                                .map { _ in user } // FirebaseAuth.Userに変換 流すイベントの型を合わせる
+                        }
                         .materialize()
                         .trackActivity(indicator)
                 }
@@ -142,15 +148,9 @@ class AuthViewModel {
         
         // 認証完了
         self.didAuthenticate = authResults
-            .filter { $0.event.element != nil }
-            .map { _ in true }
+            .map { $0.event.element != nil }
             .asDriver(onErrorJustReturn: false)
-        
-        // 自動ログイン（ログイン中かどうか）
-        self.alreadyLoggedIn = authService
-            .addStateDidChangeListener()
-            .asDriver(onErrorJustReturn: false)
-        
+       
         // 認証失敗
         self.authError = authResults
             .compactMap { $0.event.error as? MyAppError }

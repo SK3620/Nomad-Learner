@@ -37,11 +37,6 @@ class CustomAuthPickerViewController: FUIAuthPickerViewController, UITextFieldDe
         $0.spacing = UIConstants.Layout.semiMediumPadding
     }
     
-    // MapVC（マップ画面）へ遷移
-    private var toMapVC: Void {
-        Router.showMap(vc: self)
-    }
-    
     private var viewModel: AuthViewModel!
     private let disposeBag = DisposeBag()
     
@@ -49,6 +44,12 @@ class CustomAuthPickerViewController: FUIAuthPickerViewController, UITextFieldDe
         super.viewDidLoad()
         // UIのセットアップ等
         setupUI()
+        // 自動ログイン（UIの更新を待つ？）
+        if let _ = FBAuth.currentUser {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                Router.showMap(vc: self)
+            }
+        }
         // viewModelとのバインディング
         bind()
     }
@@ -101,7 +102,8 @@ extension CustomAuthPickerViewController: AlertEnabled, KRProgressHUDEnabled {
                     authButtonTaps: authStackView.authButton.rx.tap.asSignal(),
                     authModeToggleTaps: authStackView.authModeToggleButton.rx.tap.asSignal()
                 ),
-            authService: AuthService.shared
+            authService: AuthService.shared, 
+            mainService: MainService.shared
         )
         
         // 各入力欄の真下にバリデーションメッセージを表示
@@ -138,12 +140,7 @@ extension CustomAuthPickerViewController: AlertEnabled, KRProgressHUDEnabled {
             .drive(processWhenAutheticated)
             .disposed(by: disposeBag)
         
-        // 自動ログイン（ログイン中かどうか）
-        viewModel.alreadyLoggedIn
-            .drive(processWhenAutheticated)
-            .disposed(by: disposeBag)
-        
-        // ローディング
+        // ローディングインジケーター
         viewModel.isLoading
             .drive(self.rx.showProgress)
             .disposed(by: disposeBag)
@@ -181,7 +178,7 @@ extension CustomAuthPickerViewController {
             // 暫定でdismissを呼ぶ（なぜか認証成功時ProgressHudが非表示にならない）
             KRProgressHUD.dismiss()
             // 画面遷移
-            base.toMapVC
+            Router.showMap(vc: base)
         }
     }
 }

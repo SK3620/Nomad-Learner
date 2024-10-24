@@ -115,7 +115,7 @@ extension DepartViewController {
     }
 }
 
-
+/*
 struct ViewControllerPreview: PreviewProvider {
     struct Wrapper: UIViewControllerRepresentable {
         func makeUIViewController(context: Context) -> some UIViewController {
@@ -128,5 +128,6 @@ struct ViewControllerPreview: PreviewProvider {
         Wrapper()
     }
 }
+ */
 
 

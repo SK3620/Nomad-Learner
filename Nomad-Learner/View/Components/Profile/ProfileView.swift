@@ -12,16 +12,19 @@ import SnapKit
 
 class ProfileView: UIView {
     
-    public let navigationBar: ProfileNavigationBar = ProfileNavigationBar()
+    var userProfile: User
     
-    public let profileTopView: ProfileTopView = ProfileTopView()
+    let navigationBar: ProfileNavigationBar = ProfileNavigationBar()
     
-    public let profileBottomView: ProfileBottomView = ProfileBottomView()
+    lazy var profileTopView: ProfileTopView = ProfileTopView(userProfile: self.userProfile)
+    
+    lazy var profileBottomView: ProfileBottomView = ProfileBottomView(userProfile: self.userProfile)
     
     private let profileTopViewHeight: CGFloat = 80
-   
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    
+    init(userProfile: User) {
+        self.userProfile = userProfile
+        super.init(frame: .zero)
         
         setupUI()
     }

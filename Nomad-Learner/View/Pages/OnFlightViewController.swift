@@ -19,9 +19,9 @@ class OnFlightViewController: UIViewController {
         
         setupUI()
         
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-//            Router.showStudyRoomVC(vc: self)
-//        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+            Router.showStudyRoomVC(vc: self)
+        }
     }
     
     private func setupUI() {
@@ -48,6 +48,7 @@ extension OnFlightViewController {
     }
 }
 
+/*
 struct ViewControllerPreview: PreviewProvider {
     struct Wrapper: UIViewControllerRepresentable {
         func makeUIViewController(context: Context) -> some UIViewController {
@@ -60,6 +61,7 @@ struct ViewControllerPreview: PreviewProvider {
         Wrapper()
     }
 }
+ */
 
 
 

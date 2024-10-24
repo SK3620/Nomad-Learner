@@ -16,7 +16,7 @@ class EditProfileViewNavigationBar: UINavigationBar {
     }
     
     // 保存ボタン
-    public lazy var saveButton = UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.down"), style: .done, target: nil, action: nil).then {
+    lazy var saveButton = UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.down"), style: .done, target: nil, action: nil).then {
         $0.tintColor = .white
     }
         

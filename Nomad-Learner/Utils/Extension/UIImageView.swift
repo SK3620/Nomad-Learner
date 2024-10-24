@@ -7,7 +7,6 @@
 
 import Foundation
 import UIKit
-import AlamofireImage
 import Kingfisher
 
 extension UIImageView {

@@ -14,6 +14,10 @@ import CoreLocation
 import GoogleMapsUtils
 
 class MapViewController: UIViewController, GMSMapViewDelegate {
+    // ユーザープロフィール情報
+    var userProfile: User = User()
+    // 訪問したロケーション
+    var visitedLocations: [VisitedLocation] = []
     
     private lazy var navigationBoxBar: NavigationBoxBar = NavigationBoxBar()
     
@@ -119,7 +123,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
     }
 }
 
-extension MapViewController {
+extension MapViewController: KRProgressHUDEnabled, AlertEnabled {
     private func bind() {
         // AuthVC（認証画面）へ遷移
         backBarButtonItem.rx.tap
@@ -162,6 +166,31 @@ extension MapViewController {
         viewModel.fixedLocations
             .drive(addMarkersForLocations)
             .disposed(by: disposeBag)
+        
+        viewModel.userProfile
+            .drive(onNext: { [weak self] userProfile in
+                guard let self = self else { return }
+                self.userProfile = userProfile
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.visitedLocations
+            .drive(onNext: { [weak self] visitedLocations in
+                guard let self = self else { return }
+                self.visitedLocations = visitedLocations
+            })
+            .disposed(by: disposeBag)
+        
+        // ローディングインジケーター
+        viewModel.isLoading
+            .drive(self.rx.showProgress)
+            .disposed(by: disposeBag)
+        
+        // エラー
+        viewModel.myAppError
+            .map { AlertActionType.error($0) }
+            .drive(self.rx.showAlert)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -186,7 +215,7 @@ extension MapViewController {
 extension MapViewController {
     // ProfileVC（プロフィール画面）へ遷移
     private var toProfileVC: Binder<Void> {
-        return Binder(self) { base, _ in Router.showProfile(vc: base) }
+        return Binder(self) { base, _ in Router.showProfile(vc: base, with: base.userProfile) }
     }
     // DepartVC（出発画面）へ遷移
     private var toDepartVC: Binder<Void> {
@@ -199,8 +228,6 @@ extension MapViewController {
     // マップ上に取得したロケーションをマーカーとして配置
     private var addMarkersForLocations: Binder<[FixedLocation]> {
         return Binder(self) { base, locations in
-            // 画像をあらかじめ読み込んでおく
-            FixedLocation.prefetchImages(from: locations)
             // クラスター管理の初期化
             let iconGenerator = GMUDefaultClusterIconGenerator()
             let algorithm = GMUNonHierarchicalDistanceBasedAlgorithm()
@@ -235,19 +262,5 @@ struct ViewControllerPreview: PreviewProvider {
     }
     static var previews: some View {
         Wrapper()
-    }
-}
-
-import Kingfisher
-class ImageCacheManager {
-    static let shared = ImageCacheManager()
-    private var imageCache = NSCache<NSString, UIImage>()
-
-    func loadImage(forKey key: String) -> UIImage? {
-        return imageCache.object(forKey: NSString(string: key))
-    }
-
-    func saveImage(_ image: UIImage, forKey key: String) {
-        imageCache.setObject(image, forKey: NSString(string: key))
     }
 }

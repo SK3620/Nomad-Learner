@@ -50,6 +50,7 @@ extension Driver {
     }
     
     var value: Element? { return firstValue }
+    var unwrappedValue: Element { return firstValue! }
 }
 
 

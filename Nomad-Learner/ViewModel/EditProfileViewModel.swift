@@ -23,6 +23,7 @@ class EditProfileViewModel {
         saveButtonTaps: Signal<Void>,
         profileImage: Driver<UIImage?>
     ),
+         currentUserProfile: User,
          mainService: MainServiceProtocol
     ) {
         // インジケーター
@@ -39,14 +40,18 @@ class EditProfileViewModel {
         ) { username, livingPlaceAndWork, studyContent, goal, profileImage in
             return User(
                 username: !username.isEmpty ? username : "ー",
+                currentCoin: currentUserProfile.currentCoin,
                 livingPlaceAndWork: !livingPlaceAndWork.isEmpty ? livingPlaceAndWork : "ー",
                 studyContent: !studyContent.isEmpty ? studyContent : "ー",
-                goal: !goal.isEmpty ? goal : "ー"
+                goal: !goal.isEmpty ? goal : "ー",
+                visitedCountries: currentUserProfile.visitedCountries,
+                weeklyTime: currentUserProfile.weeklyTime,
+                totalTime: currentUserProfile.totalTime
             )
         }
         
         // 更新するプロフィール情報
-        var updatedUserProfile: User = User()
+        var updatedUserProfile: User!
         
         // 保存ボタン押下後、保存処理を行う
         let saveUserProfileResult = input.saveButtonTaps

@@ -64,6 +64,7 @@ class EditProfileViewController: UIViewController, AlertEnabled, KRProgressHUDEn
                     saveButtonTaps: editProfileView.navigationBar.saveButton.rx.tap.asSignal(),
                     profileImage: profileImageRelay.asDriver()
                 ),
+            currentUserProfile: userProfile,
             mainService: MainService.shared
         )
                         

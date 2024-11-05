@@ -67,29 +67,23 @@ final class VisitedLocationParser {
     // VisitedLocationをパース
     static func parse(_ documentID: String, _ data: [String: Any]) -> VisitedLocation? {
         guard let locationId = data["locationId"] as? String,
-              let coordinatesData = data["coordinates"] as? [String: Any],
-              let latitude = coordinatesData["latitude"] as? Double,
-              let longitude = coordinatesData["longitude"] as? Double,
-              let totalStudyTime = data["totalStudyTime"] as? Double,
+              let totalStudyHours = data["totalStudyHours"] as? Int,
+              let totalStudyMins = data["totalStudyMins"] as? Int,
               let visitTimesData = data["visitTimes"] as? [String: Any],
               let startTime = visitTimesData["startTime"] as? TimeInterval,
               let endTime = visitTimesData["endTime"] as? TimeInterval else {
             return nil
         }
         
-        let coordinates = GeoPoint(
-            latitude: latitude,
-            longitude: longitude
-        )
         let visitTimes = VisitTimes(
             startTime: Date(timeIntervalSince1970: startTime),
             endTime: Date(timeIntervalSince1970: endTime)
         )
-        
+                
         return VisitedLocation(
             locationId: locationId,
-            coordinates: coordinates,
-            totalStudyTime: totalStudyTime,
+            totalStudyHours: totalStudyHours,
+            totalStudyMins: totalStudyMins,
             visitTimes: visitTimes
         )
     }

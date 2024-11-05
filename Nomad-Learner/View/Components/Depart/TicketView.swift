@@ -352,8 +352,8 @@ extension TicketView {
         travelDistanceAndCost.text = ticketInfo.travelDistanceAndCost.toString
         destinationLabel.text = ticketInfo.destination
         countryAndRegion.text = ticketInfo.countryAndRegion
-        missionLabel.text = ticketInfo.totalStudyTime.toInt.toString
-        missionSubLabel.text = "/ \(ticketInfo.missionStudyTime.toInt.toString) hours"
+        missionLabel.text = "\(ticketInfo.totalStudyHours.toString)：\(ticketInfo.totalStudyMins.toString)"
+        missionSubLabel.text = "/ \(ticketInfo.missionStudyTime.toString) hours"
         rewardLabel.text = "\(ticketInfo.rewardCoin.toString)＋"
     }
 }

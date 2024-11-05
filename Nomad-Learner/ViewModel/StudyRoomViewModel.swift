@@ -39,12 +39,18 @@ class StudyRoomViewModel {
     private var formattedElapsedTime: String {
         String(format: "%02d:%02d:%02d", elapsedTime / 3600, (elapsedTime % 3600) / 60, elapsedTime % 60)
     }
-    // Firebaseに保存するフォーマット（00.00）
-    private var elapsedTimeInDecimalFormat: Double {
-        let hours = elapsedTime / 3600
-        let minutes = (elapsedTime % 3600) / 60
-        // 小数点以下に分を変換して加算
-        return Double(hours) + Double(minutes) / 100.0
+    // 経過時間（秒数）から時間/分単位を算出
+    private var elapsedStudyTime: (hours: Int, mins: Int) {
+        let hours = Int(elapsedTime / 3600) // 秒数から時間単位を算出
+        let minutes = Int(elapsedTime % 3600) / 60 // 秒数から分単位を算出
+        return (hours: hours, mins: minutes)
+    }
+    // 元々の合計勉強時間を取得
+    private var originalStudyTime: (hours: Int, mins: Int) {
+        return (
+            hours: locationInfo.ticketInfo.totalStudyHours,
+            mins: locationInfo.ticketInfo.totalStudyMins
+        )
     }
     
     private let indicator: ActivityIndicator = ActivityIndicator()
@@ -227,8 +233,9 @@ extension StudyRoomViewModel {
     // 勉強時間データ保存（退出時）
     func saveStudyProgress(countedStudyTime: Int, completion: () -> Void) {
         let updatedData = StudyProgressAndReward(
-            totalStudyTime: locationInfo.ticketInfo.totalStudyTime + elapsedTimeInDecimalFormat,
-            missionStudyTime: locationInfo.ticketInfo.missionStudyTime.toInt,
+            totalStudyHours: originalStudyTime.hours + elapsedStudyTime.hours,
+            totalStudyMins: originalStudyTime.mins + elapsedStudyTime.mins,
+            missionStudyTime: locationInfo.ticketInfo.missionStudyTime,
             rewardCoin: locationInfo.ticketInfo.rewardCoin
         )
         
@@ -259,19 +266,22 @@ extension StudyRoomViewModel {
 }
 
 struct StudyProgressAndReward {
-    let totalStudyTime: Double
+    let totalStudyHours: Int
+    let totalStudyMins: Int
     let missionStudyTime: Int
     let rewardCoin: Int
     
-    init(totalStudyTime: Double, missionStudyTime: Int, rewardCoin: Int) {
-        self.totalStudyTime = totalStudyTime
+    init(totalStudyHours: Int, totalStudyMins: Int, missionStudyTime: Int, rewardCoin: Int) {
+        self.totalStudyHours = totalStudyHours
+        self.totalStudyMins = totalStudyMins
         self.missionStudyTime = missionStudyTime
         self.rewardCoin = rewardCoin
     }
     
     var toDictionary: [String: Any] {
         return [
-            "totalStudyTime": totalStudyTime,
+            "totalStudyHours": totalStudyHours,
+            "totalStudyMins": totalStudyMins,
             "missionStudyTime": missionStudyTime,
             "rewardCoin": rewardCoin
         ]

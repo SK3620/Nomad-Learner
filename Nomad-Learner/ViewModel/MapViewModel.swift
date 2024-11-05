@@ -158,7 +158,7 @@ extension MapViewModel {
                     from: currentLocationCoordinate,
                     to: fixedLocationCoordinate
                 ),
-                locationDetials: locationsInfo.getLocationDetailsForTickeInfo(for: fixedLocation.locationId),
+                locationDetials: locationsInfo.getLocationDetailsForTicketInfo(for: fixedLocation.locationId),
                 currentCoin: currentCoin
             )
             // 配列に格納
@@ -191,9 +191,9 @@ extension MapViewModel {
             // 現在地か否か
             let isMyCurrentLocation = currentLocationId == fixedLocationId
             // 訪問履歴がある && 必要な合計勉強時間をクリアしているか否か
-            let isCompleted = hasVisited && ticketInfo.totalStudyTime >= ticketInfo.missionStudyTime
+            let isCompleted = hasVisited && ticketInfo.totalStudyHours >= ticketInfo.missionStudyTime
             // 訪問履歴がある && 必要な合計勉強時間に到達していないか否か（進行中か否か）
-            let isOngoing = hasVisited && ticketInfo.totalStudyTime < ticketInfo.missionStudyTime
+            let isOngoing = hasVisited && ticketInfo.totalStudyHours < ticketInfo.missionStudyTime
             // ロケーション状態構造体を生成
             let locationStatus = LocationStatus(
                 locationId: fixedLocationId,

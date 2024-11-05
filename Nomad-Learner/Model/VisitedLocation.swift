@@ -7,27 +7,36 @@
 
 import Foundation
 
-import Foundation
-
 struct VisitedLocation {
     let locationId: String
-    let coordinates: GeoPoint
-    let totalStudyTime: Double
+    let totalStudyHours: Int // 合計勉強時間（時間単位）
+    let totalStudyMins: Int  // 合計勉強時間（分単位）
     let visitTimes: VisitTimes
     
     init(
         locationId: String = "",
-        coordinates: GeoPoint = GeoPoint(),
-        totalStudyTime: Double = 0,
+        totalStudyHours: Int = 0,
+        totalStudyMins: Int = 0,
         visitTimes: VisitTimes = VisitTimes()
     ) {
         self.locationId = locationId
-        self.coordinates = coordinates
-        self.totalStudyTime = totalStudyTime
+        self.totalStudyHours = totalStudyHours
+        self.totalStudyMins = totalStudyMins
         self.visitTimes = visitTimes
+    }
+    
+    // 辞書形式への変換
+    var toDictionary: [String: Any] {
+        return [
+            "locationId": locationId,
+            "totalStudyHours": totalStudyHours,
+            "totalStudyMins": totalStudyMins,
+            "visitTimes": visitTimes.toDictionary
+        ]
     }
 }
 
+// 位置情報の訪問時間を管理する構造体
 struct VisitTimes {
     let startTime: Date
     let endTime: Date
@@ -39,49 +48,12 @@ struct VisitTimes {
         self.startTime = startTime
         self.endTime = endTime
     }
-}
-
-struct GeoPoint {
-    let latitude: Double
-    let longitude: Double
     
-    init(
-        latitude: Double = 0.0,
-        longitude: Double = 0.0
-    ) {
-        self.latitude = latitude
-        self.longitude = longitude
-    }
-}
-
-extension VisitedLocation {
-    // VisitedLocationのプロパティを辞書形式に変換します。
+    // 辞書形式への変換
     var toDictionary: [String: Any] {
         return [
-            "locationId": locationId,
-            "coordinates": coordinates.toDictionary, // GeoPointも辞書形式に変換
-            "totalStudyTime": totalStudyTime,
-            "visitTimes": visitTimes.toDictionary // VisitTimesも辞書形式に変換
-        ]
-    }
-}
-
-extension VisitTimes {
-    /// VisitTimesのプロパティを辞書形式に変換します。
-    var toDictionary: [String: Any] {
-        return [
-            "startTime": startTime.timeIntervalSince1970, // UNIXタイムスタンプとして保存
-            "endTime": endTime.timeIntervalSince1970 // UNIXタイムスタンプとして保存
-        ]
-    }
-}
-
-extension GeoPoint {
-    /// GeoPointのプロパティを辞書形式に変換します。
-    var toDictionary: [String: Any] {
-        return [
-            "latitude": latitude,
-            "longitude": longitude
+            "startTime": startTime.timeIntervalSince1970, // UNIXタイムスタンプ形式
+            "endTime": endTime.timeIntervalSince1970
         ]
     }
 }

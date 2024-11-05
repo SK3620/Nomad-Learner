@@ -282,7 +282,7 @@ extension StudyRoomViewController: AlertEnabled {
             case .exitRoom:
                 let alertActionType: AlertActionType = .exitRoom(
                     onConfirm: {
-                        base.viewModel.saveStudyProgress(countedStudyTime: <#T##Int#>) {
+                        base.viewModel.saveStudyProgress(countedStudyTime: 1) {
                             Router.backToMapVC(vc: base) // MapVC（マップ画面）に戻る
                         }
                     }

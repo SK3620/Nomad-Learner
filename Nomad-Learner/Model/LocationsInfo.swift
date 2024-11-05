@@ -41,12 +41,29 @@ extension LocationsInfo {
 
 extension LocationsInfo {
     // チケット上に表示する必要なロケーション情報を取得
-    func getLocationDetailsForTickeInfo(for locationId: String) -> (locationId: String, destination: String, country: String, region: String, totalStudyTime: Double) {
+    func getLocationDetailsForTicketInfo(for locationId: String) -> (
+        locationId: String,
+        destination: String,
+        country: String,
+        region: String,
+        totalStudyHours: Int,
+        totalStudyMins: Int
+    ) {
         guard let fixedLocation = fixedLocations.first(where: { $0.locationId == locationId }) else {
-            return ("", "", "", "", 0)
+            return ("", "", "", "", 0, 0)
         }
-        let totalStudyTime = visitedLocations.first(where: { $0.locationId == locationId })?.totalStudyTime ?? 0
         
-        return (fixedLocation.locationId, fixedLocation.location, fixedLocation.country, fixedLocation.region, totalStudyTime)
+        let visitedLocation = visitedLocations.first(where: { $0.locationId == locationId })
+        let totalStudyHours = visitedLocation?.totalStudyHours ?? 0
+        let totalStudyMins = visitedLocation?.totalStudyMins ?? 0
+        
+        return (
+            fixedLocation.locationId,
+            fixedLocation.location,
+            fixedLocation.country,
+            fixedLocation.region,
+            totalStudyHours,
+            totalStudyMins
+        )
     }
 }

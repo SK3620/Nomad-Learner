@@ -232,17 +232,18 @@ extension StudyRoomViewModel {
     
     // 勉強時間データ保存（退出時）
     func saveStudyProgress(countedStudyTime: Int, completion: () -> Void) {
-        let updatedData = StudyProgressAndReward(
+        let visitedLocationToUpdate = VisitedLocation(
             totalStudyHours: originalStudyTime.hours + elapsedStudyTime.hours,
             totalStudyMins: originalStudyTime.mins + elapsedStudyTime.mins,
-            fixedRequiredStudyTime: locationInfo.ticketInfo.requiredStudyHours,
-            fixedRewardCoin: locationInfo.ticketInfo.rewardCoin
+            fixedRequiredStudyHours: locationInfo.ticketInfo.requiredStudyHours,
+            fixedRewardCoin: locationInfo.ticketInfo.rewardCoin,
+            visitedAt: FieldValue.serverTimestamp()
         )
         
         let saveStudyProgressResult = mainService.removeUserIdFromLocation(locationId: locationId)
             .flatMap { [weak self] (_) -> Observable<Void> in
                 guard let self = self else { return .empty() }
-                return self.mainService.saveStudyProgressAndRewards(locationId: locationId, updatedData: updatedData)
+                return self.mainService.saveStudyProgressAndRewards(locationId: locationId, updatedData: visitedLocationToUpdate)
             }
             .materialize()
             .share(replay: 1)
@@ -262,28 +263,5 @@ extension StudyRoomViewModel {
         self.myAppError = saveStudyProgressResult
             .compactMap { $0.event.error as? MyAppError }
             .asDriver(onErrorJustReturn: .unknown)
-    }
-}
-
-struct StudyProgressAndReward {
-    let totalStudyHours: Int
-    let totalStudyMins: Int
-    let fixedRequiredStudyTime: Int
-    let fixedRewardCoin: Int
-    
-    init(totalStudyHours: Int, totalStudyMins: Int, fixedRequiredStudyTime: Int, fixedRewardCoin: Int) {
-        self.totalStudyHours = totalStudyHours
-        self.totalStudyMins = totalStudyMins
-        self.fixedRequiredStudyTime = fixedRequiredStudyTime
-        self.fixedRewardCoin = fixedRewardCoin
-    }
-    
-    var toDictionary: [String: Any] {
-        return [
-            "totalStudyHours": totalStudyHours,
-            "totalStudyMins": totalStudyMins,
-            "fixedRequiredStudyTime": fixedRequiredStudyTime,
-            "fixedRewardCoin": fixedRewardCoin
-        ]
     }
 }

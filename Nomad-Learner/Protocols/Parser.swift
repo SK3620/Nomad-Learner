@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Firebase
 
 final class FixedLocationParser {
     // FixedLocationをパース
@@ -71,16 +72,9 @@ final class VisitedLocationParser {
               let totalStudyMins = data["totalStudyMins"] as? Int,
               let fixedRequiredStudyHours = data["fixedRequiredStudyHours"] as? Int,
               let fixedRewardCoin = data["fixedRewardCoin"] as? Int,
-              let visitTimesData = data["visitTimes"] as? [String: Any],
-              let startTime = visitTimesData["startTime"] as? TimeInterval,
-              let endTime = visitTimesData["endTime"] as? TimeInterval else {
+              let visitedAt = data["visitedAt"] as? Timestamp else {
             return nil
         }
-        
-        let visitTimes = VisitTimes(
-            startTime: Date(timeIntervalSince1970: startTime),
-            endTime: Date(timeIntervalSince1970: endTime)
-        )
                 
         return VisitedLocation(
             locationId: locationId,
@@ -88,7 +82,7 @@ final class VisitedLocationParser {
             totalStudyMins: totalStudyMins,
             fixedRequiredStudyHours: fixedRequiredStudyHours,
             fixedRewardCoin: fixedRewardCoin,
-            visitTimes: visitTimes
+            visitedAt: visitedAt
         )
     }
 }

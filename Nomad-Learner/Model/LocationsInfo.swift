@@ -47,15 +47,19 @@ extension LocationsInfo {
         country: String,
         region: String,
         totalStudyHours: Int,
-        totalStudyMins: Int
+        totalStudyMins: Int,
+        fixedRequiredStudyHours: Int?,
+        fixedRewardCoin: Int?
     ) {
         guard let fixedLocation = fixedLocations.first(where: { $0.locationId == locationId }) else {
-            return ("", "", "", "", 0, 0)
+            return ("", "", "", "", 0, 0, nil, nil)
         }
         
         let visitedLocation = visitedLocations.first(where: { $0.locationId == locationId })
         let totalStudyHours = visitedLocation?.totalStudyHours ?? 0
         let totalStudyMins = visitedLocation?.totalStudyMins ?? 0
+        let fixedRequiredStudyHours = visitedLocation?.fixedRequiredStudyHours
+        let fixedRewardCoin = visitedLocation?.fixedRewardCoin
         
         return (
             fixedLocation.locationId,
@@ -63,7 +67,9 @@ extension LocationsInfo {
             fixedLocation.country,
             fixedLocation.region,
             totalStudyHours,
-            totalStudyMins
+            totalStudyMins,
+            fixedRequiredStudyHours,
+            fixedRewardCoin
         )
     }
 }

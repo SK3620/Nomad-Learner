@@ -41,7 +41,7 @@ protocol MainServiceProtocol {
     // 勉強部屋から退出
     func removeUserIdFromLocation(locationId: String) -> Observable<Void>
     // 勉強部屋からの退出時、合計勉強時間、ミッション勉強時間、報酬コインを保存
-    func saveStudyProgressAndRewards(updatedData: StudyProgressAndReward) -> Observable<Void>
+    func saveStudyProgressAndRewards(locationId: String, updatedData: StudyProgressAndReward) -> Observable<Void>
 }
 
 final class MainService: MainServiceProtocol {
@@ -383,7 +383,7 @@ final class MainService: MainServiceProtocol {
     }
     
     // 勉強部屋からの退出時、合計勉強時間、ミッション勉強時間、報酬コインを更新
-    func saveStudyProgressAndRewards(updatedData: StudyProgressAndReward) -> Observable<Void> {
+    func saveStudyProgressAndRewards(locationId: String, updatedData: StudyProgressAndReward) -> Observable<Void> {
         Observable.create { observer in
             guard let userId = FBAuth.currentUserId else {
                 observer.onError(MyAppError.userNotFound(nil))
@@ -391,7 +391,7 @@ final class MainService: MainServiceProtocol {
             }
             
             let dicData = updatedData.toDictionary
-            self.firebaseConfig.usersCollectionReference().document(userId)
+            self.firebaseConfig.visitedCollectionReference(with: userId).document(locationId)
                 .setData(dicData, merge: true) { error in
                     if let error = error {
                         observer.onError(MyAppError.allError(error))
@@ -403,4 +403,6 @@ final class MainService: MainServiceProtocol {
             return Disposables.create()
         }
     }
+    
+    // 勉強部屋からの退出時、
 }

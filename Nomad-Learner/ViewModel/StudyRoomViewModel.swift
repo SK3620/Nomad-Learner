@@ -235,14 +235,14 @@ extension StudyRoomViewModel {
         let updatedData = StudyProgressAndReward(
             totalStudyHours: originalStudyTime.hours + elapsedStudyTime.hours,
             totalStudyMins: originalStudyTime.mins + elapsedStudyTime.mins,
-            missionStudyTime: locationInfo.ticketInfo.missionStudyTime,
-            rewardCoin: locationInfo.ticketInfo.rewardCoin
+            fixedRequiredStudyTime: locationInfo.ticketInfo.requiredStudyHours,
+            fixedRewardCoin: locationInfo.ticketInfo.rewardCoin
         )
         
         let saveStudyProgressResult = mainService.removeUserIdFromLocation(locationId: locationId)
             .flatMap { [weak self] (_) -> Observable<Void> in
                 guard let self = self else { return .empty() }
-                return self.mainService.saveStudyProgressAndRewards(updatedData: updatedData)
+                return self.mainService.saveStudyProgressAndRewards(locationId: locationId, updatedData: updatedData)
             }
             .materialize()
             .share(replay: 1)
@@ -268,22 +268,22 @@ extension StudyRoomViewModel {
 struct StudyProgressAndReward {
     let totalStudyHours: Int
     let totalStudyMins: Int
-    let missionStudyTime: Int
-    let rewardCoin: Int
+    let fixedRequiredStudyTime: Int
+    let fixedRewardCoin: Int
     
-    init(totalStudyHours: Int, totalStudyMins: Int, missionStudyTime: Int, rewardCoin: Int) {
+    init(totalStudyHours: Int, totalStudyMins: Int, fixedRequiredStudyTime: Int, fixedRewardCoin: Int) {
         self.totalStudyHours = totalStudyHours
         self.totalStudyMins = totalStudyMins
-        self.missionStudyTime = missionStudyTime
-        self.rewardCoin = rewardCoin
+        self.fixedRequiredStudyTime = fixedRequiredStudyTime
+        self.fixedRewardCoin = fixedRewardCoin
     }
     
     var toDictionary: [String: Any] {
         return [
             "totalStudyHours": totalStudyHours,
             "totalStudyMins": totalStudyMins,
-            "missionStudyTime": missionStudyTime,
-            "rewardCoin": rewardCoin
+            "fixedRequiredStudyTime": fixedRequiredStudyTime,
+            "fixedRewardCoin": fixedRewardCoin
         ]
     }
 }

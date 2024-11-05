@@ -69,6 +69,8 @@ final class VisitedLocationParser {
         guard let locationId = data["locationId"] as? String,
               let totalStudyHours = data["totalStudyHours"] as? Int,
               let totalStudyMins = data["totalStudyMins"] as? Int,
+              let fixedRequiredStudyHours = data["fixedRequiredStudyHours"] as? Int,
+              let fixedRewardCoin = data["fixedRewardCoin"] as? Int,
               let visitTimesData = data["visitTimes"] as? [String: Any],
               let startTime = visitTimesData["startTime"] as? TimeInterval,
               let endTime = visitTimesData["endTime"] as? TimeInterval else {
@@ -84,6 +86,8 @@ final class VisitedLocationParser {
             locationId: locationId,
             totalStudyHours: totalStudyHours,
             totalStudyMins: totalStudyMins,
+            fixedRequiredStudyHours: fixedRequiredStudyHours,
+            fixedRewardCoin: fixedRewardCoin,
             visitTimes: visitTimes
         )
     }

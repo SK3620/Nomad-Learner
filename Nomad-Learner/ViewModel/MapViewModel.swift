@@ -152,6 +152,7 @@ extension MapViewModel {
         for fixedLocation in fixedLocations {
             // マップ上の各固定ロケーションの座標を取得
             let fixedLocationCoordinate = CLLocationCoordinate2D(latitude: fixedLocation.latitude, longitude: fixedLocation.longitude)
+            
             // チケット情報構造体を生成
             let ticketInfo = TicketInfo(
                 coordinate: (
@@ -191,9 +192,9 @@ extension MapViewModel {
             // 現在地か否か
             let isMyCurrentLocation = currentLocationId == fixedLocationId
             // 訪問履歴がある && 必要な合計勉強時間をクリアしているか否か
-            let isCompleted = hasVisited && ticketInfo.totalStudyHours >= ticketInfo.missionStudyTime
+            let isCompleted = hasVisited && ticketInfo.totalStudyHours >= ticketInfo.requiredStudyHours
             // 訪問履歴がある && 必要な合計勉強時間に到達していないか否か（進行中か否か）
-            let isOngoing = hasVisited && ticketInfo.totalStudyHours < ticketInfo.missionStudyTime
+            let isOngoing = hasVisited && ticketInfo.totalStudyHours < ticketInfo.requiredStudyHours
             // ロケーション状態構造体を生成
             let locationStatus = LocationStatus(
                 locationId: fixedLocationId,

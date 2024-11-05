@@ -94,8 +94,15 @@ class ProfileCollectionViewCell: UICollectionViewCell {
 
 extension ProfileCollectionViewCell {
     
-    public func configure(with item: Profile) {
-        userNameLabel.text = item.username
-        contentLabel.text = item.content
+    public func configure(with userProfile: User) {
+        if userProfile.profileImageUrl.isEmpty {
+            profileImageView.image = UIImage(named: "Globe") // 空の場合はデフォルト画像
+        } else {
+            profileImageView.setImage(with: userProfile.profileImageUrl)
+        }
+        
+        let content = "\(userProfile.livingPlaceAndWork) / \(userProfile.studyContent) / \(userProfile.goal)"
+        userNameLabel.text = userProfile.username
+        contentLabel.text = content
     }
 }

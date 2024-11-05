@@ -139,3 +139,13 @@ extension Int {
         return String(self)
     }
 }
+
+extension Double {
+    var toInt: Int {
+        return Int(self)
+    }
+    
+    var toString: String {
+        return String(self)
+    }
+}

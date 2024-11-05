@@ -14,22 +14,25 @@ import CoreLocation
 import GoogleMapsUtils
 
 class MapViewController: UIViewController, GMSMapViewDelegate {
+    // 各ロケーションの情報
+    private var locationsInfo: LocationsInfo = LocationsInfo()
+    // タップされたマーカーのロケーション情報
+    private var locationInfo: LocationInfo?
     // ユーザープロフィール情報
     var userProfile: User = User()
-    // 訪問したロケーション
-    var visitedLocations: [VisitedLocation] = []
     
     private lazy var navigationBoxBar: NavigationBoxBar = NavigationBoxBar()
     
     private lazy var locationDetailView: LocationDetailView = LocationDetailView()
+    // タブバー
+    private lazy var mapTabBar: MapTabBar = MapTabBar()
     
+    // viewModel
+    private var viewModel: MapViewModel!
     // マップ
     private var mapView: MapView!
     // マーカーのクラスタリング
     private var clusterManager: GMUClusterManager!
-    
-    // タブバー
-    private lazy var mapTabBar: MapTabBar = MapTabBar()
     
     private let disposeBag = DisposeBag()
     
@@ -37,14 +40,17 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
     private lazy var backBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: nil, action: nil).then {
         $0.tintColor = .lightGray
     }
+    // リローディングボタン
+    private lazy var reloadButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.circlepath"), style: .plain, target: nil, action: nil).then {
+        $0.tintColor = ColorCodes.primaryPurple.color()
+    }
     // プロフィール画面遷移ボタン
     private lazy var profileBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person"), style: .plain, target: nil, action: nil).then {
         $0.tintColor = ColorCodes.primaryPurple.color()
     }
-    
     // お財布アイコンと所持金ラベルのスタックビュー
     private lazy var walletStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [self.walletImageView, self.balanceLabel])
+        let stackView = UIStackView(arrangedSubviews: [self.walletImageView, self.currentCoinLabel])
         stackView.axis = .horizontal
         stackView.alignment = .center
         stackView.spacing = 8
@@ -52,7 +58,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
     }()
     
     // 現在の所持金
-    private let balanceLabel: UILabel = UILabel().then {
+    private let currentCoinLabel: UILabel = UILabel().then {
         $0.text = "100000"
         $0.font = .systemFont(ofSize: UIConstants.TextSize.semiSuperLarge, weight: .heavy)
         $0.textColor = .black
@@ -83,7 +89,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
         navigationController?.navigationBar.shadowImage = UIImage()
         
         // ナビゲーションバーボタンアイテムの設定
-        navigationItem.leftBarButtonItem = backBarButtonItem
+        navigationItem.leftBarButtonItems = [backBarButtonItem, reloadButtonItem]
         navigationItem.rightBarButtonItem = profileBarButtonItem
         navigationItem.titleView = walletStackView
         
@@ -116,6 +122,16 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
         }
     }
     
+    // クラスターマネージャーのセットアップメソッド
+    private func setupClusterManager() {
+        let iconGenerator = GMUDefaultClusterIconGenerator()
+        let algorithm = GMUNonHierarchicalDistanceBasedAlgorithm()
+        let renderer = GMUDefaultClusterRenderer(mapView: mapView, clusterIconGenerator: iconGenerator)
+        clusterManager = GMUClusterManager(map: mapView, algorithm: algorithm, renderer: renderer)
+        clusterManager.clearItems() // 既存のクラスターをリセット
+        clusterManager.setMapDelegate(self)
+    }
+    
     override func viewDidLayoutSubviews() {
         // 子ビューのレイアウト完了後にcollectionViewのitemSizeを決定する
         let layout = locationDetailView.locationCategoryCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
@@ -139,8 +155,12 @@ extension MapViewController: KRProgressHUDEnabled, AlertEnabled {
         mapTabBar.airplaneItem.rx.tap
             .bind(to: toDepartVC)
             .disposed(by: disposeBag)
-
-        let viewModel = MapViewModel(
+        
+        self.viewModel = MapViewModel(
+            input: (
+                reloadButtonItemTaps: reloadButtonItem.rx.tap.asSignal(),
+                hoge: ""
+            ),
             mainService: MainService.shared,
             realmService: RealmService.shared
         )
@@ -148,11 +168,12 @@ extension MapViewController: KRProgressHUDEnabled, AlertEnabled {
         
         // カテゴリーをセルに表示
         viewModel.categories
-            .drive(collectionView.rx.items(cellIdentifier: LocationCategoryCollectionViewCell.identifier, cellType: LocationCategoryCollectionViewCell.self)) { row, item, cell in
+            .drive(collectionView.rx.items(cellIdentifier: LocationCategoryCollectionViewCell.identifier, cellType: LocationCategoryCollectionViewCell.self)) { [weak self] row, item, cell in
+                guard let self = self else { return }
                 // 選択されたセルかどうか
-                let isSelected = viewModel.selectedIndex.value?.row == row
+                let isSelected = self.viewModel.selectedIndex.value?.row == row
                 cell.configure(with: item, isSelected: isSelected)
-                cell.bind(indexPath: IndexPath(row: row, section: 0), viewModel: viewModel)
+                cell.bind(indexPath: IndexPath(row: row, section: 0), viewModel: self.viewModel)
             }
             .disposed(by: disposeBag)
         
@@ -163,22 +184,14 @@ extension MapViewController: KRProgressHUDEnabled, AlertEnabled {
             })
             .disposed(by: disposeBag)
         
-        viewModel.fixedLocations
+        // 各ロケーション情報
+        viewModel.locationsAndUserInfo
             .drive(addMarkersForLocations)
             .disposed(by: disposeBag)
         
-        viewModel.userProfile
-            .drive(onNext: { [weak self] userProfile in
-                guard let self = self else { return }
-                self.userProfile = userProfile
-            })
-            .disposed(by: disposeBag)
-        
-        viewModel.visitedLocations
-            .drive(onNext: { [weak self] visitedLocations in
-                guard let self = self else { return }
-                self.visitedLocations = visitedLocations
-            })
+        // 各ロケーション情報（リロード）
+        viewModel.reloadedLocationsAndUserInfo
+            .drive(addMarkersForLocations)
             .disposed(by: disposeBag)
         
         // ローディングインジケーター
@@ -195,7 +208,46 @@ extension MapViewController: KRProgressHUDEnabled, AlertEnabled {
 }
 
 extension MapViewController {
-    
+    // ProfileVC（プロフィール画面）へ遷移
+    private var toProfileVC: Binder<Void> {
+        return Binder(self) { base, _ in Router.showProfile(vc: base, with: base.userProfile) }
+    }
+    // DepartVC（出発画面）へ遷移
+    private var toDepartVC: Binder<Void> {
+        return Binder(self) { base, _ in
+            guard let locationInfo = base.locationInfo else { return }
+            Router.showDepartVC(vc: base, locationInfo: locationInfo) }
+    }
+    // AuthVC（認証画面）へ遷移
+    private var backToAuthVC: Binder<Void> {
+        return Binder(self) { base, _ in Router.dismissModal(vc: base) }
+    }
+    // マップ上に取得したロケーションをマーカーとして配置
+    private var addMarkersForLocations: Binder<(LocationsInfo, User)> {
+        return Binder(self) { base, tuple in
+            let (locationsInfo, userProfile) = tuple
+            // プロパティ更新
+            base.locationsInfo = locationsInfo
+            base.userProfile = userProfile
+            
+            // クラスターマネージャーのセットアップ
+            base.setupClusterManager()
+            
+            // 現在地のロケーション情報を取得し、UIを更新
+            let currentLocationId = userProfile.currentLocationId
+            let currentLocationInfo = locationsInfo.createLocationInfo(of: currentLocationId)
+            base.locationInfo = currentLocationInfo
+            base.locationDetailView.update(ticketInfo: currentLocationInfo.ticketInfo)
+            base.currentCoinLabel.text = userProfile.currentCoin.toString
+            
+            // ロケーションマーカーを追加し、クラスタリング
+            base.clusterManager.add(base.mapView.addMarkersForLocations(locationsInfo: locationsInfo, currentLocationId: currentLocationId))
+            base.clusterManager.cluster()
+        }
+    }
+}
+
+extension MapViewController: CLLocationManagerDelegate {
     // infoWindowを表示
     func mapView(_ mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView? {
         // width, heightは固定
@@ -207,38 +259,21 @@ extension MapViewController {
     }
     
     // マーカータップ時
-    func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
-        
-    }
-}
-
-extension MapViewController {
-    // ProfileVC（プロフィール画面）へ遷移
-    private var toProfileVC: Binder<Void> {
-        return Binder(self) { base, _ in Router.showProfile(vc: base, with: base.userProfile) }
-    }
-    // DepartVC（出発画面）へ遷移
-    private var toDepartVC: Binder<Void> {
-        return Binder(self) { base, _ in Router.showDepartVC(vc: base) }
-    }
-    // AuthVC（認証画面）へ遷移
-    private var backToAuthVC: Binder<Void> {
-        return Binder(self) { base, _ in Router.dismissModal(vc: base) }
-    }
-    // マップ上に取得したロケーションをマーカーとして配置
-    private var addMarkersForLocations: Binder<[FixedLocation]> {
-        return Binder(self) { base, locations in
-            // クラスター管理の初期化
-            let iconGenerator = GMUDefaultClusterIconGenerator()
-            let algorithm = GMUNonHierarchicalDistanceBasedAlgorithm()
-            let renderer = GMUDefaultClusterRenderer(mapView: base.mapView, clusterIconGenerator: iconGenerator)
-            base.clusterManager = GMUClusterManager(map: base.mapView, algorithm: algorithm, renderer: renderer)
-            // MapViewDelegate設定
-            base.clusterManager.setMapDelegate(base)
-            // 全てのlocationのマーカーを追加
-            base.clusterManager.add(base.mapView.addMarkersForLocations(fixedLocations: locations))
-            base.clusterManager.cluster()
+    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        if let tappedLocation = marker.userData as? FixedLocation {
+            self.locationInfo = locationsInfo.createLocationInfo(of: tappedLocation.locationId)
+            // UIを更新
+            locationDetailView.update(ticketInfo: locationInfo!.ticketInfo)
+            mapTabBar.airplaneItem.isEnabled = true // 出発ボタン有効化
         }
+        return false
+    }
+    
+    // マーカー以外タップ時
+    func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
+        // UIを更新
+        locationDetailView.update(ticketInfo: TicketInfo())
+        mapTabBar.airplaneItem.isEnabled = false // 出発ボタン無効化
     }
 }
 
@@ -249,18 +284,5 @@ extension MapViewController {
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
-    }
-}
-
-struct ViewControllerPreview: PreviewProvider {
-    struct Wrapper: UIViewControllerRepresentable {
-        func makeUIViewController(context: Context) -> some UIViewController {
-            NavigationControllerForMapVC(rootViewController: MapViewController())
-        }
-        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-        }
-    }
-    static var previews: some View {
-        Wrapper()
     }
 }

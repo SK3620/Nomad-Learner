@@ -12,13 +12,13 @@ import Foundation
 struct VisitedLocation {
     let locationId: String
     let coordinates: GeoPoint
-    let totalStudyTime: Int
+    let totalStudyTime: Double
     let visitTimes: VisitTimes
     
     init(
         locationId: String = "",
         coordinates: GeoPoint = GeoPoint(),
-        totalStudyTime: Int = 0,
+        totalStudyTime: Double = 0,
         visitTimes: VisitTimes = VisitTimes()
     ) {
         self.locationId = locationId

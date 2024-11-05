@@ -67,8 +67,8 @@ class TicketView: UIView {
         $0.image = UIImage(named: "coin")
     }
     
-    // 距離と支払うコインの値
-    private lazy var distanceAndCoinValueLabel: UILabel = UILabel().then {
+    // 距離と旅費（距離==旅費）
+    private lazy var travelDistanceAndCost: UILabel = UILabel().then {
         $0.textColor = .black
         $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.semiSuperLarge)
         $0.text = "21600"
@@ -76,7 +76,7 @@ class TicketView: UIView {
     }
     
     // 距離とコインの下線
-    private let distanceAndCoinUnderline: UIView = UIView().then {
+    private let travelDistanceAndCostUnderline: UIView = UIView().then {
         $0.backgroundColor = UIColor(red: 240/255, green: 224/255, blue: 207/255, alpha: 1)
     }
     
@@ -90,7 +90,7 @@ class TicketView: UIView {
     }
     
     // 地域・国label
-    private lazy var regionLabel: UILabel = UILabel().then {
+    private lazy var countryAndRegion: UILabel = UILabel().then {
         $0.textColor = ColorCodes.primaryPurple.color()
         $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.small, weight: .ultraLight)
         $0.numberOfLines = 2
@@ -174,11 +174,11 @@ class TicketView: UIView {
         backgroundViewForDistanceAndCoin.addSubview(IconImageDivider)
         backgroundViewForDistanceAndCoin.addSubview(coinImageView)
         addSubview(backgroundViewForDistanceAndCoin)
-        addSubview(distanceAndCoinValueLabel)
-        addSubview(distanceAndCoinUnderline)
+        addSubview(travelDistanceAndCost)
+        addSubview(travelDistanceAndCostUnderline)
         
         addSubview(destinationLabel)
-        addSubview(regionLabel)
+        addSubview(countryAndRegion)
         
         backgroundViewForMission.addSubview(missionImageView)
         addSubview(backgroundViewForMission)
@@ -247,17 +247,18 @@ class TicketView: UIView {
         }
         
         // 距離とコインの値
-        distanceAndCoinValueLabel.snp.makeConstraints {
+        travelDistanceAndCost.snp.makeConstraints {
             $0.left.equalTo(backgroundViewForDistanceAndCoin.snp.right).offset(UIConstants.Layout.standardPadding)
             $0.centerY.equalTo(distanceImageView).offset(3) // 微調整
+            $0.right.equalToSuperview().inset(UIConstants.Layout.standardPadding)
         }
         
-        // 距離とアイコンの下線
-        distanceAndCoinUnderline.snp.makeConstraints {
+        // 距離＆旅費とアイコンの下線
+        travelDistanceAndCostUnderline.snp.makeConstraints {
             $0.height.equalTo(3)
             $0.bottom.equalTo(backgroundViewForDistanceAndCoin)
             $0.left.equalTo(backgroundViewForDistanceAndCoin.snp.centerX)
-            $0.right.equalTo(distanceAndCoinValueLabel)
+            $0.right.equalTo(travelDistanceAndCost)
         }
         
         // 目的地label
@@ -268,7 +269,7 @@ class TicketView: UIView {
         }
         
         // 地域・国label
-        regionLabel.snp.makeConstraints {
+        countryAndRegion.snp.makeConstraints {
             $0.top.equalTo(destinationLabel.snp.bottom)
             $0.right.left.equalTo(destinationLabel)
             $0.bottom.equalTo(backgroundViewForMission.snp.top).inset(-UIConstants.Layout.standardPadding)
@@ -342,6 +343,18 @@ class TicketView: UIView {
         
         // チケットのダッシュ線を描く
         draw(rect: rect)
+    }
+}
+
+extension TicketView {
+    // 各UIを更新
+    func update(with ticketInfo: TicketInfo) {
+        travelDistanceAndCost.text = ticketInfo.travelDistanceAndCost.toString
+        destinationLabel.text = ticketInfo.destination
+        countryAndRegion.text = ticketInfo.countryAndRegion
+        missionLabel.text = ticketInfo.totalStudyTime.toInt.toString
+        missionSubLabel.text = "/ \(ticketInfo.missionStudyTime.toInt.toString) hours"
+        rewardLabel.text = "\(ticketInfo.rewardCoin.toString)＋"
     }
 }
 

@@ -24,10 +24,11 @@ struct FirebaseConfig {
     
     // MARK: - Paths
     struct Paths {
-        static let locations = "locations"
+        static let fixedLocations = "fixedLocations"
         static let profileImages = "profileImages"
         static let users = "users"
         static let visitedLocations = "visitedLocations"
+        static let locations = "locations"
     }
     
     // MARK: - Initializer
@@ -38,23 +39,33 @@ struct FirebaseConfig {
     }
     
     // MARK: - Methods for accessing paths
-    // Realtime Databaseのlocationsコレクションへの参照
-    func locationsReference() -> DatabaseReference {
-        return realtimeDb.child(Paths.locations)
+    // Realtime Database fixedLocations
+    func fixedLocationsReference() -> DatabaseReference {
+        return realtimeDb.child(Paths.fixedLocations)
     }
     
-    // StorageのprofileImagesコレクションへの参照
+    // Storage profileImages
     func profileImagesReference(with userId: String) -> StorageReference {
         return storage.child(Paths.profileImages).child("\(userId).jpg")
     }
     
-    // Firestoreのusersコレクションへの参照
+    // users
     func usersCollectionReference() -> CollectionReference {
         return storeDb.collection(Paths.users)
     }
     
-    // FirestoreのvisitedLocationsコレクションへの参照
+    // users/{userId}/visitedLocations
     func visitedCollectionReference(with userId: String) -> CollectionReference {
         return usersCollectionReference().document(userId).collection(Paths.visitedLocations)
+    }
+    
+    // locations
+    func locationsCollectionReference() -> CollectionReference {
+        return storeDb.collection(Paths.locations)
+    }
+    
+    // locations/{locationId}/users
+    func usersInLocationsReference(with locationId: String) -> CollectionReference {
+        return locationsCollectionReference().document(locationId).collection(Paths.users)
     }
 }

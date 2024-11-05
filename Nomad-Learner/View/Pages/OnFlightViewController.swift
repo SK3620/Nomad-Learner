@@ -9,19 +9,23 @@ import UIKit
 import KRProgressHUD
 import SnapKit
 import SwiftUI
+import Firebase
+import RxSwift
+import RxCocoa
 
-class OnFlightViewController: UIViewController {
+class OnFlightViewController: UIViewController, AlertEnabled {
+    
+    var locationInfo: LocationInfo!
     
     private let onFlightView: OnFlightView = OnFlightView()
+    
+    private let disposeBag = DisposeBag()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupUI()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
-            Router.showStudyRoomVC(vc: self)
-        }
+        bind()
     }
     
     private func setupUI() {
@@ -31,6 +35,59 @@ class OnFlightViewController: UIViewController {
         
         onFlightView.snp.makeConstraints {
             $0.edges.equalToSuperview()
+        }
+    }
+    
+    private func bind() {
+        
+        let viewModel = OnFlightViewModel(
+            mainService: MainService.shared,
+            locationInfo: locationInfo
+        )
+        
+        Driver.combineLatest(
+            viewModel.userProfiles,
+            viewModel.latestLoadedDocDate,
+            viewModel.oldestDocument
+        ) { userProfiles, latestLoadedDocDate, oldestDocument in (userProfiles, latestLoadedDocDate, oldestDocument) }
+        .drive(toStudyRoomVC)
+        .disposed(by: disposeBag)
+        
+        // ローディングインジケーター
+        viewModel.isLoading
+            .drive(self.showOnFlightLoading)
+            .disposed(by: disposeBag)
+        
+        // エラー
+        viewModel.myAppError
+            .map { AlertActionType.error($0) }
+            .drive(self.rx.showAlert)
+            .disposed(by: disposeBag)
+    }
+}
+
+extension OnFlightViewController {
+    // StudyRoomVC（勉強部屋画面）へ遷移
+    private var toStudyRoomVC: Binder<([User], Timestamp?, QueryDocumentSnapshot?)> {
+        return Binder(self) { base, tuple in
+            let (userProfiles, latestLoadedDocDate, oldestDocument) = tuple
+            Router.showStudyRoomVC(
+                vc: base,
+                locationInfo: base.locationInfo,
+                userProfiles: userProfiles,
+                latestLoadedDocDate: latestLoadedDocDate,
+                oldestDocument: oldestDocument
+            )
+        }
+    }
+    // フライト中はローディングアニメーションを表示
+    private var showOnFlightLoading: Binder<Bool> {
+        return Binder(self) { base, isShow in
+            if isShow {
+                base.onFlightView.startAnimatingDots()
+            } else {
+                base.onFlightView.stopAnimatingDots()
+            }
         }
     }
 }
@@ -47,21 +104,6 @@ extension OnFlightViewController {
         return .landscapeRight
     }
 }
-
-/*
-struct ViewControllerPreview: PreviewProvider {
-    struct Wrapper: UIViewControllerRepresentable {
-        func makeUIViewController(context: Context) -> some UIViewController {
-            OnFlightViewController()
-        }
-        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-        }
-    }
-    static var previews: some View {
-        Wrapper()
-    }
-}
- */
 
 
 

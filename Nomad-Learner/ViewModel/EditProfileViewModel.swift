@@ -31,7 +31,7 @@ class EditProfileViewModel {
         self.isLoading = indicator.asDriver()
         
         // 入力したユーザーのプロフィール情報
-        var userProfile = Driver.combineLatest(
+        let userProfile = Driver.combineLatest(
             input.username,
             input.livingPlaceAndWork,
             input.studyContent,

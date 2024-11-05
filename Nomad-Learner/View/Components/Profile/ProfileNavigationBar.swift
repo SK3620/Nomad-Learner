@@ -11,12 +11,12 @@ import Then
 class ProfileNavigationBar: UINavigationBar {
     
     // マップ画面へ戻るボタン
-    public lazy var closeButton = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: nil, action: nil).then {
+    lazy var closeButton = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: nil, action: nil).then {
         $0.tintColor = .white
     }
     
     // プロフィール編集ボタン
-    public lazy var editButton = UIBarButtonItem(image: UIImage(systemName: "pencil"), style: .plain, target: nil, action: nil).then {
+    lazy var editButton = UIBarButtonItem(image: UIImage(systemName: "pencil"), style: .plain, target: nil, action: nil).then {
         $0.tintColor = .white
     }
         

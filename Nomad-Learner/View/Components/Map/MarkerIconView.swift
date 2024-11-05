@@ -9,30 +9,41 @@ import UIKit
 
 class MarkerIconView: UIView {
     
+    private var statusIcon = StatusIcon()
+    
+    private struct StatusIcon {
+        // アイコン画像
+        let configuration = UIImage.SymbolConfiguration(weight: .bold)
+        lazy var completed = UIImage(systemName: "checkmark.circle.fill", withConfiguration: self.configuration)
+        lazy var ongoing = UIImage(systemName: "minus.circle.fill", withConfiguration: self.configuration)
+        var hasNotVisided = UIImage()
+        
+        // アイコン色
+        let completedColor = UIColor(red: 0.0/255.0, green: 100.0/255.0, blue: 0.0/255.0, alpha: 1.0)
+        let ongoingColor = UIColor.yellow
+        
+        // アイコン背景色
+        let completedBackgroundColor = UIColor.white
+        let ongoingBackgroundColor = UIColor.black
+    }
+    
     // マーカーアイコン
     private let markerIconImageView: UIImageView = UIImageView().then {
         $0.image = UIImage(systemName: "mountain.2.fill")
         $0.tintColor = .red
     }
     
-    // チェックアイコン（完了）
-    private let checkmarkImageView: UIImageView = UIImageView().then {
-        let configuration = UIImage.SymbolConfiguration(weight: .bold)
-        $0.image = UIImage(systemName: "checkmark.circle.fill", withConfiguration: configuration)
-        $0.tintColor = UIColor(red: 0.0/255.0, green: 100.0/255.0, blue: 0.0/255.0, alpha: 1.0)
-        $0.backgroundColor = .white
-        $0.layer.cornerRadius = 7
+    // 現在地ピン
+    private let mappinImageView: UIImageView = UIImageView().then {
+        $0.image = UIImage(systemName: "mappin")
+        $0.tintColor = ColorCodes.primaryPurple.color()
     }
     
-    // マイナスアイコン（途中）
-    private let minusImageView: UIImageView = UIImageView().then {
-        let configuration = UIImage.SymbolConfiguration(weight: .bold)
-        $0.image = UIImage(systemName: "minus.circle.fill", withConfiguration: configuration)
-        $0.tintColor = .yellow
-        $0.backgroundColor = .black
+    // ステータスアイコン（完了/進行中/未訪問）
+    private let statusImageView: UIImageView = UIImageView().then {
         $0.layer.cornerRadius = 7
     }
-    
+
     // 人のアイコン
     private let personImageView: UIImageView = UIImageView().then {
         $0.image = UIImage(systemName: "person")
@@ -40,37 +51,42 @@ class MarkerIconView: UIView {
     }
     
     // 勉強中の人数
-    private let peopleCountLabel: UILabel = UILabel().then {
+    private let userCountLabel: UILabel = UILabel().then {
         $0.textColor = .black
-        $0.text = "20"
         $0.font = .systemFont(ofSize: UIConstants.TextSize.extraSmall)
     }
     
-    override init(frame: CGRect) {
+    
+    init(frame: CGRect, locationStatus: LocationStatus) {
         super.init(frame: frame)
         
+        setupUI()
+        // 各UIを更新
+        update(locationStatus: locationStatus)
+    }
+    
+    private func setupUI() {
         addSubview(markerIconImageView)
-        addSubview(checkmarkImageView)
-//        addSubview(minusImageView)
+        addSubview(mappinImageView)
+        addSubview(statusImageView)
 //        addSubview(personImageView)
-        addSubview(peopleCountLabel)
+        addSubview(userCountLabel)
         
         markerIconImageView.snp.makeConstraints {
             $0.left.top.equalToSuperview()
             $0.size.equalTo(30)
         }
         
-        checkmarkImageView.snp.makeConstraints {
+        mappinImageView.snp.makeConstraints {
+            $0.left.top.equalToSuperview()
+            $0.size.equalTo(30)
+        }
+        
+        statusImageView.snp.makeConstraints {
             $0.size.equalTo(14)
             $0.left.equalTo(markerIconImageView.snp.right)
             $0.top.equalTo(markerIconImageView)
         }
-        
-//        minusImageView.snp.makeConstraints {
-//            $0.size.equalTo(14)
-//            $0.left.equalTo(markerIconImageView.snp.right)
-//            $0.top.equalTo(markerIconImageView)
-//        }
                 
 //        personImageView.snp.makeConstraints {
 //            $0.bottom.equalTo(markerIconImageView.snp.bottom)
@@ -78,9 +94,34 @@ class MarkerIconView: UIView {
 //            $0.size.equalTo(14)
 //        }
         
-        peopleCountLabel.snp.makeConstraints {
+        userCountLabel.snp.makeConstraints {
             $0.centerY.equalTo(markerIconImageView.snp.bottom)
             $0.left.equalTo(markerIconImageView.snp.right)
+        }
+    }
+    
+    private func update(locationStatus: LocationStatus) {
+        // 参加人数
+        userCountLabel.text = locationStatus.userCount.toString
+        
+        // 現在地のロケーションの場合
+        mappinImageView.isHidden = !locationStatus.isMyCurrentLocation
+        
+        // 必要な合計勉強時間をクリアしている場合
+        if locationStatus.isCompleted {
+            statusImageView.image = statusIcon.completed
+            statusImageView.tintColor = statusIcon.completedColor
+            statusImageView.backgroundColor = statusIcon.completedBackgroundColor
+        }
+        // 進行中の場合
+        else if locationStatus.isOngoing {
+            statusImageView.image = statusIcon.ongoing
+            statusImageView.tintColor = statusIcon.ongoingColor
+            statusImageView.backgroundColor = statusIcon.ongoingBackgroundColor
+        }
+        // まだ訪問したことがない場合
+        else {
+            statusImageView.image = statusIcon.hasNotVisided
         }
     }
     

@@ -34,7 +34,7 @@ class OnFlightView: UIView {
         return stackView
     }()
     
-    private let disposeBag = DisposeBag()
+    private var animationDisposeBag = DisposeBag()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -56,8 +56,11 @@ class OnFlightView: UIView {
             make.center.equalToSuperview()
         }
     }
+}
+
+extension OnFlightView {
     
-    private func startAnimatingDots() {
+    func startAnimatingDots() {
         var dotCount: Int = 0
         let maxDots: Int = 3
         // 0.5秒ごとに点の数を更新するObservableを作成
@@ -68,6 +71,10 @@ class OnFlightView: UIView {
                 let dots = String(repeating: " .", count: dotCount) // 現在の点の数を反映
                 self.loadingLabel.text = "on a flight to the destination \(dots)"
             })
-            .disposed(by: disposeBag) // disposeBagでメモリ管理
+            .disposed(by: animationDisposeBag)
+    }
+    
+    func stopAnimatingDots() {
+        animationDisposeBag = DisposeBag() // DisposeBagを再生成してアニメーションを停止
     }
 }

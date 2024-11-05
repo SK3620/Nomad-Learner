@@ -16,7 +16,7 @@ class MapTabBar: UIView {
     private lazy var mapItem: UIButton = MapTabBarItem(name: "map")
     
     // 飛行機（出発）ボタン
-    public lazy var airplaneItem: UIButton = MapTabBarItem(name: "airplane", color: .white).then {
+    lazy var airplaneItem: UIButton = MapTabBarItem(name: "airplane", color: .white).then {
         $0.backgroundColor = ColorCodes.primaryPurple.color()
         $0.layer.cornerRadius = UIConstants.Button.height / 2
         // 縦向きの飛行機に調整

@@ -26,12 +26,12 @@ protocol RouterProtocol {
     // ProfileVC → EditProfileVC（プロフィール編集画面）
     static func showEditProfile(vc: UIViewController, with userProfile: User)
     // MapVC（マップ画面）→ DepartVC（出発画面）
-    static func showDepartVC(vc: UIViewController)
+    static func showDepartVC(vc: UIViewController, locationInfo: LocationInfo)
     // DepartVC（出発画面）→ OnFlightVC（飛行中画面）
-    static func showOnFlightVC(vc: UIViewController)
+    static func showOnFlightVC(vc: UIViewController, locationInfo: LocationInfo)
     // OnFlightVC（飛行中画面）→ StudyRoomVC（勉強部屋画面）
-    static func showStudyRoomVC(vc: UIViewController)
-    
+    static func showStudyRoomVC(vc: UIViewController, locationInfo: LocationInfo, userProfiles: [User], latestLoadedDocDate: Timestamp?, oldestDocument: QueryDocumentSnapshot?)
+
     // StudyRoomVC（勉強部屋画面）/ EditProfileVC（プロフィール編集画面）→ MapVC（マップ画面）
     static func backToMapVC(vc: UIViewController, _ updatedUserProfile: User)
     
@@ -102,24 +102,30 @@ extension Router: RouterProtocol {
     }
     
     // MacVC（マップ画面）→ DepartVC（出発画面）
-    static func showDepartVC(vc: UIViewController) {
+    static func showDepartVC(vc: UIViewController, locationInfo: LocationInfo) {
         let departViewController = DepartViewController()
+        departViewController.locationInfo = locationInfo
         departViewController.modalPresentationStyle = .overFullScreen
         departViewController.modalTransitionStyle = .crossDissolve
         modal(from: vc, to: departViewController)
     }
     
     // DepartVC（出発画面）→ StudyRoomVC（勉強部屋画面）
-    static func showOnFlightVC(vc: UIViewController) {
+    static func showOnFlightVC(vc: UIViewController, locationInfo: LocationInfo) {
         let onFlightViewController = OnFlightViewController()
+        onFlightViewController.locationInfo = locationInfo
         onFlightViewController.modalPresentationStyle = .overFullScreen
         onFlightViewController.modalTransitionStyle = .crossDissolve
         modal(from: vc, to: onFlightViewController)
     }
     
     // OnFlightVC（飛行中画面）→ StudyRoomVC（勉強部屋画面）
-    static func showStudyRoomVC(vc: UIViewController) {
+    static func showStudyRoomVC(vc: UIViewController, locationInfo: LocationInfo, userProfiles: [User], latestLoadedDocDate: Timestamp?, oldestDocument: QueryDocumentSnapshot?) {
         let studyRoomViewController = StudyRoomViewController()
+        studyRoomViewController.locationInfo = locationInfo
+        studyRoomViewController.userProfiles = userProfiles
+        studyRoomViewController.latestLoadedDocDate = latestLoadedDocDate
+        studyRoomViewController.oldestDocument = oldestDocument
         let navigationController = NavigationControllerForStudyRoomVC(rootViewController: studyRoomViewController)
         navigationController.modalPresentationStyle = .overFullScreen
         navigationController.modalTransitionStyle = .crossDissolve

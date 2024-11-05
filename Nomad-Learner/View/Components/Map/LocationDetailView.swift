@@ -107,14 +107,12 @@ class LocationDetailView: UIView {
     }
     
     private func setupUI() {
-        
-
         addSubview(distanceAndCoinBackgroundView)
         distanceAndCoinBackgroundView.addSubview(distanceImageView)
         distanceAndCoinBackgroundView.addSubview(IconImageDivider)
         distanceAndCoinBackgroundView.addSubview(coinImageView)
         addSubview(distanceAndCoinValueLabel)
-
+        
         addSubview(verticalDivider)
         addSubview(horizontalDivider)
         
@@ -125,7 +123,7 @@ class LocationDetailView: UIView {
         backgroundViewForReward.addSubview(rewardImageView)
         addSubview(backgroundViewForReward)
         addSubview(rewardLabel)
-       
+        
         addSubview(locationCategoryCollectionView)
         
         // 距離アイコンとコインアイコンをまとめる背景View
@@ -134,7 +132,7 @@ class LocationDetailView: UIView {
             $0.height.equalTo(35)
             $0.right.equalTo(coinImageView).offset(UIConstants.Layout.smallPadding)
         }
-
+        
         // 距離アイコン
         distanceImageView.snp.makeConstraints {
             $0.size.equalTo(CGSize(width: 45, height: 25))
@@ -201,7 +199,7 @@ class LocationDetailView: UIView {
         missionSubLabel.snp.makeConstraints {
             $0.left.equalTo(missionLabel.snp.right)
             $0.bottom.equalTo(missionLabel).inset(3) // 微調整
-            $0.right.equalToSuperview().inset(UIConstants.Layout.semiStandardPadding)
+            $0.right.equalToSuperview().inset(UIConstants.Layout.standardPadding)
         }
         
         // 報酬アイコン背景View
@@ -232,5 +230,15 @@ class LocationDetailView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension LocationDetailView {
+    // 各UIを更新
+    func update(ticketInfo: TicketInfo) {
+        distanceAndCoinValueLabel.text = ticketInfo.travelDistanceAndCost.toString
+        missionLabel.text = ticketInfo.totalStudyTime.toString
+        missionSubLabel.text = "/ \(ticketInfo.missionStudyTime.toInt.toString) hours"
+        rewardLabel.text = "\(ticketInfo.rewardCoin.toString)＋"
     }
 }

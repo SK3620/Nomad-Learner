@@ -8,8 +8,10 @@
 import Foundation
 
 struct User {
+    var userId: String
     var username: String
     var profileImageUrl: String
+    var currentLocationId: String
     var currentCoin: Int
     var livingPlaceAndWork: String
     var studyContent: String
@@ -19,8 +21,10 @@ struct User {
     var totalTime: Int
     
     init(
+        userId: String = "",
         username: String = "ー",
         profileImageUrl: String = "",
+        currentLocationId: String = "sydney_opera_house", // 暫定で設定
         currentCoin: Int = 100000,
         livingPlaceAndWork: String = "ー",
         studyContent: String = "ー",
@@ -29,8 +33,10 @@ struct User {
         weeklyTime: Int = 0,
         totalTime: Int = 0
     ) {
+        self.userId = userId
         self.username = username
         self.profileImageUrl = profileImageUrl
+        self.currentLocationId = currentLocationId
         self.currentCoin = currentCoin
         self.livingPlaceAndWork = livingPlaceAndWork
         self.studyContent = studyContent
@@ -47,6 +53,7 @@ extension User {
         return [
             "username": username,
             "profileImageUrl": profileImageUrl,
+            "currentLocationId": currentLocationId,
             "currentCoin": currentCoin,
             "livingPlaceAndWork": livingPlaceAndWork,
             "studyContent": studyContent,

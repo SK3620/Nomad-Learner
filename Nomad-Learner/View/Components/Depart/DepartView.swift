@@ -12,8 +12,11 @@ import RxSwift
 
 class DepartView: UIView {
     
-    // StudyRoomVC（勉強部屋画面）へ遷移
-    private var toStudyRoomVC: () -> Void
+    // タップされたマーカーのロケーション情報
+    var locationInfo: LocationInfo
+    
+    // つまみの位置が最上部に達した時にイベントを流す
+    var knobDidReachTopHandler: (() -> Void)?
     
     // つまみの初期中心位置
     private lazy var startCenterY: CGFloat = {
@@ -94,7 +97,7 @@ class DepartView: UIView {
     private let currentCoinLabel: UILabel = UILabel().then {
         $0.textColor = .darkGray
         $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.large)
-        $0.text = "1000000"
+        $0.text = "111111"
     }
     
     // 右矢印アイコン
@@ -112,11 +115,12 @@ class DepartView: UIView {
         $0.textColor = .orange
     }
     
-    public init(toStudyRoomVC: @escaping () -> Void) {
-        self.toStudyRoomVC = toStudyRoomVC
+    init(locationInfo: LocationInfo) {
+        self.locationInfo = locationInfo
         super.init(frame: .zero)
-
+        
         setupUI()
+        update(with: locationInfo.ticketInfo)
     }
     
     private func setupUI() {
@@ -201,6 +205,13 @@ class DepartView: UIView {
         }
     }
     
+    // UIを更新
+    private func update(with ticketInfo: TicketInfo) {
+        ticketFrame.update(with: ticketInfo)
+        currentCoinLabel.text = ticketInfo.currentCoin.toString
+        remainingCoinLabel.text = ticketInfo.remainingCoin.toString
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -229,7 +240,7 @@ extension DepartView {
             } completion: { _ in
                 // アニメーション終了時につまみが移動限界位置にあった場合の処理
                 if sender.view!.center.y == self.endCenterY {
-                    self.toStudyRoomVC()
+                    self.knobDidReachTopHandler!()
                 }
             }
             // senderが示すUIPanGestureRecognizerによって追跡されているジェスチャーの移動量をゼロにリセットする

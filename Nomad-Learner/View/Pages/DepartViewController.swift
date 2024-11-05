@@ -14,19 +14,19 @@ import SwiftUI
 
 class DepartViewController: UIViewController {
     
+    // タップされたマーカーのロケーション情報
+    var locationInfo: LocationInfo!
+    
+    // つまみの位置が最上部に達した時にイベントを流す
+    var knobDidReachTopRelay = PublishRelay<Void>()
+    
     // 基本のView
     private let basicView: UIView = UIView().then {
         $0.backgroundColor = .white
     }
     
-    // DepartVC（出発画面）→ StudyRoomVC（勉強部屋画面）
-    private func toStudyRoomVC() {
-        // Router.showStudyRoomVC(vc: self)
-        Router.showOnFlightVC(vc: self)
-    }
-    
     // 出発View
-    private lazy var departView: DepartView = DepartView(toStudyRoomVC: self.toStudyRoomVC)
+    private lazy var departView: DepartView = DepartView(locationInfo: self.locationInfo)
     
     // 出発キャンセルボタン
     private let cancelButton: UIButton = UIButton(type: .system).then {
@@ -37,11 +37,6 @@ class DepartViewController: UIViewController {
         $0.layer.borderWidth = 1
         $0.layer.cornerRadius = 30
         $0.backgroundColor = .white
-    }
-    
-    // MapVC（マップ画面）に戻る
-    private var backToMapVC: Void {
-        Router.dismissModal(vc: self)
     }
     
     private let disposeBag = DisposeBag()
@@ -83,19 +78,35 @@ class DepartViewController: UIViewController {
     }
     
     private func bind() {
-        
         // MapVC（マップ画面）に戻る
         cancelButton.rx.tap
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                self.backToMapVC
-            })
+            .bind(to: backToMapVC)
+            .disposed(by: disposeBag)
+        
+        // つまみが最上部に到達した時に実行する処理を渡す
+        departView.knobDidReachTopHandler = { [weak self] in
+            self?.knobDidReachTopRelay.accept(())
+        }
+        // OnFlightVC（出発準備画面）へ遷移
+        knobDidReachTopRelay
+            .bind(to: toOnFlightVC)
             .disposed(by: disposeBag)
     }
 }
 
 extension DepartViewController {
+    // MapVC（マップ画面）に戻る
+    private var backToMapVC: Binder<Void> {
+        return Binder(self) { base, _ in Router.dismissModal(vc: base) }
+    }
     
+    // OnFlightVC（出発準備画面）へ遷移
+    private var toOnFlightVC: Binder<Void> {
+        return Binder(self) { base, _ in Router.showOnFlightVC(vc: self, locationInfo: base.locationInfo) }
+    }
+}
+
+extension DepartViewController {
     // つまみ（knobButton)をスライド
     @objc func touchedKnob(_ sender: UIPanGestureRecognizer) {
         departView.slideKnob(sender: sender)
@@ -114,20 +125,3 @@ extension DepartViewController {
         return .portrait
     }
 }
-
-/*
-struct ViewControllerPreview: PreviewProvider {
-    struct Wrapper: UIViewControllerRepresentable {
-        func makeUIViewController(context: Context) -> some UIViewController {
-            DepartViewController()
-        }
-        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-        }
-    }
-    static var previews: some View {
-        Wrapper()
-    }
-}
- */
-
-

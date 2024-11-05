@@ -26,6 +26,12 @@
 		831E5C8C2CC4B4F6001A90C4 /* FixedLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831E5C8B2CC4B4F6001A90C4 /* FixedLocation.swift */; };
 		834478612CCA4A680038C7B9 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834478602CCA4A680038C7B9 /* ImageCacheManager.swift */; };
 		834478632CCA65380038C7B9 /* UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834478622CCA65380038C7B9 /* UITextView.swift */; };
+		834478652CCD52680038C7B9 /* DynamicLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834478642CCD52680038C7B9 /* DynamicLocation.swift */; };
+		834478672CCF6BDE0038C7B9 /* LocationsInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834478662CCF6BDE0038C7B9 /* LocationsInfo.swift */; };
+		834478692CCF9CE60038C7B9 /* TicketInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834478682CCF9CE60038C7B9 /* TicketInfo.swift */; };
+		8344786B2CCFB61E0038C7B9 /* LocationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8344786A2CCFB61E0038C7B9 /* LocationInfo.swift */; };
+		8344786D2CD213BE0038C7B9 /* LocationStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8344786C2CD213BE0038C7B9 /* LocationStatus.swift */; };
+		8344786F2CD498700038C7B9 /* OnFlightViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8344786E2CD498700038C7B9 /* OnFlightViewModel.swift */; };
 		835BD2F12CA413560088CA02 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835BD2F02CA413560088CA02 /* AppDelegate.swift */; };
 		835BD2F32CA413560088CA02 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835BD2F22CA413560088CA02 /* SceneDelegate.swift */; };
 		835BD2FA2CA413570088CA02 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 835BD2F92CA413570088CA02 /* Assets.xcassets */; };
@@ -126,6 +132,12 @@
 		831E5C8B2CC4B4F6001A90C4 /* FixedLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedLocation.swift; sourceTree = "<group>"; };
 		834478602CCA4A680038C7B9 /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
 		834478622CCA65380038C7B9 /* UITextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextView.swift; sourceTree = "<group>"; };
+		834478642CCD52680038C7B9 /* DynamicLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicLocation.swift; sourceTree = "<group>"; };
+		834478662CCF6BDE0038C7B9 /* LocationsInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsInfo.swift; sourceTree = "<group>"; };
+		834478682CCF9CE60038C7B9 /* TicketInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketInfo.swift; sourceTree = "<group>"; };
+		8344786A2CCFB61E0038C7B9 /* LocationInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationInfo.swift; sourceTree = "<group>"; };
+		8344786C2CD213BE0038C7B9 /* LocationStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationStatus.swift; sourceTree = "<group>"; };
+		8344786E2CD498700038C7B9 /* OnFlightViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnFlightViewModel.swift; sourceTree = "<group>"; };
 		835BD2ED2CA413560088CA02 /* Nomad-Learner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Nomad-Learner.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		835BD2F02CA413560088CA02 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		835BD2F22CA413560088CA02 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -233,6 +245,7 @@
 			children = (
 				838753D12CABE9A3001EE8F1 /* AuthViewModel.swift */,
 				83A6D7AE2CB3F0F800D18A30 /* MapViewModel.swift */,
+				8344786E2CD498700038C7B9 /* OnFlightViewModel.swift */,
 				83A6D7BC2CB61A8000D18A30 /* ProfileViewModel.swift */,
 				83A6D7D62CB80C5D00D18A30 /* EditProfileViewModel.swift */,
 				83A6D7E12CB8F88500D18A30 /* DepartViewModel.swift */,
@@ -251,6 +264,11 @@
 				831E5C872CC4B493001A90C4 /* VisitedLocation.swift */,
 				831E5C892CC4B4C1001A90C4 /* StudyRoom.swift */,
 				831E5C8B2CC4B4F6001A90C4 /* FixedLocation.swift */,
+				834478642CCD52680038C7B9 /* DynamicLocation.swift */,
+				834478662CCF6BDE0038C7B9 /* LocationsInfo.swift */,
+				8344786A2CCFB61E0038C7B9 /* LocationInfo.swift */,
+				834478682CCF9CE60038C7B9 /* TicketInfo.swift */,
+				8344786C2CD213BE0038C7B9 /* LocationStatus.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -716,7 +734,9 @@
 				831E5C862CC4AAC3001A90C4 /* User.swift in Sources */,
 				831E5C752CC2740A001A90C4 /* MarkerInfoWindow.swift in Sources */,
 				83C5E13E2CC0BEFC001C27E1 /* MapView.swift in Sources */,
+				834478652CCD52680038C7B9 /* DynamicLocation.swift in Sources */,
 				83C5E1312CBF7AFE001C27E1 /* NavigationControllerForMapVC.swift in Sources */,
+				834478692CCF9CE60038C7B9 /* TicketInfo.swift in Sources */,
 				83A6D7B72CB4D3CF00D18A30 /* LocationCategoryCollectionView.swift in Sources */,
 				836180E62CBB81E80059937E /* ScreenSizeProvidable.swift in Sources */,
 				838753DE2CAED385001EE8F1 /* ValidationLabel.swift in Sources */,
@@ -731,12 +751,15 @@
 				831E5C732CC271EF001A90C4 /* MarkerIconView.swift in Sources */,
 				834478612CCA4A680038C7B9 /* ImageCacheManager.swift in Sources */,
 				83A6D7A92CB3D7B000D18A30 /* UIScrollView.swift in Sources */,
+				8344786B2CCFB61E0038C7B9 /* LocationInfo.swift in Sources */,
 				831E5C882CC4B493001A90C4 /* VisitedLocation.swift in Sources */,
 				83A6D7D72CB80C5D00D18A30 /* EditProfileViewModel.swift in Sources */,
 				83AFB3A82CB1A94400501FEE /* MapTabBar.swift in Sources */,
 				83A6D7AF2CB3F0F800D18A30 /* MapViewModel.swift in Sources */,
 				838753ED2CB0EEED001EE8F1 /* Router.swift in Sources */,
 				83A6D7D92CB80C8F00D18A30 /* EditProfileView.swift in Sources */,
+				8344786F2CD498700038C7B9 /* OnFlightViewModel.swift in Sources */,
+				8344786D2CD213BE0038C7B9 /* LocationStatus.swift in Sources */,
 				83A6D7AB2CB3D93E00D18A30 /* LocationLabel.swift in Sources */,
 				838753E22CAF9E53001EE8F1 /* AlertEnabled.swift in Sources */,
 				831E5C712CC136E0001A90C4 /* GoogleMapID.swift in Sources */,
@@ -752,6 +775,7 @@
 				831E5C6F2CC13205001A90C4 /* Location.swift in Sources */,
 				834478632CCA65380038C7B9 /* UITextView.swift in Sources */,
 				838753D42CABFDB7001EE8F1 /* AuthInputValidation.swift in Sources */,
+				834478672CCF6BDE0038C7B9 /* LocationsInfo.swift in Sources */,
 				83A6D7C62CB682D600D18A30 /* ProfileTopView.swift in Sources */,
 				83C5E1332CBF851D001C27E1 /* NavigationControllerForAuthVC.swift in Sources */,
 				83A6D7C42CB6630700D18A30 /* ProfileNavigationBar.swift in Sources */,

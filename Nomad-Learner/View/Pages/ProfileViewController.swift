@@ -64,6 +64,9 @@ class ProfileViewController: UIViewController {
                 $0.width.equalToSuperview().multipliedBy(0.45)
             }
         }
+        
+        // StudyRommVC（勉強部屋画面）の場合は編集ボタン非表示
+        profileView.navigationBar.editButton.isHidden = (orientation == .landscape)
     }
     
     private func bind() {

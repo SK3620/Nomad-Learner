@@ -37,6 +37,7 @@ final class UserParser {
     static func parse(_ data: [String: Any]) -> User? {
         guard let username = data["username"] as? String,
               let profileImageUrl = data["profileImageUrl"] as? String,
+              let currentLocationId = data["currentLocationId"] as? String,
               let currentCoin = data["currentCoin"] as? Int,
               let livingPlaceAndWork = data["livingPlaceAndWork"] as? String,
               let studyContent = data["studyContent"] as? String,
@@ -50,6 +51,7 @@ final class UserParser {
         return User(
             username: username,
             profileImageUrl: profileImageUrl,
+            currentLocationId: currentLocationId,
             currentCoin: currentCoin,
             livingPlaceAndWork: livingPlaceAndWork,
             studyContent: studyContent,
@@ -68,7 +70,7 @@ final class VisitedLocationParser {
               let coordinatesData = data["coordinates"] as? [String: Any],
               let latitude = coordinatesData["latitude"] as? Double,
               let longitude = coordinatesData["longitude"] as? Double,
-              let totalStudyTime = data["totalStudyTime"] as? Int,
+              let totalStudyTime = data["totalStudyTime"] as? Double,
               let visitTimesData = data["visitTimes"] as? [String: Any],
               let startTime = visitTimesData["startTime"] as? TimeInterval,
               let endTime = visitTimesData["endTime"] as? TimeInterval else {
@@ -89,6 +91,20 @@ final class VisitedLocationParser {
             coordinates: coordinates,
             totalStudyTime: totalStudyTime,
             visitTimes: visitTimes
+        )
+    }
+}
+
+final class LocationParser {
+    // locationをパース
+    static func parse(_ documentID: String, _ data: [String: Any]) -> DynamicLocation? {
+        guard let userCount = data["userCount"] as? Int else {
+            return nil
+        }
+        
+        return DynamicLocation(
+            locationId: documentID,
+            userCount: userCount
         )
     }
 }

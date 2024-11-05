@@ -9,6 +9,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 import Kingfisher
+import GoogleMaps
 
 class MapViewModel {
     
@@ -16,96 +17,194 @@ class MapViewModel {
     let categories: Driver<[LocationCategoryItem]> = Driver.just(LocationCategoryItem.categories)
     var selectedIndex: Driver<IndexPath> { return selectedCategoryIndex.asDriver(onErrorDriveWith: .empty())}
     
-    let fixedLocations: Driver<[FixedLocation]> // マップ上にマーカーとして配置するロケーション
-    let userProfile: Driver<User> // ユーザープロフィール
-    let visitedLocations: Driver<[VisitedLocation]> // 訪問したロケーション情報
-    let isLoading: Driver<Bool>
-    let myAppError: Driver<MyAppError>
+    let locationsAndUserInfo: Driver<(LocationsInfo, User)> // 各ロケーション情報
+    let reloadedLocationsAndUserInfo: Driver<(LocationsInfo, User)>  // リロード
+    let isLoading: Driver<Bool> // ローディングインジケーター
+    let myAppError: Driver<MyAppError> // エラー
     
+    // MARK: - Input
     // タップされたカテゴリーのインデックスを監視、最新の値を保持する
     let selectedCategoryIndex = BehaviorRelay<IndexPath>(value: IndexPath(item: 0, section: 0))
     
-    init(mainService: MainServiceProtocol, realmService: RealmServiceProtocol) {
+    init(
+        input: (
+            reloadButtonItemTaps: Signal<Void>,
+            hoge: String
+        ),
+        mainService: MainServiceProtocol,
+        realmService: RealmServiceProtocol
+    ) {
         
         // インジケーター
         let indicator = ActivityIndicator()
         self.isLoading = indicator.asDriver()
         
-        // マップに配置するロケーション情報取得
-        let fetchFixedLocationsResult = realmService.fetchFixedLocations()
+        // マップに配置するロケーション関連の情報取得
+        //（イベント発火＋マップマーカーViewの再描画）が高頻度で行われると予想されるため、
+        // firebaseによる値の監視（リスナー）はしない
+        let fetchLocationsInfoResult = realmService.fetchFixedLocations() // Realmから固定ロケーション取得
             .flatMap { realmData in
-                // Realmにデータが存在しない場合Firebaseから取得
-                if realmData.isEmpty {
-                    return mainService.fetchFixedLocations()
-                        .flatMap { fixedLocations -> Observable<[FixedLocation]> in
-                            // 一旦既存データを削除
-                            realmService.deleteFixedLocations()
-                            // Firebaseから取得したデータをRealmに保存
-                            realmService.saveFixedLocations(fixedLocations)
-                            // マップ上に配置するロケーション画像のURLをプリフェッチ
-                            let imageUrls = fixedLocations.flatMap(\.imageUrlsArr).compactMap(URL.init)
-                            ImageCacheManager.prefetch(from: imageUrls)
-                            // 保存後、取得したデータを流す
-                            return Observable.just(fixedLocations)
+                // Realmにデータがない場合、Firebaseから取得してキャッシュ
+                let locationData = !realmData.isEmpty
+                ? mainService.fetchFixedLocations()
+                    .do(onNext: { fixedLocations in
+                    // 既存データとキャッシュのリセット
+                    realmService.deleteFixedLocations()
+                    ImageCacheManager.clearCache()
+                    
+                    // Firebaseデータの保存と画像プリフェッチ
+                    realmService.saveFixedLocations(fixedLocations)
+                    let imageUrls = fixedLocations.flatMap(\.imageUrlsArr).compactMap(URL.init)
+                    ImageCacheManager.prefetch(from: imageUrls)
+                })
+                : Observable.just(realmData)
+                return locationData
+            }
+            .flatMap { fixedLocations in
+                // 各ロケーションの状況、訪問情報、ユーザープロフィールを取得
+                Observable.zip(
+                    mainService.fetchLocations(), // 各ロケーションの状態を取得
+                    mainService.fetchVisitedLocations(), // 各ロケーションの訪問情報を取得
+                    mainService.fetchUserProfile() // ユーザープロフィール取得
+                        .map { userProfile in
+                            // プロフィール画像をプリフェッチ 空の場合はデフォルト画像を適用
+                            if !userProfile.profileImageUrl.isEmpty {
+                                ImageCacheManager.prefetch(from: [URL(string: userProfile.profileImageUrl)!])
+                            }
+                            return userProfile
                         }
-                        .trackActivity(indicator)
-                } else {
-                    return Observable.just(realmData)
+                )
+                .map { dynamicLocations, visitedLocations, userProfile in
+                    // LocationsInfoとuserProfileのタプル作成
+                    var locationsInfo = LocationsInfo(
+                        fixedLocations: fixedLocations,
+                        dynamicLocations: dynamicLocations,
+                        visitedLocations: visitedLocations
+                    )
+                    
+                    let ticketsInfo = MapViewModel.createTicketsInfo(userProfile: userProfile, locationsInfo: locationsInfo)
+                    let locationsStatus = MapViewModel.createLocationStatus(currentLocationId: userProfile.currentLocationId, ticketsInfo: ticketsInfo, locationsInfo: locationsInfo)
+                    // 上書き
+                    locationsInfo = LocationsInfo(
+                        fixedLocations: fixedLocations,
+                        dynamicLocations: dynamicLocations,
+                        visitedLocations: visitedLocations,
+                        ticketsInfo: ticketsInfo, // 各ロケーションごとのチケット上のUIに表示する情報（配列）を追加
+                        locationStatus: locationsStatus // 各ロケーションごとの状態（配列）追加
+                    )
+                    return (locationsInfo, userProfile)
                 }
+                .trackActivity(indicator)
             }
             .materialize()
             .share(replay: 1)
         
-        // 取得したロケーション情報を流す
-        self.fixedLocations = fetchFixedLocationsResult
+        // マップに配置するロケーション関連の情報を流す
+        self.locationsAndUserInfo = fetchLocationsInfoResult
             .compactMap { $0.event.element }
-            .map { $0 }
-            .asDriver(onErrorJustReturn: [])
+            .asDriver(onErrorJustReturn: (LocationsInfo(), User()))
         
-        // ロケーション情報取得エラーを流す
-        let fetchFixedLocationsError = fetchFixedLocationsResult
+        // マップに配置するロケーション関連の情報取得エラーを流す
+        let fetchLocationsInfoError = fetchLocationsInfoResult
             .compactMap { $0.event.error as? MyAppError }
         
-        // ユーザープロフィールと訪問したロケーションの取得を同時に行う
-        let mergedObservable = Observable.zip(
-            mainService.fetchUserProfile(), // ユーザープロフィールの取得
-            mainService.fetchVisitedLocations() // 訪問したロケーションの取得
-        )
-            .materialize()
-            .trackActivity(indicator)
-            .share(replay: 1)
+        // リロードボタン押下時 ロケーション情報再取得＆マップマーカーの再描画
+        let reloadFetchLocationsInfoResult = input.reloadButtonItemTaps
+            .asObservable()
+            .flatMap { _ in fetchLocationsInfoResult }
         
-        // ユーザープロフィールを流す
-        self.userProfile = mergedObservable
-            .compactMap { event in
-                guard case .next((let userProfile, _)) = event else {
-                    return nil
-                }
-                // プロフィール画像をプリフェッチ 空の場合はデフォルト画像を適用
-                if !userProfile.profileImageUrl.isEmpty {
-                    ImageCacheManager.prefetch(from: [URL(string: userProfile.profileImageUrl)!])
-                }
-                return userProfile
-            }
-            .asDriver(onErrorJustReturn: User())
-        
-        // 訪問したロケーション情報を流す
-        self.visitedLocations = mergedObservable
-            .compactMap { event in
-                guard case .next((_, let visitedLocations)) = event else {
-                    return nil
-                }
-                return visitedLocations
-            }
-            .asDriver(onErrorJustReturn: [])
-        
-        // ユーザープロフィールまたはロケーション取得のエラーを流す
-        let mergedObservableError = mergedObservable
+        // マップに配置するロケーション関連の情報を流す（リロード）
+        self.reloadedLocationsAndUserInfo = reloadFetchLocationsInfoResult
+            .compactMap { $0.event.element }
+            .asDriver(onErrorJustReturn: (LocationsInfo(), User()))
+
+        // マップに配置するロケーション関連の情報取得エラーを流す（リロード）
+        let reloadFetchLocationsInfoError = reloadFetchLocationsInfoResult
             .compactMap { $0.event.error as? MyAppError }
         
         // 発生したエラーを一つに集約
         self.myAppError = Observable
-            .merge(fetchFixedLocationsError, mergedObservableError)
+            .merge(fetchLocationsInfoError, reloadFetchLocationsInfoError)
             .asDriver(onErrorJustReturn: .unknown)
+    }
+}
+
+extension MapViewModel {
+    // 各ロケーションごとに、チケットの各UIに表示する情報を配列で生成
+    private static func createTicketsInfo(
+        userProfile: User,
+        locationsInfo: LocationsInfo
+    ) -> [TicketInfo] {
+        // ユーザーの現在の所持金を取得
+        let currentCoin = userProfile.currentCoin
+        // 固定ロケーション取得
+        let fixedLocations = locationsInfo.fixedLocations
+        // ユーザーの現在地のロケーション情報取得
+        let currentLocationInfo = fixedLocations.first(where: { $0.locationId == userProfile.currentLocationId })!
+        // ユーザーの現在地のロケーションの座標取得
+        let currentLocationCoordinate = CLLocationCoordinate2D(
+            latitude: currentLocationInfo.latitude,
+            longitude: currentLocationInfo.longitude
+        )
+        
+        // チケットの各UIに表示する情報を格納
+        var ticketsInfo: [TicketInfo] = []
+        for fixedLocation in fixedLocations {
+            // マップ上の各固定ロケーションの座標を取得
+            let fixedLocationCoordinate = CLLocationCoordinate2D(latitude: fixedLocation.latitude, longitude: fixedLocation.longitude)
+            // チケット情報構造体を生成
+            let ticketInfo = TicketInfo(
+                coordinate: (
+                    from: currentLocationCoordinate,
+                    to: fixedLocationCoordinate
+                ),
+                locationDetials: locationsInfo.getLocationDetailsForTickeInfo(for: fixedLocation.locationId),
+                currentCoin: currentCoin
+            )
+            // 配列に格納
+            ticketsInfo.append(ticketInfo)
+        }
+        return ticketsInfo
+    }
+    
+    // 各ロケーションごとの状態を配列で生成
+    private static func createLocationStatus(
+        currentLocationId: String,
+        ticketsInfo: [TicketInfo],
+        locationsInfo: LocationsInfo
+    ) -> [LocationStatus] {
+        // 固定ロケーション取得
+        let fixedLocations = locationsInfo.fixedLocations
+        // 訪問情報を取得
+        let visitedLocations = locationsInfo.visitedLocations
+        
+        var locationsStatus: [LocationStatus] = []
+        for fixedLocation in fixedLocations {
+            // 参加人数を取得
+            let userCount = locationsInfo.dynamicLocations.first(where: { $0.locationId == fixedLocation.locationId })?.userCount ?? 0
+            // 固定ロケーションIDを取得
+            let fixedLocationId = fixedLocation.locationId
+            // 過去に訪問したロケーションかどうか
+            let hasVisited = visitedLocations.contains(where: { $0.locationId == fixedLocationId })
+            // チケット情報を取得
+            let ticketInfo = ticketsInfo.first(where: { $0.locationId == fixedLocationId })!
+            // 現在地か否か
+            let isMyCurrentLocation = currentLocationId == fixedLocationId
+            // 訪問履歴がある && 必要な合計勉強時間をクリアしているか否か
+            let isCompleted = hasVisited && ticketInfo.totalStudyTime >= ticketInfo.missionStudyTime
+            // 訪問履歴がある && 必要な合計勉強時間に到達していないか否か（進行中か否か）
+            let isOngoing = hasVisited && ticketInfo.totalStudyTime < ticketInfo.missionStudyTime
+            // ロケーション状態構造体を生成
+            let locationStatus = LocationStatus(
+                locationId: fixedLocationId,
+                userCount: userCount,
+                isMyCurrentLocation: isMyCurrentLocation,
+                isCompleted: isCompleted,
+                isOngoing: isOngoing
+            )
+            // 配列に格納
+            locationsStatus.append(locationStatus)
+        }
+        return locationsStatus
     }
 }

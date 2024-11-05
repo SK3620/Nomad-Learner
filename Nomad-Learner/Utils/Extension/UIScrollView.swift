@@ -17,4 +17,9 @@ extension UIScrollView {
         showsHorizontalScrollIndicator = false
         backgroundColor = .clear
     }
+    
+    // 下端から20ポイント範囲内に達した場合trueを返す
+    func isNearBottomEdge(edgeOffset: CGFloat = 20.0) -> Bool {
+        return contentOffset.y + frame.size.height + edgeOffset > contentSize.height
+    }
 }

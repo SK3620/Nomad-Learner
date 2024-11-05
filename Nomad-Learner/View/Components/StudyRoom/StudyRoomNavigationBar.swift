@@ -21,7 +21,6 @@ class StudyRoomNavigationBar: UIView {
     
     // 合計時間ラベル
     private let timeLabel: UILabel = UILabel().then {
-        $0.text = "合計時間 01:38:45"
         $0.font = .systemFont(ofSize: UIConstants.TextSize.small)
         $0.textColor = .lightGray
     }
@@ -37,7 +36,6 @@ class StudyRoomNavigationBar: UIView {
     
     // 現在地ラベル
     private let currentPositionLabel: UILabel = UILabel().then {
-        $0.text = "The Great Barrier Reef / United Kingdom / South West England"
         $0.font = .systemFont(ofSize: UIConstants.TextSize.small)
         $0.textColor = .lightGray
     }
@@ -126,6 +124,16 @@ class StudyRoomNavigationBar: UIView {
 }
 
 extension StudyRoomNavigationBar {
+    // UIを更新
+    func update(fixedLocation: FixedLocation) {
+        let locationText = "\(fixedLocation.location) / \(fixedLocation.country) / \(fixedLocation.region)"
+        currentPositionLabel.text = locationText
+    }
+    
+    // タイマーを更新
+    func updateTimer(timerText: String) {
+        timeLabel.text = timerText
+    }
     
     // 休憩中 または 勉強再開 を交互に切り替える
     func switchBreakOrRestartAction(_ action: StudyRoomViewModel.MenuAction = .restart) {

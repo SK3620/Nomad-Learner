@@ -10,8 +10,16 @@ import UIKit
 import SwiftUI
 import RxSwift
 import RxCocoa
+import Firebase
 
 class StudyRoomViewController: UIViewController {
+    
+    var locationInfo: LocationInfo!
+    var userProfiles: [User] = []
+    var latestLoadedDocDate: Timestamp?
+    var oldestDocument: QueryDocumentSnapshot?
+    
+    private var viewModel: StudyRoomViewModel!
     
     // 背景画像
     private let backgroundImageView: UIImageView = UIImageView().then {
@@ -39,16 +47,6 @@ class StudyRoomViewController: UIViewController {
     
     // プロフィール欄
     private let profileCollectionView: ProfileCollectionView = ProfileCollectionView()
-        
-    // MapVC（マップ画面）に戻る
-    private var backToMapVC: Void {
-        Router.backToMapVC(vc: self)
-    }
-    
-    // ProfileVC（プロフィール画面）へ遷移
-    private var toProfileVC: Void {
-        Router.showProfile(vc: self)
-    }
     
     // contentLabelが使用可能な最大横幅 lazyで再取得を防ぐ
     private lazy var contentLabelMaxWidth: CGFloat  = {
@@ -61,6 +59,7 @@ class StudyRoomViewController: UIViewController {
         
         setupUI()
         bind()
+        update()
     }
     
     private func setupUI() {
@@ -104,6 +103,11 @@ class StudyRoomViewController: UIViewController {
         }
     }
     
+    // UIを更新
+    private func update() {
+        studyRoomNavigationBar.update(fixedLocation: locationInfo.fixedLocation)
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         // profileCollectionViewのframe値確定後、itemSizeを更新
@@ -111,15 +115,23 @@ class StudyRoomViewController: UIViewController {
     }
 }
 
-extension StudyRoomViewController {
+extension StudyRoomViewController: KRProgressHUDEnabled {
     private func bind() {
         
-        let viewModel = StudyRoomViewModel()
+        let viewModel = StudyRoomViewModel(
+            mainService: MainService.shared,
+            locationInfo: locationInfo,
+            initialLoadedUserProfiles: userProfiles,
+            latestLoadedDocDate: latestLoadedDocDate,
+            oldestDocument: oldestDocument
+        )
+        
+        self.viewModel = viewModel
         
         // ViewModelへイベントを流す
         publishEvent(to: viewModel)
         
-        viewModel.profiles.drive(profileCollectionView.rx.items(cellIdentifier: ProfileCollectionViewCell.identifier, cellType: ProfileCollectionViewCell.self)) { row, item, cell in
+        viewModel.userProfiles.drive(profileCollectionView.rx.items(cellIdentifier: ProfileCollectionViewCell.identifier, cellType: ProfileCollectionViewCell.self)) { row, item, cell in
             cell.configure(with: item)
         }
         .disposed(by: disposeBag)
@@ -130,14 +142,40 @@ extension StudyRoomViewController {
         }
         .disposed(by: disposeBag)
         
+        // タイマー表示
+        viewModel.timerText
+            .drive(updateTimer)
+            .disposed(by: disposeBag)
+        
+        // 背景画像切り替え
+        viewModel.backgroundImageUrl
+            .drive(switchBackgroundImage)
+            .disposed(by: disposeBag)
+        
         // profileCollectionViewCellタップ検知
         profileCollectionView.rx.itemSelected.asDriver()
-            .drive(onNext: { [weak self] indexPath in
+            .withLatestFrom(viewModel.userProfiles) { indexPath, userProfiles in
+                return (indexPath, userProfiles)
+            }
+            .drive(onNext: { [weak self] (indexPath, userProfiles) in
                 guard let self = self else { return }
                 viewModel.tappedProfile(at: indexPath)
                 // ProfileVC（プロフィール画面）へ遷移
-                self.toProfileVC
+                Router.showProfile(vc: self, with: userProfiles[indexPath.row])
             })
+            .disposed(by: disposeBag)
+        
+        // 追加データ取得（ページネーション）
+        profileCollectionView.rx.contentOffset.asDriver()
+            .map { _ in self.shouldRequestNextPage() }
+            .distinctUntilChanged() // 無駄なリクエストの発生を防止
+            .filter { $0 }
+            .drive(onNext: { _ in viewModel.fetchMoreUserProfiles() })
+            .disposed(by: disposeBag)
+        
+        // ローディングインジケーター
+        viewModel.isLoading
+            .drive(self.rx.showProgress)
             .disposed(by: disposeBag)
         
         // 画面レイアウト切り替えイベント購読
@@ -150,6 +188,18 @@ extension StudyRoomViewController {
             .compactMap { $0 } // nilを排除
             .drive(handleMenuAction)
             .disposed(by: disposeBag)
+        
+        // エラー
+        viewModel.myAppError
+            .map { AlertActionType.error($0) }
+            .drive(self.rx.showAlert)
+            .disposed(by: disposeBag)
+    }
+    
+    // 追加データを読み込むべきか否か
+    private func shouldRequestNextPage() -> Bool {
+        return profileCollectionView.contentSize.height > 0 &&
+            profileCollectionView.isNearBottomEdge()
     }
     
     // 各イベントをViewModelへ流す
@@ -166,8 +216,33 @@ extension StudyRoomViewController {
     }
 }
 
-// MARK: -StudyRoomViewController + Bindings
+// MARK: - StudyRoomViewController + Bindings
 extension StudyRoomViewController: AlertEnabled {
+    // タイマー表示
+    private var updateTimer: Binder<String> {
+        return Binder(self) { base, timerText in
+            base.studyRoomNavigationBar.updateTimer(timerText: timerText)
+        }
+    }
+    
+    // 背景画像切り替え
+    private var switchBackgroundImage: Binder<String> {
+        return Binder(self) { base, imageUrl in
+            UIView.animate(withDuration: 1.0, animations: {
+                // 背景画像をフェードアウトさせる（透明にする）
+                self.backgroundImageView.alpha = 0.0
+
+            }) { _ in
+                // フェードアウトが完了したら、新しい画像に更新
+                self.backgroundImageView.setImage(with: imageUrl)
+                UIView.animate(withDuration: 1.0) {
+                    // 新しい画像をフェードインさせる（表示する）
+                    self.backgroundImageView.alpha = 1.0
+                }
+            }
+        }
+    }
+    
     // 画面レイアウト切り替え
     private var updateRoomLayoutBinder: Binder<StudyRoomViewModel.RoomLayout> {
         return Binder(self) { base, layout in
@@ -206,7 +281,11 @@ extension StudyRoomViewController: AlertEnabled {
                 print("Coming Soon")
             case .exitRoom:
                 let alertActionType: AlertActionType = .exitRoom(
-                    onConfirm: { base.backToMapVC }
+                    onConfirm: {
+                        base.viewModel.saveStudyProgress(countedStudyTime: <#T##Int#>) {
+                            Router.backToMapVC(vc: base) // MapVC（マップ画面）に戻る
+                        }
+                    }
                 )
                 Driver.just(alertActionType)
                     .drive(base.rx.showAlert)
@@ -228,18 +307,3 @@ extension StudyRoomViewController {
         return .landscapeRight
     }
 }
-
-//struct ViewControllerPreview: PreviewProvider {
-//    struct Wrapper: UIViewControllerRepresentable {
-//        func makeUIViewController(context: Context) -> some UIViewController {
-//            NavigationControllerForStudyRoomVC(rootViewController: StudyRoomViewController())
-//        }
-//        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-//        }
-//    }
-//    static var previews: some View {
-//        Wrapper()
-//    }
-//}
-//
-//

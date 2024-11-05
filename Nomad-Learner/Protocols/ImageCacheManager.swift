@@ -14,4 +14,11 @@ class ImageCacheManager {
         let prefether = ImagePrefetcher(urls: urls)
         prefether.start()
     }
+    
+    // キャッシュ削除
+    static func clearCache() {
+        ImageCache.default.clearCache {
+            print("キャッシュを削除しました。")
+        }
+    }
 }

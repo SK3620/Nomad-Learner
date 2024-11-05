@@ -15,9 +15,8 @@ class MapView: GMSMapView {
     private let googleMapID = GMSMapID(identifier: GoogleMapID.googleMapID)
     // 初期位置 縮小具合
     private let initialCamera = GMSCameraPosition(latitude: -33.857, longitude: 151.215, zoom: 1.0)
-    
-    // location
-//    private var locations: [Location] = []
+    // ロケーション情報
+    private var locationsInfo: LocationsInfo = LocationsInfo()
     
     override init(options: GMSMapViewOptions) {
         // セットアップ
@@ -26,30 +25,35 @@ class MapView: GMSMapView {
         super.init(options: options)
     }
     
-    // 場所にマーカーを立てる
-    func addMarkersForLocations(fixedLocations: [FixedLocation]) -> [GMSMarker] {
-        // 登録したlocation全て取得
-//        self.locations = Location.all
-        // locationのマーカーを格納
+    // マップの各ロケーションにマーカーを立てる
+    func addMarkersForLocations(locationsInfo: LocationsInfo, currentLocationId: String) -> [GMSMarker] {
+        // 固定ロケーション取得
+        let fixedLocations = locationsInfo.fixedLocations
+        // マーカーを格納する配列
         var markerArray: [GMSMarker] = []
         
-        for location in fixedLocations {
+        // 各固定ロケーションに対してマーカーを作成
+        for fixedLocation in fixedLocations {
+            // 固定ロケーションのIDを取得
+            let fixedLocationId = fixedLocation.locationId
+            // ロケーション状態を取得
+            let locationStatus = locationsInfo.locationsStatus.first(where: { $0.locationId == fixedLocationId})!
+            
+            // 新しいマーカーを作成
             let marker = GMSMarker()
-            marker.position = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
-            let markerIconView = MarkerIconView(frame: CGRect(origin: .zero, size: CGSize(width: 45, height: 33) ))
+            marker.position = CLLocationCoordinate2D(latitude: fixedLocation.latitude, longitude: fixedLocation.longitude)
+            
+            // マーカーのアイコンビューを作成
+            let markerIconView = MarkerIconView(
+                frame: CGRect(origin: .zero, size: CGSize(width: 45, height: 33)),
+                locationStatus: locationStatus
+            )
             marker.iconView = markerIconView
-            marker.userData = location
+            marker.userData = fixedLocation // マーカーに関連するデータを保存
+            
+            // 作成したマーカーを配列に追加
             markerArray.append(marker)
         }
-        
-        return markerArray
-    }
-    
-    // ランダムなUIColorを生成する関数
-    private func generateRandomColor() -> UIColor {
-        let red = CGFloat(arc4random_uniform(256)) / 255.0
-        let green = CGFloat(arc4random_uniform(256)) / 255.0
-        let blue = CGFloat(arc4random_uniform(256)) / 255.0
-        return UIColor(red: red, green: green, blue: blue, alpha: 1.0)
+        return markerArray  // 作成したマーカーの配列を返す
     }
 }

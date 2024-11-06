@@ -42,10 +42,7 @@ final class UserParser {
               let currentCoin = data["currentCoin"] as? Int,
               let livingPlaceAndWork = data["livingPlaceAndWork"] as? String,
               let studyContent = data["studyContent"] as? String,
-              let goal = data["goal"] as? String,
-              let visitedCountries = data["visitedCountries"] as? Int,
-              let weeklyTime = data["weeklyTime"] as? Int,
-              let totalTime = data["totalTime"] as? Int else {
+              let goal = data["goal"] as? String else {
             return nil
         }
         
@@ -56,10 +53,7 @@ final class UserParser {
             currentCoin: currentCoin,
             livingPlaceAndWork: livingPlaceAndWork,
             studyContent: studyContent,
-            goal: goal,
-            visitedCountries: visitedCountries,
-            weeklyTime: weeklyTime,
-            totalTime: totalTime
+            goal: goal
         )
     }
 }
@@ -72,7 +66,7 @@ final class VisitedLocationParser {
               let totalStudyMins = data["totalStudyMins"] as? Int,
               let fixedRequiredStudyHours = data["fixedRequiredStudyHours"] as? Int,
               let fixedRewardCoin = data["fixedRewardCoin"] as? Int,
-              let visitedAt = data["visitedAt"] as? Timestamp else {
+              let visitedAt = data["visitedAt"] as? FieldValue else {
             return nil
         }
                 

@@ -14,15 +14,15 @@ struct VisitedLocation {
     let totalStudyMins: Int  // 合計勉強時間（分単位）
     let fixedRequiredStudyHours: Int? // 必要  な合計勉強時間（時間単位）（固定値）
     let fixedRewardCoin: Int? // 報酬コイン（固定値）
-    let visitedAt: Timestamp
+    let visitedAt: FieldValue
     
     init(
         locationId: String = "",
-        totalStudyHours: Int = 0,
-        totalStudyMins: Int = 0,
+        totalStudyHours: Int = 00,
+        totalStudyMins: Int = 00,
         fixedRequiredStudyHours: Int? = nil,
         fixedRewardCoin: Int? = nil,
-        visitedAt: Timestamp
+        visitedAt: FieldValue
     ) {
         self.locationId = locationId
         self.totalStudyHours = totalStudyHours

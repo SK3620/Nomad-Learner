@@ -20,6 +20,8 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
     private var locationInfo: LocationInfo?
     // ユーザープロフィール情報
     var userProfile: User = User()
+    // どの画面から戻ってきたかを記録するプロパティ
+    var fromScreen: ScreenType?
     
     private lazy var navigationBoxBar: NavigationBoxBar = NavigationBoxBar()
     
@@ -132,6 +134,17 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
         clusterManager.setMapDelegate(self)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        // StudyRoomVC（勉強部屋画面）から戻ってきた時、データ再取得
+        if fromScreen == .studyRoomVC {
+            viewModel.locationsAndUserInfo
+                .drive(addMarkersForLocations)
+                .disposed(by: disposeBag)
+        }
+    }
+    
     override func viewDidLayoutSubviews() {
         // 子ビューのレイアウト完了後にcollectionViewのitemSizeを決定する
         let layout = locationDetailView.locationCategoryCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
@@ -157,10 +170,6 @@ extension MapViewController: KRProgressHUDEnabled, AlertEnabled {
             .disposed(by: disposeBag)
         
         self.viewModel = MapViewModel(
-            input: (
-                reloadButtonItemTaps: reloadButtonItem.rx.tap.asSignal(),
-                hoge: ""
-            ),
             mainService: MainService.shared,
             realmService: RealmService.shared
         )
@@ -189,8 +198,12 @@ extension MapViewController: KRProgressHUDEnabled, AlertEnabled {
             .drive(addMarkersForLocations)
             .disposed(by: disposeBag)
         
-        // 各ロケーション情報（リロード）
-        viewModel.reloadedLocationsAndUserInfo
+        // リロードで各ロケーション情報を再取得
+        reloadButtonItem.rx.tap.asDriver()
+            .flatMap { [weak self] _ in
+                guard let self = self else { return .empty() }
+                return self.viewModel.locationsAndUserInfo
+            }
             .drive(addMarkersForLocations)
             .disposed(by: disposeBag)
         

@@ -54,8 +54,8 @@ struct TicketInfo {
         self.travelDistanceAndCost = 0
         self.requiredStudyHours = 0
         self.rewardCoin = 0
-        self.totalStudyHours = 0
-        self.totalStudyMins = 0
+        self.totalStudyHours = 00
+        self.totalStudyMins = 00
         self.destination = "ー"
         self.countryAndRegion = "ー"
         self.currentCoin = 0

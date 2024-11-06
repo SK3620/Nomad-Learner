@@ -31,38 +31,94 @@ class ProfileTopView: UIView {
         $0.layer.masksToBounds = true
     }
     
-    private let weeklyStudyTimeTitle: ProfileLabel = ProfileLabel(text: "weekly", fontSize: UIConstants.TextSize.semiMedium, textColor: ColorCodes.primaryPurple.color(), isRounded: true)
+    // 今日の勉強時間タイトル
+    private let todayStudyTimeTitle = ProfileLabel(text: "today", fontSize: UIConstants.TextSize.semiMedium, textColor: ColorCodes.primaryPurple.color(), isRounded: true)
     
-    private let weeklyStudyTime: ProfileLabel = ProfileLabel(text: "4時間30分", fontSize: UIConstants.TextSize.medium, textColor: .white)
+    // 今日の勉強時間
+    private let todayStudyTime = ProfileLabel(text: "00:00", fontSize: UIConstants.TextSize.medium, textColor: .white)
     
-    private let totalStudyTimeTitle: ProfileLabel = ProfileLabel(text: "total", fontSize: UIConstants.TextSize.semiMedium, textColor: ColorCodes.primaryPurple.color(), isRounded: true)
+    // 一週間の勉強時間タイトル
+    private let weeklyStudyTimeTitle = ProfileLabel(text: "weekly", fontSize: UIConstants.TextSize.semiMedium, textColor: ColorCodes.primaryPurple.color(), isRounded: true)
     
-    private let totalStudyTime: ProfileLabel = ProfileLabel(text: "35時間48分", fontSize: UIConstants.TextSize.medium, textColor: .white)
-        
-    private lazy var weeklyStudyTimeStackView: UIStackView = UIStackView().then {
-        $0.axis = .vertical
-        $0.alignment = .center
-        $0.spacing = UIConstants.Layout.smallPadding
+    // 一週間の勉強時間
+    private let weeklyStudyTime = ProfileLabel(text: "00:00", fontSize: UIConstants.TextSize.medium, textColor: .white)
+    
+    // 合計勉強時間タイトル
+    private let totalStudyTimeTitle = ProfileLabel(text: "total", fontSize: UIConstants.TextSize.semiMedium, textColor: ColorCodes.primaryPurple.color(), isRounded: true)
+    
+    // 合計勉強時間
+    private let totalStudyTime = ProfileLabel(text: "00:00", fontSize: UIConstants.TextSize.medium, textColor: .white)
+    
+    // 今日の勉強時間のスタックビュー
+    private lazy var todayStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [todayStudyTimeTitle, todayStudyTime])
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.spacing = 8
+        return stackView
+    }()
+
+    // 一週間の勉強時間のスタックビュー
+    private lazy var weeklyStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [weeklyStudyTimeTitle, weeklyStudyTime])
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.spacing = 8
+        return stackView
+    }()
+
+    // 合計勉強時間のスタックビュー
+    private lazy var totalStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [totalStudyTimeTitle, totalStudyTime])
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.spacing = 8
+        return stackView
+    }()
+
+    // 今日、一週間、合計のスタックビューを並べる横方向のスタックビュー
+    private lazy var studyTimeStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [todayStackView, weeklyStackView, totalStackView])
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.distribution = .fillEqually
+        return stackView
+    }()
+    
+    //　訪問したロケーション数 背景View
+    private let backgroundViewForAirplane = UIView().then {
+        $0.backgroundColor = ColorCodes.primaryPurple.color()
+        $0.layer.cornerRadius = 28 / 2
     }
     
-    private lazy var totalStudyTimeStackView: UIStackView = UIStackView().then {
-        $0.axis = .vertical
-        $0.alignment = .center
-        $0.spacing = UIConstants.Layout.smallPadding
+    // 訪問したロケーション数 飛行機アイコン
+    private let airplaneImageView = UIImageView().then {
+        $0.tintColor = .white
+        $0.image = UIImage(systemName: "airplane")
+        $0.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi) * 2 * 270 / 360)
     }
     
-    // weeklyStudyTimeStackViewとtotalStudyTimeStackViewをまとめる
-    private lazy var studyTimeSummaryStackView: UIStackView = UIStackView().then {
-        $0.axis = .horizontal
-        $0.alignment = .center
-        $0.distribution = .fillProportionally
+    // 訪問したロケーション数
+    private let visitedLocationsLabel = ProfileLabel(text: "00", fontSize: UIConstants.TextSize.medium, textColor: ColorCodes.primaryPurple.color())
+    
+    // 全ロケーション数
+    private let allLocationsLabel = ProfileLabel(text: " / 00", fontSize: UIConstants.TextSize.semiMedium, textColor: ColorCodes.primaryPurple.color())
+    
+    //　完了マークアイコン背景View
+    private let backgroundViewForCompleted = UIView().then {
+        $0.backgroundColor = ColorCodes.primaryPurple.color()
+        $0.layer.cornerRadius = 28 / 2
     }
     
-    // 訪れた国の数のタイトル
-    private let visitedCountriesTitle: ProfileLabel = ProfileLabel(text: "Visited Countries", fontSize: UIConstants.TextSize.semiMedium, textColor: ColorCodes.primaryPurple.color())
+    // 完了マークアイコン
+    private let completedImageView = UIImageView().then {
+        let configuration = UIImage.SymbolConfiguration(weight: .bold)
+        $0.image = UIImage(systemName: "checkmark", withConfiguration: configuration)
+        $0.tintColor = .white
+    }
     
-    // 訪れた国の数
-    private let visitedCountries: ProfileLabel = ProfileLabel(text: "23", fontSize: UIConstants.TextSize.medium, textColor: .darkGray)
+    // クリアしたロケーション数
+    private let completedLocationsLabel = ProfileLabel(text: "00", fontSize: UIConstants.TextSize.medium, textColor: ColorCodes.primaryPurple.color())
     
     init(userProfile: User) {
         self.userProfile = userProfile
@@ -75,19 +131,20 @@ class ProfileTopView: UIView {
     }
     
     private func setupUI() {
-        weeklyStudyTimeStackView.addArrangedSubview(weeklyStudyTimeTitle)
-        weeklyStudyTimeStackView.addArrangedSubview(weeklyStudyTime)
-        totalStudyTimeStackView.addArrangedSubview(totalStudyTimeTitle)
-        totalStudyTimeStackView.addArrangedSubview(totalStudyTime)
-        
-        studyTimeSummaryStackView.addArrangedSubview(weeklyStudyTimeStackView)
-        studyTimeSummaryStackView.addArrangedSubview(totalStudyTimeStackView)
         
         addSubview(pictureOutsideView)
         addSubview(pictureImageView)
-        addSubview(studyTimeSummaryStackView)
-        addSubview(visitedCountriesTitle)
-        addSubview(visitedCountries)
+        
+        addSubview(studyTimeStackView)
+        
+        backgroundViewForAirplane.addSubview(airplaneImageView)
+        addSubview(backgroundViewForAirplane)
+        addSubview(visitedLocationsLabel)
+        addSubview(allLocationsLabel)
+        
+        backgroundViewForCompleted.addSubview(completedImageView)
+        addSubview(backgroundViewForCompleted)
+        addSubview(completedLocationsLabel)
         
         pictureOutsideView.snp.makeConstraints {
             $0.left.equalToSuperview().inset(UIConstants.Layout.standardPadding)
@@ -100,20 +157,47 @@ class ProfileTopView: UIView {
             $0.size.equalTo(pictureSize - UIConstants.Layout.semiStandardPadding)
         }
         
-        studyTimeSummaryStackView.snp.makeConstraints {
-            $0.left.equalTo(pictureOutsideView.snp.right).inset(-(UIConstants.Layout.smallPadding))
-            $0.right.equalToSuperview().inset(UIConstants.Layout.smallPadding)
+        studyTimeStackView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
+            $0.left.equalTo(pictureImageView.snp.right).offset(12)
+            $0.right.equalToSuperview().inset(12)
         }
         
-        visitedCountriesTitle.snp.makeConstraints {
-            $0.left.equalTo(pictureOutsideView.snp.right).inset(-(UIConstants.Layout.standardPadding))
-            $0.top.equalTo(self.snp.bottom).inset(-(UIConstants.Layout.smallPadding))
+        backgroundViewForAirplane.snp.makeConstraints {
+            $0.size.equalTo(28)
+            $0.bottom.equalTo(pictureImageView.snp.bottom)
+            $0.left.equalTo(todayStudyTimeTitle)
         }
         
-        visitedCountries.snp.makeConstraints {
-            $0.centerY.equalTo(visitedCountriesTitle)
-            $0.left.equalTo(visitedCountriesTitle.snp.right).inset(-(UIConstants.Layout.standardPadding))
+        airplaneImageView.snp.makeConstraints {
+            $0.center.equalToSuperview()
+            $0.size.equalTo(18)
+        }
+        
+        visitedLocationsLabel.snp.makeConstraints {
+            $0.centerY.equalTo(backgroundViewForAirplane)
+            $0.left.equalTo(backgroundViewForAirplane.snp.right).offset(8)
+        }
+        
+        allLocationsLabel.snp.makeConstraints {
+            $0.bottom.equalTo(visitedLocationsLabel)
+            $0.left.equalTo(visitedLocationsLabel.snp.right)
+        }
+        
+        backgroundViewForCompleted.snp.makeConstraints {
+            $0.size.equalTo(28)
+            $0.centerY.equalTo(backgroundViewForAirplane)
+            $0.left.equalTo(allLocationsLabel.snp.right).offset(24)
+        }
+        
+        completedImageView.snp.makeConstraints {
+            $0.center.equalToSuperview()
+            $0.size.equalTo(18)
+        }
+        
+        completedLocationsLabel.snp.makeConstraints {
+            $0.centerY.equalTo(backgroundViewForCompleted)
+            $0.left.equalTo(backgroundViewForCompleted.snp.right).offset(8)
         }
     }
     
@@ -124,9 +208,10 @@ class ProfileTopView: UIView {
         } else {
             pictureImageView.setImage(with: userProfile.profileImageUrl)
         }
-        weeklyStudyTime.text = userProfile.weeklyTime.toString
-        totalStudyTime.text = userProfile.totalTime.toString
-        visitedCountries.text = userProfile.visitedCountries.toString
+        totalStudyTime.text = "\(userProfile.progressSum?.totalStudyHours ?? 00):\(userProfile.progressSum?.totalStudyMins ?? 00)"
+        visitedLocationsLabel.text = userProfile.progressSum?.visitedLocationsCount.toString
+        allLocationsLabel.text =  " / \(userProfile.progressSum?.allLocationsCount ?? 00)"
+        completedLocationsLabel.text = userProfile.progressSum?.completedLocationsCount.toString
     }
     
     required init?(coder: NSCoder) {
@@ -135,16 +220,6 @@ class ProfileTopView: UIView {
 }
 
 extension Int {
-    var toString: String {
-        return String(self)
-    }
-}
-
-extension Double {
-    var toInt: Int {
-        return Int(self)
-    }
-    
     var toString: String {
         return String(self)
     }

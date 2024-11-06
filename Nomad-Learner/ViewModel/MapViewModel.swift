@@ -18,7 +18,6 @@ class MapViewModel {
     var selectedIndex: Driver<IndexPath> { return selectedCategoryIndex.asDriver(onErrorDriveWith: .empty())}
     
     let locationsAndUserInfo: Driver<(LocationsInfo, User)> // 各ロケーション情報
-    let reloadedLocationsAndUserInfo: Driver<(LocationsInfo, User)>  // リロード
     let isLoading: Driver<Bool> // ローディングインジケーター
     let myAppError: Driver<MyAppError> // エラー
     
@@ -27,10 +26,6 @@ class MapViewModel {
     let selectedCategoryIndex = BehaviorRelay<IndexPath>(value: IndexPath(item: 0, section: 0))
     
     init(
-        input: (
-            reloadButtonItemTaps: Signal<Void>,
-            hoge: String
-        ),
         mainService: MainServiceProtocol,
         realmService: RealmServiceProtocol
     ) {
@@ -74,7 +69,10 @@ class MapViewModel {
                             return userProfile
                         }
                 )
-                .map { dynamicLocations, visitedLocations, userProfile in
+                .map { (dynamicLocations: [DynamicLocation], visitedLocations: [VisitedLocation], userProfile: User) in
+                    // userProfileをコピー
+                    var mutableUserProfile = userProfile
+                    
                     // LocationsInfoとuserProfileのタプル作成
                     var locationsInfo = LocationsInfo(
                         fixedLocations: fixedLocations,
@@ -84,6 +82,7 @@ class MapViewModel {
                     
                     let ticketsInfo = MapViewModel.createTicketsInfo(userProfile: userProfile, locationsInfo: locationsInfo)
                     let locationsStatus = MapViewModel.createLocationStatus(currentLocationId: userProfile.currentLocationId, ticketsInfo: ticketsInfo, locationsInfo: locationsInfo)
+                    let progressSum = MapViewModel.createStudyProgressSummary(fixedLocations: fixedLocations, visitedLocations: visitedLocations, locationsStatus: locationsStatus)
                     // 上書き
                     locationsInfo = LocationsInfo(
                         fixedLocations: fixedLocations,
@@ -92,7 +91,10 @@ class MapViewModel {
                         ticketsInfo: ticketsInfo, // 各ロケーションごとのチケット上のUIに表示する情報（配列）を追加
                         locationStatus: locationsStatus // 各ロケーションごとの状態（配列）追加
                     )
-                    return (locationsInfo, userProfile)
+                    // progressSumに値をセット
+                    mutableUserProfile.progressSum = progressSum
+                    
+                    return (locationsInfo, mutableUserProfile)
                 }
                 .trackActivity(indicator)
             }
@@ -108,23 +110,9 @@ class MapViewModel {
         let fetchLocationsInfoError = fetchLocationsInfoResult
             .compactMap { $0.event.error as? MyAppError }
         
-        // リロードボタン押下時 ロケーション情報再取得＆マップマーカーの再描画
-        let reloadFetchLocationsInfoResult = input.reloadButtonItemTaps
-            .asObservable()
-            .flatMap { _ in fetchLocationsInfoResult }
-        
-        // マップに配置するロケーション関連の情報を流す（リロード）
-        self.reloadedLocationsAndUserInfo = reloadFetchLocationsInfoResult
-            .compactMap { $0.event.element }
-            .asDriver(onErrorJustReturn: (LocationsInfo(), User()))
-
-        // マップに配置するロケーション関連の情報取得エラーを流す（リロード）
-        let reloadFetchLocationsInfoError = reloadFetchLocationsInfoResult
-            .compactMap { $0.event.error as? MyAppError }
-        
         // 発生したエラーを一つに集約
         self.myAppError = Observable
-            .merge(fetchLocationsInfoError, reloadFetchLocationsInfoError)
+            .merge(fetchLocationsInfoError)
             .asDriver(onErrorJustReturn: .unknown)
     }
 }
@@ -207,5 +195,17 @@ extension MapViewModel {
             locationsStatus.append(locationStatus)
         }
         return locationsStatus
+    }
+    
+    private static func createStudyProgressSummary(
+        fixedLocations: [FixedLocation],
+        visitedLocations: [VisitedLocation],
+        locationsStatus: [LocationStatus]
+    ) -> StudyProgressSummary {
+       return StudyProgressSummary(
+        fixedLocations: fixedLocations,
+        visitedLocations: visitedLocations,
+        locationsStatus: locationsStatus
+       )
     }
 }

@@ -16,6 +16,12 @@ enum ScreenOrientation {
     case landscape // 横向き
 }
 
+// 画面の種類を示す
+// 特定の画面から戻った時にさせたい処理の判定をさせる
+enum ScreenType {
+    case studyRoomVC
+}
+
 protocol RouterProtocol {
     // 初期画面表示
     static func showRoot(window: UIWindow)
@@ -146,7 +152,8 @@ extension Router: RouterProtocol {
         // 現在の画面が勉強部屋画面の場合
         else if vc is StudyRoomViewController, let navForMapVC = vc.presentingViewController?.presentingViewController?.presentingViewController as? NavigationControllerForMapVC, let mapVC = navForMapVC.navigationController?.viewControllers[0] as? MapViewController {
             nav = navForMapVC
-            mapVC.userProfile = updatedUserProfile // ユーザープロフィール情報を渡す
+            mapVC.fromScreen = .studyRoomVC
+            // MapVC画面にてデータ再取得を行うため、ユーザープロフィール情報は渡す必要はない
         }
         dismissModal(vc: nav)
     }

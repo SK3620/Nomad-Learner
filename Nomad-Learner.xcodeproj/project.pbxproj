@@ -16,6 +16,7 @@
 		8304A0E22CA5123300061B33 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8304A0E12CA5123300061B33 /* AuthViewController.swift */; };
 		8304A0E42CA5437800061B33 /* GoogleService-Info-Nomad-LearnerDev.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8304A0E32CA5437800061B33 /* GoogleService-Info-Nomad-LearnerDev.plist */; };
 		8304A0E62CA546F700061B33 /* GoogleService-Info-Nomad-Learner.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8304A0E52CA546F700061B33 /* GoogleService-Info-Nomad-Learner.plist */; };
+		831731C42CDB0F910092AE89 /* StudyProgressSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831731C32CDB0F910092AE89 /* StudyProgressSummary.swift */; };
 		831E5C6F2CC13205001A90C4 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831E5C6E2CC13205001A90C4 /* Location.swift */; };
 		831E5C712CC136E0001A90C4 /* GoogleMapID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831E5C702CC136E0001A90C4 /* GoogleMapID.swift */; };
 		831E5C732CC271EF001A90C4 /* MarkerIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831E5C722CC271EF001A90C4 /* MarkerIconView.swift */; };
@@ -122,6 +123,7 @@
 		8304A0E12CA5123300061B33 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		8304A0E32CA5437800061B33 /* GoogleService-Info-Nomad-LearnerDev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Nomad-LearnerDev.plist"; sourceTree = "<group>"; };
 		8304A0E52CA546F700061B33 /* GoogleService-Info-Nomad-Learner.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Nomad-Learner.plist"; sourceTree = "<group>"; };
+		831731C32CDB0F910092AE89 /* StudyProgressSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyProgressSummary.swift; sourceTree = "<group>"; };
 		831E5C6E2CC13205001A90C4 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		831E5C702CC136E0001A90C4 /* GoogleMapID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapID.swift; sourceTree = "<group>"; };
 		831E5C722CC271EF001A90C4 /* MarkerIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerIconView.swift; sourceTree = "<group>"; };
@@ -269,6 +271,7 @@
 				8344786A2CCFB61E0038C7B9 /* LocationInfo.swift */,
 				834478682CCF9CE60038C7B9 /* TicketInfo.swift */,
 				8344786C2CD213BE0038C7B9 /* LocationStatus.swift */,
+				831731C32CDB0F910092AE89 /* StudyProgressSummary.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -738,6 +741,7 @@
 				83C5E1312CBF7AFE001C27E1 /* NavigationControllerForMapVC.swift in Sources */,
 				834478692CCF9CE60038C7B9 /* TicketInfo.swift in Sources */,
 				83A6D7B72CB4D3CF00D18A30 /* LocationCategoryCollectionView.swift in Sources */,
+				831731C42CDB0F910092AE89 /* StudyProgressSummary.swift in Sources */,
 				836180E62CBB81E80059937E /* ScreenSizeProvidable.swift in Sources */,
 				838753DE2CAED385001EE8F1 /* ValidationLabel.swift in Sources */,
 				83A6D7B32CB3F3E200D18A30 /* LocationCategoryCollectionViewCell.swift in Sources */,

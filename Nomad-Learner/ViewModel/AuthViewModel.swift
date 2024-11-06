@@ -137,7 +137,7 @@ class AuthViewModel {
                             // 保存するユーザー情報
                             let userProfile = User(username: user.displayName!)
                             // サインアップ後、ユーザープロフィール情報を保存
-                            return mainService.saveUserProfile(user: userProfile)
+                            return mainService.saveUserProfile(user: userProfile, shouldUpdate: false)
                                 .map { _ in user } // FirebaseAuth.Userに変換 流すイベントの型を合わせる
                         }
                         .materialize()

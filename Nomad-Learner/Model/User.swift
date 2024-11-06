@@ -16,9 +16,7 @@ struct User {
     var livingPlaceAndWork: String
     var studyContent: String
     var goal: String
-    var visitedCountries: Int
-    var weeklyTime: Int
-    var totalTime: Int
+    var progressSum: StudyProgressSummary?
     
     init(
         userId: String = "",
@@ -28,10 +26,7 @@ struct User {
         currentCoin: Int = 100000,
         livingPlaceAndWork: String = "ー",
         studyContent: String = "ー",
-        goal: String = "ー",
-        visitedCountries: Int = 0,
-        weeklyTime: Int = 0,
-        totalTime: Int = 0
+        goal: String = "ー"
     ) {
         self.userId = userId
         self.username = username
@@ -41,14 +36,11 @@ struct User {
         self.livingPlaceAndWork = livingPlaceAndWork
         self.studyContent = studyContent
         self.goal = goal
-        self.visitedCountries = visitedCountries
-        self.weeklyTime = weeklyTime
-        self.totalTime = totalTime
     }
 }
 
 extension User {
-    /// Userのプロパティを辞書形式に変換します。
+    // Userのプロパティを辞書形式に変換（プロフィール情報のみ）
     var toDictionary: [String: Any] {
         return [
             "username": username,
@@ -57,10 +49,17 @@ extension User {
             "currentCoin": currentCoin,
             "livingPlaceAndWork": livingPlaceAndWork,
             "studyContent": studyContent,
+            "goal": goal
+        ]
+    }
+    
+    var toDictionary2: [String: Any] {
+        return [
+            "username": username,
+            "profileImageUrl": profileImageUrl,
+            "livingPlaceAndWork": livingPlaceAndWork,
+            "studyContent": studyContent,
             "goal": goal,
-            "visitedCountries": visitedCountries,
-            "weeklyTime": weeklyTime,
-            "totalTime": totalTime
         ]
     }
 }

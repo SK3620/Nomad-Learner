@@ -40,13 +40,9 @@ class EditProfileViewModel {
         ) { username, livingPlaceAndWork, studyContent, goal, profileImage in
             return User(
                 username: !username.isEmpty ? username : "ー",
-                currentCoin: currentUserProfile.currentCoin,
                 livingPlaceAndWork: !livingPlaceAndWork.isEmpty ? livingPlaceAndWork : "ー",
                 studyContent: !studyContent.isEmpty ? studyContent : "ー",
-                goal: !goal.isEmpty ? goal : "ー",
-                visitedCountries: currentUserProfile.visitedCountries,
-                weeklyTime: currentUserProfile.weeklyTime,
-                totalTime: currentUserProfile.totalTime
+                goal: !goal.isEmpty ? goal : "ー"
             )
         }
         
@@ -69,7 +65,7 @@ class EditProfileViewModel {
                             // プロフィール画像ダウンロードURLを設定
                             updatedUserProfile.profileImageUrl = downloadUrlString
                             // 画像保存後にユーザープロフィールを保存
-                            return mainService.saveUserProfile(user: updatedUserProfile)
+                            return mainService.saveUserProfile(user: updatedUserProfile, shouldUpdate: true)
                         }
                         .materialize()
                         .trackActivity(indicator)
@@ -77,7 +73,7 @@ class EditProfileViewModel {
                     // ない場合は、空文字を設定し、デフォルト画像を適用
                     updatedUserProfile.profileImageUrl = ""
                     // ユーザープロフィールを保存
-                    return mainService.saveUserProfile(user: updatedUserProfile)
+                    return mainService.saveUserProfile(user: updatedUserProfile, shouldUpdate: false)
                         .materialize()
                         .trackActivity(indicator)
                 }

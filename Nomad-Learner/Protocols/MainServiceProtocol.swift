@@ -19,7 +19,7 @@ protocol MainServiceProtocol {
     // プロフィール画像保存
     func saveProfileImage(image: UIImage) -> Observable<String>
     // ユーザープロフィール保存
-    func saveUserProfile(user: User) -> Observable<Void>
+    func saveUserProfile(user: User, shouldUpdate: Bool) -> Observable<Void>
     // ユーザープロフィール取得
     func fetchUserProfile() -> Observable<User>
     // 訪問したロケーション情報を取得
@@ -116,16 +116,22 @@ final class MainService: MainServiceProtocol {
     }
     
     // ユーザープロフィール保存
-    func saveUserProfile(user: User) -> Observable<Void> {
+    func saveUserProfile(user: User, shouldUpdate: Bool = false) -> Observable<Void> {
         return Observable.create { observer in
             guard let userId = FBAuth.currentUserId else {
                 observer.onError(MyAppError.userNotFound(nil))
                 return Disposables.create()
             }
-            // 辞書型に変換
-            let userData: [String: Any] = user.toDictionary
+            
+            var userData: [String: Any] = [:]
+            if shouldUpdate {
+                userData = user.toDictionary2
+            } else {
+                userData = user.toDictionary
+            }
             // Firestoreにユーザー情報を保存
-            self.firebaseConfig.usersCollectionReference().document(userId).setData(userData) { error in
+            self.firebaseConfig.usersCollectionReference().document(userId)
+                .setData(userData, merge: true) { error in
                 if let error = error {
                     observer.onError(MyAppError.saveUserProfileFailed(error))
                 } else {

@@ -35,19 +35,19 @@ class ProfileTopView: UIView {
     private let todayStudyTimeTitle = ProfileLabel(text: "today", fontSize: UIConstants.TextSize.semiMedium, textColor: ColorCodes.primaryPurple.color(), isRounded: true)
     
     // 今日の勉強時間
-    private let todayStudyTime = ProfileLabel(text: "00:00", fontSize: UIConstants.TextSize.medium, textColor: .white)
+    private let todayStudyTime = ProfileLabel(text: "--:--", fontSize: UIConstants.TextSize.medium, textColor: .white)
     
     // 一週間の勉強時間タイトル
     private let weeklyStudyTimeTitle = ProfileLabel(text: "weekly", fontSize: UIConstants.TextSize.semiMedium, textColor: ColorCodes.primaryPurple.color(), isRounded: true)
     
     // 一週間の勉強時間
-    private let weeklyStudyTime = ProfileLabel(text: "00:00", fontSize: UIConstants.TextSize.medium, textColor: .white)
+    private let weeklyStudyTime = ProfileLabel(text: "--:--", fontSize: UIConstants.TextSize.medium, textColor: .white)
     
     // 合計勉強時間タイトル
     private let totalStudyTimeTitle = ProfileLabel(text: "total", fontSize: UIConstants.TextSize.semiMedium, textColor: ColorCodes.primaryPurple.color(), isRounded: true)
     
     // 合計勉強時間
-    private let totalStudyTime = ProfileLabel(text: "00:00", fontSize: UIConstants.TextSize.medium, textColor: .white)
+    private let totalStudyTime = ProfileLabel(text: "--:--", fontSize: UIConstants.TextSize.medium, textColor: .white)
     
     // 今日の勉強時間のスタックビュー
     private lazy var todayStackView: UIStackView = {
@@ -208,19 +208,14 @@ class ProfileTopView: UIView {
         } else {
             pictureImageView.setImage(with: userProfile.profileImageUrl)
         }
-        totalStudyTime.text = "\(userProfile.progressSum?.totalStudyHours ?? 00):\(userProfile.progressSum?.totalStudyMins ?? 00)"
-        visitedLocationsLabel.text = userProfile.progressSum?.visitedLocationsCount.toString
-        allLocationsLabel.text =  " / \(userProfile.progressSum?.allLocationsCount ?? 00)"
-        completedLocationsLabel.text = userProfile.progressSum?.completedLocationsCount.toString
+        let progressSum = userProfile.progressSum
+        totalStudyTime.text = progressSum != nil ? Int.toTimeFormat(hours: progressSum!.totalStudyHours, mins: progressSum!.totalStudyMins) : "--:--"
+        visitedLocationsLabel.text = progressSum?.visitedLocationsCount.toString ?? "--"
+        allLocationsLabel.text = " / \(progressSum?.allLocationsCount.toString ?? "--")"
+        completedLocationsLabel.text = progressSum?.completedLocationsCount.toString ?? "--"
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-}
-
-extension Int {
-    var toString: String {
-        return String(self)
     }
 }

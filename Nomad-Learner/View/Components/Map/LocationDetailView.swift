@@ -265,7 +265,7 @@ extension LocationDetailView {
     // 各UIを更新
     func update(ticketInfo: TicketInfo) {
         distanceAndCoinValueLabel.text = ticketInfo.travelDistanceAndCost.toString
-        missionLabel.text = "\(ticketInfo.totalStudyHours.toString):\(ticketInfo.totalStudyMins.toString)"
+        missionLabel.text = Int.toTimeFormat(hours: ticketInfo.totalStudyHours, mins: ticketInfo.totalStudyMins)
         requiredStudyHours.text = ticketInfo.requiredStudyHours.toString
         rewardLabel.text = "\(ticketInfo.rewardCoin.toString)＋"
     }

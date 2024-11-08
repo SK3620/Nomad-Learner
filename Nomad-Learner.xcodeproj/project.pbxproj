@@ -17,6 +17,7 @@
 		8304A0E42CA5437800061B33 /* GoogleService-Info-Nomad-LearnerDev.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8304A0E32CA5437800061B33 /* GoogleService-Info-Nomad-LearnerDev.plist */; };
 		8304A0E62CA546F700061B33 /* GoogleService-Info-Nomad-Learner.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8304A0E52CA546F700061B33 /* GoogleService-Info-Nomad-Learner.plist */; };
 		831731C42CDB0F910092AE89 /* StudyProgressSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831731C32CDB0F910092AE89 /* StudyProgressSummary.swift */; };
+		831731C62CDE031D0092AE89 /* Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831731C52CDE031D0092AE89 /* Int.swift */; };
 		831E5C6F2CC13205001A90C4 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831E5C6E2CC13205001A90C4 /* Location.swift */; };
 		831E5C712CC136E0001A90C4 /* GoogleMapID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831E5C702CC136E0001A90C4 /* GoogleMapID.swift */; };
 		831E5C732CC271EF001A90C4 /* MarkerIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831E5C722CC271EF001A90C4 /* MarkerIconView.swift */; };
@@ -124,6 +125,7 @@
 		8304A0E32CA5437800061B33 /* GoogleService-Info-Nomad-LearnerDev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Nomad-LearnerDev.plist"; sourceTree = "<group>"; };
 		8304A0E52CA546F700061B33 /* GoogleService-Info-Nomad-Learner.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Nomad-Learner.plist"; sourceTree = "<group>"; };
 		831731C32CDB0F910092AE89 /* StudyProgressSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyProgressSummary.swift; sourceTree = "<group>"; };
+		831731C52CDE031D0092AE89 /* Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Int.swift; sourceTree = "<group>"; };
 		831E5C6E2CC13205001A90C4 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		831E5C702CC136E0001A90C4 /* GoogleMapID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapID.swift; sourceTree = "<group>"; };
 		831E5C722CC271EF001A90C4 /* MarkerIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerIconView.swift; sourceTree = "<group>"; };
@@ -519,6 +521,7 @@
 			isa = PBXGroup;
 			children = (
 				83A9C2C42CA7DA5000898F0B /* UILabel.swift */,
+				831731C52CDE031D0092AE89 /* Int.swift */,
 				83C9F3B92CA9161300CF0D73 /* UITextField.swift */,
 				834478622CCA65380038C7B9 /* UITextView.swift */,
 				83AFB3A92CB2902C00501FEE /* UIView.swift */,
@@ -707,6 +710,7 @@
 				831E5C8A2CC4B4C1001A90C4 /* StudyRoom.swift in Sources */,
 				83AFB3B12CB2B75F00501FEE /* NavigationHeightProvidable.swift in Sources */,
 				835BD2F12CA413560088CA02 /* AppDelegate.swift in Sources */,
+				831731C62CDE031D0092AE89 /* Int.swift in Sources */,
 				83A6D7D42CB807F100D18A30 /* EditProfileViewController.swift in Sources */,
 				83C5E1352CBFB019001C27E1 /* OnFlightViewController.swift in Sources */,
 				83AFB3AE2CB2ABD300501FEE /* LocationDetailView.swift in Sources */,

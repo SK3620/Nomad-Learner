@@ -59,13 +59,42 @@ class LocationDetailView: UIView {
         $0.text = "21 "
     }
     
-    // ミッションサブlabel
-    private let missionSubLabel: UILabel = UILabel().then {
+    // スラッシュ線
+    private let slashView = UIView().then {
+        $0.backgroundColor = .black
+        $0.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 4)
+        $0.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi) * 2 * 15 / 360)
+        $0.snp.makeConstraints {
+            $0.size.equalTo(CGSize(width: 1, height: 30))
+        }
+    }
+    
+    // 必要な勉強時間
+    private let requiredStudyHours: UILabel = UILabel().then {
         $0.textColor = .darkGray
         $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.semiMedium)
-        $0.text = "/ 30 hours"
         $0.textAlignment = .right
     }
+    
+    // "hours"テキスト
+    private let hoursTextLabel = UILabel().then {
+        $0.text = "hours"
+        $0.textColor = .darkGray
+        $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.semiMedium)
+    }
+    
+    // 「/ hours XX」を表示するstackView
+    private lazy var requiredStudyHoursStackView: UIStackView = {
+        let verticalStackView = UIStackView(arrangedSubviews: [requiredStudyHours, hoursTextLabel])
+        verticalStackView.axis = .vertical
+        verticalStackView.alignment = .center
+        verticalStackView.distribution = .fillEqually
+        
+        let horizontalStackView = UIStackView(arrangedSubviews: [slashView, verticalStackView])
+        horizontalStackView.axis = .horizontal
+        horizontalStackView.spacing = 4
+        return horizontalStackView
+    }()
     
     // 報酬アイコン背景View
     private let backgroundViewForReward: UIView = UIView().then {
@@ -119,7 +148,7 @@ class LocationDetailView: UIView {
         backgroundViewForMission.addSubview(missionImageView)
         addSubview(backgroundViewForMission)
         addSubview(missionLabel)
-        addSubview(missionSubLabel)
+        addSubview(requiredStudyHoursStackView)
         backgroundViewForReward.addSubview(rewardImageView)
         addSubview(backgroundViewForReward)
         addSubview(rewardLabel)
@@ -195,11 +224,10 @@ class LocationDetailView: UIView {
             $0.left.equalTo(backgroundViewForMission.snp.right).offset(UIConstants.Layout.semiStandardPadding)
         }
         
-        // ミッションサブlabel
-        missionSubLabel.snp.makeConstraints {
-            $0.left.equalTo(missionLabel.snp.right)
-            $0.bottom.equalTo(missionLabel).inset(3) // 微調整
+        // 「/ hours XX」を表示するstackView
+        requiredStudyHoursStackView.snp.makeConstraints {
             $0.right.equalToSuperview().inset(UIConstants.Layout.standardPadding)
+            $0.centerY.equalTo(missionLabel)
         }
         
         // 報酬アイコン背景View
@@ -238,7 +266,7 @@ extension LocationDetailView {
     func update(ticketInfo: TicketInfo) {
         distanceAndCoinValueLabel.text = ticketInfo.travelDistanceAndCost.toString
         missionLabel.text = "\(ticketInfo.totalStudyHours.toString):\(ticketInfo.totalStudyMins.toString)"
-        missionSubLabel.text = "/ \(ticketInfo.requiredStudyHours.toString) hours"
+        requiredStudyHours.text = ticketInfo.requiredStudyHours.toString
         rewardLabel.text = "\(ticketInfo.rewardCoin.toString)＋"
     }
 }

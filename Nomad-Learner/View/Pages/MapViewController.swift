@@ -136,7 +136,6 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        
         // StudyRoomVC（勉強部屋画面）から戻ってきた時、データ再取得
         if fromScreen == .studyRoomVC {
             viewModel.locationsAndUserInfo

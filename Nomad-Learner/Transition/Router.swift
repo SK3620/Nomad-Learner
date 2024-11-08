@@ -111,16 +111,16 @@ extension Router: RouterProtocol {
     static func showDepartVC(vc: UIViewController, locationInfo: LocationInfo) {
         let departViewController = DepartViewController()
         departViewController.locationInfo = locationInfo
-        departViewController.modalPresentationStyle = .overFullScreen
+        departViewController.modalPresentationStyle = .fullScreen
         departViewController.modalTransitionStyle = .crossDissolve
         modal(from: vc, to: departViewController)
     }
     
-    // DepartVC（出発画面）→ StudyRoomVC（勉強部屋画面）
+    // DepartVC（出発画面）→ OnFlightVC（飛行中画面）
     static func showOnFlightVC(vc: UIViewController, locationInfo: LocationInfo) {
         let onFlightViewController = OnFlightViewController()
         onFlightViewController.locationInfo = locationInfo
-        onFlightViewController.modalPresentationStyle = .overFullScreen
+        onFlightViewController.modalPresentationStyle = .fullScreen
         onFlightViewController.modalTransitionStyle = .crossDissolve
         modal(from: vc, to: onFlightViewController)
     }
@@ -150,7 +150,7 @@ extension Router: RouterProtocol {
         }
         
         // 現在の画面が勉強部屋画面の場合
-        else if vc is StudyRoomViewController, let navForMapVC = vc.presentingViewController?.presentingViewController?.presentingViewController as? NavigationControllerForMapVC, let mapVC = navForMapVC.navigationController?.viewControllers[0] as? MapViewController {
+        else if vc is StudyRoomViewController, let navForMapVC = vc.presentingViewController?.presentingViewController?.presentingViewController as? NavigationControllerForMapVC, let mapVC = navForMapVC.viewControllers[0] as? MapViewController {
             nav = navForMapVC
             mapVC.fromScreen = .studyRoomVC
             // MapVC画面にてデータ再取得を行うため、ユーザープロフィール情報は渡す必要はない

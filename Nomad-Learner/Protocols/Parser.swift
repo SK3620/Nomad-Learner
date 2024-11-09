@@ -35,7 +35,7 @@ final class FixedLocationParser {
 
 final class UserParser {
     // Userをパース
-    static func parse(_ data: [String: Any]) -> User? {
+    static func parse(_ documentID: String,_ data: [String: Any]) -> User? {
         guard let username = data["username"] as? String,
               let profileImageUrl = data["profileImageUrl"] as? String,
               let currentLocationId = data["currentLocationId"] as? String,
@@ -47,6 +47,7 @@ final class UserParser {
         }
         
         return User(
+            userId: documentID,
             username: username,
             profileImageUrl: profileImageUrl,
             currentLocationId: currentLocationId,
@@ -61,22 +62,19 @@ final class UserParser {
 final class VisitedLocationParser {
     // VisitedLocationをパース
     static func parse(_ documentID: String, _ data: [String: Any]) -> VisitedLocation? {
-        guard let locationId = data["locationId"] as? String,
-              let totalStudyHours = data["totalStudyHours"] as? Int,
+        guard let totalStudyHours = data["totalStudyHours"] as? Int,
               let totalStudyMins = data["totalStudyMins"] as? Int,
               let fixedRequiredStudyHours = data["fixedRequiredStudyHours"] as? Int,
-              let fixedRewardCoin = data["fixedRewardCoin"] as? Int,
-              let visitedAt = data["visitedAt"] as? FieldValue else {
+              let fixedRewardCoin = data["fixedRewardCoin"] as? Int else {
             return nil
         }
                 
         return VisitedLocation(
-            locationId: locationId,
+            locationId: documentID,
             totalStudyHours: totalStudyHours,
             totalStudyMins: totalStudyMins,
             fixedRequiredStudyHours: fixedRequiredStudyHours,
-            fixedRewardCoin: fixedRewardCoin,
-            visitedAt: visitedAt
+            fixedRewardCoin: fixedRewardCoin
         )
     }
 }

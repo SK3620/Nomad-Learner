@@ -61,7 +61,7 @@ class LocationDetailView: UIView {
     
     // スラッシュ線
     private let slashView = UIView().then {
-        $0.backgroundColor = .black
+        $0.backgroundColor = .darkGray
         $0.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 4)
         $0.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi) * 2 * 15 / 360)
         $0.snp.makeConstraints {

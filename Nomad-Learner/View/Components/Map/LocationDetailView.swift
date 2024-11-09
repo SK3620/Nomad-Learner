@@ -92,7 +92,7 @@ class LocationDetailView: UIView {
         
         let horizontalStackView = UIStackView(arrangedSubviews: [slashView, verticalStackView])
         horizontalStackView.axis = .horizontal
-        horizontalStackView.spacing = 4
+        horizontalStackView.spacing = 6
         return horizontalStackView
     }()
     

@@ -253,7 +253,7 @@ final class MainService: MainServiceProtocol {
         }
     }
     
-    // 参加中のロケーションにuuidを追加
+    // 参加中のロケーションにuuidを追加＆参加ユーザー数を+1インクリメント
     func addUserIdToLocation(locationId: String) -> Observable<Void> {
         Observable.create { observer in
             guard let userId = FBAuth.currentUserId else {
@@ -261,30 +261,30 @@ final class MainService: MainServiceProtocol {
                 return Disposables.create()
             }
             
-            var updatedData: [String: Any] = [:]
+            // 初期データとして userCount のフィールドを 1 インクリメント
+            let locationRef = self.firebaseConfig.locationsCollectionReference().document(locationId)
             
-            updatedData = [
-                "userCount": 0
-            ]
-            self.firebaseConfig.locationsCollectionReference().document(locationId)
-                .setData(updatedData, merge: true){ error in
-                    if let error = error {
-                        observer.onError(MyAppError.allError(error))
-                    } else {
-                        updatedData = [
-                            "createdAt": FieldValue.serverTimestamp()
-                        ]
-                        self.firebaseConfig.usersInLocationsReference(with: locationId).document(userId)
-                            .setData(updatedData, merge: true) { error in
-                                if let error = error {
-                                    observer.onError(MyAppError.allError(error))
-                                } else {
-                                    observer.onNext(())
-                                    observer.onCompleted()
-                                }
-                            }
+            locationRef.setData([
+                "userCount": FieldValue.increment(Int64(1))  // userCountを+1インクリメント
+            ], merge: true) { error in
+                if let error = error {
+                    observer.onError(MyAppError.allError(error))
+                } else {
+                    // users サブコレクションにユーザーIDを追加
+                    let userRef = self.firebaseConfig.usersInLocationsReference(with: locationId).document(userId)
+                    userRef.setData([
+                        "createdAt": FieldValue.serverTimestamp()  // 作成日時を追加
+                    ], merge: true) { error in
+                        if let error = error {
+                            observer.onError(MyAppError.allError(error))
+                        } else {
+                            observer.onNext(())
+                            observer.onCompleted()
+                        }
                     }
                 }
+            }
+            
             return Disposables.create()
         }
     }
@@ -420,7 +420,7 @@ final class MainService: MainServiceProtocol {
         }
     }
     
-    // 勉強部屋からの退出時、ユーザーIDドキュメントを削除
+    // 勉強部屋からの退出時、ユーザーIDドキュメントを削除＆参加ユーザー数を-1デクリメント
     func removeUserIdFromLocation(locationId: String) -> Observable<Void> {
         Observable.create { observer in
             guard let userId = FBAuth.currentUserId else {
@@ -428,15 +428,27 @@ final class MainService: MainServiceProtocol {
                 return Disposables.create()
             }
             
+            // ユーザーIDドキュメントを削除
             self.firebaseConfig.usersInLocationsReference(with: locationId).document(userId)
                 .delete { error in
                     if let error = error {
                         observer.onError(MyAppError.allError(error))
                     } else {
-                        observer.onNext(())
-                        observer.onCompleted()
+                        // userCount フィールドを -1 デクリメント
+                        let locationRef = self.firebaseConfig.locationsCollectionReference().document(locationId)
+                        locationRef.updateData([
+                            "userCount": FieldValue.increment(Int64(-1))  // userCountを-1デクリメント
+                        ]) { error in
+                            if let error = error {
+                                observer.onError(MyAppError.allError(error))
+                            } else {
+                                observer.onNext(())
+                                observer.onCompleted()
+                            }
+                        }
                     }
                 }
+            
             return Disposables.create()
         }
     }

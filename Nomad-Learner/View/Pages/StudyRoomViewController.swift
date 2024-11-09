@@ -65,8 +65,8 @@ class StudyRoomViewController: UIViewController {
     private func setupUI() {
         // studyRoomNavigationBarのitemを押下可能にする
         navigationController?.navigationBar.isHidden = true
-        view.backgroundColor = .clear
-                
+        view.backgroundColor = .black
+        
         view.addSubview(backgroundImageView)
         view.addSubview(breakTimeView)
         view.addSubview(studyRoomNavigationBar)
@@ -228,14 +228,14 @@ extension StudyRoomViewController: AlertEnabled {
     // 背景画像切り替え
     private var switchBackgroundImage: Binder<String> {
         return Binder(self) { base, imageUrl in
-            UIView.animate(withDuration: 1.0, animations: {
+            UIView.animate(withDuration: 1.5, animations: {
                 // 背景画像をフェードアウトさせる（透明にする）
                 self.backgroundImageView.alpha = 0.0
 
             }) { _ in
                 // フェードアウトが完了したら、新しい画像に更新
                 self.backgroundImageView.setImage(with: imageUrl)
-                UIView.animate(withDuration: 1.0) {
+                UIView.animate(withDuration: 1.5) {
                     // 新しい画像をフェードインさせる（表示する）
                     self.backgroundImageView.alpha = 1.0
                 }
@@ -282,7 +282,7 @@ extension StudyRoomViewController: AlertEnabled {
             case .exitRoom:
                 let alertActionType: AlertActionType = .exitRoom(
                     onConfirm: {
-                        base.viewModel.saveStudyProgress(countedStudyTime: 1) {
+                        base.viewModel.saveStudyProgress() {
                             Router.backToMapVC(vc: base) // MapVC（マップ画面）に戻る
                         }
                     }

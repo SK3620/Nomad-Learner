@@ -38,10 +38,15 @@ protocol MainServiceProtocol {
     func fetchMoreUserIdsInLocation(locationId: String, limit: Int, oldestDocument: QueryDocumentSnapshot?) -> Observable<(userIds: [String], oldestDocument: QueryDocumentSnapshot?)>
     // ロケーションに参加する他ユーザーをリアルタイムリッスン
     func listenForNewUsersParticipation(locationId: String, latestLoadedDocDate: Timestamp) -> Observable<(userIds: [String], latestLoadedDocDate: Timestamp)>
+    // 退出したユーザーをリッスン
+    func listenForUsersExit(locationId: String) -> Observable<[String]>
     // 勉強部屋から退出
     func removeUserIdFromLocation(locationId: String) -> Observable<Void>
     // 勉強部屋からの退出時、合計勉強時間、ミッション勉強時間、報酬コインを保存
     func saveStudyProgressAndRewards(locationId: String, updatedData: VisitedLocation) -> Observable<Void>
+    
+    // リスナー解除
+    func removeListeners()
 }
 
 final class MainService: MainServiceProtocol {
@@ -51,6 +56,16 @@ final class MainService: MainServiceProtocol {
     private let firebaseConfig = FirebaseConfig.shared
     
     private init(){}
+    
+    private var listenerForUsersExit: ListenerRegistration?
+    private var listenerForNewUsersParticipation: ListenerRegistration?
+    
+    func removeListeners() {
+        listenerForUsersExit?.remove()
+        listenerForNewUsersParticipation?.remove()
+        listenerForUsersExit = nil
+        listenerForNewUsersParticipation = nil
+    }
     
     // マップのマーカーに設定するロケーション情報取得
     func fetchFixedLocations() -> Observable<[FixedLocation]> {
@@ -156,7 +171,7 @@ final class MainService: MainServiceProtocol {
                     observer.onError(MyAppError.fetchUserProfileFailed(error))
                 } else if let document = document, document.exists, let userData = document.data() {
                     // データをUserモデルに変換
-                    if let fetchedUser = UserParser.parse(userData) {
+                    if let fetchedUser = UserParser.parse(document.documentID, userData) {
                         observer.onNext(fetchedUser)
                         observer.onCompleted()
                     } else {
@@ -246,17 +261,30 @@ final class MainService: MainServiceProtocol {
                 return Disposables.create()
             }
             
-            let data: [String: Any] = [
-                "createdAt": FieldValue.serverTimestamp()
+            var updatedData: [String: Any] = [:]
+            
+            updatedData = [
+                "userCount": 0
             ]
-            self.firebaseConfig.usersInLocationsReference(with: locationId).document(userId).setData(data) { error in
-                if let error = error {
-                    observer.onError(MyAppError.allError(error))
-                } else {
-                    observer.onNext(())
-                    observer.onCompleted()
+            self.firebaseConfig.locationsCollectionReference().document(locationId)
+                .setData(updatedData, merge: true){ error in
+                    if let error = error {
+                        observer.onError(MyAppError.allError(error))
+                    } else {
+                        updatedData = [
+                            "createdAt": FieldValue.serverTimestamp()
+                        ]
+                        self.firebaseConfig.usersInLocationsReference(with: locationId).document(userId)
+                            .setData(updatedData, merge: true) { error in
+                                if let error = error {
+                                    observer.onError(MyAppError.allError(error))
+                                } else {
+                                    observer.onNext(())
+                                    observer.onCompleted()
+                                }
+                            }
+                    }
                 }
-            }
             return Disposables.create()
         }
     }
@@ -271,11 +299,11 @@ final class MainService: MainServiceProtocol {
             query.getDocuments { snapshots, error in
                 if let error = error {
                     observer.onError(error)
-                } else {
+                } else if let documents = snapshots?.documents, !documents.isEmpty {
                     // ユーザーのuuidを取得
-                    let userIds: [String] = snapshots?.documents.compactMap { $0.documentID } ?? []
-                    let latestLoadedDocDate = snapshots?.documents.first?.data()["createdAt"] as? Timestamp // 最新のドキュメントのTimeStampを取得
-                    let oldestDocument = snapshots?.documents.last // 一番古いドキュメントを取得
+                    let userIds: [String] = documents.compactMap { $0.documentID }
+                    let latestLoadedDocDate = documents.first?.data()["createdAt"] as? Timestamp // 最新のドキュメントのTimeStampを取得
+                    let oldestDocument = documents.last // 一番古いドキュメントを取得
                     observer.onNext((userIds: userIds, latestLoadedDocDate: latestLoadedDocDate, oldestDocument: oldestDocument))
                     observer.onCompleted()
                 }
@@ -294,14 +322,14 @@ final class MainService: MainServiceProtocol {
             }
             
             let query = self.firebaseConfig.usersCollectionReference()
-                .whereField(FieldPath.documentID(), in: [userIds])
+                .whereField(FieldPath.documentID(), in: userIds)
             
             query.getDocuments { snapshots, error in
                 if let error = error {
                     observer.onError(MyAppError.allError(error))
                 } else {
                     let userProfiles = snapshots?.documents.compactMap {
-                        UserParser.parse($0.data())
+                        UserParser.parse($0.documentID, $0.data())
                     } ?? []
                     
                     observer.onNext(userProfiles)
@@ -350,17 +378,42 @@ final class MainService: MainServiceProtocol {
                 .start(after: [latestLoadedDocDate]) // 最後のデータ以降のみ取得（？）
                 .limit(to: 3) // 最新データ3件までリッスン
             
-            query.addSnapshotListener { snapshots, error in
+            self.listenerForNewUsersParticipation = query.addSnapshotListener { snapshots, error in
                 if let error = error {
                     observer.onError(MyAppError.allError(error))
-                } else {
+                } else if let documents = snapshots?.documents, !documents.isEmpty {
                     // ユーザーのuuidを取得
-                    let userIds: [String] = snapshots?.documents.compactMap { $0.documentID } ?? []
-                    let latestDocument = snapshots?.documents.last // 最後のスナップショットを保持
+                    let userIds: [String] = documents.compactMap { $0.documentID }
+                    let latestDocument = documents.last // 最後のスナップショットを保持
                     let data = latestDocument?.data()
-                    let date = data?["createdAt"] as? Timestamp // あとで修正すること！
+                    let date = data?["createdAt"] as? Timestamp
                     observer.onNext((userIds: userIds, latestLoadedDocDate: date!))
                     observer.onCompleted()
+                }
+            }
+            return Disposables.create()
+        }
+    }
+    
+    // 退出したユーザーをリッスン
+    func listenForUsersExit(locationId: String) -> Observable<[String]> {
+        Observable.create { observer in
+            let query = self.firebaseConfig.usersInLocationsReference(with: locationId)
+            
+            self.listenerForUsersExit = query.addSnapshotListener { snapshots, error in
+                if let error = error {
+                    observer.onError(MyAppError.allError(error))
+                } else if let documents = snapshots?.documentChanges, !documents.isEmpty {
+                    var userIds: [String] = []
+                    
+                    for change in documents {
+                        // 退出したユーザーを検知
+                        if change.type == .removed {
+                            let userId = change.document.documentID
+                            userIds.append(userId)
+                        }
+                    }
+                    observer.onNext(userIds)
                 }
             }
             return Disposables.create()

@@ -156,10 +156,34 @@ class StudyRoomViewModel {
             })
             .disposed(by: disposeBag)
         
-        self.myAppError = listenForNewUsersParticipationResult
+        let listenForNewUsersParticipationError = listenForNewUsersParticipationResult
             .compactMap { $0.event.error as? MyAppError }
-            .asDriver(onErrorJustReturn: .unknown)
         
+        // 退出したユーザーをリッスン
+        let listenForUsersExitResult = mainService.listenForUsersExit(locationId: locationId)
+            .materialize()
+            .share(replay: 1)
+        
+        listenForUsersExitResult
+            .compactMap { $0.event.element }
+            .subscribe(onNext: { [weak self] userIds in
+                guard let self = self else { return }
+                for userId in userIds {
+                    if let index = self.userProfilesRelay.value.firstIndex(where: { $0.userId == userId}) {
+                        var updatedProfiles = userProfilesRelay.value
+                        updatedProfiles.remove(at: index)
+                        self.userProfilesRelay.accept(updatedProfiles)
+                    }
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        let listenForUsersExitError = listenForUsersExitResult
+            .compactMap { $0.event.error as? MyAppError }
+        
+        self.myAppError = Observable
+            .merge(listenForNewUsersParticipationError, listenForUsersExitError)
+            .asDriver(onErrorJustReturn: .unknown)
         
         messageRelay.accept(Message.messages)
     }
@@ -231,13 +255,13 @@ extension StudyRoomViewModel {
     }
     
     // 勉強時間データ保存（退出時）
-    func saveStudyProgress(countedStudyTime: Int, completion: () -> Void) {
+    func saveStudyProgress(completion: @escaping () -> Void) {
         let visitedLocationToUpdate = VisitedLocation(
+            locationId: locationId,
             totalStudyHours: originalStudyTime.hours + elapsedStudyTime.hours,
             totalStudyMins: originalStudyTime.mins + elapsedStudyTime.mins,
             fixedRequiredStudyHours: locationInfo.ticketInfo.requiredStudyHours,
-            fixedRewardCoin: locationInfo.ticketInfo.rewardCoin,
-            visitedAt: FieldValue.serverTimestamp()
+            fixedRewardCoin: locationInfo.ticketInfo.rewardCoin
         )
         
         let saveStudyProgressResult = mainService.removeUserIdFromLocation(locationId: locationId)
@@ -251,13 +275,10 @@ extension StudyRoomViewModel {
         saveStudyProgressResult
             .compactMap { $0.event.element }
             .subscribe(onNext: { [weak self] _ in
-                guard let self = self, let userId = FBAuth.currentUserId else { return }
-                if let index = self.userProfilesRelay.value.firstIndex(where: { $0.userId == userId}) {
-                    var updatedProfiles = userProfilesRelay.value
-                    updatedProfiles.remove(at: index)
-                    userProfilesRelay.accept(updatedProfiles)
-                }
-            })
+                guard let self = self else { return }
+                completion()
+                self.mainService.removeListeners()
+            }) // MapVC（マップ画面）に戻る
             .disposed(by: disposeBag)
         
         self.myAppError = saveStudyProgressResult

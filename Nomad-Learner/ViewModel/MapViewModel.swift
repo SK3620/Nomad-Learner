@@ -40,7 +40,7 @@ class MapViewModel {
         let fetchLocationsInfoResult = realmService.fetchFixedLocations() // Realmから固定ロケーション取得
             .flatMap { realmData in
                 // Realmにデータがない場合、Firebaseから取得してキャッシュ
-                let locationData = !realmData.isEmpty
+                let locationData = realmData.isEmpty
                 ? mainService.fetchFixedLocations()
                     .do(onNext: { fixedLocations in
                     // 既存データとキャッシュのリセット

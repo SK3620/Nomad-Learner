@@ -20,6 +20,7 @@ enum ScreenOrientation {
 // 特定の画面から戻った時にさせたい処理の判定をさせる
 enum ScreenType {
     case studyRoomVC
+    case departVC
 }
 
 protocol RouterProtocol {

@@ -97,7 +97,12 @@ class DepartViewController: UIViewController {
 extension DepartViewController {
     // MapVC（マップ画面）に戻る
     private var backToMapVC: Binder<Void> {
-        return Binder(self) { base, _ in Router.dismissModal(vc: base) }
+        return Binder(self) { base, _ in 
+            if let navForMapVC = base.presentingViewController as? NavigationControllerForMapVC, let mapVC = navForMapVC.viewControllers[0] as? MapViewController {
+                mapVC.fromScreen = .departVC
+            }
+            Router.dismissModal(vc: base)
+        }
     }
     
     // OnFlightVC（出発準備画面）へ遷移

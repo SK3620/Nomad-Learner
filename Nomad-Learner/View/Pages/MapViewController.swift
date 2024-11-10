@@ -106,7 +106,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
         }
         
         mapView.snp.makeConstraints {
-            $0.top.equalTo(navigationBoxBar.snp.bottom).inset(UIConstants.Layout.semiMediumPadding)
+            $0.top.equalTo(navigationBoxBar.snp.bottom).inset(UIConstants.Layout.mediumPadding)
             $0.right.left.bottom.equalToSuperview()
         }
         

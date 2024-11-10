@@ -60,16 +60,18 @@ class MarkerIconView: UIView {
     init(frame: CGRect, locationStatus: LocationStatus) {
         super.init(frame: frame)
         
-        setupUI()
+        setupUI(isMyCurrentLocation: locationStatus.isMyCurrentLocation)
         // 各UIを更新
         update(locationStatus: locationStatus)
     }
     
-    private func setupUI() {
+    private func setupUI(isMyCurrentLocation: Bool) {
         addSubview(markerIconImageView)
-        addSubview(mappinImageView)
+        if isMyCurrentLocation {
+            addSubview(mappinImageView)
+            addSubview(personImageView)
+        }
         addSubview(statusImageView)
-//        addSubview(personImageView)
         addSubview(userCountLabel)
         
         markerIconImageView.snp.makeConstraints {
@@ -77,9 +79,16 @@ class MarkerIconView: UIView {
             $0.size.equalTo(30)
         }
         
-        mappinImageView.snp.makeConstraints {
-            $0.left.top.equalToSuperview()
-            $0.size.equalTo(30)
+        if isMyCurrentLocation {
+            mappinImageView.snp.makeConstraints {
+                $0.left.top.equalToSuperview()
+                $0.size.equalTo(30)
+            }
+            personImageView.snp.makeConstraints {
+                $0.bottom.equalTo(markerIconImageView.snp.bottom)
+                $0.left.equalTo(markerIconImageView.snp.right)
+                $0.size.equalTo(14)
+            }
         }
         
         statusImageView.snp.makeConstraints {
@@ -87,25 +96,16 @@ class MarkerIconView: UIView {
             $0.left.equalTo(markerIconImageView.snp.right)
             $0.top.equalTo(markerIconImageView)
         }
-                
-//        personImageView.snp.makeConstraints {
-//            $0.bottom.equalTo(markerIconImageView.snp.bottom)
-//            $0.left.equalTo(markerIconImageView.snp.right)
-//            $0.size.equalTo(14)
-//        }
         
         userCountLabel.snp.makeConstraints {
-            $0.centerY.equalTo(markerIconImageView.snp.bottom)
-            $0.left.equalTo(markerIconImageView.snp.right)
+            $0.bottom.equalTo(markerIconImageView).offset(2) // 微調整
+            $0.left.equalTo(isMyCurrentLocation ? personImageView.snp.right : markerIconImageView.snp.right)
         }
     }
     
     private func update(locationStatus: LocationStatus) {
         // 参加人数
         userCountLabel.text = locationStatus.userCount.toString
-        
-        // 現在地のロケーションの場合
-        mappinImageView.isHidden = !locationStatus.isMyCurrentLocation
         
         // 必要な合計勉強時間をクリアしている場合
         if locationStatus.isCompleted {

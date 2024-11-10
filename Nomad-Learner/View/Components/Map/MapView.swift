@@ -44,8 +44,9 @@ class MapView: GMSMapView {
             marker.position = CLLocationCoordinate2D(latitude: fixedLocation.latitude, longitude: fixedLocation.longitude)
             
             // マーカーのアイコンビューを作成
+            let adjustedWidth: CGFloat = locationStatus.isMyCurrentLocation ? 57 : 45 // UIパーツがはみ出ないように幅調整
             let markerIconView = MarkerIconView(
-                frame: CGRect(origin: .zero, size: CGSize(width: 45, height: 33)),
+                frame: CGRect(origin: .zero, size: CGSize(width: adjustedWidth, height: 33)),
                 locationStatus: locationStatus
             )
             marker.iconView = markerIconView

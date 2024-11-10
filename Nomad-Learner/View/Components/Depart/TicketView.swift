@@ -113,15 +113,43 @@ class TicketView: UIView {
         $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.semiSuperLarge)
         $0.text = "21 "
     }
+   
+    // スラッシュ線
+    private let slashView = UIView().then {
+        $0.backgroundColor = .darkGray
+        $0.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 4)
+        $0.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi) * 2 * 15 / 360)
+        $0.snp.makeConstraints {
+            $0.size.equalTo(CGSize(width: 1, height: 23))
+        }
+    }
     
-    // ミッションサブlabel
-    private let missionSubLabel: UILabel = UILabel().then {
+    // 必要な勉強時間
+    private let requiredStudyHours: UILabel = UILabel().then {
         $0.textColor = .darkGray
-        $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.semiMedium)
-        $0.text = "/ 30 hours"
+        $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.small)
         $0.textAlignment = .right
     }
     
+    // "hours"テキスト
+    private let hoursTextLabel = UILabel().then {
+        $0.text = "hours"
+        $0.textColor = .darkGray
+        $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.small)
+    }
+    
+    // 「/ hours XX」を表示するstackView
+    private lazy var requiredStudyHoursStackView: UIStackView = {
+        let verticalStackView = UIStackView(arrangedSubviews: [requiredStudyHours, hoursTextLabel])
+        verticalStackView.axis = .vertical
+        verticalStackView.alignment = .center
+        verticalStackView.distribution = .fillProportionally
+        
+        let horizontalStackView = UIStackView(arrangedSubviews: [slashView, verticalStackView])
+        horizontalStackView.axis = .horizontal
+        horizontalStackView.spacing = 6
+        return horizontalStackView
+    }()
     // ミッション下線
     private let missionUnderline: UIView = UIView().then {
         $0.backgroundColor = UIColor(red: 240/255, green: 224/255, blue: 207/255, alpha: 1)
@@ -183,7 +211,7 @@ class TicketView: UIView {
         backgroundViewForMission.addSubview(missionImageView)
         addSubview(backgroundViewForMission)
         addSubview(missionLabel)
-        addSubview(missionSubLabel)
+        addSubview(requiredStudyHoursStackView)
         addSubview(missionUnderline)
         backgroundViewForReward.addSubview(rewardImageView)
         addSubview(backgroundViewForReward)
@@ -294,10 +322,9 @@ class TicketView: UIView {
             $0.left.equalTo(backgroundViewForMission.snp.right).offset(UIConstants.Layout.standardPadding)
         }
         
-        // ミッションサブlabel
-        missionSubLabel.snp.makeConstraints {
-            $0.left.equalTo(missionLabel.snp.right)
-            $0.bottom.equalTo(missionLabel).inset(3) // 微調整
+        // 必要な勉強時間
+        requiredStudyHoursStackView.snp.makeConstraints {
+            $0.bottom.equalTo(missionLabel).inset(8) // 微調整
             $0.right.equalToSuperview().inset(UIConstants.Layout.standardPadding)
         }
         
@@ -306,7 +333,7 @@ class TicketView: UIView {
             $0.height.equalTo(3)
             $0.bottom.equalTo(backgroundViewForMission)
             $0.left.equalTo(backgroundViewForMission.snp.centerX)
-            $0.right.equalTo(missionSubLabel)
+            $0.right.equalTo(requiredStudyHoursStackView)
         }
         
         // 報酬アイコン背景View
@@ -353,7 +380,7 @@ extension TicketView {
         destinationLabel.text = ticketInfo.destination
         countryAndRegion.text = ticketInfo.countryAndRegion
         missionLabel.text = Int.toTimeFormat(hours: ticketInfo.totalStudyHours, mins: ticketInfo.totalStudyMins)
-        missionSubLabel.text = "/ \(ticketInfo.requiredStudyHours.toString) hours"
+        requiredStudyHours.text = ticketInfo.requiredStudyHours.toString
         rewardLabel.text = "\(ticketInfo.rewardCoin.toString)＋"
     }
 }

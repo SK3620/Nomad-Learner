@@ -46,7 +46,8 @@ class MarkerIconView: UIView {
 
     // 人のアイコン
     private let personImageView: UIImageView = UIImageView().then {
-        $0.image = UIImage(systemName: "person")
+        let configuration = UIImage.SymbolConfiguration(weight: .medium)
+        $0.image = UIImage(systemName: "person", withConfiguration: configuration)
         $0.tintColor = .black
     }
     

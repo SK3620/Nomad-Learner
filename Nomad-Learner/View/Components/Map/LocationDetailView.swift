@@ -39,7 +39,6 @@ class LocationDetailView: UIView {
     // 距離とコインの値
     private lazy var distanceAndCoinValueLabel: UILabel = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.semiSuperLarge)
-        $0.text = "20500"
         $0.textAlignment = .center
     }
     
@@ -52,11 +51,10 @@ class LocationDetailView: UIView {
     // ミッションのアイコン
     private let missionImageView: UIImageView = UIImageView(image: UIImage(named: "Study2"))
     
-    // ミッションlabel
-    private let missionLabel: UILabel = UILabel().then {
+    // 合計勉強時間
+    private let totalStudyTimeLabel: UILabel = UILabel().then {
         $0.textColor = .black
         $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.semiSuperLarge)
-        $0.text = "21 "
     }
     
     // スラッシュ線
@@ -65,13 +63,13 @@ class LocationDetailView: UIView {
         $0.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 4)
         $0.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi) * 2 * 15 / 360)
         $0.snp.makeConstraints {
-            $0.size.equalTo(CGSize(width: 1, height: 30))
+            $0.size.equalTo(CGSize(width: 2, height: 30))
         }
     }
     
     // 必要な勉強時間
     private let requiredStudyHours: UILabel = UILabel().then {
-        $0.textColor = .darkGray
+        $0.textColor = .orange
         $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.semiMedium)
         $0.textAlignment = .right
     }
@@ -106,7 +104,7 @@ class LocationDetailView: UIView {
     private let rewardImageView: UIImageView = UIImageView(image: UIImage(named: "Reward"))
     
     // 報酬label
-    private let rewardLabel: UILabel = UILabel().then {
+    private let rewardCoinLabel: UILabel = UILabel().then {
         $0.textColor = .black
         $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.semiSuperLarge)
         $0.text = "22500＋"
@@ -147,11 +145,11 @@ class LocationDetailView: UIView {
         
         backgroundViewForMission.addSubview(missionImageView)
         addSubview(backgroundViewForMission)
-        addSubview(missionLabel)
+        addSubview(totalStudyTimeLabel)
         addSubview(requiredStudyHoursStackView)
         backgroundViewForReward.addSubview(rewardImageView)
         addSubview(backgroundViewForReward)
-        addSubview(rewardLabel)
+        addSubview(rewardCoinLabel)
         
         addSubview(locationCategoryCollectionView)
         
@@ -186,7 +184,7 @@ class LocationDetailView: UIView {
         // 距離とコインの値
         distanceAndCoinValueLabel.snp.makeConstraints {
             $0.centerX.equalTo(distanceAndCoinBackgroundView)
-            $0.bottom.equalTo(rewardLabel.snp.bottom)
+            $0.bottom.equalTo(rewardCoinLabel.snp.bottom)
         }
         
         // 縦の区切り線
@@ -218,8 +216,8 @@ class LocationDetailView: UIView {
             $0.center.equalToSuperview()
         }
         
-        // ミッションlabel
-        missionLabel.snp.makeConstraints {
+        // 合計勉強時間
+        totalStudyTimeLabel.snp.makeConstraints {
             $0.bottom.equalTo(backgroundViewForMission)
             $0.left.equalTo(backgroundViewForMission.snp.right).offset(UIConstants.Layout.semiStandardPadding)
         }
@@ -227,7 +225,7 @@ class LocationDetailView: UIView {
         // 「/ hours XX」を表示するstackView
         requiredStudyHoursStackView.snp.makeConstraints {
             $0.right.equalToSuperview().inset(UIConstants.Layout.standardPadding)
-            $0.centerY.equalTo(missionLabel)
+            $0.centerY.equalTo(totalStudyTimeLabel)
         }
         
         // 報酬アイコン背景View
@@ -244,7 +242,7 @@ class LocationDetailView: UIView {
         }
         
         // 報酬label
-        rewardLabel.snp.makeConstraints {
+        rewardCoinLabel.snp.makeConstraints {
             $0.bottom.equalTo(backgroundViewForReward)
             $0.left.equalTo(backgroundViewForReward.snp.right).offset(UIConstants.Layout.semiStandardPadding)
         }
@@ -263,10 +261,15 @@ class LocationDetailView: UIView {
 
 extension LocationDetailView {
     // 各UIを更新
-    func update(ticketInfo: TicketInfo) {
+    func update(ticketInfo: TicketInfo, locationStatus: LocationStatus) {
         distanceAndCoinValueLabel.text = ticketInfo.travelDistanceAndCost.toString
-        missionLabel.text = Int.toTimeFormat(hours: ticketInfo.totalStudyHours, mins: ticketInfo.totalStudyMins)
+        totalStudyTimeLabel.text = Int.toTimeFormat(hours: ticketInfo.totalStudyHours, mins: ticketInfo.totalStudyMins)
         requiredStudyHours.text = ticketInfo.requiredStudyHours.toString
-        rewardLabel.text = "\(ticketInfo.rewardCoin.toString)＋"
+        rewardCoinLabel.text = "\(ticketInfo.rewardCoin.toString)＋"
+        
+        let isCompleted = locationStatus.isCompleted
+        let completedColor = ColorCodes.completedGreen.color()
+        totalStudyTimeLabel.textColor = isCompleted ? completedColor : .black
+        rewardCoinLabel.textColor = isCompleted ? completedColor : .black
     }
 }

@@ -279,7 +279,7 @@ extension MapViewController {
             let currentLocationId = userProfile.currentLocationId
             let currentLocationInfo = locationsInfo.createLocationInfo(of: currentLocationId)
             base.locationInfo = currentLocationInfo
-            base.locationDetailView.update(ticketInfo: currentLocationInfo.ticketInfo)
+            base.locationDetailView.update(ticketInfo: currentLocationInfo.ticketInfo, locationStatus: currentLocationInfo.locationStatus)
             base.currentCoinLabel.text = userProfile.currentCoin.toString
             
             // ロケーションマーカーを追加し、クラスタリング
@@ -314,7 +314,7 @@ extension MapViewController: CLLocationManagerDelegate {
         if let tappedLocation = marker.userData as? FixedLocation {
             self.locationInfo = locationsInfo.createLocationInfo(of: tappedLocation.locationId)
             // UIを更新
-            locationDetailView.update(ticketInfo: locationInfo!.ticketInfo)
+            locationDetailView.update(ticketInfo: locationInfo!.ticketInfo, locationStatus: locationInfo!.locationStatus)
             mapTabBar.airplaneItem.isEnabled = true // 出発ボタン有効化
         }
         return false
@@ -323,7 +323,7 @@ extension MapViewController: CLLocationManagerDelegate {
     // マーカー以外タップ時
     func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
         // UIを更新
-        locationDetailView.update(ticketInfo: TicketInfo())
+        locationDetailView.update(ticketInfo: TicketInfo(), locationStatus: LocationStatus())
         mapTabBar.airplaneItem.isEnabled = false // 出発ボタン無効化
     }
 }

@@ -120,7 +120,7 @@ class DepartView: UIView {
         super.init(frame: .zero)
         
         setupUI()
-        update(with: locationInfo.ticketInfo)
+        update(locationInfo: locationInfo)
     }
     
     private func setupUI() {
@@ -206,8 +206,11 @@ class DepartView: UIView {
     }
     
     // UIを更新
-    private func update(with ticketInfo: TicketInfo) {
-        ticketFrame.update(with: ticketInfo)
+    private func update(locationInfo: LocationInfo) {
+        let ticketInfo = locationInfo.ticketInfo
+        let locationStatus = locationInfo.locationStatus
+        
+        ticketFrame.update(with: ticketInfo, locationStatus: locationStatus)
         currentCoinLabel.text = ticketInfo.currentCoin.toString
         remainingCoinLabel.text = ticketInfo.remainingCoin.toString
     }

@@ -13,6 +13,7 @@ enum ColorCodes {
     case primaryGray
     case primaryGray2
     case primaryLightGray
+    case completedGreen
     case successGreen
     case successGreen2
     case failure
@@ -35,6 +36,8 @@ extension ColorCodes {
             return UIColor(red: 0.45, green: 0.45, blue: 0.45, alpha: 1.0)
         case .primaryLightGray:
             return UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1.0)
+        case .completedGreen:
+            return UIColor(red: 0.0/255.0, green: 100.0/255.0, blue: 0.0/255.0, alpha: 1.0)
         case .successGreen:
             return UIColor(red: 0.1, green: 0.45, blue: 0.1, alpha: 1.0)
         case .successGreen2:

@@ -15,11 +15,11 @@ struct LocationStatus {
     let isOngoing: Bool // 進行中かどうか
     
     init(
-        locationId: String,
-        userCount: Int,
-        isMyCurrentLocation: Bool,
-        isCompleted: Bool,
-        isOngoing: Bool
+        locationId: String = "",
+        userCount: Int = 0,
+        isMyCurrentLocation: Bool = false,
+        isCompleted: Bool = false,
+        isOngoing: Bool = false
     ) {
         self.locationId = locationId
         self.userCount = userCount

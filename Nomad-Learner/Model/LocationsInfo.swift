@@ -34,7 +34,8 @@ extension LocationsInfo {
         return LocationInfo(
             fixedLocation: self.fixedLocations.first(where: { $0.locationId == locationId })!,
             visitedLocation: self.visitedLocations.first(where: { $0.locationId == locationId }),
-            ticketInfo: self.ticketsInfo.first(where: {$0.locationId == locationId })!
+            ticketInfo: self.ticketsInfo.first(where: { $0.locationId == locationId })!,
+            locationStatus: self.locationsStatus.first(where: { $0.locationId == locationId })!
         )
     }
 }

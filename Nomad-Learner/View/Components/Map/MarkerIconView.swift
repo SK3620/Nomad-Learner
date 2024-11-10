@@ -35,7 +35,7 @@ class MarkerIconView: UIView {
     
     // 現在地ピン
     private let mappinImageView: UIImageView = UIImageView().then {
-        $0.image = UIImage(systemName: "mappin")
+        $0.image = UIImage(systemName: "target")
         $0.tintColor = ColorCodes.primaryPurple.color()
     }
     

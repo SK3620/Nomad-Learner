@@ -73,6 +73,18 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
         $0.snp.makeConstraints { $0.size.equalTo(26) }
     }
     
+    // 現在地までcameraを移動するボタン
+    private let moveToCurrentLocationButton = UIButton().then {
+        $0.backgroundColor = .white
+        $0.applyShadow(color: .black, opacity: 0.6, offset: CGSize(width: 0.5, height: 4), radius: 5)
+        $0.layer.cornerRadius = 44 / 2
+        $0.setImage(UIImage(systemName: "dot.scope"), for: .normal)
+        $0.imageView?.tintColor = ColorCodes.primaryPurple.color()
+        $0.imageView?.snp.makeConstraints {
+            $0.size.equalTo(24)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // UIのセットアップ
@@ -99,6 +111,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
         view.addSubview(navigationBoxBar)
         view.addSubview(locationDetailView)
         view.addSubview(mapTabBar)
+        view.addSubview(moveToCurrentLocationButton)
         
         navigationBoxBar.snp.makeConstraints {
             $0.width.top.equalToSuperview()
@@ -121,6 +134,12 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
             $0.height.equalTo(UIConstants.TabBarHeight.height)
             $0.horizontalEdges.equalToSuperview().inset(UIConstants.Layout.standardPadding)
             $0.bottom.equalToSuperview().inset(UIConstants.Layout.semiMediumPadding)
+        }
+                
+        moveToCurrentLocationButton.snp.makeConstraints {
+            $0.right.equalTo(mapTabBar)
+            $0.centerY.equalTo(mapTabBar.snp.top)
+            $0.size.equalTo(44)
         }
     }
     
@@ -192,6 +211,11 @@ extension MapViewController: KRProgressHUDEnabled, AlertEnabled {
             })
             .disposed(by: disposeBag)
         
+        // 現在地までcamera移動
+        moveToCurrentLocationButton.rx.tap
+            .bind(to: moveToCurrentLocation)
+            .disposed(by: disposeBag)
+            
         // 各ロケーション情報
         viewModel.locationsAndUserInfo
             .drive(addMarkersForLocations)
@@ -255,6 +279,15 @@ extension MapViewController {
             // ロケーションマーカーを追加し、クラスタリング
             base.clusterManager.add(base.mapView.addMarkersForLocations(locationsInfo: locationsInfo, currentLocationId: currentLocationId))
             base.clusterManager.cluster()
+        }
+    }
+    // 現在地までcamera移動
+    private var moveToCurrentLocation: Binder<Void> {
+        return Binder(self) { base, _ in
+            if let currentLocationInfo = base.locationsInfo.fixedLocations.first(where: { $0.locationId == base.userProfile.currentLocationId }) {
+                let currentPosition = GMSCameraPosition(latitude: currentLocationInfo.latitude, longitude: currentLocationInfo.longitude, zoom: 1.0)
+                base.mapView.animate(to: currentPosition)
+            }
         }
     }
 }

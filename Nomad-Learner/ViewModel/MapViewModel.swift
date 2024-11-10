@@ -202,10 +202,10 @@ extension MapViewModel {
         visitedLocations: [VisitedLocation],
         locationsStatus: [LocationStatus]
     ) -> StudyProgressSummary {
-       return StudyProgressSummary(
-        fixedLocations: fixedLocations,
-        visitedLocations: visitedLocations,
-        locationsStatus: locationsStatus
-       )
+        return StudyProgressSummary(
+            fixedLocations: fixedLocations,
+            visitedLocations: visitedLocations,
+            locationsStatus: locationsStatus
+        )
     }
 }

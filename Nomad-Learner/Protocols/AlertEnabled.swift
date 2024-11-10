@@ -143,7 +143,7 @@ enum AlertActionType {
     }
     
     var onCancelTitle: String {
-       return "Cancel"
+        return "Cancel"
     }
     
     // キャンセルアクションの表示/非表示
@@ -184,17 +184,17 @@ enum AlertActionType {
     }
     
     // Confirm と Cancel のハンドラー
-        var handlers: (onConfirm: (String?, String?) -> Void, onCancel: () -> Void) {
-            switch self {
-            case .willDeleteAccount(let onConfirm, let onCancel):
-                return (onConfirm: onConfirm, onCancel: onCancel)
-            case .willShowDepartVC(let onConfirm, _, _),
-                 .exitRoom(let onConfirm, _),
-                 .breakTime(let onConfirm, _),
-                 .community(let onConfirm, _):
-                return (onConfirm: { _, _ in onConfirm() }, onCancel: {})
-            case .error:
-                return (onConfirm: { _, _ in }, onCancel: {})
-            }
+    var handlers: (onConfirm: (String?, String?) -> Void, onCancel: () -> Void) {
+        switch self {
+        case .willDeleteAccount(let onConfirm, let onCancel):
+            return (onConfirm: onConfirm, onCancel: onCancel)
+        case .willShowDepartVC(let onConfirm, _, _),
+                .exitRoom(let onConfirm, _),
+                .breakTime(let onConfirm, _),
+                .community(let onConfirm, _):
+            return (onConfirm: { _, _ in onConfirm() }, onCancel: {})
+        case .error:
+            return (onConfirm: { _, _ in }, onCancel: {})
         }
+    }
 }

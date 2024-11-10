@@ -182,9 +182,9 @@ extension MapViewController: KRProgressHUDEnabled, AlertEnabled {
             .bind(to: toProfileVC)
             .disposed(by: disposeBag)
         
-        // DepartVC（出発画面）へ遷移
+        // DepartVC（出発画面）への遷移制御
         mapTabBar.airplaneItem.rx.tap
-            .bind(to: toDepartVC)
+            .bind(to: departVCAccessControl)
             .disposed(by: disposeBag)
         
         // 学習記録画面へ遷移（現在開発中の機能のため、ProgressHUDを表示）
@@ -221,7 +221,7 @@ extension MapViewController: KRProgressHUDEnabled, AlertEnabled {
         moveToCurrentLocationButton.rx.tap
             .bind(to: moveToCurrentLocation)
             .disposed(by: disposeBag)
-            
+        
         // 各ロケーション情報
         viewModel.locationsAndUserInfo
             .drive(addMarkersForLocations)
@@ -254,11 +254,16 @@ extension MapViewController {
     private var toProfileVC: Binder<Void> {
         return Binder(self) { base, _ in Router.showProfile(vc: base, with: base.userProfile) }
     }
-    // DepartVC（出発画面）へ遷移
-    private var toDepartVC: Binder<Void> {
+    // DepartVC（出発画面）へ遷移制御
+    private var departVCAccessControl: Binder<Void> {
         return Binder(self) { base, _ in
             guard let locationInfo = base.locationInfo else { return }
-            Router.showDepartVC(vc: base, locationInfo: locationInfo) }
+            let isSufficientCoin = locationInfo.locationStatus.isSufficientCoin
+            // 所持金が足りている場合はDepartVC（出発画面）へ遷移
+            isSufficientCoin
+            ? Router.showDepartVC(vc: base, locationInfo: locationInfo)
+            : base.rx.showMessage.onNext(.insufficientCoin) // 警告を表示
+        }
     }
     // AuthVC（認証画面）へ遷移
     private var backToAuthVC: Binder<Void> {

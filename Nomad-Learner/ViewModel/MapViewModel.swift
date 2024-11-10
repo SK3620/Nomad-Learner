@@ -177,6 +177,8 @@ extension MapViewModel {
             let hasVisited = visitedLocations.contains(where: { $0.locationId == fixedLocationId })
             // チケット情報を取得
             let ticketInfo = ticketsInfo.first(where: { $0.locationId == fixedLocationId })!
+            // 所持金が足りてるか否か
+            let isSufficientCoin = ticketInfo.currentCoin >= ticketInfo.travelDistanceAndCost
             // 現在地か否か
             let isMyCurrentLocation = currentLocationId == fixedLocationId
             // 訪問履歴がある && 必要な合計勉強時間をクリアしているか否か
@@ -187,6 +189,7 @@ extension MapViewModel {
             let locationStatus = LocationStatus(
                 locationId: fixedLocationId,
                 userCount: userCount,
+                isSufficientCoin: isSufficientCoin,
                 isMyCurrentLocation: isMyCurrentLocation,
                 isCompleted: isCompleted,
                 isOngoing: isOngoing

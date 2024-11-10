@@ -34,13 +34,16 @@ extension Reactive where Base: KRProgressHUDEnabled {
 // ProgressHUDメッセージに関する列挙型
 enum ProgressHUDMessage {
     case didDeleteAccount
+    case insufficientCoin
     case inDevelopment
     case none
     
     var message: String {
         switch self {
         case .didDeleteAccount:
-            return "Account deleted successfully."
+            return "アカウントを正常に削除しました。"
+        case .insufficientCoin:
+            return "所持金が足りません。"
         case .inDevelopment:
             return "現在開発中の機能です。\n乞うご期待を！"
         case .none:
@@ -53,6 +56,8 @@ enum ProgressHUDMessage {
         switch self {
         case .inDevelopment:
             return .info
+        case .insufficientCoin:
+            return .warning
         default:
             return .success
         }
@@ -64,6 +69,8 @@ enum ProgressHUDMessage {
         switch self {
         case .didDeleteAccount:
             KRProgressHUD.showSuccess(withMessage: message)
+        case .insufficientCoin:
+            KRProgressHUD.showWarning(withMessage: message)
         case .inDevelopment:
             KRProgressHUD.showInfo(withMessage: message)
         case .none:
@@ -76,6 +83,7 @@ enum ProgressHUDMessage {
 enum ProgressHUDStyle {
     case success
     case info
+    case warning
         
     // 共通のカスタムスタイルを適用する
     func apply() {
@@ -84,6 +92,8 @@ enum ProgressHUDStyle {
         case .success:
             KRProgressHUD.set(style: .custom(background: .white, text: ColorCodes.primaryPurple.color(), icon: ColorCodes.primaryPurple.color()))
         case .info:
+            KRProgressHUD.set(style: .custom(background: .white, text: ColorCodes.primaryPurple.color(), icon: ColorCodes.primaryPurple.color()))
+        case .warning:
             KRProgressHUD.set(style: .custom(background: .white, text: ColorCodes.primaryPurple.color(), icon: ColorCodes.primaryPurple.color()))
         }
     }

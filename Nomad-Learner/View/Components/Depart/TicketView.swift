@@ -71,7 +71,6 @@ class TicketView: UIView {
     private lazy var travelDistanceAndCost: UILabel = UILabel().then {
         $0.textColor = .black
         $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.semiSuperLarge)
-        $0.text = "21600"
         $0.textAlignment = .left
     }
     

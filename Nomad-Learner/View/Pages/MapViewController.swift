@@ -258,11 +258,27 @@ extension MapViewController {
     private var departVCAccessControl: Binder<Void> {
         return Binder(self) { base, _ in
             guard let locationInfo = base.locationInfo else { return }
+            
             let isSufficientCoin = locationInfo.locationStatus.isSufficientCoin
-            // 所持金が足りている場合はDepartVC（出発画面）へ遷移
-            isSufficientCoin
-            ? Router.showDepartVC(vc: base, locationInfo: locationInfo)
-            : base.rx.showMessage.onNext(.insufficientCoin) // 警告を表示
+            let hasntVisited = locationInfo.visitedLocation == nil
+            
+            if !isSufficientCoin {
+                // 所持金が足りない場合、警告を表示
+                base.rx.showMessage.onNext(.insufficientCoin)
+                return
+            }
+            
+            if hasntVisited {
+                // 初回訪問の場合、アラートを表示して遷移
+                let alert = AlertActionType.willShowDepartVC(
+                    onConfirm: { Router.showDepartVC(vc: base, locationInfo: locationInfo) },
+                    ticketInfo: locationInfo.ticketInfo
+                )
+                base.rx.showAlert.onNext(alert)
+            } else {
+                // 既に訪問済みの場合、直接DepartVCへ遷移
+                Router.showDepartVC(vc: base, locationInfo: locationInfo)
+            }
         }
     }
     // AuthVC（認証画面）へ遷移

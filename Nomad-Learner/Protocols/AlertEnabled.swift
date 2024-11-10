@@ -73,6 +73,7 @@ extension Reactive where Base: AlertEnabled {
 enum AlertActionType {
     case error(MyAppError)
     case willDeleteAccount(onConfirm: (String?, String?) -> Void, onCancel: () -> Void = {})
+    case willShowDepartVC(onConfirm: () -> Void, onCancel: () -> Void = {}, ticketInfo: TicketInfo)
     case exitRoom(onConfirm: () -> Void, onCancel: () -> Void = {})
     case breakTime(onConfirm: () -> Void, onCancel: () -> Void = {})
     case community(onConfirm: () -> Void, onCancel: () -> Void = {})
@@ -96,6 +97,8 @@ enum AlertActionType {
             return "Error"
         case .willDeleteAccount:
             return "Delete an Account"
+        case .willShowDepartVC:
+            return "出発準備"
         case .exitRoom:
             return "Exit Room"
         case .breakTime:
@@ -111,6 +114,8 @@ enum AlertActionType {
             return error.errorDescription ?? ""
         case .willDeleteAccount:
             return "Are you sure you want to delete your account?"
+        case .willShowDepartVC(_, _, let ticketInfo):
+            return "次回の\(ticketInfo.destination)への訪問時以降、以下の項目は変更されません。\n\n必要な勉強時間：\(ticketInfo.requiredStudyHours)時間\n報酬コイン：\(ticketInfo.rewardCoin)コイン"
         case .exitRoom:
             return "Do you really want to exit the room?"
         case .breakTime:
@@ -126,6 +131,8 @@ enum AlertActionType {
             return "OK"
         case .willDeleteAccount:
             return "Delete"
+        case .willShowDepartVC:
+            return "OK"
         case .exitRoom:
             return "Exit"
         case .breakTime:
@@ -181,10 +188,11 @@ enum AlertActionType {
             switch self {
             case .willDeleteAccount(let onConfirm, let onCancel):
                 return (onConfirm: onConfirm, onCancel: onCancel)
-            case .exitRoom(let onConfirm, let onCancel),
-                 .breakTime(let onConfirm, let onCancel),
-                 .community(let onConfirm, let onCancel):
-                return (onConfirm: { _, _ in onConfirm() }, onCancel: onCancel)
+            case .willShowDepartVC(let onConfirm, _, _),
+                 .exitRoom(let onConfirm, _),
+                 .breakTime(let onConfirm, _),
+                 .community(let onConfirm, _):
+                return (onConfirm: { _, _ in onConfirm() }, onCancel: {})
             case .error:
                 return (onConfirm: { _, _ in }, onCancel: {})
             }

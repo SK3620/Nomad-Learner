@@ -14,39 +14,87 @@ import UIKit
 protocol KRProgressHUDEnabled: AnyObject {}
 
 extension Reactive where Base: KRProgressHUDEnabled {
+    // ローディング表示制御
     var showProgress: Binder<Bool> {
-        return Binder.init(self.base, binding: { progress, isShow in
-            if isShow {
-                KRProgressHUD.show(withMessage: "Loading...")
-            } else {
-                KRProgressHUD.dismiss()
-            }
-        })
+        return Binder(self.base) { _, isShow in
+            KRProgressHUD.setDefaultStyle()
+            isShow ? KRProgressHUD.show(withMessage: "Loading...") : KRProgressHUD.dismiss()
+        }
     }
-}
-
-extension Reactive where Base: KRProgressHUDEnabled {
+    
+    // メッセージ表示制御
     var showMessage: Binder<ProgressHUDMessage> {
-        return Binder.init(self.base) { progress, value in
-            guard value != .none else { return }
-            // showProgressのdismiss()より後に実行
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                KRProgressHUD.showSuccess(withMessage: value.message)
-            }
+        return Binder(self.base) { _, message in
+            guard message != .none else { return }
+            message.show()
         }
     }
 }
 
+// ProgressHUDメッセージに関する列挙型
 enum ProgressHUDMessage {
     case didDeleteAccount
+    case inDevelopment
     case none
     
     var message: String {
         switch self {
         case .didDeleteAccount:
             return "Account deleted successfully."
+        case .inDevelopment:
+            return "現在開発中の機能です。\n乞うご期待を！"
         case .none:
             return ""
         }
+    }
+    
+    // 適切なスタイルを返す
+    var style: ProgressHUDStyle {
+        switch self {
+        case .inDevelopment:
+            return .info
+        default:
+            return .success
+        }
+    }
+    
+    // メッセージを表示
+    func show() {
+        style.apply()
+        switch self {
+        case .didDeleteAccount:
+            KRProgressHUD.showSuccess(withMessage: message)
+        case .inDevelopment:
+            KRProgressHUD.showInfo(withMessage: message)
+        case .none:
+            break
+        }
+    }
+}
+
+// 状況別のカスタムスタイルを定義
+enum ProgressHUDStyle {
+    case success
+    case info
+        
+    // 共通のカスタムスタイルを適用する
+    func apply() {
+        KRProgressHUD.setDefaultStyle()
+        switch self {
+        case .success:
+            KRProgressHUD.set(style: .custom(background: .white, text: ColorCodes.primaryPurple.color(), icon: ColorCodes.primaryPurple.color()))
+        case .info:
+            KRProgressHUD.set(style: .custom(background: .white, text: ColorCodes.primaryPurple.color(), icon: ColorCodes.primaryPurple.color()))
+        }
+    }
+}
+
+// KRProgressHUDのデフォルトスタイル設定
+extension KRProgressHUD {
+    static func setDefaultStyle() {
+        let basicColor = ColorCodes.primaryPurple.color()
+        KRProgressHUD.set(activityIndicatorViewColors: [basicColor])
+        KRProgressHUD.set(font: UIFont(name: "AppleSDGothicNeo-Bold", size: 14)!)
+        KRProgressHUD.set(duration: 2.5)
     }
 }

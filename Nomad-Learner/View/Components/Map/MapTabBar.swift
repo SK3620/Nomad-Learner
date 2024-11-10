@@ -13,7 +13,10 @@ import SnapKit
 class MapTabBar: UIView {
     
     // マップボタン
-    private lazy var mapItem: UIButton = MapTabBarItem(name: "map")
+    var mapItem: UIButton = MapTabBarItem(name: "map")
+    
+    // レポートボタン
+    var reportItem: UIButton = MapTabBarItem(name: "doc.plaintext", color: .lightGray)
     
     // 飛行機（出発）ボタン
     lazy var airplaneItem: UIButton = MapTabBarItem(name: "airplane", color: .white).then {
@@ -21,19 +24,14 @@ class MapTabBar: UIView {
         $0.layer.cornerRadius = UIConstants.Button.height / 2
         // 縦向きの飛行機に調整
         $0.imageView!.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi) * 2 * 270 / 360)
-        // 影を追加
         $0.applyShadow(color: .black, opacity: 0.6, offset: CGSize(width: 0.5, height: 4), radius: 5)
     }
-    
-    // レポートボタン
-    private lazy var reportItem: UIButton = MapTabBarItem(name: "doc.plaintext")
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         self.layer.cornerRadius = UIConstants.TabBarHeight.height / 2
         self.backgroundColor = .white
-        // 影を追加
         self.applyShadow(color: .black, opacity: 0.3, offset: CGSize(width: 1, height: 1), radius: 3)
         
         setupUI()

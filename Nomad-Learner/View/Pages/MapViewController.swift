@@ -187,6 +187,12 @@ extension MapViewController: KRProgressHUDEnabled, AlertEnabled {
             .bind(to: toDepartVC)
             .disposed(by: disposeBag)
         
+        // 学習記録画面へ遷移（現在開発中の機能のため、ProgressHUDを表示）
+        mapTabBar.reportItem.rx.tap
+            .map { ProgressHUDMessage.inDevelopment }
+            .bind(to: self.rx.showMessage)
+            .disposed(by: disposeBag)
+        
         self.viewModel = MapViewModel(
             mainService: MainService.shared,
             realmService: RealmService.shared

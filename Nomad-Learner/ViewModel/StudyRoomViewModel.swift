@@ -40,18 +40,21 @@ class StudyRoomViewModel {
     private var formattedElapsedTime: String {
         String(format: "%02d:%02d:%02d", elapsedTime / 3600, (elapsedTime % 3600) / 60, elapsedTime % 60)
     }
-    // 経過時間（秒数）から時間/分単位を算出
+    // 経過時間の時間/分単位を算出
     private var elapsedStudyTime: (hours: Int, mins: Int) {
-        let hours = Int(elapsedTime / 3600) // 秒数から時間単位を算出
-        let minutes = Int(elapsedTime % 3600) / 60 // 秒数から分単位を算出
-        return (hours: hours, mins: minutes)
+        (hours: elapsedTime / 3600, mins: (elapsedTime % 3600) / 60)
     }
-    // 元々の合計勉強時間を取得
+
+    // 元々の勉強時間
     private var originalStudyTime: (hours: Int, mins: Int) {
-        return (
-            hours: locationInfo.ticketInfo.totalStudyHours,
-            mins: locationInfo.ticketInfo.totalStudyMins
-        )
+        (hours: locationInfo.ticketInfo.totalStudyHours, mins: locationInfo.ticketInfo.totalStudyMins)
+    }
+
+    // 合計勉強時間（時間/分単位）
+    private var totalStudyTime: (hours: Int, mins: Int) {
+        let totalHours = originalStudyTime.hours + elapsedStudyTime.hours
+        let totalMins = originalStudyTime.mins + elapsedStudyTime.mins
+        return (hours: totalHours + totalMins / 60, mins: totalMins % 60)
     }
     
     private let indicator: ActivityIndicator = ActivityIndicator()
@@ -261,8 +264,8 @@ extension StudyRoomViewModel {
     func saveStudyProgress(completion: @escaping () -> Void) {
         let visitedLocationToUpdate = VisitedLocation(
             locationId: locationId,
-            totalStudyHours: originalStudyTime.hours + elapsedStudyTime.hours,
-            totalStudyMins: originalStudyTime.mins + elapsedStudyTime.mins,
+            totalStudyHours: totalStudyTime.hours,
+            totalStudyMins: totalStudyTime.mins,
             fixedRequiredStudyHours: locationInfo.ticketInfo.requiredStudyHours,
             fixedRewardCoin: locationInfo.ticketInfo.rewardCoin
         )

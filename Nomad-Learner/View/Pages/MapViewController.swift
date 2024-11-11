@@ -270,11 +270,11 @@ extension MapViewController {
             
             if hasntVisited {
                 // 初回訪問の場合、アラートを表示して遷移
-                let alert = AlertActionType.willShowDepartVC(
+                let alertActionType = AlertActionType.willShowDepartVC(
                     onConfirm: { Router.showDepartVC(vc: base, locationInfo: locationInfo) },
                     ticketInfo: locationInfo.ticketInfo
                 )
-                base.rx.showAlert.onNext(alert)
+                base.rx.showAlert.onNext(alertActionType)
             } else {
                 // 既に訪問済みの場合、直接DepartVCへ遷移
                 Router.showDepartVC(vc: base, locationInfo: locationInfo)

@@ -287,9 +287,7 @@ extension StudyRoomViewController: AlertEnabled {
                         }
                     }
                 )
-                Driver.just(alertActionType)
-                    .drive(base.rx.showAlert)
-                    .disposed(by: base.disposeBag)
+                base.rx.showAlert.onNext(alertActionType)
             }
         }
     }

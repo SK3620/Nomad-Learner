@@ -269,7 +269,7 @@ extension StudyRoomViewController: AlertEnabled {
         }
     }
     
-    // UIMenuAction（休憩or勉強再開 コミュニティ 退出）
+    // UIMenuAction（休憩or勉強再開, チケット確認画面, コミュニティ, 退出）
     private var handleMenuAction: Binder<StudyRoomViewModel.MenuAction> {
         return Binder(self) { base, action in
             switch action {
@@ -277,6 +277,8 @@ extension StudyRoomViewController: AlertEnabled {
                 let isBreakTime = action == .breakTime
                 base.breakTimeView.isHidden = !isBreakTime
                 base.studyRoomNavigationBar.switchBreakOrRestartAction(action)
+            case .confirmTicket:
+                Router.showTicketConfirmVC(vc: base, locationInfo: base.locationInfo)
             case .community:
                 print("Coming Soon")
             case .exitRoom:

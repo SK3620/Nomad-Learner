@@ -38,6 +38,8 @@ protocol RouterProtocol {
     static func showOnFlightVC(vc: UIViewController, locationInfo: LocationInfo)
     // OnFlightVC（飛行中画面）→ StudyRoomVC（勉強部屋画面）
     static func showStudyRoomVC(vc: UIViewController, locationInfo: LocationInfo, userProfiles: [User], latestLoadedDocDate: Timestamp?, oldestDocument: QueryDocumentSnapshot?)
+    // StudyRoomVC（勉強部屋画面）→ TicketBackgroundView（チケット確認画面）
+    static func showTicketConfirmVC(vc: UIViewController, locationInfo: LocationInfo)
 
     // StudyRoomVC（勉強部屋画面）/ EditProfileVC（プロフィール編集画面）→ MapVC（マップ画面）
     static func backToMapVC(vc: UIViewController, _ updatedUserProfile: User)
@@ -137,6 +139,15 @@ extension Router: RouterProtocol {
         navigationController.modalPresentationStyle = .overFullScreen
         navigationController.modalTransitionStyle = .crossDissolve
         modal(from: vc, to: navigationController)
+    }
+    
+    // StudyRoomVC（勉強部屋画面）→ TicketBackgroundView（チケット確認画面）
+    static func showTicketConfirmVC(vc: UIViewController, locationInfo: LocationInfo) {
+        let ticketConfirmViewController = TicketConfirmViewController()
+        ticketConfirmViewController.locationInfo = locationInfo
+        ticketConfirmViewController.modalPresentationStyle = .overFullScreen
+        ticketConfirmViewController.modalTransitionStyle = .crossDissolve
+        modal(from: vc, to: ticketConfirmViewController)
     }
     
     // StudyRoomVC（勉強部屋画面）/ EditProfileVC（プロフィール編集画面）→ MapVC（マップ画面）

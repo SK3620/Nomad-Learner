@@ -305,6 +305,8 @@ extension MapViewController {
             base.showRewardCoinProgressHUD()
             // 現在地までcamera移動
             base.moveToCurrentLocation.onNext(())
+            // ポリラインを削除
+            base.mapView.clearDashedLine()
         }
     }
     // 現在地までcamera移動

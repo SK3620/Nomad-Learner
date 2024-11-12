@@ -271,11 +271,15 @@ extension MapViewController {
             if hasntVisited {
                 // 初回訪問の場合、アラートを表示して遷移
                 let alertActionType = AlertActionType.willShowDepartVC(
-                    onConfirm: { Router.showDepartVC(vc: base, locationInfo: locationInfo) },
+                    onConfirm: { 
+                        base.mapView.clearDashedLine() // ポリラインを削除
+                        Router.showDepartVC(vc: base, locationInfo: locationInfo) // DepartVC（出発準備画面）へ遷移
+                    },
                     ticketInfo: locationInfo.ticketInfo
                 )
                 base.rx.showAlert.onNext(alertActionType)
             } else {
+                base.mapView.clearDashedLine() // ポリラインを削除
                 // 既に訪問済みの場合、直接DepartVCへ遷移
                 Router.showDepartVC(vc: base, locationInfo: locationInfo)
             }
@@ -370,7 +374,7 @@ extension MapViewController: CLLocationManagerDelegate {
         // 現在地以外のマーカーをタップした場合、ルートを描画
         if userProfile.currentLocationId != locationInfo?.fixedLocation.locationId {
             let currentCoordinate = locationsInfo.getCurrentCoordinate(currentLocationId: userProfile.currentLocationId)
-            (mapView as? MapView)?.drawDashedLine(from: currentCoordinate, to: marker.position)
+            self.mapView.drawDashedLine(from: currentCoordinate, to: marker.position)
         }
         return false
     }
@@ -378,7 +382,7 @@ extension MapViewController: CLLocationManagerDelegate {
     // 地図がズームイン/ズームアウトされた時に呼び出す
     func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
         // ズームレベルが変更されてもサイズを一定に保つ
-        (mapView as? MapView)?.updateCircleSizesOnZoom()
+        self.mapView.updateCircleSizesOnZoom()
     }
     
     // マーカー以外タップ時

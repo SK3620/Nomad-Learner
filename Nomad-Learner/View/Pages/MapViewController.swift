@@ -341,12 +341,13 @@ extension MapViewController {
 extension MapViewController: CLLocationManagerDelegate {
     // infoWindowを表示
     func mapView(_ mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView? {
-        // width, heightは固定
-        let window = MarkerInfoWindow(frame: CGRect.init(x: 0, y: 0, width: 250, height: 50))
         if let location = marker.userData as? FixedLocation {
+            // width, heightは固定
+            let window = MarkerInfoWindow(frame: CGRect.init(x: 0, y: 0, width: 250, height: 50))
             window.configure(location: location)
+            return window
         }
-        return window
+        return UIView()
     }
     
     // マーカータップ時
@@ -355,7 +356,8 @@ extension MapViewController: CLLocationManagerDelegate {
             self.locationInfo = locationsInfo.createLocationInfo(of: tappedLocation.locationId)
             // UIを更新
             locationDetailView.update(ticketInfo: locationInfo!.ticketInfo, locationStatus: locationInfo!.locationStatus)
-            mapTabBar.airplaneItem.isEnabled = true // 出発ボタン有効化
+            // 初期位置の場合は、出発できない
+            mapTabBar.airplaneItem.isEnabled = !(locationInfo!.locationStatus.isInitialLocation)
         }
         return false
     }

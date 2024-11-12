@@ -14,6 +14,7 @@ struct LocationStatus {
     let isMyCurrentLocation: Bool // 現在地か否か
     let isCompleted: Bool // 必要な合計勉強時間をクリアしているか否か
     let isOngoing: Bool // 進行中かどうか
+    let isInitialLocation: Bool // 初期位置か否か
     
     init(
         locationId: String = "",
@@ -21,7 +22,8 @@ struct LocationStatus {
         isSufficientCoin: Bool = false,
         isMyCurrentLocation: Bool = false,
         isCompleted: Bool = false,
-        isOngoing: Bool = false
+        isOngoing: Bool = false,
+        isInitialLocation: Bool = false
     ) {
         self.locationId = locationId
         self.userCount = userCount
@@ -29,6 +31,7 @@ struct LocationStatus {
         self.isMyCurrentLocation = isMyCurrentLocation
         self.isCompleted = isCompleted
         self.isOngoing = isOngoing
+        self.isInitialLocation = isInitialLocation
     }
     
 }

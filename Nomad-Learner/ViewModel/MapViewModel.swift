@@ -185,6 +185,9 @@ extension MapViewModel {
             let isCompleted = hasVisited && ticketInfo.totalStudyHours >= ticketInfo.requiredStudyHours
             // 訪問履歴がある && 必要な合計勉強時間に到達していないか否か（進行中か否か）
             let isOngoing = hasVisited && ticketInfo.totalStudyHours < ticketInfo.requiredStudyHours
+            // 初期位置か否か
+            let isInitialLocation = fixedLocation.locationId == UserInitialLocation.id
+            
             // ロケーション状態構造体を生成
             let locationStatus = LocationStatus(
                 locationId: fixedLocationId,
@@ -192,7 +195,8 @@ extension MapViewModel {
                 isSufficientCoin: isSufficientCoin,
                 isMyCurrentLocation: isMyCurrentLocation,
                 isCompleted: isCompleted,
-                isOngoing: isOngoing
+                isOngoing: isOngoing,
+                isInitialLocation: isInitialLocation
             )
             // 配列に格納
             locationsStatus.append(locationStatus)

@@ -135,7 +135,10 @@ class AuthViewModel {
                         .flatMap { user in
                             print("ユーザー名: \(user.displayName!) uid: \(user.uid)")
                             // 保存するユーザー情報
-                            let userProfile = User(username: user.displayName!)
+                            let userProfile = User(
+                                username: user.displayName!,
+                                currentLocationId: UserInitialLocation.id // 初期位置
+                            )
                             // サインアップ後、ユーザープロフィール情報を保存
                             return mainService.saveUserProfile(user: userProfile, shouldUpdate: false)
                                 .map { _ in user } // FirebaseAuth.Userに変換 流すイベントの型を合わせる

@@ -43,7 +43,7 @@ class MarkerIconView: UIView {
     private let statusImageView: UIImageView = UIImageView().then {
         $0.layer.cornerRadius = 7
     }
-
+    
     // 人のアイコン
     private let personImageView: UIImageView = UIImageView().then {
         let configuration = UIImage.SymbolConfiguration(weight: .medium)
@@ -107,6 +107,13 @@ class MarkerIconView: UIView {
     private func update(locationStatus: LocationStatus) {
         // 参加人数
         userCountLabel.text = locationStatus.userCount.toString
+        
+        // 初期位置の場合は現在地ピンのみ表示
+        let isInitialLocation = locationStatus.isInitialLocation
+        markerIconImageView.isHidden = isInitialLocation
+        statusImageView.isHidden = isInitialLocation
+        personImageView.isHidden = isInitialLocation
+        userCountLabel.isHidden = isInitialLocation
         
         // 必要な合計勉強時間をクリアしている場合
         if locationStatus.isCompleted {

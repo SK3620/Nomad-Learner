@@ -20,6 +20,14 @@ class ProfileBottomView: UIView {
     // 名前
     private let usernameLabel: ProfileLabel = ProfileLabel(text: "Peder Elias", fontSize: UIConstants.TextSize.semiLarge, textColor: .darkGray)
     
+    // インフォメーションアイコンボタン（開発中の機能）
+    let inDevelopmentButton = UIButton().then {
+        $0.setImage(UIImage(systemName: "info.circle"), for: .normal)
+        $0.imageView?.snp.makeConstraints {
+            $0.size.equalTo(24)
+        }
+    }
+    
     // 区切り線
     private let borderView: UIView = UIView().then {
         $0.backgroundColor = .lightGray
@@ -50,12 +58,19 @@ class ProfileBottomView: UIView {
     
     private func setupUI() {
         addSubview(usernameLabel)
+        addSubview(inDevelopmentButton)
         addSubview(borderView)
         addSubview(profileTableView)
         
         usernameLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(UIConstants.Layout.smallPadding)
             $0.left.equalToSuperview().inset(UIConstants.Layout.standardPadding)
+            $0.right.equalTo(inDevelopmentButton.snp.left)
+        }
+        
+        inDevelopmentButton.snp.makeConstraints {
+            $0.top.centerY.equalTo(usernameLabel)
+            $0.right.equalToSuperview().inset(16)
         }
         
         borderView.snp.makeConstraints {

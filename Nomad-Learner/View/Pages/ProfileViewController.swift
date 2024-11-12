@@ -19,21 +19,21 @@ class ProfileViewController: UIViewController {
     
     // 画面が縦向きか横向きか
     var orientation: ScreenOrientation
-        
+    
     private let tapGesture = UITapGestureRecognizer()
     
     private let disposeBag = DisposeBag()
     
     // ユーザープロフィール情報を渡す
     private lazy var profileView: ProfileView = ProfileView(userProfile: self.userProfile)
-        
+    
     // カスタムイニシャライザ
     init(orientation: ScreenOrientation = .portrait, with userProfile: User) {
         self.orientation = orientation
         self.userProfile = userProfile
         super.init(nibName: nil, bundle: nil)
     }
-        
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -48,7 +48,7 @@ class ProfileViewController: UIViewController {
     
     private func setupUI() {
         view.backgroundColor = ColorCodes.modalBackground.color()
-                
+        
         view.addGestureRecognizer(tapGesture)
         view.addSubview(profileView)
         
@@ -58,7 +58,7 @@ class ProfileViewController: UIViewController {
             if orientation == .portrait {
                 $0.horizontalEdges.equalToSuperview().inset(UIConstants.Layout.semiMediumPadding)
                 $0.height.equalToSuperview().multipliedBy(0.6)
-            // 横向き
+                // 横向き
             } else if orientation == .landscape {
                 $0.verticalEdges.equalToSuperview().inset(UIConstants.Layout.semiMediumPadding)
                 $0.width.equalToSuperview().multipliedBy(0.45)
@@ -68,7 +68,9 @@ class ProfileViewController: UIViewController {
         // StudyRommVC（勉強部屋画面）の場合は編集ボタン非表示
         profileView.navigationBar.editButton.isHidden = (orientation == .landscape)
     }
-    
+}
+
+extension ProfileViewController: KRProgressHUDEnabled {
     private func bind() {
         
         // MapVCへ戻る
@@ -81,6 +83,12 @@ class ProfileViewController: UIViewController {
             .filter { $0 } // 枠外タップ（true）のみ処理
             .map { _ in () }
             .bind(to: backToMapVC)
+            .disposed(by: disposeBag)
+        
+        // 開発中の機能であることを表示
+        profileView.profileBottomView.inDevelopmentButton.rx.tap
+            .map { _ in ProgressHUDMessage.inDevelopment2 }
+            .bind(to: self.rx.showMessage)
             .disposed(by: disposeBag)
         
         // MapVCへ戻る

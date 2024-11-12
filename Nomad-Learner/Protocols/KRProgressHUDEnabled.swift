@@ -36,6 +36,7 @@ enum ProgressHUDMessage {
     case insufficientCoin
     case getRewardCoin(info: RewardCoinProgressHUDInfo)
     case inDevelopment
+    case inDevelopment2
     case none
     
     var message: String {
@@ -48,6 +49,8 @@ enum ProgressHUDMessage {
             return configureMessage(info: info)
         case .inDevelopment:
             return "現在開発中の機能です。\n乞うご期待を！"
+        case .inDevelopment2:
+            return "「 -- 」 は現在開発中の機能です。\nアップデートをお待ちください。"
         case .none:
             return ""
         }
@@ -56,7 +59,7 @@ enum ProgressHUDMessage {
     // 適切なスタイルを返す
     var style: ProgressHUDStyle {
         switch self {
-        case .inDevelopment:
+        case .inDevelopment, .inDevelopment2:
             return .info
         case .insufficientCoin:
             return .warning
@@ -78,7 +81,7 @@ enum ProgressHUDMessage {
             KRProgressHUD.showWarning(withMessage: message)
         case .getRewardCoin:
             KRProgressHUD.showImage(UIImage(named: "Reward")!, message: message)
-        case .inDevelopment:
+        case .inDevelopment, .inDevelopment2:
             KRProgressHUD.showInfo(withMessage: message)
         case .none:
             break

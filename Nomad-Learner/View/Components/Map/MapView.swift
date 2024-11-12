@@ -26,7 +26,7 @@ class MapView: GMSMapView {
     }
     
     // マップの各ロケーションにマーカーを立てる
-    func addMarkersForLocations(locationsInfo: LocationsInfo, currentLocationId: String) -> [GMSMarker] {
+    func addMarkersForLocations(locationsInfo: LocationsInfo) -> [GMSMarker] {
         // 固定ロケーション取得
         let fixedLocations = locationsInfo.fixedLocations
         // マーカーを格納する配列

@@ -32,7 +32,6 @@ class MarkerInfoWindow: UIView {
     private let destinationLabel: UILabel = UILabel().then {
         $0.textColor = .white
         $0.font = .systemFont(ofSize: UIConstants.TextSize.semiMedium)
-        $0.text = "Sydney Opera House"
         // フォントサイズ自動調整
         $0.adjustsFontSizeToFitWidth = true
     }
@@ -41,7 +40,6 @@ class MarkerInfoWindow: UIView {
     private let regionLabel: UILabel = UILabel().then {
         $0.textColor = .white
         $0.font = .systemFont(ofSize: UIConstants.TextSize.extraSmall)
-        $0.text = "Australia / New South Wales"
         // フォントサイズ自動調整
         $0.adjustsFontSizeToFitWidth = true
     }

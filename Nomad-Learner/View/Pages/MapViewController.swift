@@ -326,7 +326,7 @@ extension MapViewController {
     private func addMarkersForLocations() {
         setupClusterManager()
         // ロケーションマーカーを追加し、クラスタリング
-        clusterManager.add(mapView.addMarkersForLocations(locationsInfo: locationsInfo, currentLocationId: userProfile.currentLocationId))
+        clusterManager.add(mapView.addMarkersForLocations(locationsInfo: locationsInfo))
         clusterManager.cluster()
     }
     

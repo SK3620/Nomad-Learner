@@ -315,6 +315,14 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
+		831731CD2CE312CF0092AE89 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				831731CB2CE228670092AE89 /* BonusCoinSettings.swift */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
 		835BD2E42CA413560088CA02 = {
 			isa = PBXGroup;
 			children = (
@@ -478,7 +486,7 @@
 				83C9F3BB2CA931F400CF0D73 /* KeyboardManager.swift */,
 				83C9F3B52CA907B900CF0D73 /* ColorCodes.swift */,
 				83A6D7B82CB56C7400D18A30 /* KeyChainManager.swift */,
-				831731CB2CE228670092AE89 /* BonusCoinSettings.swift */,
+				831731CD2CE312CF0092AE89 /* Constants */,
 			);
 			path = Utils;
 			sourceTree = "<group>";

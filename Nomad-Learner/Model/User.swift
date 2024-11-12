@@ -22,7 +22,7 @@ struct User {
         userId: String = "",
         username: String = "ー",
         profileImageUrl: String = "",
-        currentLocationId: String = "sydney_opera_house", // 暫定で設定
+        currentLocationId: String = "",
         currentCoin: Int = 100000,
         livingPlaceAndWork: String = "ー",
         studyContent: String = "ー",

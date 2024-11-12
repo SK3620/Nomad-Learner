@@ -358,12 +358,23 @@ extension MapViewController: CLLocationManagerDelegate {
             locationDetailView.update(ticketInfo: locationInfo!.ticketInfo, locationStatus: locationInfo!.locationStatus)
             // 初期位置の場合は、出発できない
             mapTabBar.airplaneItem.isEnabled = !(locationInfo!.locationStatus.isInitialLocation)
+            
+            // 現在地から目的地までポリラインを描画
+            let currentCoordinate = locationsInfo.getCurrentCoordinate(currentLocationId: userProfile.currentLocationId)
+            (mapView as? MapView)?.drawDashedLine(from: currentCoordinate, to: marker.position)
         }
         return false
     }
     
+    // 地図がズームイン/ズームアウトされた時に呼び出す
+    func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
+        // ズームレベルが変更されてもサイズを一定に保つ
+        (mapView as? MapView)?.updateCircleSizesOnZoom()
+    }
+    
     // マーカー以外タップ時
     func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
+        (mapView as? MapView)?.clearDashedLine() // ポリライン削除
         // UIを更新
         locationDetailView.update(ticketInfo: TicketInfo(), locationStatus: LocationStatus())
         mapTabBar.airplaneItem.isEnabled = false // 出発ボタン無効化

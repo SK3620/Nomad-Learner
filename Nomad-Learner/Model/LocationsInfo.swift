@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import GoogleMaps
 
 struct LocationsInfo {
     let fixedLocations: [FixedLocation]
@@ -68,6 +69,12 @@ extension LocationsInfo {
 }
 
 extension LocationsInfo {
+    // 現在地の座標を取得
+    func getCurrentCoordinate(currentLocationId id: String) -> CLLocationCoordinate2D {
+        let currentLocation = fixedLocations.first(where: { $0.locationId == id })!
+        return CLLocationCoordinate2D(latitude: currentLocation.latitude, longitude: currentLocation.longitude)
+    }
+    
     // チケット上に表示する必要なロケーション情報を取得
     func getLocationDetailsForTicketInfo(for locationId: String) -> (
         locationId: String,

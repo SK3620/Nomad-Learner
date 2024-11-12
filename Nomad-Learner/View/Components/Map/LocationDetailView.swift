@@ -113,6 +113,31 @@ class LocationDetailView: UIView {
         $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.semiSuperLarge)
     }
     
+    // スラッシュ線
+    private let slashView2 = UIView().then {
+        $0.backgroundColor = .darkGray
+        $0.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 4)
+        $0.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi) * 2 * 15 / 360)
+        $0.snp.makeConstraints {
+            $0.size.equalTo(CGSize(width: 2, height: 15))
+        }
+    }
+    
+    // ボーナスタイトルlabel（達成後に表示）
+    private let bonusTitleLabel = UILabel().then {
+        $0.text = "毎1時間勉強"
+        $0.textColor = .darkGray
+        $0.font = .systemFont(ofSize: UIConstants.TextSize.semiMedium)
+    }
+    
+    lazy var bonusStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [slashView2, bonusTitleLabel])
+        stackView.axis = .horizontal
+        stackView.spacing = 6
+        stackView.isHidden = true
+        return stackView
+    }()
+    
     // 縦の区切り線
     private lazy var verticalDivider: UIView = UIView().then {
         $0.backgroundColor = .lightGray
@@ -153,6 +178,7 @@ class LocationDetailView: UIView {
         backgroundViewForReward.addSubview(rewardImageView)
         addSubview(backgroundViewForReward)
         addSubview(rewardCoinLabel)
+        addSubview(bonusStackView)
         
         addSubview(locationCategoryCollectionView)
         
@@ -202,7 +228,6 @@ class LocationDetailView: UIView {
         horizontalDivider.snp.makeConstraints {
             $0.height.equalTo(1)
             $0.centerY.equalToSuperview()
-            // $0.top.equalTo(backgroundViewForReward.snp.bottom).offset(UIConstants.Layout.smallPadding)
             $0.horizontalEdges.equalToSuperview().inset(UIConstants.Layout.standardPadding)
         }
         
@@ -250,6 +275,12 @@ class LocationDetailView: UIView {
             $0.left.equalTo(backgroundViewForReward.snp.right).offset(UIConstants.Layout.semiStandardPadding)
         }
         
+        // ボーナスタイトルlabel
+        bonusStackView.snp.makeConstraints {
+            $0.bottom.equalTo(rewardCoinLabel)
+            $0.left.equalToSuperview().inset(16)
+        }
+        
         // セクション選択collectionView
         locationCategoryCollectionView.snp.makeConstraints {
             $0.right.left.bottom.equalToSuperview()
@@ -265,14 +296,23 @@ class LocationDetailView: UIView {
 extension LocationDetailView {
     // 各UIを更新
     func update(ticketInfo: TicketInfo, locationStatus: LocationStatus) {
+        let isCompleted = locationStatus.isCompleted
+        let completedColor = ColorCodes.completedGreen.color()
+        
+        // ラベルの色設定
+        let labelColor = isCompleted ? completedColor : .black
+        totalStudyTimeLabel.textColor = labelColor
+        rewardCoinLabel.textColor = labelColor
+        
+        // ボーナス表示
+        bonusStackView.isHidden = !isCompleted
+        
+        // テキストの更新
         distanceAndCoinValueLabel.text = ticketInfo.travelDistanceAndCost.toString
         totalStudyTimeLabel.text = Int.toTimeFormat(hours: ticketInfo.totalStudyHours, mins: ticketInfo.totalStudyMins)
         requiredStudyHours.text = ticketInfo.requiredStudyHours.toString
-        rewardCoinLabel.text = "\(ticketInfo.rewardCoin.toString)＋"
         
-        let isCompleted = locationStatus.isCompleted
-        let completedColor = ColorCodes.completedGreen.color()
-        totalStudyTimeLabel.textColor = isCompleted ? completedColor : .black
-        rewardCoinLabel.textColor = isCompleted ? completedColor : .black
+        // 報酬コインラベルの更新
+        rewardCoinLabel.text = isCompleted ? "\(BonusCoinSettings.multiplier)＋" : "\(ticketInfo.rewardCoin.toString)＋"
     }
 }

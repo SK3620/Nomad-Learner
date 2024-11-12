@@ -355,26 +355,20 @@ extension MapViewController: CLLocationManagerDelegate {
         guard let tappedLocation = marker.userData as? FixedLocation else {
             return false
         }
-        
         // locationInfo の更新
         locationInfo = locationsInfo.createLocationInfo(of: tappedLocation.locationId)
-        
         // UI更新
         if let locationInfo = locationInfo {
             locationDetailView.update(ticketInfo: locationInfo.ticketInfo, locationStatus: locationInfo.locationStatus)
         }
-        
         // 初期位置なら、出発できないように設定
         if let locationStatus = locationInfo?.locationStatus {
             mapTabBar.airplaneItem.isEnabled = !locationStatus.isInitialLocation
         }
-        
         // 現在地以外のマーカーをタップした場合、ルートを描画
         if userProfile.currentLocationId != locationInfo?.fixedLocation.locationId {
             let currentCoordinate = locationsInfo.getCurrentCoordinate(currentLocationId: userProfile.currentLocationId)
-            if let mapView = mapView as? MapView {
-                mapView.drawDashedLine(from: currentCoordinate, to: marker.position)
-            }
+            (mapView as? MapView)?.drawDashedLine(from: currentCoordinate, to: marker.position)
         }
         return false
     }

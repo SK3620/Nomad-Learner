@@ -38,6 +38,7 @@ class LocationDetailView: UIView {
     
     // 距離とコインの値
     private lazy var distanceAndCoinValueLabel: UILabel = UILabel().then {
+        $0.text = "0"
         $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.semiSuperLarge)
         $0.textAlignment = .center
     }
@@ -53,6 +54,7 @@ class LocationDetailView: UIView {
     
     // 合計勉強時間
     private let totalStudyTimeLabel: UILabel = UILabel().then {
+        $0.text = "00:00"
         $0.textColor = .black
         $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.semiSuperLarge)
     }
@@ -69,6 +71,7 @@ class LocationDetailView: UIView {
     
     // 必要な勉強時間
     private let requiredStudyHours: UILabel = UILabel().then {
+        $0.text = "00"
         $0.textColor = .orange
         $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.semiMedium)
         $0.textAlignment = .right
@@ -105,9 +108,9 @@ class LocationDetailView: UIView {
     
     // 報酬label
     private let rewardCoinLabel: UILabel = UILabel().then {
+        $0.text = "0＋"
         $0.textColor = .black
         $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.semiSuperLarge)
-        $0.text = "22500＋"
     }
     
     // 縦の区切り線

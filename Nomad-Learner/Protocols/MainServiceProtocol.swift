@@ -44,6 +44,8 @@ protocol MainServiceProtocol {
     func removeUserIdFromLocation(locationId: String) -> Observable<Void>
     // 勉強部屋からの退出時、合計勉強時間、ミッション勉強時間、報酬コインを保存
     func saveStudyProgressAndRewards(locationId: String, updatedData: VisitedLocation) -> Observable<Void>
+    // 所持金に報酬コインを加算
+    func updateCurrentCoin(addedRewardCoin: Int) -> Observable<Void>
     
     // リスナー解除
     func removeListeners()
@@ -470,6 +472,31 @@ final class MainService: MainServiceProtocol {
                         observer.onCompleted()
                     }
                 }
+            return Disposables.create()
+        }
+    }
+    
+    // 所持金に報酬コインを加算
+    func updateCurrentCoin(addedRewardCoin: Int) -> Observable<Void> {
+        Observable.create { observer in
+            guard let userId = FBAuth.currentUserId else {
+                observer.onError(MyAppError.userNotFound(nil))
+                return Disposables.create()
+            }
+            
+            let dicData = [
+                "currentCoin": FieldValue.increment(Int64(addedRewardCoin))
+            ]
+            
+            let docRef = self.firebaseConfig.usersCollectionReference().document(userId)
+            docRef.updateData(dicData) { error in
+                if let error = error {
+                    observer.onError(MyAppError.allError(error))
+                } else {
+                    observer.onNext(())
+                    observer.onCompleted()
+                }
+            }
             return Disposables.create()
         }
     }

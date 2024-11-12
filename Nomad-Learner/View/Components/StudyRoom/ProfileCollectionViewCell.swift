@@ -16,6 +16,7 @@ class ProfileCollectionViewCell: UICollectionViewCell {
     private let profileImageView: UIImageView = UIImageView().then {
         $0.backgroundColor = .orange
         $0.layer.cornerRadius = 15.0
+        $0.layer.masksToBounds = true
     }
     
     // 名前

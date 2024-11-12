@@ -19,6 +19,8 @@
 		831731C42CDB0F910092AE89 /* StudyProgressSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831731C32CDB0F910092AE89 /* StudyProgressSummary.swift */; };
 		831731C62CDE031D0092AE89 /* Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831731C52CDE031D0092AE89 /* Int.swift */; };
 		831731C82CE1C1680092AE89 /* TicketConfirmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831731C72CE1C1680092AE89 /* TicketConfirmViewController.swift */; };
+		831731CA2CE220560092AE89 /* RewardCoinProgressHUDInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831731C92CE220560092AE89 /* RewardCoinProgressHUDInfo.swift */; };
+		831731CC2CE228670092AE89 /* BonusCoinSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831731CB2CE228670092AE89 /* BonusCoinSettings.swift */; };
 		831E5C6F2CC13205001A90C4 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831E5C6E2CC13205001A90C4 /* Location.swift */; };
 		831E5C712CC136E0001A90C4 /* GoogleMapID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831E5C702CC136E0001A90C4 /* GoogleMapID.swift */; };
 		831E5C732CC271EF001A90C4 /* MarkerIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831E5C722CC271EF001A90C4 /* MarkerIconView.swift */; };
@@ -128,6 +130,8 @@
 		831731C32CDB0F910092AE89 /* StudyProgressSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyProgressSummary.swift; sourceTree = "<group>"; };
 		831731C52CDE031D0092AE89 /* Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Int.swift; sourceTree = "<group>"; };
 		831731C72CE1C1680092AE89 /* TicketConfirmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketConfirmViewController.swift; sourceTree = "<group>"; };
+		831731C92CE220560092AE89 /* RewardCoinProgressHUDInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardCoinProgressHUDInfo.swift; sourceTree = "<group>"; };
+		831731CB2CE228670092AE89 /* BonusCoinSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonusCoinSettings.swift; sourceTree = "<group>"; };
 		831E5C6E2CC13205001A90C4 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		831E5C702CC136E0001A90C4 /* GoogleMapID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapID.swift; sourceTree = "<group>"; };
 		831E5C722CC271EF001A90C4 /* MarkerIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerIconView.swift; sourceTree = "<group>"; };
@@ -276,6 +280,7 @@
 				834478682CCF9CE60038C7B9 /* TicketInfo.swift */,
 				8344786C2CD213BE0038C7B9 /* LocationStatus.swift */,
 				831731C32CDB0F910092AE89 /* StudyProgressSummary.swift */,
+				831731C92CE220560092AE89 /* RewardCoinProgressHUDInfo.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -473,6 +478,7 @@
 				83C9F3BB2CA931F400CF0D73 /* KeyboardManager.swift */,
 				83C9F3B52CA907B900CF0D73 /* ColorCodes.swift */,
 				83A6D7B82CB56C7400D18A30 /* KeyChainManager.swift */,
+				831731CB2CE228670092AE89 /* BonusCoinSettings.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -712,6 +718,7 @@
 			files = (
 				831E5C8A2CC4B4C1001A90C4 /* StudyRoom.swift in Sources */,
 				83AFB3B12CB2B75F00501FEE /* NavigationHeightProvidable.swift in Sources */,
+				831731CA2CE220560092AE89 /* RewardCoinProgressHUDInfo.swift in Sources */,
 				835BD2F12CA413560088CA02 /* AppDelegate.swift in Sources */,
 				831731C62CDE031D0092AE89 /* Int.swift in Sources */,
 				83A6D7D42CB807F100D18A30 /* EditProfileViewController.swift in Sources */,
@@ -745,6 +752,7 @@
 				831E5C752CC2740A001A90C4 /* MarkerInfoWindow.swift in Sources */,
 				83C5E13E2CC0BEFC001C27E1 /* MapView.swift in Sources */,
 				834478652CCD52680038C7B9 /* DynamicLocation.swift in Sources */,
+				831731CC2CE228670092AE89 /* BonusCoinSettings.swift in Sources */,
 				83C5E1312CBF7AFE001C27E1 /* NavigationControllerForMapVC.swift in Sources */,
 				834478692CCF9CE60038C7B9 /* TicketInfo.swift in Sources */,
 				83A6D7B72CB4D3CF00D18A30 /* LocationCategoryCollectionView.swift in Sources */,

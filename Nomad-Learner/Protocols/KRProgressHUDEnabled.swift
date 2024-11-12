@@ -25,7 +25,6 @@ extension Reactive where Base: KRProgressHUDEnabled {
     // メッセージ表示制御
     var showMessage: Binder<ProgressHUDMessage> {
         return Binder(self.base) { _, message in
-            guard message != .none else { return }
             message.show()
         }
     }
@@ -35,6 +34,7 @@ extension Reactive where Base: KRProgressHUDEnabled {
 enum ProgressHUDMessage {
     case didDeleteAccount
     case insufficientCoin
+    case getRewardCoin(info: RewardCoinProgressHUDInfo)
     case inDevelopment
     case none
     
@@ -44,6 +44,8 @@ enum ProgressHUDMessage {
             return "アカウントを正常に削除しました。"
         case .insufficientCoin:
             return "所持金が足りません。"
+        case .getRewardCoin(let info):
+            return configureMessage(info: info)
         case .inDevelopment:
             return "現在開発中の機能です。\n乞うご期待を！"
         case .none:
@@ -68,9 +70,14 @@ enum ProgressHUDMessage {
         style.apply()
         switch self {
         case .didDeleteAccount:
-            KRProgressHUD.showSuccess(withMessage: message)
+            // ローディング表示制御のdismiss()よりも後に実行させる
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                KRProgressHUD.showSuccess(withMessage: message)
+            }
         case .insufficientCoin:
             KRProgressHUD.showWarning(withMessage: message)
+        case .getRewardCoin:
+            KRProgressHUD.showImage(UIImage(named: "Reward")!, message: message)
         case .inDevelopment:
             KRProgressHUD.showInfo(withMessage: message)
         case .none:
@@ -79,12 +86,37 @@ enum ProgressHUDMessage {
     }
 }
 
+extension ProgressHUDMessage {
+    private func configureMessage(info: RewardCoinProgressHUDInfo) -> String {
+        let bonusCoinMessage = """
+            ＋\(info.bonusCoin)（50×\(info.studyHoursForBonus)時間)
+        """
+        
+        let rewardCoinMessage: String
+        // "1"（初達成）の場合のみrewardCoinを表示
+        if info.completionFlag == 1 {
+            rewardCoinMessage = """
+                ＋\(info.rewardCoin)
+            """
+        } else {
+            rewardCoinMessage = ""
+        }
+        
+        let balanceChangeMessage = """
+            所持金: \(info.originalCoin) → \(info.currentCoin)
+        """
+        
+        return "\(rewardCoinMessage)\(bonusCoinMessage)\n\(balanceChangeMessage)"
+    }
+}
+
+
 // 状況別のカスタムスタイルを定義
 enum ProgressHUDStyle {
     case success
     case info
     case warning
-        
+    
     // 共通のカスタムスタイルを適用する
     func apply() {
         KRProgressHUD.setDefaultStyle()

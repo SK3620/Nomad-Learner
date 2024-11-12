@@ -158,7 +158,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
         // StudyRoomVC（勉強部屋画面）から戻ってきた時、データ再取得
         if fromScreen == .studyRoomVC {
             viewModel.locationsAndUserInfo
-                .drive(addMarkersForLocations)
+                .drive(handleLocationsInfo)
                 .disposed(by: disposeBag)
         }
     }
@@ -224,7 +224,7 @@ extension MapViewController: KRProgressHUDEnabled, AlertEnabled {
         
         // 各ロケーション情報
         viewModel.locationsAndUserInfo
-            .drive(addMarkersForLocations)
+            .drive(handleLocationsInfo)
             .disposed(by: disposeBag)
         
         // リロードで各ロケーション情報を再取得
@@ -233,7 +233,7 @@ extension MapViewController: KRProgressHUDEnabled, AlertEnabled {
                 guard let self = self else { return .empty() }
                 return self.viewModel.locationsAndUserInfo
             }
-            .drive(addMarkersForLocations)
+            .drive(handleLocationsInfo)
             .disposed(by: disposeBag)
         
         // ローディングインジケーター
@@ -285,27 +285,20 @@ extension MapViewController {
     private var backToAuthVC: Binder<Void> {
         return Binder(self) { base, _ in Router.dismissModal(vc: base) }
     }
-    // マップ上に取得したロケーションをマーカーとして配置
-    private var addMarkersForLocations: Binder<(LocationsInfo, User)> {
+    // 取得したロケーション情報とユーザー情報を制御
+    private var handleLocationsInfo: Binder<(LocationsInfo, User)> {
         return Binder(self) { base, tuple in
             let (locationsInfo, userProfile) = tuple
             // プロパティ更新
             base.locationsInfo = locationsInfo
             base.userProfile = userProfile
             
-            // クラスターマネージャーのセットアップ
-            base.setupClusterManager()
-            
-            // 現在地のロケーション情報を取得し、UIを更新
-            let currentLocationId = userProfile.currentLocationId
-            let currentLocationInfo = locationsInfo.createLocationInfo(of: currentLocationId)
-            base.locationInfo = currentLocationInfo
-            base.locationDetailView.update(ticketInfo: currentLocationInfo.ticketInfo, locationStatus: currentLocationInfo.locationStatus)
-            base.currentCoinLabel.text = userProfile.currentCoin.toString
-            
-            // ロケーションマーカーを追加し、クラスタリング
-            base.clusterManager.add(base.mapView.addMarkersForLocations(locationsInfo: locationsInfo, currentLocationId: currentLocationId))
-            base.clusterManager.cluster()
+            // 取得したロケーションをマーカーとしてマップ上に配置
+            base.addMarkersForLocations()
+            // UIを更新
+            base.updateUI()
+            // 報酬コイン獲得ProgressHUDを表示
+            base.showRewardCoinProgressHUD()
         }
     }
     // 現在地までcamera移動
@@ -316,6 +309,32 @@ extension MapViewController {
                 base.mapView.animate(to: currentPosition)
             }
         }
+    }
+}
+
+extension MapViewController {
+    // 現在地のロケーション情報を取得し、UIを更新
+    private func updateUI() {
+        let currentLocationId = userProfile.currentLocationId
+        let currentLocationInfo = locationsInfo.createLocationInfo(of: currentLocationId)
+        locationInfo = currentLocationInfo
+        locationDetailView.update(ticketInfo: currentLocationInfo.ticketInfo, locationStatus: currentLocationInfo.locationStatus)
+        currentCoinLabel.text = userProfile.currentCoin.toString
+    }
+    
+    // 取得したロケーションをマーカーとしてマップ上に配置
+    private func addMarkersForLocations() {
+        setupClusterManager()
+        // ロケーションマーカーを追加し、クラスタリング
+        clusterManager.add(mapView.addMarkersForLocations(locationsInfo: locationsInfo, currentLocationId: userProfile.currentLocationId))
+        clusterManager.cluster()
+    }
+    
+    // 報酬コイン獲得ProgressHUDを表示
+    private func showRewardCoinProgressHUD() {
+        guard let rewardCoinProgressHUDInfo = locationsInfo.createRewardCoinProgressHUDInfo(userProfile: userProfile) else { return }
+        // ProgressHUD表示
+        self.rx.showMessage.onNext(.getRewardCoin(info: rewardCoinProgressHUDInfo))
     }
 }
 

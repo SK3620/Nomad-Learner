@@ -57,6 +57,17 @@ class StudyRoomViewModel {
         return (hours: totalHours + totalMins / 60, mins: totalMins % 60)
     }
     
+    // 現在の勉強時間（時間/分単位）
+    private var currentStudyTime: (hours: Int, mins: Int) {
+        let totalMinutes1 = totalStudyTime.hours * 60 + totalStudyTime.mins // 分単位に換算
+        let totalMinutes2 = originalStudyTime.hours * 60 + originalStudyTime.mins // 分単位に換算
+        let differenceInMinutes = totalMinutes1 - totalMinutes2 // 分単位で差分を算出
+        return (hours: differenceInMinutes / 60, mins: differenceInMinutes % 60)
+    }
+    
+    // 加算される報酬コイン
+    private var addedRewardCoin: Int = 0
+    
     private let indicator: ActivityIndicator = ActivityIndicator()
     private let disposeBag = DisposeBag()
     
@@ -262,33 +273,58 @@ extension StudyRoomViewModel {
     
     // 勉強時間データ保存（退出時）
     func saveStudyProgress(completion: @escaping () -> Void) {
-        let visitedLocationToUpdate = VisitedLocation(
+        let visitedLocationToUpdate = createVisitedLocation()
+        
+        let combinedObservableResult = Observable.zip(
+            mainService.removeUserIdFromLocation(locationId: locationId),
+            mainService.saveStudyProgressAndRewards(locationId: locationId, updatedData: visitedLocationToUpdate),
+            mainService.updateCurrentCoin(addedRewardCoin: addedRewardCoin)
+        )
+            .materialize()
+            .share(replay: 1)
+        
+        combinedObservableResult
+            .compactMap { $0.event.element }
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                completion() // MapVC（マップ画面）に戻る
+                self.mainService.removeListeners()
+            })
+            .disposed(by: disposeBag)
+        
+        self.myAppError = combinedObservableResult
+            .compactMap { $0.event.error as? MyAppError }
+            .asDriver(onErrorJustReturn: .unknown)
+    }
+}
+
+extension StudyRoomViewModel {
+    private func createVisitedLocation() -> VisitedLocation {
+        // completionFlagの状態を取得 (0:未達成, 1:初達成, 2以上:既達成)
+        let currentCompletionFlag = locationInfo.visitedLocation?.completionFlag ?? 0
+
+        // 必要な勉強時間を達成しているかどうか
+        let hasAchievedRequiredStudyTime = totalStudyTime.hours >= locationInfo.ticketInfo.requiredStudyHours
+        // 初めての達成であるかどうか
+        let isFirstCompletion = hasAchievedRequiredStudyTime && currentCompletionFlag == 0
+        // 達成しているかどうか
+        let isAlreadyCompleted = currentCompletionFlag >= 1
+        // ボーナスコインの計算
+        let bonusCoin = isFirstCompletion || isAlreadyCompleted ? currentStudyTime.hours * BonusCoinSettings.multiplier : 0
+        // 新しいcompletionFlagの計算
+        let updatedCompletionFlag = isFirstCompletion || isAlreadyCompleted ? currentCompletionFlag + 1 : 0
+        // 加算される報酬コインの合計
+        addedRewardCoin += isFirstCompletion ? locationInfo.ticketInfo.rewardCoin : 0
+        addedRewardCoin += bonusCoin
+
+        return VisitedLocation(
             locationId: locationId,
             totalStudyHours: totalStudyTime.hours,
             totalStudyMins: totalStudyTime.mins,
             fixedRequiredStudyHours: locationInfo.ticketInfo.requiredStudyHours,
-            fixedRewardCoin: locationInfo.ticketInfo.rewardCoin
+            fixedRewardCoin: locationInfo.ticketInfo.rewardCoin,
+            completionFlag: updatedCompletionFlag,
+            bonusCoin: bonusCoin
         )
-        
-        let saveStudyProgressResult = mainService.removeUserIdFromLocation(locationId: locationId)
-            .flatMap { [weak self] (_) -> Observable<Void> in
-                guard let self = self else { return .empty() }
-                return self.mainService.saveStudyProgressAndRewards(locationId: locationId, updatedData: visitedLocationToUpdate)
-            }
-            .materialize()
-            .share(replay: 1)
-        
-        saveStudyProgressResult
-            .compactMap { $0.event.element }
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                completion()
-                self.mainService.removeListeners()
-            }) // MapVC（マップ画面）に戻る
-            .disposed(by: disposeBag)
-        
-        self.myAppError = saveStudyProgressResult
-            .compactMap { $0.event.error as? MyAppError }
-            .asDriver(onErrorJustReturn: .unknown)
     }
 }

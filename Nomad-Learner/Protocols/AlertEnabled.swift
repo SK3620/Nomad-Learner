@@ -115,7 +115,7 @@ enum AlertActionType {
         case .willDeleteAccount:
             return "Are you sure you want to delete your account?"
         case .willShowDepartVC(_, _, let ticketInfo):
-            return "次回の\(ticketInfo.destination)への訪問時以降、以下の項目は変更されません。\n\n必要な勉強時間：\(ticketInfo.requiredStudyHours)時間\n報酬コイン：\(ticketInfo.rewardCoin)コイン"
+            return "次回の「\(ticketInfo.destination)」への訪問時以降、以下の項目は変更されません。\n\n必要な勉強時間：\(ticketInfo.requiredStudyHours)時間\n報酬コイン：\(ticketInfo.rewardCoin)コイン"
         case .exitRoom:
             return "Do you really want to exit the room?"
         case .breakTime:

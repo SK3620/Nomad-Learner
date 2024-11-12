@@ -38,6 +38,33 @@ extension LocationsInfo {
             locationStatus: self.locationsStatus.first(where: { $0.locationId == locationId })!
         )
     }
+    
+    func createRewardCoinProgressHUDInfo(userProfile: User) -> RewardCoinProgressHUDInfo? {
+        let currentLocationId = userProfile.currentLocationId
+        // completionFlag: 0→未達成, 1→初達成, 2以降→すでに達成 "0"の場合はProgressHUDを表示しない
+        guard let visitedLocation = visitedLocations.first(where: { $0.locationId == currentLocationId }),
+              visitedLocation.completionFlag != 0 else {
+            return nil
+        }
+        
+        let completionFlag = visitedLocation.completionFlag
+        let currentCoin = userProfile.currentCoin
+        let rewardCoin = visitedLocation.fixedRewardCoin ?? 0
+        let bonusCoin = visitedLocation.bonusCoin
+        // 元々の所持金
+        let originalCoin = currentCoin - (rewardCoin + bonusCoin)
+        // ボーナスコイン獲得に必要だった勉強時間
+        let studyHoursForBonus = bonusCoin / BonusCoinSettings.multiplier
+        
+        return RewardCoinProgressHUDInfo(
+            completionFlag: completionFlag,
+            currentCoin: currentCoin,
+            originalCoin: originalCoin,
+            rewardCoin: rewardCoin,
+            bonusCoin: bonusCoin,
+            studyHoursForBonus: studyHoursForBonus
+        )
+    }
 }
 
 extension LocationsInfo {

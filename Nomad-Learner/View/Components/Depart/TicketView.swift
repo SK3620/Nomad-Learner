@@ -118,7 +118,7 @@ class TicketView: UIView {
         $0.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 4)
         $0.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi) * 2 * 15 / 360)
         $0.snp.makeConstraints {
-            $0.size.equalTo(CGSize(width: 2, height: 24))
+            $0.size.equalTo(CGSize(width: 2, height: 25))
         }
     }
     
@@ -131,7 +131,7 @@ class TicketView: UIView {
     
     // "hours"テキスト
     private let hoursTextLabel = UILabel().then {
-        $0.text = "hours"
+        $0.text = "時間"
         $0.textColor = .darkGray
         $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.small)
     }
@@ -168,6 +168,31 @@ class TicketView: UIView {
         $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.semiSuperLarge)
         $0.textAlignment = .left
     }
+    
+    // スラッシュ線2
+    private let slashView2 = UIView().then {
+        $0.backgroundColor = .darkGray
+        $0.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 4)
+        $0.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi) * 2 * 15 / 360)
+        $0.snp.makeConstraints {
+            $0.size.equalTo(CGSize(width: 2, height: 15))
+        }
+    }
+    
+    // ボーナスタイトルlabel（達成後に表示）
+    private let bonusTitleLabel = UILabel().then {
+        $0.text = "1時間ごと"
+        $0.textColor = .darkGray
+        $0.font = .systemFont(ofSize: UIConstants.TextSize.small)
+    }
+    
+    lazy var bonusStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [slashView2, bonusTitleLabel])
+        stackView.axis = .horizontal
+        stackView.spacing = 5
+        stackView.isHidden = true
+        return stackView
+    }()
     
     // 報酬の下線
     private let rewardUnderline: UIView = UIView().then {
@@ -213,6 +238,7 @@ class TicketView: UIView {
         backgroundViewForReward.addSubview(rewardImageView)
         addSubview(backgroundViewForReward)
         addSubview(rewardCoinLabel)
+        addSubview(bonusStackView)
         addSubview(rewardUnderline)
         
         // 現在地の国旗と目的地の国旗をまとめる背景View
@@ -353,6 +379,12 @@ class TicketView: UIView {
             $0.right.equalToSuperview().inset(UIConstants.Layout.standardPadding)
         }
         
+        // ボーナスタイトルlabel
+        bonusStackView.snp.makeConstraints {
+            $0.centerY.equalTo(rewardCoinLabel)
+            $0.right.equalToSuperview().inset(16)
+        }
+        
         // ミッションの下線
         rewardUnderline.snp.makeConstraints {
             $0.height.equalTo(3)
@@ -373,17 +405,22 @@ class TicketView: UIView {
 extension TicketView {
     // 各UIを更新
     func update(with ticketInfo: TicketInfo, locationStatus: LocationStatus) {
+        // 基本情報の更新
         travelDistanceAndCost.text = ticketInfo.travelDistanceAndCost.toString
         destinationLabel.text = ticketInfo.destination
         countryAndRegion.text = ticketInfo.countryAndRegion
         totalStudyTimeLabel.text = Int.toTimeFormat(hours: ticketInfo.totalStudyHours, mins: ticketInfo.totalStudyMins)
         requiredStudyHours.text = ticketInfo.requiredStudyHours.toString
-        rewardCoinLabel.text = "\(ticketInfo.rewardCoin.toString)＋"
         
-        let isCompleted = locationStatus.isCompleted
+        // 達成状況に応じた色設定とボーナス表示
         let completedColor = ColorCodes.completedGreen.color()
-        totalStudyTimeLabel.textColor = isCompleted ? completedColor : .black
-        rewardCoinLabel.textColor = isCompleted ? completedColor : .black
+        let labelColor = locationStatus.isCompleted ? completedColor : .black
+        totalStudyTimeLabel.textColor = labelColor
+        rewardCoinLabel.textColor = labelColor
+        bonusStackView.isHidden = !locationStatus.isCompleted
+        
+        // 報酬コインラベルの更新
+        rewardCoinLabel.text = locationStatus.isCompleted ? "\(BonusCoinSettings.multiplier)＋" : "\(ticketInfo.rewardCoin.toString)＋"
     }
 }
 

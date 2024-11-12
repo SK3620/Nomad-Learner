@@ -79,7 +79,7 @@ class LocationDetailView: UIView {
     
     // "hours"テキスト
     private let hoursTextLabel = UILabel().then {
-        $0.text = "hours"
+        $0.text = "時間"
         $0.textColor = .darkGray
         $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.semiMedium)
     }
@@ -113,19 +113,19 @@ class LocationDetailView: UIView {
         $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.semiSuperLarge)
     }
     
-    // スラッシュ線
+    // スラッシュ線2
     private let slashView2 = UIView().then {
         $0.backgroundColor = .darkGray
         $0.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 4)
         $0.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi) * 2 * 15 / 360)
         $0.snp.makeConstraints {
-            $0.size.equalTo(CGSize(width: 2, height: 15))
+            $0.size.equalTo(CGSize(width: 2, height: 17))
         }
     }
     
     // ボーナスタイトルlabel（達成後に表示）
     private let bonusTitleLabel = UILabel().then {
-        $0.text = "毎1時間勉強"
+        $0.text = "1時間ごと"
         $0.textColor = .darkGray
         $0.font = .systemFont(ofSize: UIConstants.TextSize.semiMedium)
     }
@@ -133,7 +133,7 @@ class LocationDetailView: UIView {
     lazy var bonusStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [slashView2, bonusTitleLabel])
         stackView.axis = .horizontal
-        stackView.spacing = 6
+        stackView.spacing = 5
         stackView.isHidden = true
         return stackView
     }()
@@ -277,8 +277,8 @@ class LocationDetailView: UIView {
         
         // ボーナスタイトルlabel
         bonusStackView.snp.makeConstraints {
-            $0.bottom.equalTo(rewardCoinLabel)
-            $0.left.equalToSuperview().inset(16)
+            $0.centerY.equalTo(rewardCoinLabel)
+            $0.right.equalToSuperview().inset(16)
         }
         
         // セクション選択collectionView

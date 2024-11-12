@@ -299,6 +299,8 @@ extension MapViewController {
             base.updateUI()
             // 報酬コイン獲得ProgressHUDを表示
             base.showRewardCoinProgressHUD()
+            // 現在地までcamera移動
+            base.moveToCurrentLocation.onNext(())
         }
     }
     // 現在地までcamera移動

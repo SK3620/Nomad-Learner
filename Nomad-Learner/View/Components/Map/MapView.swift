@@ -13,18 +13,13 @@ class MapView: GMSMapView {
     
     // GoogleMap ID
     private let googleMapID = GMSMapID(identifier: GoogleMapID.googleMapID)
-    // 初期位置 縮小具合
-    private let initialCamera = GMSCameraPosition(latitude: -33.857, longitude: 151.215, zoom: 1.0)
-    // ロケーション情報
-    private var locationsInfo: LocationsInfo = LocationsInfo()
-    
     // 描画された円を保持
     var circles: [GMSCircle] = []
     
     override init(options: GMSMapViewOptions) {
         // セットアップ
         options.mapID = googleMapID
-        options.camera = initialCamera
+        options.camera = GMSCameraPosition(target: .init(), zoom: 1.0)
         super.init(options: options)
     }
     

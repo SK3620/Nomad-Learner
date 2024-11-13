@@ -33,8 +33,6 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
     private var viewModel: MapViewModel!
     // マップ
     private var mapView: MapView!
-    // マーカーのクラスタリング
-    private var clusterManager: GMUClusterManager!
     
     private let disposeBag = DisposeBag()
     
@@ -96,7 +94,8 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
     private func setupUI() {
         // マップを表示
         let options = GMSMapViewOptions()
-        self.mapView = MapView(options: options)
+        mapView = MapView(options: options)
+        mapView.delegate = self
         
         // ナビゲーションバーの設定
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
@@ -141,16 +140,6 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
             $0.centerY.equalTo(mapTabBar.snp.top)
             $0.size.equalTo(44)
         }
-    }
-    
-    // クラスターマネージャーのセットアップメソッド
-    private func setupClusterManager() {
-        let iconGenerator = GMUDefaultClusterIconGenerator()
-        let algorithm = GMUNonHierarchicalDistanceBasedAlgorithm()
-        let renderer = GMUDefaultClusterRenderer(mapView: mapView, clusterIconGenerator: iconGenerator)
-        clusterManager = GMUClusterManager(map: mapView, algorithm: algorithm, renderer: renderer)
-        clusterManager.clearItems() // 既存のクラスターをリセット
-        clusterManager.setMapDelegate(self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -313,7 +302,7 @@ extension MapViewController {
     private var moveToCurrentLocation: Binder<Void> {
         return Binder(self) { base, _ in
             if let currentLocationInfo = base.locationsInfo.fixedLocations.first(where: { $0.locationId == base.userProfile.currentLocationId }) {
-                let currentPosition = GMSCameraPosition(latitude: currentLocationInfo.latitude, longitude: currentLocationInfo.longitude, zoom: 1.0)
+                let currentPosition = GMSCameraPosition(latitude: currentLocationInfo.latitude, longitude: currentLocationInfo.longitude, zoom: 13)
                 base.mapView.animate(to: currentPosition)
             }
         }
@@ -332,10 +321,8 @@ extension MapViewController {
     
     // 取得したロケーションをマーカーとしてマップ上に配置
     private func addMarkersForLocations() {
-        setupClusterManager()
-        // ロケーションマーカーを追加し、クラスタリング
-        clusterManager.add(mapView.addMarkersForLocations(locationsInfo: locationsInfo))
-        clusterManager.cluster()
+        mapView.clear() // 一度リセット
+        mapView.addMarkersForLocations(locationsInfo: locationsInfo)
     }
     
     // 報酬コイン獲得ProgressHUDを表示
@@ -376,7 +363,7 @@ extension MapViewController: CLLocationManagerDelegate {
             // 現在位置なら、ポリラインを削除
             self.mapView.clearDashedLine()
         }
-        // 現在地以外のマーカーをタップした場合、ルートを描画
+        // 現在地以外のマーカーをタップした場合、ポリラインを描画
         if userProfile.currentLocationId != locationInfo?.fixedLocation.locationId {
             let currentCoordinate = locationsInfo.getCurrentCoordinate(currentLocationId: userProfile.currentLocationId)
             self.mapView.drawDashedLine(from: currentCoordinate, to: marker.position)
@@ -392,7 +379,7 @@ extension MapViewController: CLLocationManagerDelegate {
     
     // マーカー以外タップ時
     func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
-        (mapView as? MapView)?.clearDashedLine() // ポリライン削除
+        self.mapView.clearDashedLine() // ポリライン削除
         // UIを更新
         locationDetailView.update(ticketInfo: TicketInfo(), locationStatus: LocationStatus())
         mapTabBar.airplaneItem.isEnabled = false // 出発ボタン無効化

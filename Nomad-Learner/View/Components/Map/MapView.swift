@@ -13,6 +13,13 @@ class MapView: GMSMapView {
     
     // GoogleMap ID
     private let googleMapID = GMSMapID(identifier: GoogleMapID.googleMapID)
+    // GMSMapViewOptions
+    private var options: GMSMapViewOptions?
+    // cameraのzoom値
+    var cameraZoomValue: Float {
+        return options?.camera?.zoom ?? 1.0
+    }
+    
     // 描画された円を保持
     var circles: [GMSCircle] = []
     
@@ -20,15 +27,14 @@ class MapView: GMSMapView {
         // セットアップ
         options.mapID = googleMapID
         options.camera = GMSCameraPosition(target: .init(), zoom: 1.0)
+        self.options = options
         super.init(options: options)
     }
     
     // マップの各ロケーションにマーカーを立てる
-    func addMarkersForLocations(locationsInfo: LocationsInfo) -> [GMSMarker] {
+    func addMarkersForLocations(locationsInfo: LocationsInfo) {
         // 固定ロケーション取得
         let fixedLocations = locationsInfo.fixedLocations
-        // マーカーを格納する配列
-        var markerArray: [GMSMarker] = []
         
         // 各固定ロケーションに対してマーカーを作成
         for fixedLocation in fixedLocations {
@@ -49,10 +55,8 @@ class MapView: GMSMapView {
             marker.iconView = markerIconView
             marker.userData = fixedLocation // マーカーに関連するデータを保存
             
-            // 作成したマーカーを配列に追加
-            markerArray.append(marker)
+            marker.map = self
         }
-        return markerArray  // 作成したマーカーの配列を返す
     }
 }
 
@@ -68,7 +72,7 @@ extension MapView {
         let distance = startLocation.distance(from: endLocation) // 距離(m単位)
         
         // ドット間の距離と円の半径
-        let intervalDistance: CLLocationDistance = 500000 // 500kmごとに円
+        let intervalDistance: CLLocationDistance = 450000 // 450kmごとに円を生成
         let circleRadiusScale = 1 / self.projection.points(forMeters: 1, at: start)
         let circleRadius = 5.0 * circleRadiusScale // 円の半径を調整
         
@@ -83,6 +87,8 @@ extension MapView {
         endCircle.fillColor = .blue // 色を変えて区別
         endCircle.map = self
         circles.append(endCircle)
+        
+        guard distance > intervalDistance else { return } // 距離が450kmよりも短い場合は円を描画しない
         
         // 2点間に均等な間隔で円を描画
         let totalCircles = Int(distance / intervalDistance) // 必要な円の数

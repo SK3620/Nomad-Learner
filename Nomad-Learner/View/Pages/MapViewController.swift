@@ -261,14 +261,14 @@ extension MapViewController {
                 // 初回訪問の場合、アラートを表示して遷移
                 let alertActionType = AlertActionType.willShowDepartVC(
                     onConfirm: { 
-                        base.mapView.clearDashedLine() // ポリラインを削除
+                        base.mapView.clearPolyline() // ポリラインを削除
                         Router.showDepartVC(vc: base, locationInfo: locationInfo) // DepartVC（出発準備画面）へ遷移
                     },
                     ticketInfo: locationInfo.ticketInfo
                 )
                 base.rx.showAlert.onNext(alertActionType)
             } else {
-                base.mapView.clearDashedLine() // ポリラインを削除
+                base.mapView.clearPolyline() // ポリラインを削除
                 // 既に訪問済みの場合、直接DepartVCへ遷移
                 Router.showDepartVC(vc: base, locationInfo: locationInfo)
             }
@@ -286,6 +286,8 @@ extension MapViewController {
             base.locationsInfo = locationsInfo
             base.userProfile = userProfile
             
+            // 現在地の座標を保持
+            base.mapView.currentCoordinate = locationsInfo.getCurrentCoordinate(currentLocationId: userProfile.currentLocationId)
             // 取得したロケーションをマーカーとしてマップ上に配置
             base.addMarkersForLocations()
             // UIを更新
@@ -295,7 +297,7 @@ extension MapViewController {
             // 現在地までcamera移動
             base.moveToCurrentLocation.onNext(())
             // ポリラインを削除
-            base.mapView.clearDashedLine()
+            base.mapView.clearPolyline()
         }
     }
     // 現在地までcamera移動
@@ -352,21 +354,19 @@ extension MapViewController: CLLocationManagerDelegate {
         }
         // locationInfo の更新
         locationInfo = locationsInfo.createLocationInfo(of: tappedLocation.locationId)
+        guard let locationInfo = locationInfo else { return false }
         // UI更新
-        if let locationInfo = locationInfo {
-            locationDetailView.update(ticketInfo: locationInfo.ticketInfo, locationStatus: locationInfo.locationStatus)
-        }
+        locationDetailView.update(ticketInfo: locationInfo.ticketInfo, locationStatus: locationInfo.locationStatus)
         
-        if let locationStatus = locationInfo?.locationStatus {
-            // 初期位置なら、出発できないように設定
-            mapTabBar.airplaneItem.isEnabled = !locationStatus.isInitialLocation
-            // 現在位置なら、ポリラインを削除
-            self.mapView.clearDashedLine()
-        }
+        // 初期位置なら、出発できないように設定
+        mapTabBar.airplaneItem.isEnabled = !locationInfo.locationStatus.isInitialLocation
+        // 現在位置なら、ポリラインを削除
+        self.mapView.clearPolyline()
+        
         // 現在地以外のマーカーをタップした場合、ポリラインを描画
-        if userProfile.currentLocationId != locationInfo?.fixedLocation.locationId {
+        if userProfile.currentLocationId != locationInfo.fixedLocation.locationId {
             let currentCoordinate = locationsInfo.getCurrentCoordinate(currentLocationId: userProfile.currentLocationId)
-            self.mapView.drawDashedLine(from: currentCoordinate, to: marker.position)
+            self.mapView.drawPolyline(from: currentCoordinate, to: marker.position)
         }
         return false
     }
@@ -375,11 +375,13 @@ extension MapViewController: CLLocationManagerDelegate {
     func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
         // ズームレベルが変更されてもサイズを一定に保つ
         self.mapView.updateCircleSizesOnZoom()
+        // 現在地ピンの位置を更新
+        self.mapView.updateCurrentLocationPin()
     }
     
     // マーカー以外タップ時
     func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
-        self.mapView.clearDashedLine() // ポリライン削除
+        self.mapView.clearPolyline() // ポリライン削除
         // UIを更新
         locationDetailView.update(ticketInfo: TicketInfo(), locationStatus: LocationStatus())
         mapTabBar.airplaneItem.isEnabled = false // 出発ボタン無効化

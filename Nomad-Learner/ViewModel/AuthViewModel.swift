@@ -137,7 +137,7 @@ class AuthViewModel {
                             // 保存するユーザー情報
                             let userProfile = User(
                                 username: user.displayName!,
-                                currentLocationId: UserInitialLocation.id // 初期位置
+                                currentLocationId: MyAppSettings.userInitialLocationId // 初期位置
                             )
                             // サインアップ後、ユーザープロフィール情報を保存
                             return mainService.saveUserProfile(user: userProfile, shouldUpdate: false)

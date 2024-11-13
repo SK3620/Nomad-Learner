@@ -313,6 +313,6 @@ extension LocationDetailView {
         requiredStudyHours.text = ticketInfo.requiredStudyHours.toString
         
         // 報酬コインラベルの更新
-        rewardCoinLabel.text = isCompleted ? "\(BonusCoinSettings.multiplier)＋" : "\(ticketInfo.rewardCoin.toString)＋"
+        rewardCoinLabel.text = isCompleted ? "\(MyAppSettings.bonusCoinMultiplier)＋" : "\(ticketInfo.rewardCoin.toString)＋"
     }
 }

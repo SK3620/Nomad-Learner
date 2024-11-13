@@ -20,8 +20,7 @@
 		831731C62CDE031D0092AE89 /* Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831731C52CDE031D0092AE89 /* Int.swift */; };
 		831731C82CE1C1680092AE89 /* TicketConfirmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831731C72CE1C1680092AE89 /* TicketConfirmViewController.swift */; };
 		831731CA2CE220560092AE89 /* RewardCoinProgressHUDInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831731C92CE220560092AE89 /* RewardCoinProgressHUDInfo.swift */; };
-		831731CC2CE228670092AE89 /* BonusCoinSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831731CB2CE228670092AE89 /* BonusCoinSettings.swift */; };
-		831731CF2CE32AAE0092AE89 /* UserInitialLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831731CE2CE32AAE0092AE89 /* UserInitialLocation.swift */; };
+		831731CC2CE228670092AE89 /* MyAppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831731CB2CE228670092AE89 /* MyAppSettings.swift */; };
 		831E5C6F2CC13205001A90C4 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831E5C6E2CC13205001A90C4 /* Location.swift */; };
 		831E5C712CC136E0001A90C4 /* GoogleMapID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831E5C702CC136E0001A90C4 /* GoogleMapID.swift */; };
 		831E5C732CC271EF001A90C4 /* MarkerIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831E5C722CC271EF001A90C4 /* MarkerIconView.swift */; };
@@ -132,8 +131,7 @@
 		831731C52CDE031D0092AE89 /* Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Int.swift; sourceTree = "<group>"; };
 		831731C72CE1C1680092AE89 /* TicketConfirmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketConfirmViewController.swift; sourceTree = "<group>"; };
 		831731C92CE220560092AE89 /* RewardCoinProgressHUDInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardCoinProgressHUDInfo.swift; sourceTree = "<group>"; };
-		831731CB2CE228670092AE89 /* BonusCoinSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonusCoinSettings.swift; sourceTree = "<group>"; };
-		831731CE2CE32AAE0092AE89 /* UserInitialLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInitialLocation.swift; sourceTree = "<group>"; };
+		831731CB2CE228670092AE89 /* MyAppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAppSettings.swift; sourceTree = "<group>"; };
 		831E5C6E2CC13205001A90C4 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		831E5C702CC136E0001A90C4 /* GoogleMapID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapID.swift; sourceTree = "<group>"; };
 		831E5C722CC271EF001A90C4 /* MarkerIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerIconView.swift; sourceTree = "<group>"; };
@@ -320,8 +318,7 @@
 		831731CD2CE312CF0092AE89 /* Constants */ = {
 			isa = PBXGroup;
 			children = (
-				831731CB2CE228670092AE89 /* BonusCoinSettings.swift */,
-				831731CE2CE32AAE0092AE89 /* UserInitialLocation.swift */,
+				831731CB2CE228670092AE89 /* MyAppSettings.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -737,7 +734,6 @@
 				83AFB3AE2CB2ABD300501FEE /* LocationDetailView.swift in Sources */,
 				830498C62CC64F87003973EC /* FixedLocationsInfo.json in Sources */,
 				83A6D7E02CB8DA8600D18A30 /* DepartViewController.swift in Sources */,
-				831731CF2CE32AAE0092AE89 /* UserInitialLocation.swift in Sources */,
 				837DE5952CBAD11500819964 /* StudyRoomViewController.swift in Sources */,
 				83A6D7CC2CB6B85A00D18A30 /* ProfileTableViewCell.swift in Sources */,
 				83A6D7CA2CB6B4FC00D18A30 /* ProfileBottomView.swift in Sources */,
@@ -764,7 +760,7 @@
 				831E5C752CC2740A001A90C4 /* MarkerInfoWindow.swift in Sources */,
 				83C5E13E2CC0BEFC001C27E1 /* MapView.swift in Sources */,
 				834478652CCD52680038C7B9 /* DynamicLocation.swift in Sources */,
-				831731CC2CE228670092AE89 /* BonusCoinSettings.swift in Sources */,
+				831731CC2CE228670092AE89 /* MyAppSettings.swift in Sources */,
 				83C5E1312CBF7AFE001C27E1 /* NavigationControllerForMapVC.swift in Sources */,
 				834478692CCF9CE60038C7B9 /* TicketInfo.swift in Sources */,
 				83A6D7B72CB4D3CF00D18A30 /* LocationCategoryCollectionView.swift in Sources */,

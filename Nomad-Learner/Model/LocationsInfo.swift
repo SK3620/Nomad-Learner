@@ -55,7 +55,7 @@ extension LocationsInfo {
         // 元々の所持金
         let originalCoin = currentCoin - (rewardCoin + bonusCoin)
         // ボーナスコイン獲得に必要だった勉強時間
-        let studyHoursForBonus = bonusCoin / BonusCoinSettings.multiplier
+        let studyHoursForBonus = bonusCoin / MyAppSettings.bonusCoinMultiplier
         
         return RewardCoinProgressHUDInfo(
             completionFlag: completionFlag,

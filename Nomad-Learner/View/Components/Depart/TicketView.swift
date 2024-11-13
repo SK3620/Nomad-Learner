@@ -420,7 +420,7 @@ extension TicketView {
         bonusStackView.isHidden = !locationStatus.isCompleted
         
         // 報酬コインラベルの更新
-        rewardCoinLabel.text = locationStatus.isCompleted ? "\(BonusCoinSettings.multiplier)＋" : "\(ticketInfo.rewardCoin.toString)＋"
+        rewardCoinLabel.text = locationStatus.isCompleted ? "\(MyAppSettings.bonusCoinMultiplier)＋" : "\(ticketInfo.rewardCoin.toString)＋"
     }
 }
 

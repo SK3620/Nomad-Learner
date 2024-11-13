@@ -310,7 +310,7 @@ extension StudyRoomViewModel {
         // 達成しているかどうか
         let isAlreadyCompleted = currentCompletionFlag >= 1
         // ボーナスコインの計算
-        let bonusCoin = isFirstCompletion || isAlreadyCompleted ? currentStudyTime.hours * BonusCoinSettings.multiplier : 0
+        let bonusCoin = isFirstCompletion || isAlreadyCompleted ? currentStudyTime.hours * MyAppSettings.bonusCoinMultiplier : 0
         // 新しいcompletionFlagの計算
         let updatedCompletionFlag = isFirstCompletion || isAlreadyCompleted ? currentCompletionFlag + 1 : 0
         // 加算される報酬コインの合計

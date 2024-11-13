@@ -186,7 +186,7 @@ extension MapViewModel {
             // 訪問履歴がある && 必要な合計勉強時間に到達していないか否か（進行中か否か）
             let isOngoing = hasVisited && ticketInfo.totalStudyHours < ticketInfo.requiredStudyHours
             // 初期位置か否か
-            let isInitialLocation = fixedLocation.locationId == UserInitialLocation.id
+            let isInitialLocation = fixedLocation.locationId == MyAppSettings.userInitialLocationId
             
             // ロケーション状態構造体を生成
             let locationStatus = LocationStatus(

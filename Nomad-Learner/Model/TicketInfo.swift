@@ -73,7 +73,10 @@ extension TicketInfo {
     
     // 必要な合計勉強時間を計算
     private static func calculateMissionStudyTime(for distance: Int) -> Int {
-        distance / 100
+        // アプリ内で定める最低距離よりも小さい場合、最低限必要な勉強時間（固定値）を返す
+        MyAppSettings.minDistance > distance
+        ? MyAppSettings.minRequiredStudyHours
+        : distance / 100
     }
     
     // 報酬コインの計算

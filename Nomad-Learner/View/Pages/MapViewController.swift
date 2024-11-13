@@ -302,7 +302,7 @@ extension MapViewController {
     private var moveToCurrentLocation: Binder<Void> {
         return Binder(self) { base, _ in
             if let currentLocationInfo = base.locationsInfo.fixedLocations.first(where: { $0.locationId == base.userProfile.currentLocationId }) {
-                let currentPosition = GMSCameraPosition(latitude: currentLocationInfo.latitude, longitude: currentLocationInfo.longitude, zoom: 13)
+                let currentPosition = GMSCameraPosition(latitude: currentLocationInfo.latitude, longitude: currentLocationInfo.longitude, zoom: base.mapView.currentZoom)
                 base.mapView.animate(to: currentPosition)
             }
         }
@@ -383,6 +383,11 @@ extension MapViewController: CLLocationManagerDelegate {
         // UIを更新
         locationDetailView.update(ticketInfo: TicketInfo(), locationStatus: LocationStatus())
         mapTabBar.airplaneItem.isEnabled = false // 出発ボタン無効化
+    }
+    
+    // カメラが移動完了したときにズーム値を更新
+    func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
+        self.mapView.currentZoom = position.zoom
     }
 }
 

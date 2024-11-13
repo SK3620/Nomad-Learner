@@ -15,10 +15,8 @@ class MapView: GMSMapView {
     private let googleMapID = GMSMapID(identifier: GoogleMapID.googleMapID)
     // GMSMapViewOptions
     private var options: GMSMapViewOptions?
-    // cameraのzoom値
-    var cameraZoomValue: Float {
-        return options?.camera?.zoom ?? 1.0
-    }
+    // 現在のcameraのzoom値を保持
+    var currentZoom: Float = 1.0
     
     // 描画された円を保持
     var circles: [GMSCircle] = []
@@ -27,7 +25,6 @@ class MapView: GMSMapView {
         // セットアップ
         options.mapID = googleMapID
         options.camera = GMSCameraPosition(target: .init(), zoom: 1.0)
-        self.options = options
         super.init(options: options)
     }
     

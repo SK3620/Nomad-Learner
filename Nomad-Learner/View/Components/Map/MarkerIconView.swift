@@ -9,46 +9,29 @@ import UIKit
 
 class MarkerIconView: UIView {
     
-    private var statusIcon = StatusIcon()
+    private let statusIcon = StatusIcon()
     
     private struct StatusIcon {
         // アイコン画像
-        let configuration = UIImage.SymbolConfiguration(weight: .bold)
-        lazy var completed = UIImage(systemName: "checkmark.circle.fill", withConfiguration: self.configuration)
-        lazy var ongoing = UIImage(systemName: "minus.circle.fill", withConfiguration: self.configuration)
-        var hasNotVisided = UIImage()
-        
-        // アイコン色
-        let completedColor = UIColor(red: 0.0/255.0, green: 100.0/255.0, blue: 0.0/255.0, alpha: 1.0)
-        let ongoingColor = UIColor.yellow
-        
-        // アイコン背景色
-        let completedBackgroundColor = UIColor.white
-        let ongoingBackgroundColor = UIColor.black
+        let hasntVisited = UIImage(named: "MapPinGray") // 未訪問
+        let ongoing = UIImage(named: "MapPinYellow") // 進行中
+        let completed = UIImage(named: "MapPinGreen") // 達成
     }
     
-    // マーカーアイコン
-    private let markerIconImageView: UIImageView = UIImageView().then {
-        $0.image = UIImage(systemName: "mountain.2.fill")
-        $0.tintColor = .red
-    }
+    // ロケーションのピン
+    private let locationPinImageView = UIImageView()
     
     // 現在地ピン
-    private let mappinImageView: UIImageView = UIImageView().then {
+    private let currentLocationPinImageView: UIImageView = UIImageView().then {
         $0.image = UIImage(systemName: "target")
         $0.tintColor = ColorCodes.primaryPurple.color()
     }
     
-    // ステータスアイコン（完了/進行中/未訪問）
-    private let statusImageView: UIImageView = UIImageView().then {
-        $0.layer.cornerRadius = 7
-    }
-    
-    // 人のアイコン
-    private let personImageView: UIImageView = UIImageView().then {
-        let configuration = UIImage.SymbolConfiguration(weight: .medium)
-        $0.image = UIImage(systemName: "person", withConfiguration: configuration)
+    // 人型アイコン
+    private let personImageView = UIImageView().then {
+        $0.image = UIImage(systemName: "person")
         $0.tintColor = .black
+        $0.snp.makeConstraints { $0.size.equalTo(14) }
     }
     
     // 勉強中の人数
@@ -56,7 +39,6 @@ class MarkerIconView: UIView {
         $0.textColor = .black
         $0.font = .systemFont(ofSize: UIConstants.TextSize.extraSmall)
     }
-    
     
     init(frame: CGRect, locationStatus: LocationStatus) {
         super.init(frame: frame)
@@ -67,40 +49,41 @@ class MarkerIconView: UIView {
     }
     
     private func setupUI(isMyCurrentLocation: Bool) {
-        addSubview(markerIconImageView)
-        if isMyCurrentLocation {
-            addSubview(mappinImageView)
-            addSubview(personImageView)
-        }
-        addSubview(statusImageView)
+        addSubview(locationPinImageView)
         addSubview(userCountLabel)
-        
-        markerIconImageView.snp.makeConstraints {
-            $0.left.top.equalToSuperview()
-            $0.size.equalTo(30)
-        }
-        
-        if isMyCurrentLocation {
-            mappinImageView.snp.makeConstraints {
-                $0.left.top.equalToSuperview()
-                $0.size.equalTo(30)
-            }
-            personImageView.snp.makeConstraints {
-                $0.bottom.equalTo(markerIconImageView.snp.bottom)
-                $0.left.equalTo(markerIconImageView.snp.right)
-                $0.size.equalTo(14)
-            }
-        }
-        
-        statusImageView.snp.makeConstraints {
-            $0.size.equalTo(14)
-            $0.left.equalTo(markerIconImageView.snp.right)
-            $0.top.equalTo(markerIconImageView)
+      
+        locationPinImageView.snp.makeConstraints {
+            $0.bottom.centerX.equalToSuperview()
+            $0.size.equalTo(26)
         }
         
         userCountLabel.snp.makeConstraints {
-            $0.bottom.equalTo(markerIconImageView).offset(2) // 微調整
-            $0.left.equalTo(isMyCurrentLocation ? personImageView.snp.right : markerIconImageView.snp.right)
+            $0.centerY.equalTo(locationPinImageView.snp.top).inset(4) // 微調整
+            $0.centerX.equalToSuperview()
+        }
+        
+        if isMyCurrentLocation {
+            addSubview(currentLocationPinImageView)
+            addSubview(personImageView)
+            
+            currentLocationPinImageView.snp.makeConstraints {
+                $0.bottom.centerX.equalToSuperview()
+                $0.size.equalTo(22)
+            }
+       
+            personImageView.snp.makeConstraints {
+                $0.right.equalTo(self.snp.centerX)
+                $0.centerY.equalTo(locationPinImageView.snp.top).inset(2) // 微調整
+            }
+            
+            userCountLabel.snp.remakeConstraints {
+                $0.centerY.equalTo(locationPinImageView.snp.top).inset(4) // 微調整
+                $0.left.equalTo(self.snp.centerX)
+            }
+            
+            locationPinImageView.snp.updateConstraints {
+                $0.size.equalTo(32) // 現在地のピンのみサイズ拡大
+            }
         }
     }
     
@@ -110,26 +93,21 @@ class MarkerIconView: UIView {
         
         // 初期位置の場合は現在地ピンのみ表示
         let isInitialLocation = locationStatus.isInitialLocation
-        markerIconImageView.isHidden = isInitialLocation
-        statusImageView.isHidden = isInitialLocation
-        personImageView.isHidden = isInitialLocation
+        locationPinImageView.isHidden = isInitialLocation
         userCountLabel.isHidden = isInitialLocation
+        personImageView.isHidden = isInitialLocation
         
         // 必要な合計勉強時間をクリアしている場合
         if locationStatus.isCompleted {
-            statusImageView.image = statusIcon.completed
-            statusImageView.tintColor = statusIcon.completedColor
-            statusImageView.backgroundColor = statusIcon.completedBackgroundColor
+            locationPinImageView.image = statusIcon.completed
         }
         // 進行中の場合
         else if locationStatus.isOngoing {
-            statusImageView.image = statusIcon.ongoing
-            statusImageView.tintColor = statusIcon.ongoingColor
-            statusImageView.backgroundColor = statusIcon.ongoingBackgroundColor
+            locationPinImageView.image = statusIcon.ongoing
         }
         // まだ訪問したことがない場合
         else {
-            statusImageView.image = statusIcon.hasNotVisided
+            locationPinImageView.image = statusIcon.hasntVisited
         }
     }
     

@@ -369,9 +369,12 @@ extension MapViewController: CLLocationManagerDelegate {
         if let locationInfo = locationInfo {
             locationDetailView.update(ticketInfo: locationInfo.ticketInfo, locationStatus: locationInfo.locationStatus)
         }
-        // 初期位置なら、出発できないように設定
+        
         if let locationStatus = locationInfo?.locationStatus {
+            // 初期位置なら、出発できないように設定
             mapTabBar.airplaneItem.isEnabled = !locationStatus.isInitialLocation
+            // 現在位置なら、ポリラインを削除
+            self.mapView.clearDashedLine()
         }
         // 現在地以外のマーカーをタップした場合、ルートを描画
         if userProfile.currentLocationId != locationInfo?.fixedLocation.locationId {

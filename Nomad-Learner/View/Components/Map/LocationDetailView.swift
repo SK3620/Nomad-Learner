@@ -61,7 +61,7 @@ class LocationDetailView: UIView {
     
     // スラッシュ線
     private let slashView = UIView().then {
-        $0.backgroundColor = .darkGray
+        $0.backgroundColor = .gray
         $0.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 4)
         $0.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi) * 2 * 15 / 360)
         $0.snp.makeConstraints {
@@ -72,7 +72,7 @@ class LocationDetailView: UIView {
     // 必要な勉強時間
     private let requiredStudyHours: UILabel = UILabel().then {
         $0.text = "00"
-        $0.textColor = .orange
+        $0.textColor = .black
         $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.semiMedium)
         $0.textAlignment = .right
     }
@@ -80,8 +80,8 @@ class LocationDetailView: UIView {
     // "hours"テキスト
     private let hoursTextLabel = UILabel().then {
         $0.text = "時間"
-        $0.textColor = .darkGray
-        $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.semiMedium)
+        $0.textColor = .gray
+        $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.small)
     }
     
     // 「/ hours XX」を表示するstackView

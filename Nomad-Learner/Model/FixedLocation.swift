@@ -8,6 +8,7 @@
 import Foundation
 import RealmSwift
 import Kingfisher
+import GoogleMaps
 
 class FixedLocation: Object {
     @Persisted var locationId: String
@@ -23,5 +24,9 @@ extension FixedLocation {
     // imageUrlsを配列に変換するメソッド
     var imageUrlsArr: [String] {
         return Array(imageUrls)
+    }
+    // 座標
+    var coordinate: CLLocationCoordinate2D {
+        return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
 }

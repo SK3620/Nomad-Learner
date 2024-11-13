@@ -21,12 +21,6 @@ class MarkerIconView: UIView {
     // ロケーションのピン
     private let locationPinImageView = UIImageView()
     
-    // 現在地ピン
-    private let currentLocationPinImageView: UIImageView = UIImageView().then {
-        $0.image = UIImage(systemName: "target")
-        $0.tintColor = ColorCodes.primaryPurple.color()
-    }
-    
     // 人型アイコン
     private let personImageView = UIImageView().then {
         $0.image = UIImage(systemName: "person")
@@ -63,14 +57,8 @@ class MarkerIconView: UIView {
         }
         
         if isMyCurrentLocation {
-            addSubview(currentLocationPinImageView)
             addSubview(personImageView)
             
-            currentLocationPinImageView.snp.makeConstraints {
-                $0.bottom.centerX.equalToSuperview()
-                $0.size.equalTo(22)
-            }
-       
             personImageView.snp.makeConstraints {
                 $0.right.equalTo(self.snp.centerX)
                 $0.centerY.equalTo(locationPinImageView.snp.top).inset(2) // 微調整

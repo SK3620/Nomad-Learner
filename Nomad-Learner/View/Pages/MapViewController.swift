@@ -336,38 +336,31 @@ extension MapViewController {
 }
 
 extension MapViewController: CLLocationManagerDelegate {
-    // infoWindowを表示
-    func mapView(_ mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView? {
-        if let location = marker.userData as? FixedLocation {
-            // width, heightは固定
-            let window = MarkerInfoWindow(frame: CGRect.init(x: 0, y: 0, width: 250, height: 50))
-            window.configure(location: location)
-            return window
-        }
-        return UIView()
-    }
     
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         // タップされたマーカーの情報を取得
-        guard let tappedLocation = marker.userData as? FixedLocation else {
+        guard let fixedLocation = marker.userData as? FixedLocation else {
             return false
         }
-        // locationInfo の更新
-        locationInfo = locationsInfo.createLocationInfo(of: tappedLocation.locationId)
+        // プロパティを更新
+        self.mapView.tappedMarker = marker
+        locationInfo = locationsInfo.createLocationInfo(of: fixedLocation.locationId)
+        
         guard let locationInfo = locationInfo else { return false }
         // UI更新
         locationDetailView.update(ticketInfo: locationInfo.ticketInfo, locationStatus: locationInfo.locationStatus)
         
         // 初期位置なら、出発できないように設定
         mapTabBar.airplaneItem.isEnabled = !locationInfo.locationStatus.isInitialLocation
-        // 現在位置なら、ポリラインを削除
-        self.mapView.clearPolyline()
         
-        // 現在地以外のマーカーをタップした場合、ポリラインを描画
-        if userProfile.currentLocationId != locationInfo.fixedLocation.locationId {
-            let currentCoordinate = locationsInfo.getCurrentCoordinate(currentLocationId: userProfile.currentLocationId)
-            self.mapView.drawPolyline(from: currentCoordinate, to: marker.position)
-        }
+        // InfoWindowを生成
+        self.mapView.addInfoWindow(fixedLocation: fixedLocation)
+        
+        // 現在位置の場合はポリラインを削除 それ以外の場合はポリラインを描画
+        locationInfo.locationStatus.isMyCurrentLocation
+        ? self.mapView.clearPolyline()
+        : self.mapView.drawPolyline(from: self.mapView.currentCoordinate!, to: marker.position)
+        
         return false
     }
     
@@ -377,19 +370,29 @@ extension MapViewController: CLLocationManagerDelegate {
         self.mapView.updateCircleSizesOnZoom()
         // 現在地ピンの位置を更新
         self.mapView.updateCurrentLocationPin()
+        // InfoWindowの位置を更新
+        if self.mapView.infoWindow != nil { self.mapView.updateInfoWindowPosition() }
     }
     
     // マーカー以外タップ時
     func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
-        self.mapView.clearPolyline() // ポリライン削除
         // UIを更新
         locationDetailView.update(ticketInfo: TicketInfo(), locationStatus: LocationStatus())
-        mapTabBar.airplaneItem.isEnabled = false // 出発ボタン無効化
+        // ポリライン削除
+        self.mapView.clearPolyline()
+        // 現在地ピンの位置を更新
+        self.mapView.updateCurrentLocationPin()
+        // InfoWindowを非表示
+        self.mapView.removeInfoWindow()
+        // 出発ボタン無効化
+        mapTabBar.airplaneItem.isEnabled = false
     }
     
     // カメラが移動完了したときにズーム値を更新
     func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
         self.mapView.currentZoom = position.zoom
+        // 現在地ピンの位置を更新
+        self.mapView.updateCurrentLocationPin()
     }
 }
 

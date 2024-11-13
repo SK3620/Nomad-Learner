@@ -43,11 +43,12 @@ class MarkerInfoWindow: UIView {
         // フォントサイズ自動調整
         $0.adjustsFontSizeToFitWidth = true
     }
-        
-    override init(frame: CGRect) {
+    
+    init(frame: CGRect, fixedLocation: FixedLocation) {
         super.init(frame: frame)
         
         setupUI()
+        configure(fixedLocation: fixedLocation)
     }
    
     private func setupUI() {
@@ -69,17 +70,15 @@ class MarkerInfoWindow: UIView {
             $0.right.equalToSuperview().inset(UIConstants.Layout.standardPadding)
         }
     }
+    
+    // windowにロケーション情報を表示
+    private func configure(fixedLocation: FixedLocation)  {
+        locationImageView.setImage(with: fixedLocation.imageUrlsArr[0])
+        destinationLabel.text = fixedLocation.location
+        regionLabel.text = "\(fixedLocation.country) / \(fixedLocation.region)"
+    }
         
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-}
-
-extension MarkerInfoWindow {
-    // windowにロケーション情報を表示
-    func configure(location: FixedLocation)  {         
-        locationImageView.setImage(with: location.imageUrlsArr[0])
-        destinationLabel.text = location.location
-        regionLabel.text = "\(location.country) / \(location.region)"
     }
 }

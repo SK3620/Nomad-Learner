@@ -286,6 +286,8 @@ extension MapViewController {
             base.locationsInfo = locationsInfo
             base.userProfile = userProfile
             
+            // マーカーを削除しリセット
+            base.mapView.clear()
             // 現在地の座標を保持
             base.mapView.currentCoordinate = locationsInfo.getCurrentCoordinate(currentLocationId: userProfile.currentLocationId)
             // 取得したロケーションをマーカーとしてマップ上に配置
@@ -296,8 +298,12 @@ extension MapViewController {
             base.showRewardCoinProgressHUD()
             // 現在地までcamera移動
             base.moveToCurrentLocation.onNext(())
-            // ポリラインを削除
-            base.mapView.clearPolyline()
+            // InfoWindowを非表示
+            self.mapView.removeInfoWindow()
+            // 現在地ピンの位置を更新（遅延させることで動作）
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                base.mapView.updateCurrentLocationPin()
+            }
         }
     }
     // 現在地までcamera移動

@@ -26,8 +26,7 @@ class MapViewModel {
     let selectedCategoryIndex = BehaviorRelay<IndexPath>(value: IndexPath(item: 0, section: 0))
     
     init(
-        mainService: MainServiceProtocol,
-        realmService: RealmServiceProtocol
+        mainService: MainServiceProtocol
     ) {
         
         // インジケーター
@@ -35,26 +34,14 @@ class MapViewModel {
         self.isLoading = indicator.asDriver()
         
         // マップに配置するロケーション関連の情報取得
-        //（イベント発火＋マップマーカーViewの再描画）が高頻度で行われると予想されるため、各ロケーションにいるユーザー数はfirebaseリアルタイムで監視しない
-        // 新ロケーションの追加はかなり低頻度で行われるため、fixedLocationの監視は行う
-        let fetchLocationsInfoResult = realmService.fetchFixedLocations() // Realmから固定ロケーション取得
-            .flatMap { realmData in
-                // Realmにデータがない場合、Firebaseから取得してキャッシュ
-                let locationData = realmData.isEmpty
-                ? mainService.fetchFixedLocations()
-                    .do(onNext: { fixedLocations in
-                    // 既存データと画像キャッシュのリセット
-                    realmService.deleteFixedLocations()
-                    ImageCacheManager.clearCache()
-                    
-                    // Firebaseデータの保存と画像プリフェッチ
-                    realmService.saveFixedLocations(fixedLocations)
-                    let imageUrls = fixedLocations.flatMap(\.imageUrlsArr).compactMap(URL.init)
-                    ImageCacheManager.prefetch(from: imageUrls)
-                })
-                : Observable.just(realmData)
-                return locationData
-            }
+        let fetchLocationsInfoResult = mainService.fetchFixedLocations()
+            .do(onNext: { fixedLocations in
+            // 画像キャッシュのリセット
+            ImageCacheManager.clearCache()
+            // 画像をプリフェッチ
+            let imageUrls = fixedLocations.flatMap(\.imageUrlsArr).compactMap(URL.init)
+            ImageCacheManager.prefetch(from: imageUrls)
+        })
             .flatMap { fixedLocations in
                 // 各ロケーションの状況、訪問情報、ユーザープロフィールを取得
                 Observable.zip(

@@ -183,8 +183,7 @@ extension MapViewController: KRProgressHUDEnabled, AlertEnabled {
             .disposed(by: disposeBag)
         
         self.viewModel = MapViewModel(
-            mainService: MainService.shared,
-            realmService: RealmService.shared
+            mainService: MainService.shared
         )
         let collectionView = locationDetailView.locationCategoryCollectionView
         

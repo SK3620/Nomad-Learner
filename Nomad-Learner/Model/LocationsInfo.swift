@@ -74,7 +74,10 @@ extension LocationsInfo {
         let currentLocation = fixedLocations.first(where: { $0.locationId == id })!
         return CLLocationCoordinate2D(latitude: currentLocation.latitude, longitude: currentLocation.longitude)
     }
-    
+    // 現在地のロケーション取得
+    func getCurrentLocation(currentLocationId id: String) -> FixedLocation {
+        return fixedLocations.first(where: { $0.locationId == id })!
+    }
     // チケット上に表示する必要なロケーション情報を取得
     func getLocationDetailsForTicketInfo(for locationId: String) -> (
         locationId: String,

@@ -23,7 +23,7 @@ class MarkerIconView: UIView {
     
     // 人型アイコン
     private let personImageView = UIImageView().then {
-        $0.image = UIImage(systemName: "person")
+        $0.image = UIImage(systemName: "person.fill")
         $0.tintColor = .black
         $0.snp.makeConstraints { $0.size.equalTo(14) }
     }

@@ -44,11 +44,11 @@ class MarkerInfoWindow: UIView {
         $0.adjustsFontSizeToFitWidth = true
     }
     
-    init(frame: CGRect, fixedLocation: FixedLocation) {
+    init(frame: CGRect, locationInfo: LocationInfo) {
         super.init(frame: frame)
         
         setupUI()
-        configure(fixedLocation: fixedLocation)
+        configure(locationInfo: locationInfo)
     }
    
     private func setupUI() {
@@ -72,10 +72,15 @@ class MarkerInfoWindow: UIView {
     }
     
     // windowにロケーション情報を表示
-    private func configure(fixedLocation: FixedLocation)  {
+    private func configure(locationInfo: LocationInfo) {
+        let fixedLocation = locationInfo.fixedLocation
+        let isMyCurrentLocation = locationInfo.locationStatus.isMyCurrentLocation
+
         locationImageView.setImage(with: fixedLocation.imageUrlsArr[0])
         destinationLabel.text = fixedLocation.location
         regionLabel.text = "\(fixedLocation.country) / \(fixedLocation.region)"
+        
+        backgroundColor = isMyCurrentLocation ? .blue : ColorCodes.primaryPurple.color()
     }
         
     required init?(coder: NSCoder) {

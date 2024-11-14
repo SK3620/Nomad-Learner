@@ -211,6 +211,11 @@ extension MapViewController: KRProgressHUDEnabled, AlertEnabled {
             .bind(to: moveToCurrentLocation)
             .disposed(by: disposeBag)
         
+        // 現在地ピン
+        mapView.currentLocationPinButton.rx.tap
+            .bind(to: displayCurrentLocationInfoWindow)
+            .disposed(by: disposeBag)
+        
         // 各ロケーション情報
         viewModel.locationsAndUserInfo
             .drive(handleLocationsInfo)
@@ -298,21 +303,31 @@ extension MapViewController {
             base.showRewardCoinProgressHUD()
             // 現在地までcamera移動
             base.moveToCurrentLocation.onNext(())
-            // InfoWindowを非表示
+            // 既存InfoWindowを非表示
             self.mapView.removeInfoWindow()
+            // 現在地のInfoWindow表示
+            base.displayCurrentLocationInfoWindow.onNext(())
             // 現在地ピンの位置を更新（遅延させることで動作）
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                 base.mapView.updateCurrentLocationPin()
             }
         }
     }
+    // 現在地のInfoWindow表示
+    private var displayCurrentLocationInfoWindow: Binder<Void> {
+        return Binder(self) { base, _ in
+            let marker = GMSMarker(position: base.mapView.currentCoordinate)
+            marker.userData = base.locationsInfo.getCurrentLocation(currentLocationId: base.userProfile.currentLocationId)
+            
+            base.markerTapped(marker: marker)
+            base.moveToCurrentLocation.onNext(())
+        }
+    }
     // 現在地までcamera移動
     private var moveToCurrentLocation: Binder<Void> {
         return Binder(self) { base, _ in
-            if let currentLocationInfo = base.locationsInfo.fixedLocations.first(where: { $0.locationId == base.userProfile.currentLocationId }) {
-                let currentPosition = GMSCameraPosition(latitude: currentLocationInfo.latitude, longitude: currentLocationInfo.longitude, zoom: base.mapView.currentZoom)
-                base.mapView.animate(to: currentPosition)
-            }
+        let currentPosition = GMSCameraPosition(target: base.mapView.currentCoordinate, zoom: base.mapView.currentZoom)
+            base.mapView.animate(to: currentPosition)
         }
     }
 }
@@ -320,10 +335,8 @@ extension MapViewController {
 extension MapViewController {
     // 現在地のロケーション情報を取得し、UIを更新
     private func updateUI() {
-        let currentLocationId = userProfile.currentLocationId
-        let currentLocationInfo = locationsInfo.createLocationInfo(of: currentLocationId)
-        locationInfo = currentLocationInfo
-        locationDetailView.update(ticketInfo: currentLocationInfo.ticketInfo, locationStatus: currentLocationInfo.locationStatus)
+        locationInfo = locationsInfo.createLocationInfo(of: userProfile.currentLocationId)
+        locationDetailView.update(ticketInfo: locationInfo!.ticketInfo, locationStatus: locationInfo!.locationStatus)
         currentCoinLabel.text = userProfile.currentCoin.toString
     }
     
@@ -339,34 +352,40 @@ extension MapViewController {
         // ProgressHUD表示
         self.rx.showMessage.onNext(.getRewardCoin(info: rewardCoinProgressHUDInfo))
     }
-}
-
-extension MapViewController: CLLocationManagerDelegate {
     
-    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
-        // タップされたマーカーの情報を取得
-        guard let fixedLocation = marker.userData as? FixedLocation else {
-            return false
-        }
+    // マーカータップ時の処理
+    private func markerTapped(marker: GMSMarker) {
         // プロパティを更新
         self.mapView.tappedMarker = marker
+        
+        // マーカーの関連情報を取得
+        guard let fixedLocation = marker.userData as? FixedLocation else { return }
         locationInfo = locationsInfo.createLocationInfo(of: fixedLocation.locationId)
         
-        guard let locationInfo = locationInfo else { return false }
-        // UI更新
+        // locationInfoがnilでないことを確認
+        guard let locationInfo = locationInfo else { return }
+        
+        // LocationDetailViewのUIを更新
         locationDetailView.update(ticketInfo: locationInfo.ticketInfo, locationStatus: locationInfo.locationStatus)
         
-        // 初期位置なら、出発できないように設定
+        // マーカーが初期位置なら出発ボタンを無効にする
         mapTabBar.airplaneItem.isEnabled = !locationInfo.locationStatus.isInitialLocation
         
-        // InfoWindowを生成
-        self.mapView.addInfoWindow(fixedLocation: fixedLocation)
+        // InfoWindowを生成・表示
+        self.mapView.addInfoWindow(locationInfo: locationInfo)
         
         // 現在位置の場合はポリラインを削除 それ以外の場合はポリラインを描画
         locationInfo.locationStatus.isMyCurrentLocation
         ? self.mapView.clearPolyline()
-        : self.mapView.drawPolyline(from: self.mapView.currentCoordinate!, to: marker.position)
-        
+        : self.mapView.drawPolyline(from: self.mapView.currentCoordinate, to: marker.position)
+    }
+}
+
+extension MapViewController: CLLocationManagerDelegate {
+    
+    // マーカータップ時
+    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        markerTapped(marker: marker)
         return false
     }
     

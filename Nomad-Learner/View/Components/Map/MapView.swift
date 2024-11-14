@@ -18,14 +18,12 @@ class MapView: GMSMapView {
     // 現在のcameraのzoom値を保持
     var currentZoom: Float = 1.0
     // 現在地の座標
-    var currentCoordinate: CLLocationCoordinate2D?
+    var currentCoordinate: CLLocationCoordinate2D = .init()
     
     // タップされたマーカー
     var tappedMarker: GMSMarker?
     // タップされたマーカーの座標
     var tappedMarkerCoordinate: CLLocationCoordinate2D { tappedMarker!.position }
-    // タップされたマーカーのIconView
-    private lazy var iconView = tappedMarker?.iconView as? MarkerIconView
     
     // ポリライン
     var polyline: GMSPolyline?
@@ -34,14 +32,14 @@ class MapView: GMSMapView {
     
     // InfoWindow
     var infoWindow: MarkerInfoWindow?
+    // IconView 高さ
+    private let IconViewHeight: CGFloat = 35
     
     // 現在地ピン
-    private let currentLocationPinImageView: UIImageView = UIImageView().then {
-        $0.image = UIImage(named: "CurrentLocationPin")
-        $0.tintColor = .blue
-        $0.frame.size = CGSize(width: 22, height: 22)
-        let tapGesture = UITapGestureRecognizer()
-        $0.addGestureRecognizer(tapGesture)
+    let currentLocationPinButton = UIButton().then {
+        let image = UIImage(named: "CurrentLocationPin")
+        $0.setImage(image, for: .normal)
+        $0.frame = CGRect(origin: .zero, size: CGSize(width: 24, height: 24))
     }
     
     override init(options: GMSMapViewOptions) {
@@ -50,17 +48,15 @@ class MapView: GMSMapView {
         options.camera = GMSCameraPosition(target: .init(), zoom: 1.0)
         super.init(options: options)
         
-        addSubview(currentLocationPinImageView)
+        addSubview(currentLocationPinButton)
     }
     
-    func addInfoWindow(fixedLocation: FixedLocation) {
+    func addInfoWindow(locationInfo: LocationInfo) {
         // 既存のInfoWindowを非表示
         removeInfoWindow()
         
-        guard let iconView = iconView else { return }
         let frame = CGRect(origin: .zero, size: CGSize(width: 250, height: 50))
-        infoWindow = MarkerInfoWindow(frame: frame, fixedLocation: fixedLocation)
-        
+        infoWindow = MarkerInfoWindow(frame: frame, locationInfo: locationInfo)
         updateInfoWindowPosition()
         
         addSubview(infoWindow!)
@@ -71,17 +67,17 @@ extension MapView {
     
     // 現在地ピンの位置を更新
     func updateCurrentLocationPin() {
-        guard let currentCoordinate = currentCoordinate else { return }
+//        guard let currentCoordinate = currentCoordinate else { return }
         // 現在の地図上の位置を画面座標に変換
         let point = projection.point(for: currentCoordinate)
         // UIImageViewの中心を画面座標に合わせる
-        currentLocationPinImageView.center = point
+        currentLocationPinButton.center = point
     }
     
     // InfoWindowの位置を更新
     func updateInfoWindowPosition() {
         let markerPoint = projection.point(for: tappedMarkerCoordinate)
-        let centerY = markerPoint.y - (iconView!.viewHeight + infoWindow!.viewHeight / 2)
+        let centerY = markerPoint.y - (IconViewHeight + infoWindow!.viewHeight / 2)
         let centerX = markerPoint.x
         let centerPoint = CGPoint(x: centerX, y: centerY)
         infoWindow?.center = centerPoint
@@ -110,7 +106,7 @@ extension MapView {
             
             // マーカーのアイコンビューを作成
             let markerIconView = MarkerIconView(
-                frame: CGRect(origin: .zero, size: CGSize(width: 26, height: 35)),
+                frame: CGRect(origin: .zero, size: CGSize(width: 26, height: IconViewHeight)),
                 locationStatus: locationStatus
             )
             marker.iconView = markerIconView

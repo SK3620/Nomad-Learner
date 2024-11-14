@@ -21,17 +21,10 @@ class MarkerIconView: UIView {
     // ロケーションのピン
     private let locationPinImageView = UIImageView()
     
-    // 人型アイコン
-    private let personImageView = UIImageView().then {
-        $0.image = UIImage(systemName: "person.fill")
-        $0.tintColor = .black
-        $0.snp.makeConstraints { $0.size.equalTo(14) }
-    }
-    
     // 勉強中の人数
     private let userCountLabel: UILabel = UILabel().then {
         $0.textColor = .black
-        $0.font = .systemFont(ofSize: UIConstants.TextSize.extraSmall)
+        $0.font = .systemFont(ofSize: UIConstants.TextSize.small)
     }
     
     init(frame: CGRect, locationStatus: LocationStatus) {
@@ -48,30 +41,12 @@ class MarkerIconView: UIView {
       
         locationPinImageView.snp.makeConstraints {
             $0.bottom.centerX.equalToSuperview()
-            $0.size.equalTo(26)
+            $0.size.equalTo(28)
         }
         
         userCountLabel.snp.makeConstraints {
             $0.centerY.equalTo(locationPinImageView.snp.top).inset(4) // 微調整
             $0.centerX.equalToSuperview()
-        }
-        
-        if isMyCurrentLocation {
-            addSubview(personImageView)
-            
-            personImageView.snp.makeConstraints {
-                $0.right.equalTo(self.snp.centerX)
-                $0.centerY.equalTo(locationPinImageView.snp.top).inset(2) // 微調整
-            }
-            
-            userCountLabel.snp.remakeConstraints {
-                $0.centerY.equalTo(locationPinImageView.snp.top).inset(4) // 微調整
-                $0.left.equalTo(self.snp.centerX)
-            }
-            
-            locationPinImageView.snp.updateConstraints {
-                $0.size.equalTo(32) // 現在地のピンのみサイズ拡大
-            }
         }
     }
     
@@ -83,7 +58,6 @@ class MarkerIconView: UIView {
         let isInitialLocation = locationStatus.isInitialLocation
         locationPinImageView.isHidden = isInitialLocation
         userCountLabel.isHidden = isInitialLocation
-        personImageView.isHidden = isInitialLocation
         
         // 必要な合計勉強時間をクリアしている場合
         if locationStatus.isCompleted {

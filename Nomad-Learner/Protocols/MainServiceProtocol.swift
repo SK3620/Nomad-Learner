@@ -72,23 +72,24 @@ final class MainService: MainServiceProtocol {
     // マップのマーカーに設定するロケーション情報取得
     func fetchFixedLocations() -> Observable<[FixedLocation]> {
         return Observable.create { observer in
-            let observer = self.firebaseConfig.fixedLocationsReference().observe(.value) { snapshot in
-                if !snapshot.exists() {
-                    observer.onError(MyAppError.locationEmpty)
+            self.firebaseConfig.fixedLocationsReference().getData { error, snapshot in
+                if let error = error {
+                    observer.onError(MyAppError.allError(error))
                 }
-                
-                var locations = [FixedLocation]()
-                // Firebaseのスナップショットからデータを抽出し、FixedLocationに変換
-                for child in snapshot.children {
-                    if let childSnapshot = child as? DataSnapshot,
-                       let locationData = childSnapshot.value as? [String: Any],
-                       let location = FixedLocationParser.parse(childSnapshot.key, locationData)
-                    {
-                        locations.append(location)
+                else if let children = snapshot?.children {
+                    var locations = [FixedLocation]()
+                    // Firebaseのスナップショットからデータを抽出し、FixedLocationに変換
+                    for child in children {
+                        if let childSnapshot = child as? DataSnapshot,
+                           let locationData = childSnapshot.value as? [String: Any],
+                           let location = FixedLocationParser.parse(childSnapshot.key, locationData)
+                        {
+                            locations.append(location)
+                        }
                     }
+                    observer.onNext(locations)
+                    observer.onCompleted()
                 }
-                // 監視するため、onCompleted()はさせない
-                observer.onNext(locations)
             }
             return Disposables.create()
         }

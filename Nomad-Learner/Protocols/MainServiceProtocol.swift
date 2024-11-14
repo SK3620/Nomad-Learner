@@ -72,7 +72,7 @@ final class MainService: MainServiceProtocol {
     // マップのマーカーに設定するロケーション情報取得
     func fetchFixedLocations() -> Observable<[FixedLocation]> {
         return Observable.create { observer in
-            self.firebaseConfig.fixedLocationsReference().observe(.value) { snapshot in
+            let observer = self.firebaseConfig.fixedLocationsReference().observe(.value) { snapshot in
                 if !snapshot.exists() {
                     observer.onError(MyAppError.locationEmpty)
                 }
@@ -87,8 +87,8 @@ final class MainService: MainServiceProtocol {
                         locations.append(location)
                     }
                 }
+                // 監視するため、onCompleted()はさせない
                 observer.onNext(locations)
-                observer.onCompleted()
             }
             return Disposables.create()
         }

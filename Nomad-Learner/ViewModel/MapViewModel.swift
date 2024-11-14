@@ -148,7 +148,8 @@ extension MapViewModel {
                     to: fixedLocationCoordinate
                 ),
                 locationDetials: locationsInfo.getLocationDetailsForTicketInfo(for: fixedLocation.locationId),
-                currentCoin: currentCoin
+                currentCoin: currentCoin, 
+                currentCountry: currentLocationInfo.country
             )
             // 配列に格納
             ticketsInfo.append(ticketInfo)

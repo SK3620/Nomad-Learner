@@ -11,6 +11,9 @@ import Then
 
 class TicketView: UIView {
     
+    // 国旗画像
+    private let nationalFlagImageStringURLs: [String: String] = NationalFlagImageStringURLs.dic
+    
     // ダッシュ線のX座標
     private let dashPointX: CGFloat = 80
     // ダッシュ線の幅
@@ -24,18 +27,20 @@ class TicketView: UIView {
     
     // 現在地の国旗
     private let currentNationalFlag: UIImageView = UIImageView().then {
-        $0.layer.borderWidth = 1.0
-        $0.layer.borderColor = UIColor.blue.cgColor
-        $0.backgroundColor = UIColor.blue
+        $0.layer.borderWidth = 2
+        $0.layer.borderColor = UIColor.white.cgColor
         $0.layer.cornerRadius = 44 / 2
+        $0.contentMode = .scaleToFill
+        $0.layer.masksToBounds = true
     }
     
     // 目的地の国旗
     private let destinationNationalFlag: UIImageView = UIImageView().then {
-        $0.layer.borderWidth = 1.0
-        $0.layer.borderColor = UIColor.green.cgColor
-        $0.backgroundColor = UIColor.green
+        $0.layer.borderWidth = 2
+        $0.layer.borderColor = UIColor.white.cgColor
         $0.layer.cornerRadius = 44 / 2
+        $0.contentMode = .scaleToFill
+        $0.layer.masksToBounds = true
     }
     
     // 矢印画像
@@ -411,6 +416,10 @@ extension TicketView {
         countryAndRegion.text = ticketInfo.countryAndRegion
         totalStudyTimeLabel.text = Int.toTimeFormat(hours: ticketInfo.totalStudyHours, mins: ticketInfo.totalStudyMins)
         requiredStudyHours.text = ticketInfo.requiredStudyHours.toString
+        
+        // 国旗画像をセット
+        currentNationalFlag.setImage(with: ticketInfo.nationalFlagImageUrlString.current)
+        destinationNationalFlag.setImage(with: ticketInfo.nationalFlagImageUrlString.destination)
         
         // 達成状況に応じた色設定とボーナス表示
         let completedColor = ColorCodes.completedGreen.color()

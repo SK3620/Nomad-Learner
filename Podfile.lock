@@ -24,6 +24,9 @@ PODS:
     - CLImageEditor/Core
   - CLImageEditor/TextTool (0.2.4):
     - CLImageEditor/Core
+  - CocoaLumberjack (3.8.5):
+    - CocoaLumberjack/Core (= 3.8.5)
+  - CocoaLumberjack/Core (3.8.5)
   - FBAEMKit (16.3.1):
     - FBSDKCoreKit_Basics (= 16.3.1)
   - FBSDKCoreKit (16.3.1):
@@ -280,6 +283,8 @@ PODS:
     - SDWebImage/Core (= 5.19.7)
   - SDWebImage/Core (5.19.7)
   - SnapKit (5.7.1)
+  - SVGKit (3.0.0):
+    - CocoaLumberjack (~> 3.0)
   - Then (3.0.0)
 
 DEPENDENCIES:
@@ -303,6 +308,7 @@ DEPENDENCIES:
   - RxCocoa (~> 6.5.0)
   - RxSwift (~> 6.5.0)
   - SnapKit (~> 5.7.0)
+  - SVGKit
   - Then
 
 SPEC REPOS:
@@ -310,6 +316,7 @@ SPEC REPOS:
     - Alamofire
     - AppAuth
     - CLImageEditor
+    - CocoaLumberjack
     - FBAEMKit
     - FBSDKCoreKit
     - FBSDKCoreKit_Basics
@@ -364,6 +371,7 @@ SPEC REPOS:
     - RxSwift
     - SDWebImage
     - SnapKit
+    - SVGKit
     - Then
 
 EXTERNAL SOURCES:
@@ -380,6 +388,7 @@ SPEC CHECKSUMS:
   Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
   AppAuth: 501c04eda8a8d11f179dbe8637b7a91bb7e5d2fa
   CLImageEditor: dc3e5358f641368da3a76fc1c744a4c2ceb270ad
+  CocoaLumberjack: 6a459bc897d6d80bd1b8c78482ec7ad05dffc3f0
   FBAEMKit: 6c7b5eb77c96861bb59e040842c6e55bf39512ce
   FBSDKCoreKit: 5e4dd478947ab1bcc887e8cfadeae0727af1a942
   FBSDKCoreKit_Basics: cd7b5f5d1e8868c26706917919d058999ca672c3
@@ -435,8 +444,9 @@ SPEC CHECKSUMS:
   RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
   SDWebImage: 8a6b7b160b4d710e2a22b6900e25301075c34cb3
   SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
+  SVGKit: 1ad7513f8c74d9652f94ed64ddecda1a23864dea
   Then: 844265ae87834bbe1147d91d5d41a404da2ec27d
 
-PODFILE CHECKSUM: 33f8e8c3f98ca90cb7c31a2f5a8eca3790f65adb
+PODFILE CHECKSUM: 9bcd21f81960006d791c45f0fea1284226f1197c
 
 COCOAPODS: 1.15.2

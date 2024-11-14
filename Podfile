@@ -28,4 +28,5 @@ pod 'Google-Maps-iOS-Utils', '6.0.0'
 pod 'RealmSwift', '~> 10'
 pod 'Kingfisher', '~> 8.0'
 pod 'CLImageEditor/AllTools', '0.2.4'
+pod 'SVGKit'
 end

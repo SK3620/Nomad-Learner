@@ -19,6 +19,7 @@ struct TicketInfo {
     let countryAndRegion: String // 目的地の国と地域
     let currentCoin: Int // 所持金
     let remainingCoin: Int // 旅費支払い後の残高
+    let nationalFlagImageUrlString: (current: String, destination: String) // 現在地と目的地の国旗画像URL文字列
     
     init(
         coordinate: (
@@ -35,7 +36,8 @@ struct TicketInfo {
             fixedRequiredStudyHours: Int?,
             fixedRewardCoin: Int?
         ),
-        currentCoin: Int
+        currentCoin: Int,
+        currentCountry: String
     ) {
         self.locationId = locationDetials.locationId
         self.travelDistanceAndCost = TicketInfo.calculateTravelDistanceAndCost(from: coordinate.from, to: coordinate.to)
@@ -47,6 +49,7 @@ struct TicketInfo {
         self.countryAndRegion = locationDetials.country + " / " + locationDetials.region
         self.currentCoin = currentCoin
         self.remainingCoin = self.currentCoin - self.travelDistanceAndCost
+        self.nationalFlagImageUrlString = TicketInfo.getNationalFlagImageStringURLs(of: currentCountry, of: locationDetials.country)
     }
     
     init() {
@@ -60,6 +63,7 @@ struct TicketInfo {
         self.countryAndRegion = "ー"
         self.currentCoin = 0
         self.remainingCoin = 0
+        self.nationalFlagImageUrlString =  (current: "", destination: "")
     }
 }
 
@@ -82,5 +86,13 @@ extension TicketInfo {
     // 報酬コインの計算
     private static func calculateRewardCoin(for distance: Int) -> Int {
         Int(Double(distance) * 1.2)
+    }
+    
+    private static func getNationalFlagImageStringURLs(
+        of currentCountry: String,
+        of destinationCountry: String
+    ) -> (current: String, destination: String) {
+        let dic = NationalFlagImageStringURLs.dic
+        return (current: dic[currentCountry] ?? "", destination: dic[destinationCountry] ?? "")
     }
 }

@@ -37,6 +37,7 @@
 		8344786B2CCFB61E0038C7B9 /* LocationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8344786A2CCFB61E0038C7B9 /* LocationInfo.swift */; };
 		8344786D2CD213BE0038C7B9 /* LocationStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8344786C2CD213BE0038C7B9 /* LocationStatus.swift */; };
 		8344786F2CD498700038C7B9 /* OnFlightViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8344786E2CD498700038C7B9 /* OnFlightViewModel.swift */; };
+		8344D0312CE6474F007559E0 /* NationalFlagImageUrlString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8344D0302CE6474F007559E0 /* NationalFlagImageUrlString.swift */; };
 		835BD2F12CA413560088CA02 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835BD2F02CA413560088CA02 /* AppDelegate.swift */; };
 		835BD2F32CA413560088CA02 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835BD2F22CA413560088CA02 /* SceneDelegate.swift */; };
 		835BD2FA2CA413570088CA02 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 835BD2F92CA413570088CA02 /* Assets.xcassets */; };
@@ -148,6 +149,7 @@
 		8344786A2CCFB61E0038C7B9 /* LocationInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationInfo.swift; sourceTree = "<group>"; };
 		8344786C2CD213BE0038C7B9 /* LocationStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationStatus.swift; sourceTree = "<group>"; };
 		8344786E2CD498700038C7B9 /* OnFlightViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnFlightViewModel.swift; sourceTree = "<group>"; };
+		8344D0302CE6474F007559E0 /* NationalFlagImageUrlString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NationalFlagImageUrlString.swift; sourceTree = "<group>"; };
 		835BD2ED2CA413560088CA02 /* Nomad-Learner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Nomad-Learner.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		835BD2F02CA413560088CA02 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		835BD2F22CA413560088CA02 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -319,6 +321,7 @@
 			isa = PBXGroup;
 			children = (
 				831731CB2CE228670092AE89 /* MyAppSettings.swift */,
+				8344D0302CE6474F007559E0 /* NationalFlagImageUrlString.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -804,6 +807,7 @@
 				834478632CCA65380038C7B9 /* UITextView.swift in Sources */,
 				838753D42CABFDB7001EE8F1 /* AuthInputValidation.swift in Sources */,
 				834478672CCF6BDE0038C7B9 /* LocationsInfo.swift in Sources */,
+				8344D0312CE6474F007559E0 /* NationalFlagImageUrlString.swift in Sources */,
 				83A6D7C62CB682D600D18A30 /* ProfileTopView.swift in Sources */,
 				83C5E1332CBF851D001C27E1 /* NavigationControllerForAuthVC.swift in Sources */,
 				83A6D7C42CB6630700D18A30 /* ProfileNavigationBar.swift in Sources */,

@@ -16,6 +16,8 @@ import FirebaseStorage
 protocol MainServiceProtocol {
     // Firebaseからロケーションデータ取得
     func fetchFixedLocations() -> Observable<[FixedLocation]>
+    // ロケーション情報の変更を監視
+    func monitorFixedLocationsChanges() -> Observable<[FixedLocation]>
     // プロフィール画像保存
     func saveProfileImage(image: UIImage) -> Observable<String>
     // ユーザープロフィール保存
@@ -72,13 +74,14 @@ final class MainService: MainServiceProtocol {
     // マップのマーカーに設定するロケーション情報取得
     func fetchFixedLocations() -> Observable<[FixedLocation]> {
         return Observable.create { observer in
-            self.firebaseConfig.fixedLocationsReference().getData { error, snapshot in
+            let ref = self.firebaseConfig.fixedLocationsReference()
+            
+            ref.getData { error, snapshot in
                 if let error = error {
                     observer.onError(MyAppError.allError(error))
                 }
                 else if let children = snapshot?.children {
                     var locations = [FixedLocation]()
-                    // Firebaseのスナップショットからデータを抽出し、FixedLocationに変換
                     for child in children {
                         if let childSnapshot = child as? DataSnapshot,
                            let locationData = childSnapshot.value as? [String: Any],
@@ -92,6 +95,28 @@ final class MainService: MainServiceProtocol {
                 }
             }
             return Disposables.create()
+        }
+    }
+    
+    // ロケーション情報の変更を監視
+    func monitorFixedLocationsChanges() -> Observable<[FixedLocation]> {
+        return Observable.create { observer in
+            let ref = self.firebaseConfig.fixedLocationsReference()
+            
+            let handle = ref.observe(.value) { snapshot in
+                var locations = [FixedLocation]()
+                for child in snapshot.children {
+                    if let childSnapshot = child as? DataSnapshot,
+                       let locationData = childSnapshot.value as? [String: Any],
+                       let location = FixedLocationParser.parse(childSnapshot.key, locationData) {
+                        locations.append(location)
+                    }
+                }
+                observer.onNext(locations)
+            }
+            return Disposables.create {
+                ref.removeObserver(withHandle: handle)
+            }
         }
     }
     

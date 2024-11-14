@@ -18,6 +18,7 @@ class MapViewModel {
     var selectedIndex: Driver<IndexPath> { return selectedCategoryIndex.asDriver(onErrorDriveWith: .empty())}
     
     let locationsAndUserInfo: Driver<(LocationsInfo, User)> // 各ロケーション情報
+    let monitoredLocationsAndUserInfo: Driver<(LocationsInfo, User)> // 各ロケーション情報
     let isLoading: Driver<Bool> // ローディングインジケーター
     let myAppError: Driver<MyAppError> // エラー
     
@@ -28,68 +29,34 @@ class MapViewModel {
     init(
         mainService: MainServiceProtocol
     ) {
-        
         // インジケーター
         let indicator = ActivityIndicator()
         self.isLoading = indicator.asDriver()
         
         // マップに配置するロケーション関連の情報取得
         let fetchLocationsInfoResult = mainService.fetchFixedLocations()
-            .do(onNext: { fixedLocations in
-            // 画像キャッシュのリセット
-            ImageCacheManager.clearCache()
-            // 画像をプリフェッチ
-            let imageUrls = fixedLocations.flatMap(\.imageUrlsArr).compactMap(URL.init)
-            ImageCacheManager.prefetch(from: imageUrls)
-        })
             .flatMap { fixedLocations in
-                // 各ロケーションの状況、訪問情報、ユーザープロフィールを取得
-                Observable.zip(
-                    mainService.fetchLocations(), // 各ロケーションの状態を取得
-                    mainService.fetchVisitedLocations(), // 各ロケーションの訪問情報を取得
-                    mainService.fetchUserProfile() // ユーザープロフィール取得
-                        .map { userProfile in
-                            // プロフィール画像をプリフェッチ 空の場合はデフォルト画像を適用
-                            if !userProfile.profileImageUrl.isEmpty {
-                                ImageCacheManager.prefetch(from: [URL(string: userProfile.profileImageUrl)!])
-                            }
-                            return userProfile
-                        }
-                )
-                .map { (dynamicLocations: [DynamicLocation], visitedLocations: [VisitedLocation], userProfile: User) in
-                    // userProfileをコピー
-                    var mutableUserProfile = userProfile
-                    
-                    // LocationsInfoとuserProfileのタプル作成
-                    var locationsInfo = LocationsInfo(
-                        fixedLocations: fixedLocations,
-                        dynamicLocations: dynamicLocations,
-                        visitedLocations: visitedLocations
-                    )
-                    
-                    let ticketsInfo = MapViewModel.createTicketsInfo(userProfile: userProfile, locationsInfo: locationsInfo)
-                    let locationsStatus = MapViewModel.createLocationStatus(currentLocationId: userProfile.currentLocationId, ticketsInfo: ticketsInfo, locationsInfo: locationsInfo)
-                    let progressSum = MapViewModel.createStudyProgressSummary(fixedLocations: fixedLocations, visitedLocations: visitedLocations, locationsStatus: locationsStatus)
-                    // 上書き
-                    locationsInfo = LocationsInfo(
-                        fixedLocations: fixedLocations,
-                        dynamicLocations: dynamicLocations,
-                        visitedLocations: visitedLocations,
-                        ticketsInfo: ticketsInfo, // 各ロケーションごとのチケット上のUIに表示する情報（配列）を追加
-                        locationStatus: locationsStatus // 各ロケーションごとの状態（配列）追加
-                    )
-                    // progressSumに値をセット
-                    mutableUserProfile.progressSum = progressSum
-                    
-                    return (locationsInfo, mutableUserProfile)
-                }
-                .trackActivity(indicator)
+                MapViewModel.handle(fixedLocations: fixedLocations, mainService: mainService)
+            }
+            .trackActivity(indicator)
+            .materialize()
+            .share(replay: 1)
+        
+        // リアルタイム監視用の固定ロケーション取得
+        let monitorLocationsInfoResult = mainService.monitorFixedLocationsChanges()
+            .flatMap { fixedLocations in
+                MapViewModel.handle(fixedLocations: fixedLocations, mainService: mainService)
             }
             .materialize()
             .share(replay: 1)
         
         // マップに配置するロケーション関連の情報を流す
         self.locationsAndUserInfo = fetchLocationsInfoResult
+            .compactMap { $0.event.element }
+            .asDriver(onErrorJustReturn: (LocationsInfo(), User()))
+        
+        // マップに配置するロケーション関連の情報を流す（監視）
+        self.monitoredLocationsAndUserInfo = monitorLocationsInfoResult
             .compactMap { $0.event.element }
             .asDriver(onErrorJustReturn: (LocationsInfo(), User()))
         
@@ -101,6 +68,52 @@ class MapViewModel {
         self.myAppError = Observable
             .merge(fetchLocationsInfoError)
             .asDriver(onErrorJustReturn: .unknown)
+    }
+}
+
+extension MapViewModel {
+    // 共通処理
+    private static func handle(fixedLocations: [FixedLocation], mainService: MainServiceProtocol) -> Observable<(LocationsInfo, User)> {
+        // キャッシュのクリアと画像のプリフェッチ
+        ImageCacheManager.clearCache()
+        let imageUrls = fixedLocations.flatMap(\.imageUrlsArr).compactMap(URL.init)
+        ImageCacheManager.prefetch(from: imageUrls)
+        
+        // 各ロケーションの状況、訪問情報、ユーザープロフィールを取得
+        return Observable.zip(
+            mainService.fetchLocations(),
+            mainService.fetchVisitedLocations(),
+            mainService.fetchUserProfile().map { userProfile in
+                // プロフィール画像をプリフェッチ（空の場合はスキップ）
+                if !userProfile.profileImageUrl.isEmpty {
+                    ImageCacheManager.prefetch(from: [URL(string: userProfile.profileImageUrl)!])
+                }
+                return userProfile
+            }
+        )
+        .map { dynamicLocations, visitedLocations, userProfile in
+            var mutableUserProfile = userProfile
+            var locationsInfo = LocationsInfo(
+                fixedLocations: fixedLocations,
+                dynamicLocations: dynamicLocations,
+                visitedLocations: visitedLocations
+            )
+            
+            let ticketsInfo = MapViewModel.createTicketsInfo(userProfile: userProfile, locationsInfo: locationsInfo)
+            let locationsStatus = MapViewModel.createLocationStatus(currentLocationId: userProfile.currentLocationId, ticketsInfo: ticketsInfo, locationsInfo: locationsInfo)
+            let progressSum = MapViewModel.createStudyProgressSummary(fixedLocations: fixedLocations, visitedLocations: visitedLocations, locationsStatus: locationsStatus)
+            
+            locationsInfo = LocationsInfo(
+                fixedLocations: fixedLocations,
+                dynamicLocations: dynamicLocations,
+                visitedLocations: visitedLocations,
+                ticketsInfo: ticketsInfo,
+                locationStatus: locationsStatus
+            )
+            
+            mutableUserProfile.progressSum = progressSum
+            return (locationsInfo, mutableUserProfile)
+        }
     }
 }
 

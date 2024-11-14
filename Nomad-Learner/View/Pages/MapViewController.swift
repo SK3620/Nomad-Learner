@@ -147,6 +147,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
         // StudyRoomVC（勉強部屋画面）から戻ってきた時、データ再取得
         if fromScreen == .studyRoomVC {
             viewModel.locationsAndUserInfo
+                .map { ($0, isMonitoredData: false)}
                 .drive(handleLocationsInfo)
                 .disposed(by: disposeBag)
         }
@@ -217,6 +218,13 @@ extension MapViewController: KRProgressHUDEnabled, AlertEnabled {
         
         // 各ロケーション情報
         viewModel.locationsAndUserInfo
+            .map { ($0, isMonitoredData: false)}
+            .drive(handleLocationsInfo)
+            .disposed(by: disposeBag)
+        
+        // 各ロケーション情報（監視）
+        viewModel.monitoredLocationsAndUserInfo
+            .map { ($0, isMonitoredData: true)}
             .drive(handleLocationsInfo)
             .disposed(by: disposeBag)
         
@@ -226,6 +234,7 @@ extension MapViewController: KRProgressHUDEnabled, AlertEnabled {
                 guard let self = self else { return .empty() }
                 return self.viewModel.locationsAndUserInfo
             }
+            .map { ($0, isMonitoredData: false)}
             .drive(handleLocationsInfo)
             .disposed(by: disposeBag)
         
@@ -283,9 +292,9 @@ extension MapViewController {
         return Binder(self) { base, _ in Router.dismissModal(vc: base) }
     }
     // 取得したロケーション情報とユーザー情報を制御
-    private var handleLocationsInfo: Binder<(LocationsInfo, User)> {
+    private var handleLocationsInfo: Binder<((LocationsInfo, User), isMonitoredData: Bool)> {
         return Binder(self) { base, tuple in
-            let (locationsInfo, userProfile) = tuple
+            let ((locationsInfo, userProfile), isMonitoredData) = tuple
             // プロパティ更新
             base.locationsInfo = locationsInfo
             base.userProfile = userProfile
@@ -298,17 +307,22 @@ extension MapViewController {
             base.addMarkersForLocations()
             // UIを更新
             base.updateUI()
-            // 報酬コイン獲得ProgressHUDを表示
-            base.showRewardCoinProgressHUD()
-            // 現在地までcamera移動
-            base.moveToCurrentLocation.onNext(())
-            // 既存InfoWindowを非表示
-            self.mapView.removeInfoWindow()
-            // 現在地のInfoWindow表示
-            base.displayCurrentLocationInfoWindow.onNext(())
-            // 現在地ピンの位置を更新（遅延させることで動作）
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                base.mapView.updateCurrentLocationPin()
+            
+            // 監視して取得したデータの場合
+            if !isMonitoredData {
+                // 報酬コイン獲得ProgressHUDを表示
+                base.showRewardCoinProgressHUD()
+                // 現在地までcamera移動
+                base.moveToCurrentLocation.onNext(())
+                // 既存InfoWindowを非表示
+                self.mapView.removeInfoWindow()
+                // 遅延させることでUIを正常に調整
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    // 現在地ピンの位置を更新
+                    base.mapView.updateCurrentLocationPin()
+                    // 現在地のInfoWindow表示
+                    base.displayCurrentLocationInfoWindow.onNext(())
+                }
             }
         }
     }

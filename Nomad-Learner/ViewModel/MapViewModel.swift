@@ -35,15 +35,15 @@ class MapViewModel {
         self.isLoading = indicator.asDriver()
         
         // マップに配置するロケーション関連の情報取得
-        //（イベント発火＋マップマーカーViewの再描画）が高頻度で行われると予想されるため、
-        // firebaseによる値の監視（リスナー）はしない
+        //（イベント発火＋マップマーカーViewの再描画）が高頻度で行われると予想されるため、各ロケーションにいるユーザー数はfirebaseリアルタイムで監視しない
+        // 新ロケーションの追加はかなり低頻度で行われるため、fixedLocationの監視は行う
         let fetchLocationsInfoResult = realmService.fetchFixedLocations() // Realmから固定ロケーション取得
             .flatMap { realmData in
                 // Realmにデータがない場合、Firebaseから取得してキャッシュ
                 let locationData = realmData.isEmpty
                 ? mainService.fetchFixedLocations()
                     .do(onNext: { fixedLocations in
-                    // 既存データとキャッシュのリセット
+                    // 既存データと画像キャッシュのリセット
                     realmService.deleteFixedLocations()
                     ImageCacheManager.clearCache()
                     

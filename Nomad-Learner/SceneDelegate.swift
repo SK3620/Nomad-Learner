@@ -11,6 +11,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
+    private let realmService = RealmService.shared
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -21,12 +22,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window = window
         Router.showRoot(window: window)
     }
-
+    
+    // app switcher からアプリが閉じられた時に呼ばれる
     func sceneDidDisconnect(_ scene: UIScene) {
-        // Called as the scene is being released by the system.
-        // This occurs shortly after the scene enters the background, or when its session is discarded.
-        // Release any resources associated with this scene that can be re-created the next time the scene connects.
-        // The scene may re-connect later, as its session was not necessarily discarded (see `application:didDiscardSceneSessions` instead).
+        // 下記の処理が少々難しいため暫定的な処理として、Realmからデータを削除
+        
+        // アプリ2回目以降の起動では、realmにあるfixedLocationを取得しつつも、
+        // RealtimeDatabaseの"fixedLocations"の値の更新のみを監視＆更新データのrealmへの保存/取得を行うような処理が望ましい
+        realmService.deleteFixedLocations()
     }
 
     func sceneDidBecomeActive(_ scene: UIScene) {

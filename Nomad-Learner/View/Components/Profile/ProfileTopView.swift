@@ -113,8 +113,8 @@ class ProfileTopView: UIView {
     // 完了マークアイコン
     private let completedImageView = UIImageView().then {
         let configuration = UIImage.SymbolConfiguration(weight: .bold)
-        $0.image = UIImage(systemName: "checkmark", withConfiguration: configuration)
-        $0.tintColor = .white
+//        $0.image = UIImage(systemName: "checkmark", withConfiguration: configuration)
+        $0.image = UIImage(named: "MapPinGreen")
     }
     
     // クリアしたロケーション数

@@ -276,6 +276,9 @@ PODS:
   - RxCocoa (6.5.0):
     - RxRelay (= 6.5.0)
     - RxSwift (= 6.5.0)
+  - RxKeyboard (2.0.0):
+    - RxCocoa (~> 6.0)
+    - RxSwift (~> 6.0)
   - RxRelay (6.5.0):
     - RxSwift (= 6.5.0)
   - RxSwift (6.5.0)
@@ -306,6 +309,7 @@ DEPENDENCIES:
   - KRProgressHUD (~> 3.4.8)
   - RealmSwift (~> 10)
   - RxCocoa (~> 6.5.0)
+  - RxKeyboard
   - RxSwift (~> 6.5.0)
   - SnapKit (~> 5.7.0)
   - SVGKit
@@ -367,6 +371,7 @@ SPEC REPOS:
     - RealmSwift
     - RecaptchaInterop
     - RxCocoa
+    - RxKeyboard
     - RxRelay
     - RxSwift
     - SDWebImage
@@ -440,6 +445,7 @@ SPEC CHECKSUMS:
   RealmSwift: c975aa89bda0a1a8a8ab73efaad4faa9ef78719b
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
   RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
+  RxKeyboard: 4f5863f43b4ff0cbb2a20b94688d6b80c8a43c14
   RxRelay: 1de1523e604c72b6c68feadedd1af3b1b4d0ecbd
   RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
   SDWebImage: 8a6b7b160b4d710e2a22b6900e25301075c34cb3
@@ -447,6 +453,6 @@ SPEC CHECKSUMS:
   SVGKit: 1ad7513f8c74d9652f94ed64ddecda1a23864dea
   Then: 844265ae87834bbe1147d91d5d41a404da2ec27d
 
-PODFILE CHECKSUM: 9bcd21f81960006d791c45f0fea1284226f1197c
+PODFILE CHECKSUM: 5daa37f6674bf7528b4a8116a68d3db843997b25
 
 COCOAPODS: 1.15.2

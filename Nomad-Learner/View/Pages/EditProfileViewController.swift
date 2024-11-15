@@ -12,7 +12,7 @@ import RxCocoa
 import CLImageEditor
 import KRProgressHUD
 
-class EditProfileViewController: UIViewController, AlertEnabled, KRProgressHUDEnabled {
+class EditProfileViewController: UIViewController, AlertEnabled, KRProgressHUDEnabled, UITextViewDelegate {
     
     var userProfile: User
     
@@ -25,6 +25,9 @@ class EditProfileViewController: UIViewController, AlertEnabled, KRProgressHUDEn
     // プロフィール画像を保持
     private let profileImageRelay = BehaviorRelay<UIImage?>(value: nil)
     
+    // キーボードマネージャー
+    private let keyboardManager = KeyboardManager()
+    
     private let disposeBag = DisposeBag()
     
     init(userProfile: User) {
@@ -36,6 +39,7 @@ class EditProfileViewController: UIViewController, AlertEnabled, KRProgressHUDEn
         super.viewDidLoad()
         
         setupUI()
+        adjustViewOnKeyboardAppear()
         bind()
         update()
     }
@@ -51,6 +55,17 @@ class EditProfileViewController: UIViewController, AlertEnabled, KRProgressHUDEn
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             $0.bottom.equalToSuperview()
         }
+    }
+    
+    private func adjustViewOnKeyboardAppear() {
+        // 位置を調整するTextView
+        keyboardManager.setAdjustableTextViews([
+            editProfileView.livingPlaceAndWorkTextView,
+            editProfileView.studyContentTextView,
+            editProfileView.goalTextView
+        ])
+        // キーボード開閉時のUI調整
+        keyboardManager.adjustViewOnKeyboardAppear(view: self.editProfileView)
     }
     
     private func bind() {

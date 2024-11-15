@@ -60,7 +60,7 @@ class CustomAuthPickerViewController: FUIAuthPickerViewController, UITextFieldDe
             $0.delegate = self
         }
         // passwordTextFieldを基準にキーボード出現時のレイアウト調整
-        keyboardManager = KeyboardManager(viewController: self, textField: authStackView.authTextFields[2])
+        // keyboardManager = KeyboardManager(viewController: self, textField: authStackView.authTextFields[2])
         
         // 入力欄＋認証ボタン等追加
         contentView.addSubview(authStackView)

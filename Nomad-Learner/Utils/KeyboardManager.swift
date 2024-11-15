@@ -6,87 +6,73 @@
 //
 
 import UIKit
-import Foundation
+import RxSwift
+import RxCocoa
+import RxKeyboard
 
 class KeyboardManager {
-    private var viewController: UIViewController
-    // レイアウト調整の基準にしたいTextField（オプション）
-    private var targetBaseTextField: UITextField?
-    private var originalY: CGFloat = 0
+    private let disposeBag = DisposeBag()
+    private var adjustableTextViews: [UITextView] = [] // 調整可能なUITextViewを格納する配列
     
-    init(viewController: UIViewController, textField: UITextField? = nil) {
-        self.viewController = viewController
-        self.targetBaseTextField = textField
-        originalY = viewController.view.frame.origin.y
-        registerForKeyboardNotifications()
+    private var originY: CGFloat = 0 // 最初のY座標を保持
+
+    // 調整が必要なUITextViewを指定するメソッド
+    func setAdjustableTextViews(_ textViews: [UITextView]) {
+        self.adjustableTextViews = textViews
     }
     
-    // 登録解除
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
-    // キーボード表示・非表示の通知を登録
-    private func registerForKeyboardNotifications() {
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(keyboardWillShow(notification:)),
-            name: UIResponder.keyboardWillShowNotification,
-            object: nil
-        )
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(keyboardWillHide(notification:)),
-            name: UIResponder.keyboardWillHideNotification,
-            object: nil
-        )
-    }
-    
-    // キーボードが表示されるときに呼び出される
-    @objc private func keyboardWillShow(notification: Notification) {
-        // UIViewのサブビューを検索し、最初に見つかったfirstResponder（現在入力を受け付けているビュー → TextField）を返す
-        guard let userInfo = notification.userInfo,
-              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
-            return
-        }
-        
-        // 現在のfirstResponder（TextField）を取得する。targetBaseTextFieldが設定されている場合はそれを優先
-        let activeTextField = targetBaseTextField ?? self.findFirstResponder(in: viewController.view) as? UITextField
-        guard let textField = activeTextField else {
-            return
-        }
-        
-        // UITextFieldの位置をviewControllerの座標系に変換
-        let textFieldFrameInView = textField.convert(textField.bounds, to: viewController.view)
-        
-        let keyboardTopY = viewController.view.frame.height - keyboardFrame.height
-        
-        // TextFieldがキーボードに隠れる場合は画面を持ち上げる
-        if textFieldFrameInView.maxY > keyboardTopY {
-            let adjustmentHeight = textFieldFrameInView.maxY - keyboardTopY + UIConstants.Layout.standardPadding
-            
-            UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveEaseInOut, animations: {
-                self.viewController.view.frame.origin.y = self.originalY - adjustmentHeight
+    // キーボード表示時にビューを調整するメソッド
+    func adjustViewOnKeyboardAppear(view: UIView) {
+        // キーボードが表示される直前に一度だけ呼ばれる
+        RxKeyboard.instance.willShowVisibleHeight
+            .drive(onNext: { _ in
+                // フォーカスされているUITextViewが、調整対象に含まれている場合のみ処理
+                if let focusedView = view.findFirstResponder() as? UITextView,
+                   self.adjustableTextViews.contains(focusedView) {
+                    // キーボード表示前のビューのY座標を記録
+                    self.originY = view.frame.origin.y
+                }
             })
-        }
+            .disposed(by: disposeBag)
+
+        // キーボードの高さを監視し、ビューを調整
+        RxKeyboard.instance.visibleHeight
+            .drive(onNext: { [weak self] keyboardHeight in
+                guard let self = self else { return }
+                
+                // フォーカスされているUITextViewが、調整対象に含まれている場合
+                if let focusedView = view.findFirstResponder() as? UITextView,
+                   self.adjustableTextViews.contains(focusedView) {
+                    
+                    // UITextViewの位置を、viewControllerの座標系に変換
+                    let focusedViewFrameInView = focusedView.convert(focusedView.bounds, to: view)
+                    
+                    // キーボードとUITextViewの位置関係を計算
+                    let keyboardTopY = view.viewHeight - focusedViewFrameInView.maxY
+                    let diff = keyboardHeight - keyboardTopY
+                    
+                    // キーボードが表示されている場合は、UITextViewの位置を調整
+                    // キーボードが表示されていない場合は元の位置に戻す
+                    view.frame.origin.y = keyboardHeight > 0 ? -diff : self.originY
+                }
+            })
+            .disposed(by: disposeBag)
     }
-    
-    // フォーカスされているビューを探して返す
-    private func findFirstResponder(in view: UIView) -> UIView? {
-        for subView in view.subviews {
-            if subView.isFirstResponder {
-                return subView
-            } else if let firstResponder = self.findFirstResponder(in: subView) {
+}
+
+// UIView拡張: フォーカスされているビュー（最初のレスポンダー）を再帰的に探す
+private extension UIView {
+    func findFirstResponder() -> UIView? {
+        // 自身が最初のレスポンダーの場合、そのビューを返す
+        if self.isFirstResponder {
+            return self
+        }
+        // 子ビューを再帰的に検索して、最初のレスポンダーを返す
+        for subview in subviews {
+            if let firstResponder = subview.findFirstResponder() {
                 return firstResponder
             }
         }
         return nil
-    }
-    
-    @objc private func keyboardWillHide(notification: Notification) {
-        UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveEaseInOut, animations: {
-            self.viewController.view.frame.origin.y = self.originalY
-        })
     }
 }

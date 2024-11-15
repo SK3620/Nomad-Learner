@@ -24,7 +24,6 @@ class ProfileCollectionViewCell: UICollectionViewCell {
         $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.semiMedium)
         $0.textColor = .black
         $0.numberOfLines = 1
-        $0.text = "User Name Here"
     }
     
     // 内容
@@ -33,15 +32,6 @@ class ProfileCollectionViewCell: UICollectionViewCell {
         $0.numberOfLines = 3
         $0.sizeToFit()
         $0.font = .systemFont(ofSize: UIConstants.TextSize.extraSmall, weight: .ultraLight)
-        $0.text = "senior/Certified Public Accountant/TOEFL®: Test of English as a Foreign Language/IELTS: International English Language Testing System"
-    }
-    
-    // 国旗画像
-    private let nationalFlagImageView: UIImageView = UIImageView().then {
-        $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.backgroundColor = ColorCodes.primaryPurple.color()
-        $0.layer.cornerRadius = 15.0
-        $0.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMaxYCorner]
     }
     
     override init(frame: CGRect) {
@@ -57,7 +47,6 @@ class ProfileCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(profileImageView)
         contentView.addSubview(userNameLabel)
         contentView.addSubview(contentLabel)
-        contentView.addSubview(nationalFlagImageView)
         
         // プロフィール画像
         profileImageView.snp.makeConstraints {
@@ -70,7 +59,7 @@ class ProfileCollectionViewCell: UICollectionViewCell {
         userNameLabel.snp.makeConstraints {
             $0.top.equalTo(profileImageView.snp.top)
             $0.left.equalTo(profileImageView.snp.right).offset(UIConstants.Layout.smallPadding)
-            $0.right.equalTo(nationalFlagImageView.snp.left).offset(-UIConstants.Layout.smallPadding)
+            $0.right.equalToSuperview().inset(UIConstants.Layout.smallPadding)
         }
 
         // 内容
@@ -78,13 +67,6 @@ class ProfileCollectionViewCell: UICollectionViewCell {
             $0.left.equalTo(userNameLabel.snp.left)
             $0.top.equalTo(userNameLabel.snp.bottom)
             $0.right.equalToSuperview().offset(-UIConstants.Layout.smallPadding)
-        }
-
-        // 国旗
-        nationalFlagImageView.snp.makeConstraints {
-            $0.right.top.equalToSuperview()
-            $0.width.equalTo(30)
-            $0.height.equalTo(20)
         }
     }
     

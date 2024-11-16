@@ -43,6 +43,7 @@ extension User {
     // Userのプロパティを辞書形式に変換（プロフィール情報のみ）
     var toDictionary: [String: Any] {
         return [
+            "userId": userId,
             "username": username,
             "profileImageUrl": profileImageUrl,
             "currentLocationId": currentLocationId,

@@ -19,9 +19,7 @@ import RxCocoa
 import KRProgressHUD
 
 // MARK: - Customize AuthPickerViewController
-class CustomAuthPickerViewController: FUIAuthPickerViewController, UITextFieldDelegate {
-    
-    private var keyboardManager: KeyboardManager?
+class CustomAuthPickerViewController: FUIAuthPickerViewController {
     
     private lazy var scrollView = view.subviews[0].then {
         $0.backgroundColor = .white
@@ -37,7 +35,7 @@ class CustomAuthPickerViewController: FUIAuthPickerViewController, UITextFieldDe
         $0.spacing = UIConstants.Layout.semiMediumPadding
     }
     
-    private var viewModel: AuthViewModel!
+    var viewModel: AuthViewModel!
     private let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
@@ -55,13 +53,6 @@ class CustomAuthPickerViewController: FUIAuthPickerViewController, UITextFieldDe
     }
     
     private func setupUI() {
-        // UItextFieldデリゲート設定
-        authStackView.authTextFields.forEach {
-            $0.delegate = self
-        }
-        // passwordTextFieldを基準にキーボード出現時のレイアウト調整
-        // keyboardManager = KeyboardManager(viewController: self, textField: authStackView.authTextFields[2])
-        
         // 入力欄＋認証ボタン等追加
         contentView.addSubview(authStackView)
         
@@ -121,18 +112,12 @@ extension CustomAuthPickerViewController: AlertEnabled, KRProgressHUDEnabled {
         
         // SignIn/SignUp画面モードの切り替え
         viewModel.authMode
-            .drive(onNext: { [weak self] mode in
-                guard let self = self else { return }
-                self.authStackView.apply(.transform(to: mode))
-            })
+            .drive(switchAuthScreenMode)
             .disposed(by: disposeBag)
         
         // 認証ボタンの非/活性判定
         viewModel.authButtonEnabled
-            .drive(onNext: { [weak self] isValid in
-                guard let self = self else { return }
-                self.authStackView.apply(.updateAuthButtonState(isValid))
-            })
+            .drive(processWhenAutheticated)
             .disposed(by: disposeBag)
         
         // 認証完了
@@ -147,7 +132,7 @@ extension CustomAuthPickerViewController: AlertEnabled, KRProgressHUDEnabled {
         
         // 認証エラーアラート表示
         viewModel.authError
-            .map { AlertActionType.error($0)}
+            .map { AlertActionType.error($0) }
             .drive(self.rx.showAlert)
             .disposed(by: disposeBag)
         
@@ -161,16 +146,19 @@ extension CustomAuthPickerViewController: AlertEnabled, KRProgressHUDEnabled {
         viewModel.didDeleteAccount
             .drive(self.rx.showMessage)
             .disposed(by: disposeBag)
-        
-        // アカウント削除失敗
-        viewModel.deleteAccountError
-            .map { AlertActionType.error($0)}
-            .drive(self.rx.showAlert)
-            .disposed(by: disposeBag)
     }
 }
 
 extension CustomAuthPickerViewController {
+    // SignIn/SignUp画面モードの切り替え
+    private var switchAuthScreenMode: Binder<AuthViewModel.AuthMode> {
+        return Binder(self) { base, authMode in base.authStackView.apply(.transform(to: authMode)) }
+    }
+    // 認証ボタンの非/活性判定
+    private var updateAuthButtonState: Binder<Bool> {
+        return Binder(self) { base, isValid in base.authStackView.apply(.updateAuthButtonState(isValid)) }
+    }
+    // 認証完了後の処理
     private var processWhenAutheticated: Binder<Bool> {
         return Binder(self) { base, authenticated in
             guard authenticated else { return }

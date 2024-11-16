@@ -53,6 +53,7 @@ enum MyAppError: Error {
 enum MyAppError: Error {
     case signInFailed(Error)
     case signUpFailed(Error)
+    case reauthenticateFailed
     case userNotFound(Error?)
     
     // MARK: - Delete Account Error
@@ -87,6 +88,8 @@ enum MyAppError: Error {
             return NSLocalizedString("サインインに失敗しました。もう一度お試しください。", comment: "Failed to sign in")
         case .signUpFailed:
             return NSLocalizedString("サインアップに失敗しました。もう一度お試しください。", comment: "Failed to sign up")
+        case .reauthenticateFailed:
+            return NSLocalizedString("アカウント削除の再認証に失敗しました。", comment: "Failed to sign up")
         case .userNotFound:
             return NSLocalizedString("ユーザーが見つかりません。", comment: "User does not exist")
         case .deleteAccount(let error):
@@ -122,6 +125,8 @@ enum MyAppError: Error {
             return "サインインに失敗しました。エラー内容: \(error)。入力されたメールアドレスとパスワードを確認してください。"
         case .signUpFailed(let error):
             return "サインアップに失敗しました。エラー内容: \(error)。メールフォーマットやその他の入力情報を確認してください。"
+        case .reauthenticateFailed:
+            return NSLocalizedString("アカウント削除の再認証に失敗しました。", comment: "Failed to sign up")
         case .userNotFound(let error):
             return "ユーザーが見つかりませんでした。エラー内容: \(String(describing: error))。メールアドレスが正しいか、または新規アカウントを作成してください。"
         case .deleteAccount(let error):

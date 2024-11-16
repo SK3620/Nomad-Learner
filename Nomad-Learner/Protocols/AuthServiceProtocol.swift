@@ -12,18 +12,22 @@ import FirebaseAuth
 
 protocol AuthServiceProtocol {
     // サインイン
-    func signIn(email: String, password: String) -> Observable<FirebaseAuth.User>
+    func signIn(email: String, password: String, shouldReauthenticate: Bool) -> Observable<Void>
     // サインアップ
     func signUp(username: String, email: String, password: String) -> Observable<FirebaseAuth.User>
     // パスワード再設定メール
     func sendPasswordRest(with email: String) -> Observable<Void>
     // アカウント削除
-    func deleteAccount(email: String, password: String) -> Observable<Bool>
+    func deleteAccount(email: String, password: String) -> Observable<Void>
+    // UserIDの存在確認
+    func checkUUIDExists(with userId: String) -> Observable<Bool>
 }
 
 final class AuthService: AuthServiceProtocol {
     
     public static let shared = AuthService()
+    
+    private let firebaseConfig = FirebaseConfig.shared
     
     private init() {}
     
@@ -53,15 +57,18 @@ final class AuthService: AuthServiceProtocol {
         }
     }
     
-    // サインイン
-    func signIn(email: String, password: String) -> Observable<FirebaseAuth.User> {
-        return Observable<FirebaseAuth.User>.create { observer in
+    // サインイン（アカウント削除時は再認証が必要）
+    func signIn(email: String, password: String, shouldReauthenticate: Bool) -> Observable<Void> {
+        return Observable<Void>.create { observer in
             Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
-                if let user = authResult?.user {
-                    observer.onNext(user)
+                if let _ = authResult?.user {
+                    observer.onNext(())
                     observer.onCompleted()
                 } else if let error = error {
-                    observer.onError(MyAppError.signUpFailed(error))
+                    let myAppError = shouldReauthenticate
+                    ? MyAppError.reauthenticateFailed
+                    : MyAppError.signInFailed(error)
+                    observer.onError(myAppError)
                 } else {
                     observer.onError(MyAppError.unknown)
                 }
@@ -85,35 +92,40 @@ final class AuthService: AuthServiceProtocol {
     }
     
     // アカウント削除
-    func deleteAccount(email: String, password: String) -> Observable<Bool> {
-        return Observable<Bool>.create { observer in
-            guard !email.isEmpty, !password.isEmpty else {
+    func deleteAccount(email: String, password: String) -> Observable<Void> {
+        return Observable<Void>.create { observer in
+            if email.isEmpty || password.isEmpty {
                 observer.onError(MyAppError.deleteAccount(.fieldEmpty))
-                return Disposables.create()
             }
             
-            guard let user = FBAuth.currentUser else {
-                observer.onError(MyAppError.deleteAccount(.reSignInRequired))
-                return Disposables.create()
-            }
-                        
-            // 再認証用の資格情報を作成
-            let credential = EmailAuthProvider.credential(withEmail: email, password: password)
-            
-            // 再認証を実行
-            user.reauthenticate(with: credential) { result, error in
-                if let error = error {
-                    observer.onError(MyAppError.deleteAccount(.deleteAccountFailed(error)))
-                    return
-                }
+            if let user = FBAuth.currentUser {
                 // アカウントの削除を実行
                 user.delete { error in
                     if let error = error {
                         observer.onError(MyAppError.deleteAccount(.deleteAccountFailed(error)))
                     } else {
-                        observer.onNext(true) // アカウント削除成功
+                        observer.onNext(()) // アカウント削除成功
                         observer.onCompleted()
                     }
+                }
+            } else {
+                observer.onError(MyAppError.deleteAccount(.deleteAccountFailed(nil)))
+            }
+            return Disposables.create()
+        }
+    }
+    
+    // UserIDの存在確認
+    func checkUUIDExists(with userId: String) -> Observable<Bool> {
+        return Observable.create { observer in
+            let docRef = self.firebaseConfig.usersCollectionReference().whereField("userId", isEqualTo: userId)
+            docRef.getDocuments { snapshots, error in
+                if let error = error {
+                    observer.onError(MyAppError.signInFailed(error))
+                } else {
+                    let exists = snapshots?.documents.isEmpty == false
+                    observer.onNext(exists)
+                    observer.onCompleted()
                 }
             }
             return Disposables.create()

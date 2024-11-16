@@ -14,10 +14,13 @@ import FirebaseFacebookAuthUI
 import FirebaseOAuthUI
 import Firebase
 import Then
+import RxSwift
 
-class AuthViewController: UIViewController, FUIAuthDelegate {
+class AuthViewController: UIViewController {
     
     private let authUI = FUIAuth.defaultAuthUI()!
+    
+    private lazy var customAuthPickerViewController = CustomAuthPickerViewController(authUI: self.authUI)
     
     // 各認証プロバイダ
     private lazy var providers: [FUIAuthProvider] = [
@@ -56,29 +59,14 @@ class AuthViewController: UIViewController, FUIAuthDelegate {
     
     // カスタムAuthPickerViewControllerを適用
     func authPickerViewController(forAuthUI authUI: FUIAuth) -> FUIAuthPickerViewController {
-        return CustomAuthPickerViewController(authUI: authUI)
+        return customAuthPickerViewController
     }
 }
 
-extension AuthViewController {
-    // 認証結果を受け取る際に呼ばれる
-    func authUI(_ authUI: FUIAuth, didSignInWith user: User?, error: (any Error)?) {
-        if let user = user {
-            print("Sign in successfully: \(user)")
-        }
-        
-        if let error = error {
-            print("Failed to sign in: \(error)")
-        }
-    }
-}
-
-extension AuthViewController {
-    override var shouldAutorotate: Bool {
-        return false
-    }
-    
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .portrait
+extension AuthViewController: FUIAuthDelegate {
+    //認証結果を受け取る際に呼ばれる関数
+    func authUI(_ authUI: FUIAuth, didSignInWith user: FirebaseAuth.User?, error: Error?) {
+        // ViewModelで処理
+        customAuthPickerViewController.viewModel.handleSignInWithAuthProviderResult(user: user, error: error)
     }
 }

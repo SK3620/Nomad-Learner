@@ -73,7 +73,7 @@ class EditProfileViewModel {
                     // ない場合は、空文字を設定し、デフォルト画像を適用
                     updatedUserProfile.profileImageUrl = ""
                     // ユーザープロフィールを保存
-                    return mainService.saveUserProfile(user: updatedUserProfile, shouldUpdate: false)
+                    return mainService.saveUserProfile(user: updatedUserProfile, shouldUpdate: true)
                         .materialize()
                         .trackActivity(indicator)
                 }

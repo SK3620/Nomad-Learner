@@ -124,7 +124,7 @@ extension MapView {
         
         // カメラのズームに応じた円の半径を計算
         let circleRadiusScale = 1 / self.projection.points(forMeters: 1, at: start)
-        let circleRadius = 7.0 * circleRadiusScale // 円の半径を調整
+        let circleRadius = 7 * circleRadiusScale // 円の半径を調整
         
         // 終了地点に円を描画
         endCircle = GMSCircle(position: end, radius: circleRadius)
@@ -150,7 +150,7 @@ extension MapView {
         // ズームレベルを考慮して円の半径を再計算
         guard let endCircle = endCircle else { return }
         let circleRadiusScale = 1 / self.projection.points(forMeters: 1, at: endCircle.position)
-        let circleRadius = 5.0 * circleRadiusScale // 円の半径を調整
+        let circleRadius = 7 * circleRadiusScale // 円の半径を調整
         // 円の半径を更新
         endCircle.radius = circleRadius
     }

@@ -67,7 +67,6 @@ extension MapView {
     
     // 現在地ピンの位置を更新
     func updateCurrentLocationPin() {
-//        guard let currentCoordinate = currentCoordinate else { return }
         // 現在の地図上の位置を画面座標に変換
         let point = projection.point(for: currentCoordinate)
         // UIImageViewの中心を画面座標に合わせる
@@ -125,7 +124,7 @@ extension MapView {
         
         // カメラのズームに応じた円の半径を計算
         let circleRadiusScale = 1 / self.projection.points(forMeters: 1, at: start)
-        let circleRadius = 5.0 * circleRadiusScale // 円の半径を調整
+        let circleRadius = 7.0 * circleRadiusScale // 円の半径を調整
         
         // 終了地点に円を描画
         endCircle = GMSCircle(position: end, radius: circleRadius)

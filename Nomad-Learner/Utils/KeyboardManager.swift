@@ -58,9 +58,10 @@ private extension KeyboardManager {
             let focusedViewFrameInView = focusedTextView.convert(focusedTextView.bounds, to: base.view)
             let keyboardTopY = base.view.viewHeight - focusedViewFrameInView.maxY
             let adjustment = keyboardHeight - keyboardTopY
-            
-            // キーボードが表示されている場合、UITextViewの位置を調整
-            base.view.frame.origin.y = keyboardHeight > 0 ? -adjustment : base.originY
+                        
+            if adjustment > 0 || base.view.frame.origin.y != base.originY {
+                base.view.frame.origin.y = keyboardHeight > 0 ? -adjustment : base.originY
+            }
         }
     }
 }

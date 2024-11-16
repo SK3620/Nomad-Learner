@@ -60,6 +60,7 @@ class EditProfileViewController: UIViewController, AlertEnabled, KRProgressHUDEn
     private func adjustViewOnKeyboardAppear() {
         // 位置を調整するTextView
         keyboardManager.setAdjustableTextViews([
+            editProfileView.usernameTextView,
             editProfileView.livingPlaceAndWorkTextView,
             editProfileView.studyContentTextView,
             editProfileView.goalTextView

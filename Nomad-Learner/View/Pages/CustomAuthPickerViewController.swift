@@ -117,7 +117,7 @@ extension CustomAuthPickerViewController: AlertEnabled, KRProgressHUDEnabled {
         
         // 認証ボタンの非/活性判定
         viewModel.authButtonEnabled
-            .drive(processWhenAutheticated)
+            .drive(updateAuthButtonState)
             .disposed(by: disposeBag)
         
         // 認証完了

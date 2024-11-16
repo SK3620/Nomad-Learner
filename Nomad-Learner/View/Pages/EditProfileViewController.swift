@@ -65,7 +65,7 @@ class EditProfileViewController: UIViewController, AlertEnabled, KRProgressHUDEn
             editProfileView.goalTextView
         ])
         // キーボード開閉時のUI調整
-        keyboardManager.adjustViewOnKeyboardAppear(view: self.editProfileView)
+        keyboardManager.adjustViewForKeyboardAppearance(in: self.editProfileView)
     }
     
     private func bind() {

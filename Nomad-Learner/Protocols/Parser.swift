@@ -42,7 +42,8 @@ final class UserParser {
               let currentCoin = data["currentCoin"] as? Int,
               let livingPlaceAndWork = data["livingPlaceAndWork"] as? String,
               let studyContent = data["studyContent"] as? String,
-              let goal = data["goal"] as? String else {
+              let goal = data["goal"] as? String,
+              let others = data["others"] as? String else {
             return nil
         }
         
@@ -54,7 +55,8 @@ final class UserParser {
             currentCoin: currentCoin,
             livingPlaceAndWork: livingPlaceAndWork,
             studyContent: studyContent,
-            goal: goal
+            goal: goal,
+            others: others
         )
     }
 }

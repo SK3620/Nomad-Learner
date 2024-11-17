@@ -16,6 +16,7 @@ struct User {
     var livingPlaceAndWork: String
     var studyContent: String
     var goal: String
+    var others: String
     var progressSum: StudyProgressSummary?
     
     init(
@@ -26,7 +27,8 @@ struct User {
         currentCoin: Int = 100000,
         livingPlaceAndWork: String = "ー",
         studyContent: String = "ー",
-        goal: String = "ー"
+        goal: String = "ー",
+        others: String = "ー"
     ) {
         self.userId = userId
         self.username = username
@@ -36,6 +38,7 @@ struct User {
         self.livingPlaceAndWork = livingPlaceAndWork
         self.studyContent = studyContent
         self.goal = goal
+        self.others = others
     }
 }
 
@@ -50,17 +53,19 @@ extension User {
             "currentCoin": currentCoin,
             "livingPlaceAndWork": livingPlaceAndWork,
             "studyContent": studyContent,
-            "goal": goal
+            "goal": goal,
+            "others": others
         ]
     }
     
-    var toDictionary2: [String: Any] {
+    var toDictionaryForUpdate: [String: Any] {
         return [
             "username": username,
             "profileImageUrl": profileImageUrl,
             "livingPlaceAndWork": livingPlaceAndWork,
             "studyContent": studyContent,
             "goal": goal,
+            "other": others
         ]
     }
 }

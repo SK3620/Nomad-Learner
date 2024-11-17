@@ -17,9 +17,9 @@ class EditProfileViewModel {
     
     init(input: (
         username: Driver<String>,
-        livingPlaceAndWork: Driver<String>,
         studyContent: Driver<String>,
         goal: Driver<String>,
+        others: Driver<String>,
         saveButtonTaps: Signal<Void>,
         profileImage: Driver<UIImage?>
     ),
@@ -33,16 +33,16 @@ class EditProfileViewModel {
         // 入力したユーザーのプロフィール情報
         let userProfile = Driver.combineLatest(
             input.username,
-            input.livingPlaceAndWork,
             input.studyContent,
             input.goal,
+            input.others,
             input.profileImage
-        ) { username, livingPlaceAndWork, studyContent, goal, profileImage in
+        ) { username, studyContent, goal, others, profileImage in
             return User(
                 username: !username.isEmpty ? username : "ー",
-                livingPlaceAndWork: !livingPlaceAndWork.isEmpty ? livingPlaceAndWork : "ー",
                 studyContent: !studyContent.isEmpty ? studyContent : "ー",
-                goal: !goal.isEmpty ? goal : "ー"
+                goal: !goal.isEmpty ? goal : "ー",
+                others: !others.isEmpty ? others : "ー"
             )
         }
         

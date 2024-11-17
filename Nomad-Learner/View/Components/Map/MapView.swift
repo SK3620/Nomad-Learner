@@ -18,7 +18,7 @@ class MapView: GMSMapView {
     // 現在のcameraのzoom値を保持
     var currentZoom: Float = 1.0
     // 現在地の座標
-    var currentCoordinate: CLLocationCoordinate2D = .init()
+    var currentCoordinate: CLLocationCoordinate2D?
     
     // タップされたマーカー
     var tappedMarker: GMSMarker?
@@ -40,12 +40,13 @@ class MapView: GMSMapView {
         let image = UIImage(named: "CurrentLocationPin")
         $0.setImage(image, for: .normal)
         $0.frame = CGRect(origin: .zero, size: CGSize(width: 24, height: 24))
+        $0.isHidden = true
     }
     
     override init(options: GMSMapViewOptions) {
         // セットアップ
         options.mapID = googleMapID
-        options.camera = GMSCameraPosition(target: .init(), zoom: 1.0)
+        options.camera = MyAppSettings.userInitialLocationCoordinateWithZoom
         super.init(options: options)
         
         addSubview(currentLocationPinButton)
@@ -67,10 +68,15 @@ extension MapView {
     
     // 現在地ピンの位置を更新
     func updateCurrentLocationPin() {
+        guard let currentCoordinate = currentCoordinate else {
+            currentLocationPinButton.isHidden = true
+            return
+        }
         // 現在の地図上の位置を画面座標に変換
         let point = projection.point(for: currentCoordinate)
         // UIImageViewの中心を画面座標に合わせる
         currentLocationPinButton.center = point
+        currentLocationPinButton.isHidden = false
     }
     
     // InfoWindowの位置を更新
@@ -118,7 +124,8 @@ extension MapView {
 
 extension MapView {
     // ポリライン描画
-    func drawPolyline(from start: CLLocationCoordinate2D, to end: CLLocationCoordinate2D) {
+    func drawPolyline(from start: CLLocationCoordinate2D?, to end: CLLocationCoordinate2D) {
+        guard let start = start else { return }
         // 既存のポリラインと円をクリア（既存の描画があれば削除するため）
         clearPolyline()
         

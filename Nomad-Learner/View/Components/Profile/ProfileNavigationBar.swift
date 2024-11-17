@@ -23,7 +23,7 @@ class ProfileNavigationBar: UINavigationBar {
     private lazy var navigationItem = UINavigationItem().then {
         $0.leftBarButtonItem = closeButton
         $0.rightBarButtonItem = editButton
-        $0.title = "Profile"
+        $0.title = "プロフィール"
     }
     
     override init(frame: CGRect) {

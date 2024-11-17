@@ -10,7 +10,7 @@ import UIKit
 
 class EditProfileTextView: UITextView {
     
-    init(text: String) {
+    init(text: String = "") {
         super.init(frame: .zero, textContainer: nil)
         self.text = text
         self.backgroundColor = .clear

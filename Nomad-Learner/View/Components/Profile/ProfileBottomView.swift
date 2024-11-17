@@ -113,9 +113,9 @@ extension ProfileBottomView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ProfileTableViewCell.identifer, for: indexPath) as! ProfileTableViewCell
-        cell.livingPlaceAndWork.text = userProfile.livingPlaceAndWork
         cell.studyContent.text = userProfile.studyContent
         cell.goal.text = userProfile.goal
+        cell.others.text = userProfile.others
         return cell
     }
     

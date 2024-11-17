@@ -22,18 +22,18 @@ class AuthViewModel {
         var authButtonTitleToString: String {
             switch self {
             case .signIn:
-                return "Sign In"
+                return "サインイン"
             case .signUp:
-                return "Sign Up"
+                return "サインアップ"
             }
         }
         
         var sectionSwitchTitleToString: String {
             switch self {
             case .signIn:
-                return "Create an account"
+                return "アカウントを作成する▶︎"
             case .signUp:
-                return "Already have an account"
+                return "すでにアカウントを持っている▶︎"
             }
         }
     }
@@ -76,7 +76,7 @@ class AuthViewModel {
          authService: AuthServiceProtocol,
          mainService: MainServiceProtocol
     ) {
-        
+        // エラーを流す
         let myAppErrorRelay = BehaviorRelay<MyAppError?>(value: nil)
         
         // .skip() → 最初のバリデーションをスキップ

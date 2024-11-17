@@ -34,6 +34,7 @@ extension Reactive where Base: AlertEnabled {
                 if let secondPlaceHolder = alertAction.secondTextField {
                     alertController.addTextField { textField in
                         textField.placeholder = secondPlaceHolder
+                        textField.isSecureTextEntry = true
                     }
                 }
             }
@@ -94,17 +95,17 @@ enum AlertActionType {
     var title: String {
         switch self {
         case .error:
-            return "Error"
+            return "エラー"
         case .willDeleteAccount:
-            return "Delete an Account"
+            return "アカウントを削除する"
         case .willShowDepartVC:
-            return "出発準備"
+            return "注意"
         case .exitRoom:
-            return "Exit Room"
+            return "終了する"
         case .breakTime:
-            return "Take a Break"
+            return "休憩する"
         case .community:
-            return "Join Community"
+            return "コミュニティ"
         }
     }
     
@@ -113,11 +114,11 @@ enum AlertActionType {
         case .error(let error):
             return error.errorDescription ?? ""
         case .willDeleteAccount:
-            return "Are you sure you want to delete your account?"
+            return "本当にアカウントを削除してもよろしいですか？"
         case .willShowDepartVC(_, _, let ticketInfo):
             return "次回の「\(ticketInfo.destination)」への訪問時以降、以下の項目は変更されません。\n\n必要な勉強時間：\(ticketInfo.requiredStudyHours)時間\n報酬コイン：\(ticketInfo.rewardCoin)コイン"
         case .exitRoom:
-            return "Do you really want to exit the room?"
+            return "本当に終了してもよろしいですか？\n（終了後、勉強時間が記録されます。）"
         case .breakTime:
             return "It's time to take a break."
         case .community:
@@ -130,20 +131,20 @@ enum AlertActionType {
         case .error:
             return "OK"
         case .willDeleteAccount:
-            return "Delete"
+            return "削除"
         case .willShowDepartVC:
             return "OK"
         case .exitRoom:
-            return "Exit"
+            return "終了"
         case .breakTime:
-            return "Break"
+            return "休憩"
         case .community:
             return "Join"
         }
     }
     
     var onCancelTitle: String {
-        return "Cancel"
+        return "キャンセル"
     }
     
     // キャンセルアクションの表示/非表示
@@ -168,7 +169,7 @@ enum AlertActionType {
     var firstTextField: String? {
         switch self {
         case .willDeleteAccount:
-            return "email"
+            return "メールアドレス"
         default:
             return nil
         }
@@ -177,7 +178,7 @@ enum AlertActionType {
     var secondTextField: String? {
         switch self {
         case .willDeleteAccount:
-            return "password"
+            return "パスワード"
         default:
             return nil
         }

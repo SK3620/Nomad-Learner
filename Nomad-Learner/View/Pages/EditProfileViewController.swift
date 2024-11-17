@@ -61,9 +61,9 @@ class EditProfileViewController: UIViewController, AlertEnabled, KRProgressHUDEn
         // 位置を調整するTextView
         keyboardManager.setAdjustableTextViews([
             editProfileView.usernameTextView,
-            editProfileView.livingPlaceAndWorkTextView,
             editProfileView.studyContentTextView,
-            editProfileView.goalTextView
+            editProfileView.goalTextView,
+            editProfileView.othersTextView
         ])
         // キーボード開閉時のUI調整
         keyboardManager.adjustViewForKeyboardAppearance(in: self.editProfileView)
@@ -74,9 +74,9 @@ class EditProfileViewController: UIViewController, AlertEnabled, KRProgressHUDEn
             input:
                 (
                     username: editProfileView.usernameTextView.rx.text.orEmpty.asDriver(),
-                    livingPlaceAndWork: editProfileView.livingPlaceAndWorkTextView.rx.text.orEmpty.asDriver(),
                     studyContent: editProfileView.studyContentTextView.rx.text.orEmpty.asDriver(),
                     goal: editProfileView.goalTextView.rx.text.orEmpty.asDriver(),
+                    others: editProfileView.othersTextView.rx.text.orEmpty.asDriver(),
                     saveButtonTaps: editProfileView.navigationBar.saveButton.rx.tap.asSignal(),
                     profileImage: profileImageRelay.asDriver()
                 ),
@@ -148,6 +148,7 @@ extension EditProfileViewController {
             updatedUserProfile.livingPlaceAndWork = inputUserProfile.livingPlaceAndWork
             updatedUserProfile.studyContent = inputUserProfile.studyContent
             updatedUserProfile.goal = inputUserProfile.goal
+            updatedUserProfile.others = inputUserProfile.others
             
             KRProgressHUD.dismiss()
             

@@ -84,6 +84,12 @@ class CustomAuthPickerViewController: FUIAuthPickerViewController {
 
 extension CustomAuthPickerViewController: AlertEnabled, KRProgressHUDEnabled {
     private func bind() {
+        
+        // パスワード表示/非表示切り替え
+        authStackView.passwordTextField.togglePasswordVisibilityButton.rx.tap
+            .bind(to: togglePasswordVisibility)
+            .disposed(by: disposeBag)
+        
         self.viewModel = AuthViewModel(
             input:
                 (
@@ -150,6 +156,10 @@ extension CustomAuthPickerViewController: AlertEnabled, KRProgressHUDEnabled {
 }
 
 extension CustomAuthPickerViewController {
+    // パスワード表示/非表示切り替え
+    private var togglePasswordVisibility: Binder<Void> {
+        return Binder(self, binding: { base, _ in base.authStackView.passwordTextField.togglePasswordVisibility() })
+    }
     // SignIn/SignUp画面モードの切り替え
     private var switchAuthScreenMode: Binder<AuthViewModel.AuthMode> {
         return Binder(self) { base, authMode in base.authStackView.apply(.transform(to: authMode)) }

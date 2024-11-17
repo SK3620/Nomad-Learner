@@ -52,16 +52,16 @@ class StudyRoomNavigationBar: UIView {
     
     // UIMenuを生成
     private lazy var menuActions: [UIAction] = {
-        let breakAction = UIAction(title: "Take a break", image: UIImage(systemName: "cup.and.saucer")) { _ in
+        let breakAction = UIAction(title: "休憩", image: UIImage(systemName: "cup.and.saucer")) { _ in
             self.menuActionHandler?((.breakTime))
         }
-        let confirmTicketAction =  UIAction(title: "チケットを確認する", image: UIImage(systemName: "ticket")) { _ in
+        let confirmTicketAction =  UIAction(title: "チケット", image: UIImage(systemName: "ticket")) { _ in
             self.menuActionHandler?((.confirmTicket))
         }
-        let communityAction = UIAction(title: "Community", image: UIImage(systemName: "person.3")) { _ in
+        let communityAction = UIAction(title: "コミュニティ", image: UIImage(systemName: "person.3")) { _ in
             self.menuActionHandler?((.community))
         }
-        let exitAction = UIAction(title: "Exit room", image: UIImage(systemName: "door.left.hand.open")) { _ in
+        let exitAction = UIAction(title: "終了", image: UIImage(systemName: "door.left.hand.open")) { _ in
             self.menuActionHandler?((.exitRoom))
         }
         

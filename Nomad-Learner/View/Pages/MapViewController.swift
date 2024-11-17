@@ -218,13 +218,13 @@ extension MapViewController: KRProgressHUDEnabled, AlertEnabled {
         
         // 各ロケーション情報
         viewModel.locationsAndUserInfo
-            .map { ($0, isMonitoredData: false)}
+            .map { ($0, isMonitoredData: false) }
             .drive(handleLocationsInfo)
             .disposed(by: disposeBag)
         
         // 各ロケーション情報（監視）
         viewModel.monitoredLocationsAndUserInfo
-            .map { ($0, isMonitoredData: true)}
+            .map { ($0, isMonitoredData: true) }
             .drive(handleLocationsInfo)
             .disposed(by: disposeBag)
         
@@ -273,7 +273,7 @@ extension MapViewController {
             if hasntVisited {
                 // 初回訪問の場合、アラートを表示して遷移
                 let alertActionType = AlertActionType.willShowDepartVC(
-                    onConfirm: { 
+                    onConfirm: {
                         base.mapView.clearPolyline() // ポリラインを削除
                         Router.showDepartVC(vc: base, locationInfo: locationInfo) // DepartVC（出発準備画面）へ遷移
                     },
@@ -329,7 +329,8 @@ extension MapViewController {
     // 現在地のInfoWindow表示
     private var displayCurrentLocationInfoWindow: Binder<Void> {
         return Binder(self) { base, _ in
-            let marker = GMSMarker(position: base.mapView.currentCoordinate)
+            guard let currentCoordinate = base.mapView.currentCoordinate else { return }
+            let marker = GMSMarker(position: currentCoordinate)
             marker.userData = base.locationsInfo.getCurrentLocation(currentLocationId: base.userProfile.currentLocationId)
             
             base.markerTapped(marker: marker)
@@ -339,7 +340,8 @@ extension MapViewController {
     // 現在地までcamera移動
     private var moveToCurrentLocation: Binder<Void> {
         return Binder(self) { base, _ in
-        let currentPosition = GMSCameraPosition(target: base.mapView.currentCoordinate, zoom: base.mapView.currentZoom)
+            guard let currentCoordinate = base.mapView.currentCoordinate else { return }
+            let currentPosition = GMSCameraPosition(target: currentCoordinate, zoom: base.mapView.currentZoom)
             base.mapView.animate(to: currentPosition)
         }
     }

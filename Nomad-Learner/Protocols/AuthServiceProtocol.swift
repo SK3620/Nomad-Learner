@@ -94,22 +94,18 @@ final class AuthService: AuthServiceProtocol {
     // アカウント削除
     func deleteAccount(email: String, password: String) -> Observable<Void> {
         return Observable<Void>.create { observer in
-            if email.isEmpty || password.isEmpty {
-                observer.onError(MyAppError.deleteAccount(.fieldEmpty))
-            }
-            
             if let user = FBAuth.currentUser {
                 // アカウントの削除を実行
                 user.delete { error in
                     if let error = error {
-                        observer.onError(MyAppError.deleteAccount(.deleteAccountFailed(error)))
+                        observer.onError(MyAppError.deleteAccountFailed(error))
                     } else {
                         observer.onNext(()) // アカウント削除成功
                         observer.onCompleted()
                     }
                 }
             } else {
-                observer.onError(MyAppError.deleteAccount(.deleteAccountFailed(nil)))
+                observer.onError(MyAppError.deleteAccountFailed(nil))
             }
             return Disposables.create()
         }

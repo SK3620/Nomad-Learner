@@ -24,7 +24,7 @@ class SeparatorWithLabelView: UIStackView {
     
     private lazy var label = UILabel().then {
         $0.textColor = .gray
-        $0.font = UIFont.systemFont(ofSize: UIConstants.Font.smallFont)
+        $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.semiMedium)
         $0.textAlignment = .center
     }
     

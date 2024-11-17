@@ -32,19 +32,19 @@ class ProfileTopView: UIView {
     }
     
     // 今日の勉強時間タイトル
-    private let todayStudyTimeTitle = ProfileLabel(text: "today", fontSize: UIConstants.TextSize.semiMedium, textColor: ColorCodes.primaryPurple.color(), isRounded: true)
+    private let todayStudyTimeTitle = ProfileLabel(text: "今日", fontSize: UIConstants.TextSize.semiMedium, textColor: ColorCodes.primaryPurple.color(), isRounded: true)
     
     // 今日の勉強時間
     private let todayStudyTime = ProfileLabel(text: "--:--", fontSize: UIConstants.TextSize.medium, textColor: .white)
     
     // 一週間の勉強時間タイトル
-    private let weeklyStudyTimeTitle = ProfileLabel(text: "weekly", fontSize: UIConstants.TextSize.semiMedium, textColor: ColorCodes.primaryPurple.color(), isRounded: true)
+    private let weeklyStudyTimeTitle = ProfileLabel(text: "週ごと", fontSize: UIConstants.TextSize.semiMedium, textColor: ColorCodes.primaryPurple.color(), isRounded: true)
     
     // 一週間の勉強時間
     private let weeklyStudyTime = ProfileLabel(text: "--:--", fontSize: UIConstants.TextSize.medium, textColor: .white)
     
     // 合計勉強時間タイトル
-    private let totalStudyTimeTitle = ProfileLabel(text: "total", fontSize: UIConstants.TextSize.semiMedium, textColor: ColorCodes.primaryPurple.color(), isRounded: true)
+    private let totalStudyTimeTitle = ProfileLabel(text: "合計", fontSize: UIConstants.TextSize.semiMedium, textColor: ColorCodes.primaryPurple.color(), isRounded: true)
     
     // 合計勉強時間
     private let totalStudyTime = ProfileLabel(text: "--:--", fontSize: UIConstants.TextSize.medium, textColor: .white)

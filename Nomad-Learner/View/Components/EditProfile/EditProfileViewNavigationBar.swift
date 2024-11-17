@@ -23,7 +23,7 @@ class EditProfileViewNavigationBar: UINavigationBar {
     private lazy var navigationItem = UINavigationItem().then {
         $0.leftBarButtonItem = closeButton
         $0.rightBarButtonItem = saveButton
-        $0.title = "Edit Profile"
+        $0.title = "プロフィール編集"
     }
     
     override init(frame: CGRect) {

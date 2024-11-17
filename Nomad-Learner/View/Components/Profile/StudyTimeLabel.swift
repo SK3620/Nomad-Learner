@@ -12,7 +12,7 @@ class ProfileLabel: UILabel {
     
     private var textPadding: UIEdgeInsets = UIEdgeInsets.zero
     
-    init(text: String, fontSize: CGFloat, textColor: UIColor, isRounded: Bool = false, horizontalPadding: CGFloat = UIConstants.Layout.smallPadding, verticalPadding: CGFloat = UIConstants.Layout.extraSmallPadding) {
+    init(text: String = "", fontSize: CGFloat, textColor: UIColor, isRounded: Bool = false, horizontalPadding: CGFloat = UIConstants.Layout.smallPadding, verticalPadding: CGFloat = UIConstants.Layout.extraSmallPadding) {
         super.init(frame: .zero)
         
         self.text = text

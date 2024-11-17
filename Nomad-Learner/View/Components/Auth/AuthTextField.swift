@@ -8,18 +8,37 @@
 import UIKit
 
 class AuthTextField: UITextField {
-        
+    
+    // ユーザー名, メールアドレス, パスワードのアイコン画像表示
+    private let imageView = UIImageView().then {
+        $0.contentMode = .scaleAspectFit
+        $0.tintColor = .gray
+    }
+    
+    // パスワード表示/非表示切り替えボタン
+    lazy var togglePasswordVisibilityButton = UIButton(type: .system).then {
+        let image = UIImage(systemName: "eye.slash.fill")
+        $0.setImage(image, for: .normal)
+        $0.tintColor = .black
+    }
+    
     // 初期化処理
-    init(placeholder: String, isSecureTextEntry: Bool = false, keyboardType: UIKeyboardType = .default, imageName: String) {
+    init(
+        placeholder: String,
+        isSecureTextEntry: Bool = false,
+        keyboardType: UIKeyboardType = .default,
+        leftImageName: String,
+        needsRightImage: Bool = false
+    ) {
         super.init(frame: .zero)
         self.placeholder = placeholder
         self.isSecureTextEntry = isSecureTextEntry
         self.keyboardType = keyboardType
         self.font = UIFont.systemFont(ofSize: UIConstants.TextField.fontSize)
         
-        // TextField左端に画像配置
-        setupLeftView(with: imageName)
         setupUI()
+        setupLeftView(with: leftImageName)
+        if needsRightImage { setupRightView() }
     }
     
     required init?(coder: NSCoder) {
@@ -44,7 +63,6 @@ class AuthTextField: UITextField {
         self.snp.makeConstraints {
             $0.height.equalTo(UIConstants.StackViewElement.height)
         }
-
         // キーボードに完了ボタン表示
         self.addDoneToolbar(onDone: (target: self, action: #selector(doneButtonTapped)))
     }
@@ -53,18 +71,16 @@ class AuthTextField: UITextField {
     @objc func doneButtonTapped() {
         self.endEditing(true)
     }
+}
+
+extension AuthTextField {
     
     // TextFieldの左端に画像を配置
     private func setupLeftView(with systemName: String) {
-        guard let image = UIImage(systemName: systemName) else {
-            return
-        }
-        
-        let imageView = UIImageView(image: image)
-        imageView.contentMode = .scaleAspectFit
-        imageView.tintColor = .gray
-        
-        // コンテナビューを作成
+        let image = UIImage(systemName: systemName)!
+        imageView.image = image
+    
+        // コンテナビューに入れてレイアウトを微調整
         let containerView = UIView()
         containerView.addSubview(imageView)
         
@@ -79,9 +95,24 @@ class AuthTextField: UITextField {
         containerView.snp.makeConstraints {
             $0.size.equalTo(imageView).multipliedBy(2) // アイコンサイズの2倍
         }
-        
+                
         // leftViewに設定
         leftView = containerView
         leftViewMode = .always
+    }
+    
+    // TextFieldの右端に画像を配置
+    private func setupRightView() {
+        // rightViewに設定
+        rightView = togglePasswordVisibilityButton
+        rightViewMode = .always
+    }
+}
+
+extension AuthTextField {
+    func togglePasswordVisibility() {
+        isSecureTextEntry.toggle()
+        let imageName = isSecureTextEntry ? "eye.slash.fill" : "eye.fill"
+        togglePasswordVisibilityButton.setImage(UIImage(systemName: imageName), for: .normal)
     }
 }

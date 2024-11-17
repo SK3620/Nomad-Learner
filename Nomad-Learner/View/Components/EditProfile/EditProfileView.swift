@@ -16,9 +16,9 @@ class EditProfileView: UIView {
     // MARK: - Private UI Elements
     private let pictureView = EditProfileView.createRoundedView()
     private let usernameView = EditProfileView.createRoundedView()
-    private let countryAndOccupationView = EditProfileView.createRoundedView()
     private let studyContentView = EditProfileView.createRoundedView()
     private let goalView = EditProfileView.createRoundedView()
+    private let othersView = EditProfileView.createRoundedView()
     
     // 画像ライブラリ表示ボタン
     let addPictureButton: UIButton = UIButton(type: .system).then {
@@ -43,25 +43,33 @@ class EditProfileView: UIView {
         $0.layer.masksToBounds = true
     }
     
-    private let usernameTitle = ProfileLabel(text: "Name", fontSize: UIConstants.TextSize.semiMedium, textColor: .white, isRounded: true).then {
+    private let usernameTitle = ProfileLabel(text: "名前", fontSize: UIConstants.TextSize.semiMedium, textColor: .white, isRounded: true).then {
         $0.backgroundColor = ColorCodes.primaryPurple.color()
     }
-    let usernameTextView = EditProfileTextView(text: "")
+    let usernameTextView = EditProfileTextView()
     
+    /*
     private let livingPlaceAndWorkTitle = ProfileLabel(text: "Country / Occupation", fontSize: UIConstants.TextSize.semiMedium, textColor: .white, isRounded: true).then {
         $0.backgroundColor = ColorCodes.primaryPurple.color()
     }
     let livingPlaceAndWorkTextView = EditProfileTextView(text: "")
+     */
     
-    private let studyContentTitle = ProfileLabel(text: "Study Content", fontSize: UIConstants.TextSize.semiMedium, textColor: .white, isRounded: true).then {
+    private let studyContentTitle = ProfileLabel(text: "勉強内容", fontSize: UIConstants.TextSize.semiMedium, textColor: .white, isRounded: true).then {
         $0.backgroundColor = ColorCodes.primaryPurple.color()
     }
-    let studyContentTextView = EditProfileTextView(text: "")
+    let studyContentTextView = EditProfileTextView()
     
-    private let goalTitle = ProfileLabel(text: "Goal", fontSize: UIConstants.TextSize.semiMedium, textColor: .white, isRounded: true).then {
+    private let goalTitle = ProfileLabel(text: "目標", fontSize: UIConstants.TextSize.semiMedium, textColor: .white, isRounded: true).then {
         $0.backgroundColor = ColorCodes.primaryPurple.color()
     }
-    let goalTextView = EditProfileTextView(text: "")
+    let goalTextView = EditProfileTextView()
+    
+    private let othersTitle: ProfileLabel = ProfileLabel(text: "その他", fontSize: UIConstants.TextSize.semiMedium, textColor: .white, isRounded: true).then {
+        $0.backgroundColor = ColorCodes.primaryPurple.color()
+    }
+    
+    let othersTextView = EditProfileTextView()
     
     init() {
         super.init(frame: .zero)
@@ -92,9 +100,9 @@ class EditProfileView: UIView {
         // Main Vertical Stack
         let stackView = UIStackView(arrangedSubviews: [
             pictureAndUsernameStackView,
-            countryAndOccupationView,
             studyContentView,
-            goalView
+            goalView,
+            othersView
         ])
         stackView.axis = .vertical
         stackView.spacing = UIConstants.Layout.standardPadding
@@ -108,12 +116,12 @@ class EditProfileView: UIView {
         pictureView.addSubview(pictureImageView)
         usernameView.addSubview(usernameTitle)
         usernameView.addSubview(usernameTextView)
-        countryAndOccupationView.addSubview(livingPlaceAndWorkTitle)
-        countryAndOccupationView.addSubview(livingPlaceAndWorkTextView)
         studyContentView.addSubview(studyContentTitle)
         studyContentView.addSubview(studyContentTextView)
         goalView.addSubview(goalTitle)
         goalView.addSubview(goalTextView)
+        othersView.addSubview(othersTitle)
+        othersView.addSubview(othersTextView)
         
         navigationBar.snp.makeConstraints {
             $0.top.left.right.equalToSuperview()
@@ -148,15 +156,6 @@ class EditProfileView: UIView {
             $0.left.right.bottom.equalToSuperview().inset(UIConstants.Layout.standardPadding)
         }
         
-        livingPlaceAndWorkTitle.snp.makeConstraints {
-            $0.top.left.equalToSuperview().inset(UIConstants.Layout.standardPadding)
-        }
-        
-        livingPlaceAndWorkTextView.snp.makeConstraints {
-            $0.top.equalTo(livingPlaceAndWorkTitle.snp.bottom)
-            $0.left.right.bottom.equalToSuperview().inset(UIConstants.Layout.standardPadding)
-        }
-        
         studyContentTitle.snp.makeConstraints {
             $0.top.left.equalToSuperview().inset(UIConstants.Layout.standardPadding)
         }
@@ -174,6 +173,15 @@ class EditProfileView: UIView {
             $0.top.equalTo(goalTitle.snp.bottom)
             $0.left.right.bottom.equalToSuperview().inset(UIConstants.Layout.standardPadding)
         }
+        
+        othersTitle.snp.makeConstraints {
+            $0.top.left.equalToSuperview().inset(UIConstants.Layout.standardPadding)
+        }
+        
+        othersTextView.snp.makeConstraints {
+            $0.top.equalTo(othersTitle.snp.bottom)
+            $0.left.right.bottom.equalToSuperview().inset(UIConstants.Layout.standardPadding)
+        }
     }
     
     // ユーザープロフィール情報を受け取り、UI更新
@@ -186,9 +194,9 @@ class EditProfileView: UIView {
             completion(pictureImageView.image) // 画像セット後、画像データを渡す
         }
         usernameTextView.text = userProfile.username
-        livingPlaceAndWorkTextView.text = userProfile.livingPlaceAndWork
         studyContentTextView.text = userProfile.studyContent
         goalTextView.text = userProfile.goal
+        othersTextView.text = userProfile.others
     }
     
     required init?(coder: NSCoder) {

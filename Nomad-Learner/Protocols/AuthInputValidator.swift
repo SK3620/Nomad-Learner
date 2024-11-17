@@ -26,14 +26,14 @@ extension String {
 
 // MARK: - Validation Error Messages
 struct AuthInputValidationMessages {
-    static let missingUsername = "Please enter a username."
-    static let usernameTooLong = "Username is too long"
-    static let missingEmail = "Please enter an email address."
-    static let invalidEmail = "The email format is incorrect."
-    static let emailAlreadyUsed = "This email is already in use."
-    static let missingPassword = "Please enter a password."
-    static let containsSpace = "Any spaces cannot be contained."
-    static let invalidPassword = "Please include 8 to 16 characters with letters and numbers."
+    static let missingUsername = "ユーザー名を入力してください"
+    static let usernameTooLong = "ユーザー名が長すぎます"
+    static let missingEmail = "メールアドレスを入力してください"
+    static let invalidEmail = "無効なメールアドレスです"
+    static let emailAlreadyUsed = "このメールアドレスはすでに使用されています"
+    static let missingPassword = "パスワードを入力してください"
+    static let containsSpace = "スペースは使用できません"
+    static let invalidPassword = "英数字を含む8〜16文字を入力してください"
 }
 
 // MARK: - Auth Input Validator

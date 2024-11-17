@@ -11,19 +11,26 @@ import SnapKit
 
 class AuthStackView: UIStackView {
     // 入力欄
-    lazy var usernameTextField = AuthTextField(placeholder: "Username", imageName: "person")
-    lazy var emailTextField = AuthTextField(placeholder: "Email Address", keyboardType: .emailAddress, imageName: "envelope")
-    lazy var passwordTextField = AuthTextField(placeholder: "Password", isSecureTextEntry: true, imageName: "lock")
+    lazy var usernameTextField = AuthTextField(
+        placeholder: "ユーザー名",
+        leftImageName: "person"
+    )
+    lazy var emailTextField = AuthTextField(
+        placeholder: "メールアドレス",
+        keyboardType: .emailAddress,
+        leftImageName: "envelope"
+    )
+    lazy var passwordTextField = AuthTextField(
+        placeholder: "パスワード",
+        isSecureTextEntry: true,
+        leftImageName: "lock",
+        needsRightImage: true
+    )
     
     // バリデーションメッセージ
     lazy var usernameValidation: UILabel = ValidationLabel()
     lazy var emailValidation: UILabel = ValidationLabel()
     lazy var passwordValidation: UILabel = ValidationLabel()
-    
-    // 各認証情報入力欄を格納する配列
-    lazy var authTextFields: [UITextField] = {
-        return [usernameTextField, emailTextField, passwordTextField]
-    }()
     
     // 間隔を空けるための空のView
     lazy var emptyView = UIView()
@@ -61,14 +68,14 @@ class AuthStackView: UIStackView {
     // SignIn/SignUp画面切り替え
     lazy var authModeToggleButton = UIButton(type: .system).then {
         $0.titleLabel?.font = UIFont.systemFont(ofSize: UIConstants.Font.smallFont)
-        $0.setTitle("Dont't you have an account?", for: .normal)
+        $0.setTitle("パスワードを忘れた", for: .normal)
         $0.tintColor = ColorCodes.primaryPurple.color()
     }
     
     // アカウント削除ボタン
     let deleteAccountButton = UIButton(type: .system).then {
         $0.titleLabel?.font = UIFont.systemFont(ofSize: UIConstants.Font.smallFont)
-        $0.setTitle("Delete an account", for: .normal)
+        $0.setTitle("アカウントを削除する", for: .normal)
         $0.tintColor = .red
     }
     

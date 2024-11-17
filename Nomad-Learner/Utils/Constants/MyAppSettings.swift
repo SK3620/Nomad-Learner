@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import GoogleMaps
 
 struct MyAppSettings {
     /// このアプリで定める最低距離（km）
@@ -18,4 +19,8 @@ struct MyAppSettings {
     
     /// ユーザー初期位置
     public static let userInitialLocationId = "mount_fuji"
+    /// ユーザー初期位置 座標
+    public static let userInitialLocationCoordinate = CLLocationCoordinate2D(latitude: 35.361, longitude: 138.727)
+    /// ユーザー初期位置 座標 カメラ
+    public static let userInitialLocationCoordinateWithZoom = GMSCameraPosition(target: MyAppSettings.userInitialLocationCoordinate , zoom: 1.0)
 }

@@ -36,8 +36,6 @@ enum AuthInputValidation {
     }
 }
 
-// bindする対象を<>またはwhere指定（UILabel)
-// Base → Base object to extend.（拡張するベースのobject）
 extension Reactive<UILabel> where Base: UILabel {
     var validationResult: Binder<AuthInputValidation> {
         return Binder.init(self.base, binding: { label, result in

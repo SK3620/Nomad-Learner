@@ -174,7 +174,7 @@ final class MainService: MainServiceProtocol {
             self.firebaseConfig.usersCollectionReference().document(userId)
                 .setData(userData, merge: true) { error in
                 if let error = error {
-                    observer.onError(MyAppError.saveUserProfileFailed(nil))
+                    observer.onError(MyAppError.saveUserProfileFailed(error))
                 } else {
                     observer.onNext(())
                     observer.onCompleted()
@@ -221,7 +221,7 @@ final class MainService: MainServiceProtocol {
             
             self.firebaseConfig.visitedCollectionReference(with: userId).getDocuments { snapshots, error in
                 if let error = error {
-                    observer.onError(MyAppError.fetchLocationInfoFailed(nil))
+                    observer.onError(MyAppError.fetchLocationInfoFailed(error))
                 } else {
                     let visitedLocations = snapshots?.documents.compactMap { VisitedLocationParser.parse($0.documentID, $0.data())} ?? []
                     
@@ -238,7 +238,7 @@ final class MainService: MainServiceProtocol {
         Observable.create { observer in
             self.firebaseConfig.locationsCollectionReference().getDocuments { snapshots, error in
                 if let error = error {
-                    observer.onError(MyAppError.fetchLocationInfoFailed(nil))
+                    observer.onError(MyAppError.fetchLocationInfoFailed(error))
                 } else  {
                     let fixedLocations = snapshots?.documents.compactMap {
                         LocationParser.parse($0.documentID, $0.data())
@@ -255,6 +255,8 @@ final class MainService: MainServiceProtocol {
     // ユーザープロフィールの現在のロケーションIDと現在の所持金を更新
     func updateCurrentCoinAndLocationId(locationId: String, currentCoin: Int) -> Observable<Void> {
         Observable.create { observer in
+            observer.onError(MyAppError.saveDataFailed(nil))
+
             guard let userId = FBAuth.currentUserId else {
                 observer.onError(MyAppError.saveDataFailed(nil))
                 return Disposables.create()
@@ -375,7 +377,7 @@ final class MainService: MainServiceProtocol {
             
             query.getDocuments { snapshots, error in
                 if let error = error {
-                    print("ページネーションによる追加データ取得エラー発生")
+                    print("ページネーションによる追加データ取得エラー発生 エラー内容: \(error)")
                 } else {
                     // ユーザーのuuidを取得
                     let userIds: [String] = snapshots?.documents.compactMap { $0.documentID } ?? []
@@ -398,7 +400,7 @@ final class MainService: MainServiceProtocol {
             
             self.listenerForNewUsersParticipation = query.addSnapshotListener { snapshots, error in
                 if let error = error {
-                    print("ロケーションに参加する他ユーザーの情報取得エラー発生")
+                    print("ロケーションに参加する他ユーザーの情報取得エラー発生 エラー内容: \(error)")
                 } else if let documents = snapshots?.documents, !documents.isEmpty {
                     // ユーザーのuuidを取得
                     let userIds: [String] = documents.compactMap { $0.documentID }
@@ -420,7 +422,7 @@ final class MainService: MainServiceProtocol {
             
             self.listenerForUsersExit = query.addSnapshotListener { snapshots, error in
                 if let error = error {
-                    print("退出したユーザーの検知エラー発生")
+                    print("退出したユーザーの検知エラー発生 エラー内容: \(error)")
                 } else if let documents = snapshots?.documentChanges, !documents.isEmpty {
                     var userIds: [String] = []
                     
@@ -450,7 +452,7 @@ final class MainService: MainServiceProtocol {
             self.firebaseConfig.usersInLocationsReference(with: locationId).document(userId)
                 .delete { error in
                     if let error = error {
-                        print("ユーザードキュメント削除エラー発生")
+                        print("ユーザードキュメント削除エラー発生 エラー内容: \(error)")
                     } else {
                         // userCount フィールドを -1 デクリメント
                         let locationRef = self.firebaseConfig.locationsCollectionReference().document(locationId)
@@ -458,7 +460,7 @@ final class MainService: MainServiceProtocol {
                             "userCount": FieldValue.increment(Int64(-1))  // userCountを-1デクリメント
                         ]) { error in
                             if let error = error {
-                                print("userCountデクリメントエラー発生")
+                                print("userCountデクリメントエラー発生 エラー内容: \(error)")
                             } else {
                                 observer.onNext(())
                                 observer.onCompleted()
@@ -506,7 +508,7 @@ final class MainService: MainServiceProtocol {
             let docRef = self.firebaseConfig.usersCollectionReference().document(userId)
             docRef.updateData(dicData) { error in
                 if let error = error {
-                    observer.onError(MyAppError.saveDataFailed(nil))
+                    observer.onError(MyAppError.saveDataFailed(error))
                 } else {
                     observer.onNext(())
                     observer.onCompleted()

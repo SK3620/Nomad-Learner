@@ -41,9 +41,7 @@ class OnFlightViewModel {
             }
         
         let result = updateAndAddEventResult
-            .flatMap { _, _ in
-                fetchUsersInfoResult
-            }
+            .flatMap { _, _ in fetchUsersInfoResult }
             .trackActivity(indicator)
             .materialize()
             .share(replay: 1)

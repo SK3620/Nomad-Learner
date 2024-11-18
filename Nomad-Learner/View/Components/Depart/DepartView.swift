@@ -137,8 +137,6 @@ class DepartView: UIView {
         addSubview(arrowRightImageView)
         addSubview(remainingCoinLabel)
         
-       
-        
         ticketView.snp.makeConstraints {
             $0.height.equalToSuperview().multipliedBy(0.75)
             $0.top.right.left.equalToSuperview()

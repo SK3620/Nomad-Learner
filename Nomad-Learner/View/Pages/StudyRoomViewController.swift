@@ -22,8 +22,9 @@ class StudyRoomViewController: UIViewController {
     private var viewModel: StudyRoomViewModel!
     
     // 背景画像
-    private let backgroundImageView: UIImageView = UIImageView().then {
-        $0.image = UIImage(named: "grassland")
+    private lazy var backgroundImageView = UIImageView().then {
+        guard let initialImageUrlString = locationInfo.fixedLocation.imageUrls.last else { return }
+        $0.setImage(with: initialImageUrlString)
     }
     
     // 休憩中に表示する背景View
@@ -231,7 +232,6 @@ extension StudyRoomViewController: AlertEnabled {
             UIView.animate(withDuration: 1.5, animations: {
                 // 背景画像をフェードアウトさせる（透明にする）
                 self.backgroundImageView.alpha = 0.0
-
             }) { _ in
                 // フェードアウトが完了したら、新しい画像に更新
                 self.backgroundImageView.setImage(with: imageUrl)
@@ -280,18 +280,25 @@ extension StudyRoomViewController: AlertEnabled {
             case .confirmTicket:
                 Router.showTicketConfirmVC(vc: base, locationInfo: base.locationInfo)
             case .community:
-                print("Coming Soon")
+                base.rx.showMessage.onNext(.inDevelopment)
             case .exitRoom:
-                let alertActionType: AlertActionType = .exitRoom(
-                    onConfirm: {
-                        base.viewModel.saveStudyProgress() {
-                            Router.backToMapVC(vc: base) // MapVC（マップ画面）に戻る
-                        }
-                    }
-                )
-                base.rx.showAlert.onNext(alertActionType)
+                base.exitRoomHandler()
             }
         }
+    }
+}
+
+extension StudyRoomViewController {
+    // .exitRoom
+    private func exitRoomHandler() {
+        let alertActionType: AlertActionType = .exitRoom(
+            onConfirm: {
+                self.viewModel.saveStudyProgress() {
+                    Router.backToMapVC(vc: self) // MapVC（マップ画面）に戻る
+                }
+            }
+        )
+        self.rx.showAlert.onNext(alertActionType)
     }
 }
 

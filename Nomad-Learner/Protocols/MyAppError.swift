@@ -46,23 +46,23 @@ enum MyAppError: Error {
            case .deleteAccountFailed:
                return NSLocalizedString("アカウントの削除に失敗しました。もう一度お試しください。", comment: "アカウント削除失敗メッセージ")
            case .saveUserProfileFailed:
-               return NSLocalizedString("ユーザープロフィールの保存に失敗しました。もう一度お試しください。", comment: "プロフィール保存失敗メッセージ")
+               return NSLocalizedString("データの保存/取得に失敗しました。もう一度お試しください。", comment: "プロフィール保存失敗メッセージ")
            case .fetchUserProfileFailed:
-               return NSLocalizedString("ユーザープロフィールの取得に失敗しました。もう一度お試しください。", comment: "プロフィール取得失敗メッセージ")
+               return NSLocalizedString("データの保存/取得に失敗しました。もう一度お試しください。", comment: "プロフィール取得失敗メッセージ")
            case .handleAll:
-               return NSLocalizedString("エラーが発生しました。もう一度お試しください。", comment: "一般的なエラーメッセージ")
-           case .unknown:
-               return NSLocalizedString("不明なエラーが発生しました。再試行してください。", comment: "不明なエラーメッセージ")
+               return NSLocalizedString("データの保存/取得に失敗しました。もう一度お試しください。", comment: "一般的なエラーメッセージ")
            case .testError(let text):
                return NSLocalizedString("テストエラー: \(text)", comment: "テストエラーメッセージ")
            case .saveDataFailed:
-               return NSLocalizedString("データの保存に失敗しました。もう一度お試しください。", comment: "データ保存失敗メッセージ")
+               return NSLocalizedString("データの保存/取得に失敗しました。もう一度お試しください。", comment: "データ保存失敗メッセージ")
            case .saveUserProfileImageFailed:
-               return NSLocalizedString("ユーザープロフィール画像の保存に失敗しました。もう一度お試しください。", comment: "プロフィール画像保存失敗メッセージ")
+               return NSLocalizedString("データの保存/取得に失敗しました。もう一度お試しください。", comment: "プロフィール画像保存失敗メッセージ")
            case .fetchDataFailed:
-               return NSLocalizedString("データの取得に失敗しました。もう一度お試しください。", comment: "データ取得失敗メッセージ")
+               return NSLocalizedString("データの保存/取得に失敗しました。もう一度お試しください。", comment: "データ取得失敗メッセージ")
            case .fetchLocationInfoFailed:
-               return NSLocalizedString("ロケーション情報の取得に失敗しました。もう一度お試しください。", comment: "位置情報取得失敗メッセージ")
+               return NSLocalizedString("データの保存/取得に失敗しました。もう一度お試しください。", comment: "位置情報取得失敗メッセージ")
+           case .unknown:
+               return NSLocalizedString("不明なエラーが発生しました。もう一度お試しください。", comment: "不明なエラーメッセージ")
            }
        }
        

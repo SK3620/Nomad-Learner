@@ -72,7 +72,7 @@ extension Reactive where Base: AlertEnabled {
 
 
 enum AlertActionType {
-    case error(MyAppError)
+    case error(MyAppError, onConfim: () -> Void = {})
     case willDeleteAccount(onConfirm: (String?, String?) -> Void, onCancel: () -> Void = {})
     case willShowDepartVC(onConfirm: () -> Void, onCancel: () -> Void = {}, ticketInfo: TicketInfo)
     case exitRoom(onConfirm: () -> Void, onCancel: () -> Void = {})
@@ -111,7 +111,7 @@ enum AlertActionType {
     
     var message: String {
         switch self {
-        case .error(let error):
+        case .error(let error, _):
             return error.errorDescription ?? ""
         case .willDeleteAccount:
             return "本当にアカウントを削除してもよろしいですか？"
@@ -194,8 +194,8 @@ enum AlertActionType {
                 .breakTime(let onConfirm, _),
                 .community(let onConfirm, _):
             return (onConfirm: { _, _ in onConfirm() }, onCancel: {})
-        case .error:
-            return (onConfirm: { _, _ in }, onCancel: {})
+        case .error(_, let onConfirm):
+            return (onConfirm: { _, _ in onConfirm() }, onCancel: {})
         }
     }
 }

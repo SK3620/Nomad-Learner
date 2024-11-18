@@ -48,6 +48,14 @@ class DepartViewController: UIViewController {
         bind()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        // つまみ位置を初期位置に戻す
+        departView.resetKnobPosition()
+    }
+}
+
+extension DepartViewController {
     private func setupUI() {
         // 上部のSafeArea内を塗りつぶす
         view.backgroundColor = UIColor(red: 0.86, green: 0.86, blue: 0.94, alpha: 1.0)

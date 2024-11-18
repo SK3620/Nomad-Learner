@@ -25,9 +25,18 @@ class OnFlightViewController: UIViewController, AlertEnabled {
         super.viewDidLoad()
         
         setupUI()
-        bind()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        // 画面の回転が完了してから実行し、エラーアラートを正常に表示
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.bind()
+        }
+    }
+}
+
+extension OnFlightViewController {
     private func setupUI() {
         view.backgroundColor = .white
 
@@ -60,7 +69,7 @@ class OnFlightViewController: UIViewController, AlertEnabled {
         
         // エラー
         viewModel.myAppError
-            .map { AlertActionType.error($0) }
+            .map { AlertActionType.error($0, onConfim: { Router.dismissModal(vc: self) }) }
             .drive(self.rx.showAlert)
             .disposed(by: disposeBag)
     }

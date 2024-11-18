@@ -222,7 +222,12 @@ class DepartView: UIView {
 
 extension DepartView {
     
-    public func slideKnob(sender: UIPanGestureRecognizer){
+    // つまみ位置を初期位置に戻す
+    func resetKnobPosition() {
+        knobImageButton.frame.origin.y = 0
+    }
+    
+    func slideKnob(sender: UIPanGestureRecognizer){
         // knob（つまみ）の移動量を取得
         let point = sender.translation(in: knobBackgroundView)
         // つまみの中心Y座標

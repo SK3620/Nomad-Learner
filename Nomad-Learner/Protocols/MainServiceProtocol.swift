@@ -35,7 +35,7 @@ protocol MainServiceProtocol {
     // ロケーションに参加中のユーザーのuuidを取得
     func fetchUserIdsInLocation(locationId: String, limit: Int) -> Observable<(userIds: [String], latestLoadedDocDate: Timestamp?, oldestDocument: QueryDocumentSnapshot?)>
     // ロケーションに参加中のユーザーのプロフィール情報を取得
-    func fetchUserProfiles(userIds: [String]) -> Observable<[User]>
+    func fetchUserProfiles(userIds: [String], isInitialFetch: Bool) -> Observable<[User]>
     // ページネーションで追加データ取得
     func fetchMoreUserIdsInLocation(locationId: String, limit: Int, oldestDocument: QueryDocumentSnapshot?) -> Observable<(userIds: [String], oldestDocument: QueryDocumentSnapshot?)>
     // ロケーションに参加する他ユーザーをリアルタイムリッスン
@@ -122,7 +122,7 @@ final class MainService: MainServiceProtocol {
     func saveProfileImage(image: UIImage) -> Observable<String> {
         return Observable.create { observer in
             guard let userId = FBAuth.currentUserId else {
-                observer.onError(MyAppError.saveUserProfileImageFailed(nil))
+                observer.onError(MyAppError.userNotFound)
                 return Disposables.create()
             }
             // 画像をJPEG形式に変換する
@@ -160,7 +160,7 @@ final class MainService: MainServiceProtocol {
     func saveUserProfile(user: User, shouldUpdate: Bool = false) -> Observable<Void> {
         return Observable.create { observer in
             guard let userId = FBAuth.currentUserId else {
-                observer.onError(MyAppError.saveUserProfileFailed(nil))
+                observer.onError(MyAppError.userNotFound)
                 return Disposables.create()
             }
             
@@ -188,7 +188,7 @@ final class MainService: MainServiceProtocol {
     func fetchUserProfile() -> Observable<User> {
         return Observable.create { observer in
             guard let userId = FBAuth.currentUserId else {
-                observer.onError(MyAppError.fetchUserProfileFailed(nil))
+                observer.onError(MyAppError.userNotFound)
                 return Disposables.create()
             }
             // Firestoreからユーザーデータを取得
@@ -215,7 +215,7 @@ final class MainService: MainServiceProtocol {
     func fetchVisitedLocations() -> Observable<[VisitedLocation]> {
         return Observable.create { observer in
             guard let userId = FBAuth.currentUserId else {
-                observer.onError(MyAppError.fetchLocationInfoFailed(nil))
+                observer.onError(MyAppError.userNotFound)
                 return Disposables.create()
             }
             
@@ -255,10 +255,8 @@ final class MainService: MainServiceProtocol {
     // ユーザープロフィールの現在のロケーションIDと現在の所持金を更新
     func updateCurrentCoinAndLocationId(locationId: String, currentCoin: Int) -> Observable<Void> {
         Observable.create { observer in
-            observer.onError(MyAppError.saveDataFailed(nil))
-
             guard let userId = FBAuth.currentUserId else {
-                observer.onError(MyAppError.saveDataFailed(nil))
+                observer.onError(MyAppError.userNotFound)
                 return Disposables.create()
             }
             
@@ -269,7 +267,7 @@ final class MainService: MainServiceProtocol {
             self.firebaseConfig.usersCollectionReference().document(userId)
                 .updateData(updatedData) { error in
                     if let error = error {
-                        observer.onError(MyAppError.saveDataFailed(error))
+                        observer.onError(MyAppError.updateCurrentCoinAndLocationIdFailed(error))
                     } else {
                         observer.onNext(())
                         observer.onCompleted()
@@ -283,7 +281,7 @@ final class MainService: MainServiceProtocol {
     func addUserIdToLocation(locationId: String) -> Observable<Void> {
         Observable.create { observer in
             guard let userId = FBAuth.currentUserId else {
-                observer.onError(MyAppError.saveDataFailed(nil))
+                observer.onError(MyAppError.userNotFound)
                 return Disposables.create()
             }
             
@@ -293,7 +291,7 @@ final class MainService: MainServiceProtocol {
                 "userCount": FieldValue.increment(Int64(1))  // userCountを+1インクリメント
             ], merge: true) { error in
                 if let error = error {
-                    observer.onError(MyAppError.saveDataFailed(error))
+                    observer.onError(MyAppError.addUserIdToLocationFailed(error))
                 } else {
                     // users サブコレクションにユーザーIDを追加
                     let userRef = self.firebaseConfig.usersInLocationsReference(with: locationId).document(userId)
@@ -301,7 +299,7 @@ final class MainService: MainServiceProtocol {
                         "createdAt": FieldValue.serverTimestamp()  // 作成日時を追加
                     ], merge: true) { error in
                         if let error = error {
-                            observer.onError(MyAppError.saveDataFailed(error))
+                            observer.onError(MyAppError.incrementUserCountFailed(error))
                         } else {
                             observer.onNext(())
                             observer.onCompleted()
@@ -322,7 +320,7 @@ final class MainService: MainServiceProtocol {
             
             query.getDocuments { snapshots, error in
                 if let error = error {
-                    observer.onError(MyAppError.fetchDataFailed(error))
+                    observer.onError(MyAppError.fetchUserIdsInLocationFailed(error))
                 } else if let documents = snapshots?.documents, !documents.isEmpty {
                     // ユーザーのuuidを取得
                     let userIds: [String] = documents.compactMap { $0.documentID }
@@ -337,10 +335,12 @@ final class MainService: MainServiceProtocol {
     }
     
     // ロケーションに参加中のユーザーのプロフィール情報を取得
-    func fetchUserProfiles(userIds: [String]) -> Observable<[User]> {
+    func fetchUserProfiles(userIds: [String], isInitialFetch: Bool = false) -> Observable<[User]> {
         Observable.create { observer in
             guard !userIds.isEmpty else {
-                observer.onError(MyAppError.fetchDataFailed(nil))
+                isInitialFetch
+                ? observer.onError(MyAppError.userNotFound)
+                : observer.onNext([])
                 return Disposables.create()
             }
             
@@ -348,14 +348,14 @@ final class MainService: MainServiceProtocol {
                 .whereField(FieldPath.documentID(), in: userIds)
             query.getDocuments { snapshots, error in
                 if let error = error {
-                    observer.onError(MyAppError.fetchDataFailed(error))
+                    isInitialFetch
+                    ? observer.onError(MyAppError.fetchUserProfilesFailed(error))
+                    : observer.onNext([])
                 } else {
                     let userProfiles = snapshots?.documents.compactMap {
                         UserParser.parse($0.documentID, $0.data())
                     } ?? []
-                    
                     observer.onNext(userProfiles)
-                    observer.onCompleted()
                 }
             }
             return Disposables.create()
@@ -408,7 +408,6 @@ final class MainService: MainServiceProtocol {
                     let data = latestDocument?.data()
                     let date = data?["createdAt"] as? Timestamp
                     observer.onNext((userIds: userIds, latestLoadedDocDate: date!))
-                    observer.onCompleted()
                 }
             }
             return Disposables.create()
@@ -444,7 +443,7 @@ final class MainService: MainServiceProtocol {
     func removeUserIdFromLocation(locationId: String) -> Observable<Void> {
         Observable.create { observer in
             guard let userId = FBAuth.currentUserId else {
-                print("ユーザードキュメント削除エラー発生")
+                observer.onError(MyAppError.removeUserIdFromLocationFailed(nil))
                 return Disposables.create()
             }
             
@@ -452,7 +451,7 @@ final class MainService: MainServiceProtocol {
             self.firebaseConfig.usersInLocationsReference(with: locationId).document(userId)
                 .delete { error in
                     if let error = error {
-                        print("ユーザードキュメント削除エラー発生 エラー内容: \(error)")
+                        observer.onError(MyAppError.removeUserIdFromLocationFailed(error))
                     } else {
                         // userCount フィールドを -1 デクリメント
                         let locationRef = self.firebaseConfig.locationsCollectionReference().document(locationId)
@@ -460,7 +459,7 @@ final class MainService: MainServiceProtocol {
                             "userCount": FieldValue.increment(Int64(-1))  // userCountを-1デクリメント
                         ]) { error in
                             if let error = error {
-                                print("userCountデクリメントエラー発生 エラー内容: \(error)")
+                                observer.onError(MyAppError.decrementUserCountFailed(error))
                             } else {
                                 observer.onNext(())
                                 observer.onCompleted()
@@ -475,7 +474,7 @@ final class MainService: MainServiceProtocol {
     // 勉強部屋からの退出時、勉強時間（時間＆分数単位）、必要な合計勉強時間、報酬コインを更新
     func saveStudyProgressAndRewards(locationId: String, updatedData: VisitedLocation) -> Observable<Void> {        Observable.create { observer in
             guard let userId = FBAuth.currentUserId else {
-                observer.onError(MyAppError.saveDataFailed(nil))
+                observer.onError(MyAppError.userNotFound)
                 return Disposables.create()
             }
             
@@ -483,7 +482,7 @@ final class MainService: MainServiceProtocol {
             self.firebaseConfig.visitedCollectionReference(with: userId).document(locationId)
                 .setData(dicData, merge: true) { error in
                     if let error = error {
-                        observer.onError(MyAppError.saveDataFailed(error))
+                        observer.onError(MyAppError.saveStudyProgressAndRewardsFailed(error))
                     } else {
                         observer.onNext(())
                         observer.onCompleted()
@@ -497,7 +496,7 @@ final class MainService: MainServiceProtocol {
     func updateCurrentCoin(addedRewardCoin: Int) -> Observable<Void> {
         Observable.create { observer in
             guard let userId = FBAuth.currentUserId else {
-                observer.onError(MyAppError.saveDataFailed(nil))
+                observer.onError(MyAppError.userNotFound)
                 return Disposables.create()
             }
             
@@ -508,7 +507,7 @@ final class MainService: MainServiceProtocol {
             let docRef = self.firebaseConfig.usersCollectionReference().document(userId)
             docRef.updateData(dicData) { error in
                 if let error = error {
-                    observer.onError(MyAppError.saveDataFailed(error))
+                    observer.onError(MyAppError.updateCurrentCoinFailed(error))
                 } else {
                     observer.onNext(())
                     observer.onCompleted()

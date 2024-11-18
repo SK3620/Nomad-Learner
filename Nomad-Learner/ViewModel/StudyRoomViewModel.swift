@@ -83,6 +83,8 @@ class StudyRoomViewModel {
     private let menuActionRelay = BehaviorRelay<MenuAction?>(value: .none)
     // 押下されたIndexPath
     private let tappedIndexRelay = BehaviorRelay<IndexPath>(value: IndexPath(row: 0, section: 0))
+    // エラー
+    private let myAppErrorRelay = BehaviorRelay<MyAppError?>(value: nil)
     
     // MARK: - Output 外部公開
     // タイマー
@@ -107,8 +109,10 @@ class StudyRoomViewModel {
     var tappedIndex: Driver<IndexPath> {
         return tappedIndexRelay.asDriver()
     }
+    var myAppError: Driver<MyAppError> {
+        return myAppErrorRelay.compactMap { $0 }.asDriver(onErrorJustReturn: .unknown)
+    }
     let isLoading: Driver<Bool>
-    var myAppError: Driver<MyAppError> = Driver.just(MyAppError.unknown).skip(1) // 初期化&初期値を意図的にskip(1)させる
     
     // MARK: - Dependency
     private var mainService: MainServiceProtocol
@@ -156,11 +160,10 @@ class StudyRoomViewModel {
         let listenForNewUsersParticipationResult = mainService.listenForNewUsersParticipation(locationId: locationId, latestLoadedDocDate: latestLoadedDocDate!)
             .flatMap { tuple -> Observable<([User], Timestamp?)> in
                 let (userIds, latestLoadedDocDate) = tuple
-                return self.mainService.fetchUserProfiles(userIds: userIds)
+                return self.mainService.fetchUserProfiles(userIds: userIds, isInitialFetch: false)
                     .map { (userProfiles: $0, latestLoadedDocDate: latestLoadedDocDate) }
             }
             .materialize()
-            .share(replay: 1)
         
         listenForNewUsersParticipationResult
             .compactMap { $0.event.element }
@@ -171,13 +174,9 @@ class StudyRoomViewModel {
             })
             .disposed(by: disposeBag)
         
-        let listenForNewUsersParticipationError = listenForNewUsersParticipationResult
-            .compactMap { $0.event.error as? MyAppError }
-        
         // 退出したユーザーをリッスン
         let listenForUsersExitResult = mainService.listenForUsersExit(locationId: locationId)
             .materialize()
-            .share(replay: 1)
         
         listenForUsersExitResult
             .compactMap { $0.event.element }
@@ -193,13 +192,7 @@ class StudyRoomViewModel {
             })
             .disposed(by: disposeBag)
         
-        let listenForUsersExitError = listenForUsersExitResult
-            .compactMap { $0.event.error as? MyAppError }
-        
-        self.myAppError = Observable
-            .merge(listenForNewUsersParticipationError, listenForUsersExitError)
-            .asDriver(onErrorJustReturn: .unknown)
-        
+        // チャット一覧用メッセージ
         messageRelay.accept(Message.messages)
     }
 }
@@ -250,12 +243,11 @@ extension StudyRoomViewModel {
             .flatMap { [weak self] tuple -> Observable<([User], QueryDocumentSnapshot?)> in
                 guard let self = self else { return .just(([], nil)) }
                 let (userIds, oldestDocument) = tuple
-                return self.mainService.fetchUserProfiles(userIds: userIds)
+                return self.mainService.fetchUserProfiles(userIds: userIds, isInitialFetch: false)
                     .map { (userProfiles: $0, oldestDocument: oldestDocument) }
             }
             .trackActivity(indicator)
             .materialize()
-            .share(replay: 1)
         
         fetchMoreUserProfiles
             .compactMap { $0.event.element }
@@ -265,10 +257,6 @@ extension StudyRoomViewModel {
                 self.oldestDocument = oldestDocument
             })
             .disposed(by: disposeBag)
-        
-        self.myAppError = fetchMoreUserProfiles
-            .compactMap { $0.event.error as? MyAppError }
-            .asDriver(onErrorJustReturn: .unknown)
     }
     
     // 勉強時間データ保存（退出時）
@@ -280,6 +268,10 @@ extension StudyRoomViewModel {
             mainService.saveStudyProgressAndRewards(locationId: locationId, updatedData: visitedLocationToUpdate),
             mainService.updateCurrentCoin(addedRewardCoin: addedRewardCoin)
         )
+            .catch { [weak self] error in
+                self?.myAppErrorRelay.accept(error as? MyAppError)
+                return .empty()
+            }
             .materialize()
             .share(replay: 1)
         
@@ -291,10 +283,6 @@ extension StudyRoomViewModel {
                 self.mainService.removeListeners()
             })
             .disposed(by: disposeBag)
-        
-        self.myAppError = combinedObservableResult
-            .compactMap { $0.event.error as? MyAppError }
-            .asDriver(onErrorJustReturn: .unknown)
     }
 }
 

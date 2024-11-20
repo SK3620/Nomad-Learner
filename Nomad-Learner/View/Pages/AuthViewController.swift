@@ -70,3 +70,10 @@ extension AuthViewController: FUIAuthDelegate {
         customAuthPickerViewController.viewModel.handleSignInWithAuthProviderResult(user: user, error: error)
     }
 }
+
+extension AuthViewController {
+    // customAuthPickerViewControllerを返すメソッドを追加
+    func getCustomAuthPickerViewController() -> CustomAuthPickerViewController? {
+        return customAuthPickerViewController
+    }
+}

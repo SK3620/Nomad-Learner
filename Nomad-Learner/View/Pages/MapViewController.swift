@@ -144,10 +144,10 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        // StudyRoomVC（勉強部屋画面）から戻ってきた時、データ再取得
+        // StudyRoomVC（勉強部屋画面）から戻ってきた時、ロケーション情報再取得
         if fromScreen == .studyRoomVC {
             viewModel.locationsAndUserInfo
-                .map { ($0, isMonitoredData: false)}
+                .map { ($0, DataHandlingType.fetchWithRewardAlert) }
                 .drive(handleLocationsInfo)
                 .disposed(by: disposeBag)
         }
@@ -184,7 +184,8 @@ extension MapViewController: KRProgressHUDEnabled, AlertEnabled {
             .disposed(by: disposeBag)
         
         self.viewModel = MapViewModel(
-            mainService: MainService.shared
+            mainService: MainService.shared,
+            realmService: RealmService.shared
         )
         let collectionView = locationDetailView.locationCategoryCollectionView
         
@@ -216,25 +217,43 @@ extension MapViewController: KRProgressHUDEnabled, AlertEnabled {
             .bind(to: displayCurrentLocationInfoWindow)
             .disposed(by: disposeBag)
         
-        // 各ロケーション情報
+        // 各ロケーション情報初回取得
         viewModel.locationsAndUserInfo
-            .map { ($0, isMonitoredData: false) }
+            .map { ($0, DataHandlingType.initialFetch) }
             .drive(handleLocationsInfo)
             .disposed(by: disposeBag)
         
-        // 各ロケーション情報（監視）
+        // 各ロケーション情報をリアルタイムリッスンで取得
         viewModel.monitoredLocationsAndUserInfo
-            .map { ($0, isMonitoredData: true) }
+            .map { ($0, DataHandlingType.listenerTriggered) }
             .drive(handleLocationsInfo)
             .disposed(by: disposeBag)
         
-        // リロードで各ロケーション情報を再取得
+        // リロードボタンで各ロケーション情報を再取得
         reloadButtonItem.rx.tap.asDriver()
             .flatMap { [weak self] _ in
                 guard let self = self else { return .empty() }
                 return self.viewModel.locationsAndUserInfo
             }
-            .map { ($0, isMonitoredData: false)}
+            .map { ($0, DataHandlingType.manualReload) }
+            .drive(handleLocationsInfo)
+            .disposed(by: disposeBag)
+        
+        // 更新保留中の勉強記録データ取得
+        viewModel.pendingUpdateData
+            .filter { $0.pendingUpdateData != nil } // データがなければ処理中断
+            .map { (($0.pendingUpdateData!, $0.saveRetryError)) }
+            .drive(showSavePendingUpdateDataAlert)
+            .disposed(by: disposeBag)
+        
+        // 更新保留中の勉強記録データ更新完了後、ロケーション情報再取得
+        viewModel.isPendingUpdateDataHandlingCompleted
+            .filter { $0 }
+            .flatMap { [weak self] _ in
+                guard let self = self else { return .empty() }
+                return self.viewModel.locationsAndUserInfo
+            }
+            .map { ($0, DataHandlingType.fetchWithRewardAlert) }
             .drive(handleLocationsInfo)
             .disposed(by: disposeBag)
         
@@ -292,37 +311,25 @@ extension MapViewController {
         return Binder(self) { base, _ in Router.dismissModal(vc: base) }
     }
     // 取得したロケーション情報とユーザー情報を制御
-    private var handleLocationsInfo: Binder<((LocationsInfo, User), isMonitoredData: Bool)> {
+    private var handleLocationsInfo: Binder<((LocationsInfo, User), DataHandlingType)> {
         return Binder(self) { base, tuple in
-            let ((locationsInfo, userProfile), isMonitoredData) = tuple
+            let ((locationsInfo, userProfile), dataHandlingType) = tuple
+            
             // プロパティ更新
             base.locationsInfo = locationsInfo
             base.userProfile = userProfile
             
-            // マーカーを削除しリセット
-            base.mapView.clear()
-            // 現在地の座標を保持
-            base.mapView.currentCoordinate = locationsInfo.getCurrentCoordinate(currentLocationId: userProfile.currentLocationId)
-            // 取得したロケーションをマーカーとしてマップ上に配置
-            base.addMarkersForLocations()
-            // UIを更新
-            base.updateUI()
+            // マップの初期化
+            base.resetMapView(with: locationsInfo, userProfile: userProfile)
             
-            // 監視して取得したデータの場合
-            if !isMonitoredData {
-                // 報酬コイン獲得ProgressHUDを表示
+            // データ取得に伴い、報酬コイン獲得アラートの表示を行う場合
+            if dataHandlingType == .fetchWithRewardAlert {
                 base.showRewardCoinProgressHUD()
-                // 現在地までcamera移動
-                base.moveToCurrentLocation.onNext(())
-                // 既存InfoWindowを非表示
-                self.mapView.removeInfoWindow()
-                // 遅延させることでUIを正常に調整
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                    // 現在地ピンの位置を更新
-                    base.mapView.updateCurrentLocationPin()
-                    // 現在地のInfoWindow表示
-                    base.displayCurrentLocationInfoWindow.onNext(())
-                }
+            }
+            
+            // リスナー以外のデータ取得の場合
+            if dataHandlingType != .listenerTriggered {
+                base.moveCameraAndUpdateUIOnCurrentLocation()
             }
         }
     }
@@ -345,9 +352,58 @@ extension MapViewController {
             base.mapView.animate(to: currentPosition)
         }
     }
+    // 更新保留中の勉強記録データの保存を行うか否か アラート表示
+    private var showSavePendingUpdateDataAlert: Binder<(PendingUpdateData, saveRetryError: MyAppError?)> {
+        return Binder(self) { base, tuple in
+            let (pendingUpdateData, saveRetryError) = tuple
+            let alertActionType = AlertActionType.savePendingUpdateData(
+                saveRetryError: saveRetryError ?? nil,
+                onConfirm: {
+                    // 保存処理
+                    base.viewModel.handlePendingUpdateData(pendingUpdateData: pendingUpdateData)
+                },
+                onCancel: {
+                    // 削除処理
+                    base.viewModel.handlePendingUpdateData(pendingUpdateData: pendingUpdateData, shouldSave: false)
+                }
+            )
+            base.rx.showAlert.onNext(alertActionType)
+        }
+    }
 }
 
 extension MapViewController {
+    // マップの初期化
+    private func resetMapView(with locationsInfo: LocationsInfo, userProfile: User) {
+        // マーカーを削除してリセット
+        mapView.clear()
+        
+        // 現在地の座標を保持
+        mapView.currentCoordinate = locationsInfo.getCurrentCoordinate(currentLocationId: userProfile.currentLocationId)
+        
+        // 取得したロケーションをマーカーとして配置
+        addMarkersForLocations()
+        
+        // UIを更新
+        updateUI()
+    }
+    // カメラ移動＆現在地上のUIを生成
+    private func moveCameraAndUpdateUIOnCurrentLocation() {
+        // 現在地までカメラを移動
+        moveToCurrentLocation.onNext(())
+        
+        // 既存InfoWindowを非表示
+        mapView.removeInfoWindow()
+        
+        // 遅延させてUIを調整
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            // 現在地ピンの位置を更新
+            self.mapView.updateCurrentLocationPin()
+            
+            // 現在地のInfoWindow表示
+            self.displayCurrentLocationInfoWindow.onNext(())
+        }
+    }
     // 現在地のロケーション情報を取得し、UIを更新
     private func updateUI() {
         locationInfo = locationsInfo.createLocationInfo(of: userProfile.currentLocationId)

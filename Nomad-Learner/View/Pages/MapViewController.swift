@@ -396,7 +396,7 @@ extension MapViewController {
         mapView.removeInfoWindow()
         
         // 遅延させてUIを調整
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             // 現在地ピンの位置を更新
             self.mapView.updateCurrentLocationPin()
             

@@ -21,6 +21,9 @@ class StudyRoomViewController: UIViewController {
     
     private var viewModel: StudyRoomViewModel!
     
+    // グローバル用にアクセス可能な共有インスタンスを保持
+    static var sharedInstance: StudyRoomViewController?
+    
     // 背景画像
     private lazy var backgroundImageView = UIImageView().then {
         guard let initialImageUrlString = locationInfo.fixedLocation.imageUrls.last else { return }
@@ -55,14 +58,39 @@ class StudyRoomViewController: UIViewController {
     }()
     
     private let disposeBag = DisposeBag()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupUI()
         bind()
         update()
+        
+        StudyRoomViewController.sharedInstance = self
+        
+        // バックグラウンド移行時
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(self.didEnterBackground),
+            name: UIApplication.didEnterBackgroundNotification,
+            object: nil
+        )
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        // profileCollectionViewのframe値確定後、itemSizeを更新
+        profileCollectionView.updateItemSize(size: profileCollectionView.bounds.size)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        // 自身から監視を解除
+        NotificationCenter.default.removeObserver(self)
+    }
+}
+
+extension StudyRoomViewController {
     private func setupUI() {
         // studyRoomNavigationBarのitemを押下可能にする
         navigationController?.navigationBar.isHidden = true
@@ -109,24 +137,23 @@ class StudyRoomViewController: UIViewController {
         studyRoomNavigationBar.update(fixedLocation: locationInfo.fixedLocation)
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        // profileCollectionViewのframe値確定後、itemSizeを更新
-        profileCollectionView.updateItemSize(size: profileCollectionView.bounds.size)
+    // バックグラウンドへの移行時の処理
+    @objc func didEnterBackground() {
+        // アプリをキルした場合でもローカルに勉強記録等を保存しておく
+        viewModel.saveStudyProgress(shouldSaveLocallyOnKill: true)
     }
 }
 
 extension StudyRoomViewController: KRProgressHUDEnabled {
     private func bind() {
-        
         let viewModel = StudyRoomViewModel(
             mainService: MainService.shared,
+            realmService: RealmService.shared,
             locationInfo: locationInfo,
             initialLoadedUserProfiles: userProfiles,
             latestLoadedDocDate: latestLoadedDocDate,
             oldestDocument: oldestDocument
         )
-        
         self.viewModel = viewModel
         
         // ViewModelへイベントを流す
@@ -219,6 +246,7 @@ extension StudyRoomViewController: KRProgressHUDEnabled {
 
 // MARK: - StudyRoomViewController + Bindings
 extension StudyRoomViewController: AlertEnabled {
+    
     // タイマー表示
     private var updateTimer: Binder<String> {
         return Binder(self) { base, timerText in
@@ -282,23 +310,23 @@ extension StudyRoomViewController: AlertEnabled {
             case .community:
                 base.rx.showMessage.onNext(.inDevelopment)
             case .exitRoom:
-                base.exitRoomHandler()
+                let alertActionType: AlertActionType = .exitRoom(
+                    onConfirm: {
+                        base.viewModel.saveStudyProgress() {
+                            Router.backToMapVC(vc: base) // MapVC（マップ画面）に戻る
+                        }
+                    }
+                )
+                base.rx.showAlert.onNext(alertActionType)
             }
         }
     }
 }
 
 extension StudyRoomViewController {
-    // .exitRoom
-    private func exitRoomHandler() {
-        let alertActionType: AlertActionType = .exitRoom(
-            onConfirm: {
-                self.viewModel.saveStudyProgress() {
-                    Router.backToMapVC(vc: self) // MapVC（マップ画面）に戻る
-                }
-            }
-        )
-        self.rx.showAlert.onNext(alertActionType)
+    // アプリをキルした場合でもローカルに勉強記録等を保存しておく
+    func applicationDidEnterBackground() {
+        viewModel.saveStudyProgress(shouldSaveLocallyOnKill: true)
     }
 }
 

@@ -67,6 +67,10 @@ class StudyRoomViewModel {
     
     // 加算される報酬コイン
     private var addedRewardCoin: Int = 0
+    // 更新するデータ
+    private var visitedLocationToUpdate: VisitedLocation {
+        createVisitedLocation()
+    }
     
     private let indicator: ActivityIndicator = ActivityIndicator()
     private let disposeBag = DisposeBag()
@@ -115,7 +119,8 @@ class StudyRoomViewModel {
     let isLoading: Driver<Bool>
     
     // MARK: - Dependency
-    private var mainService: MainServiceProtocol
+    private let mainService: MainServiceProtocol
+    private let realmService: RealmServiceProtocol
     private var locationInfo: LocationInfo
     private lazy var locationId: String = { self.locationInfo.fixedLocation.locationId }()
     private var latestLoadedDocDate: Timestamp?
@@ -123,12 +128,14 @@ class StudyRoomViewModel {
     
     init(
         mainService: MainServiceProtocol,
+        realmService: RealmServiceProtocol,
         locationInfo: LocationInfo,
         initialLoadedUserProfiles: [User],
         latestLoadedDocDate: Timestamp?,
         oldestDocument: QueryDocumentSnapshot?
     ) {
         self.mainService = mainService
+        self.realmService = realmService
         self.locationInfo = locationInfo
         self.latestLoadedDocDate = latestLoadedDocDate
         self.oldestDocument = oldestDocument
@@ -259,9 +266,13 @@ extension StudyRoomViewModel {
             .disposed(by: disposeBag)
     }
     
-    // 勉強時間データ保存（退出時）
-    func saveStudyProgress(completion: @escaping () -> Void) {
-        let visitedLocationToUpdate = createVisitedLocation()
+    // 勉強記録等保存（退出時）
+    func saveStudyProgress(completion: @escaping () -> Void = {}, shouldSaveLocallyOnKill: Bool = false) {
+        // アプリをキルした場合でもローカルに勉強記録等を保存しておく
+        if shouldSaveLocallyOnKill, let pendingUpdateData = PendingUpdateData.create(visitedLocation: visitedLocationToUpdate, addedRewardCoin: addedRewardCoin) {
+            realmService.savePendingUpdateData(pendingUpdateData: pendingUpdateData)
+            return
+        }
         
         let combinedObservableResult = Observable.zip(
             mainService.removeUserIdFromLocation(locationId: locationId),
@@ -278,9 +289,9 @@ extension StudyRoomViewModel {
         combinedObservableResult
             .compactMap { $0.event.element }
             .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
                 completion() // MapVC（マップ画面）に戻る
-                self.mainService.removeListeners()
+                self?.mainService.removeListeners() // 監視解除
+                self?.realmService.deletePendingUpdateData() // Realmの既存データを削除
             })
             .disposed(by: disposeBag)
     }

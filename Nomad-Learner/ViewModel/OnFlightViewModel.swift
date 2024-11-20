@@ -36,7 +36,7 @@ class OnFlightViewModel {
         
         let fetchUsersInfoResult = mainService.fetchUserIdsInLocation(locationId: locationId, limit: limit)
             .flatMap { userIds, latestLoadedDocDate, oldestDocument in
-                mainService.fetchUserProfiles(userIds: userIds)
+                mainService.fetchUserProfiles(userIds: userIds, isInitialFetch: true)
                     .map { userProfiles in (userProfiles: userProfiles, latestLoadedDocDate: latestLoadedDocDate, oldestDocument: oldestDocument) }
             }
         

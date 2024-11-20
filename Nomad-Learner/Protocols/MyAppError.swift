@@ -25,6 +25,7 @@ enum MyAppError: Error {
     case saveUserProfileFailed(Error?)
     case fetchLocationInfoFailed(Error?)
     case fetchUserProfileFailed(Error?)
+    case savePendingUpdateDataRetryFailed(Error)
     
     // フライト中画面
     case updateCurrentCoinAndLocationIdFailed(Error?)
@@ -63,6 +64,8 @@ enum MyAppError: Error {
                return NSLocalizedString("アカウントの再認証に失敗しました。もう一度お試しください。", comment: "再認証失敗メッセージ")
            case .deleteAccountFailed:
                return NSLocalizedString("アカウントの削除に失敗しました。もう一度お試しください。", comment: "アカウント削除失敗メッセージ")
+           case .savePendingUpdateDataRetryFailed:
+               return NSLocalizedString("前回の勉強記録の保存に失敗しました。", comment: "勉強記録保存失敗のメッセージ")
            case .testError(let text):
                return NSLocalizedString("テストエラー: \(text)", comment: "テストエラーメッセージ")
            case .unknown:
@@ -98,6 +101,9 @@ enum MyAppError: Error {
             
         case .fetchLocationInfoFailed(let error):
             return NSLocalizedString("ロケーション情報の取得に失敗しました。エラー: \(String(describing: error)).", comment: "ロケーション情報取得エラーメッセージ")
+            
+        case .savePendingUpdateDataRetryFailed(let error):
+            return NSLocalizedString("前回の勉強記録の保存に失敗しました。エラー: \(String(describing: error)).", comment: "勉強記録保存失敗のメッセージ")
             
         case .userNotFound:
             return NSLocalizedString("指定されたユーザーが見つかりませんでした。ユーザーIDを確認してください。", comment: "ユーザー未発見エラーメッセージ")

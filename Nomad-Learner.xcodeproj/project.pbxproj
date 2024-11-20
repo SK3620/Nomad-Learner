@@ -97,6 +97,7 @@
 		83A9C2C22CA7D08500898F0B /* AuthTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2C12CA7D08500898F0B /* AuthTextField.swift */; };
 		83A9C2C52CA7DA5000898F0B /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2C42CA7DA5000898F0B /* UILabel.swift */; };
 		83A9C2C92CA8378C00898F0B /* UIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2C82CA8378C00898F0B /* UIConstants.swift */; };
+		83AAA0CC2CEB44C000D5DC00 /* PendingUpdateData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AAA0CB2CEB44C000D5DC00 /* PendingUpdateData.swift */; };
 		83AFB3A82CB1A94400501FEE /* MapTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AFB3A72CB1A94400501FEE /* MapTabBar.swift */; };
 		83AFB3AA2CB2902C00501FEE /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AFB3A92CB2902C00501FEE /* UIView.swift */; };
 		83AFB3AC2CB29AC500501FEE /* NavigationBoxBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AFB3AB2CB29AC500501FEE /* NavigationBoxBar.swift */; };
@@ -211,6 +212,7 @@
 		83A9C2C12CA7D08500898F0B /* AuthTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTextField.swift; sourceTree = "<group>"; };
 		83A9C2C42CA7DA5000898F0B /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
 		83A9C2C82CA8378C00898F0B /* UIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIConstants.swift; sourceTree = "<group>"; };
+		83AAA0CB2CEB44C000D5DC00 /* PendingUpdateData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingUpdateData.swift; sourceTree = "<group>"; };
 		83AFB3A72CB1A94400501FEE /* MapTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTabBar.swift; sourceTree = "<group>"; };
 		83AFB3A92CB2902C00501FEE /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		83AFB3AB2CB29AC500501FEE /* NavigationBoxBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBoxBar.swift; sourceTree = "<group>"; };
@@ -283,6 +285,7 @@
 				8344786C2CD213BE0038C7B9 /* LocationStatus.swift */,
 				831731C32CDB0F910092AE89 /* StudyProgressSummary.swift */,
 				831731C92CE220560092AE89 /* RewardCoinProgressHUDInfo.swift */,
+				83AAA0CB2CEB44C000D5DC00 /* PendingUpdateData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -805,6 +808,7 @@
 				838753D62CAC19D1001EE8F1 /* AuthInputValidator.swift in Sources */,
 				831E5C6F2CC13205001A90C4 /* Location.swift in Sources */,
 				834478632CCA65380038C7B9 /* UITextView.swift in Sources */,
+				83AAA0CC2CEB44C000D5DC00 /* PendingUpdateData.swift in Sources */,
 				838753D42CABFDB7001EE8F1 /* AuthInputValidation.swift in Sources */,
 				834478672CCF6BDE0038C7B9 /* LocationsInfo.swift in Sources */,
 				8344D0312CE6474F007559E0 /* NationalFlagImageUrlString.swift in Sources */,

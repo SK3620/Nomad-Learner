@@ -74,6 +74,7 @@ extension Reactive where Base: AlertEnabled {
 enum AlertActionType {
     case error(MyAppError, onConfim: () -> Void = {})
     case willDeleteAccount(onConfirm: (String?, String?) -> Void, onCancel: () -> Void = {})
+    case savePendingUpdateData(saveRetryError: MyAppError? = nil, onConfirm: () -> Void, onCancel: () -> Void)
     case willShowDepartVC(onConfirm: () -> Void, onCancel: () -> Void = {}, ticketInfo: TicketInfo)
     case exitRoom(onConfirm: () -> Void, onCancel: () -> Void = {})
     case breakTime(onConfirm: () -> Void, onCancel: () -> Void = {})
@@ -98,6 +99,8 @@ enum AlertActionType {
             return "エラー"
         case .willDeleteAccount:
             return "アカウントを削除する"
+        case .savePendingUpdateData(let saveRetryError, _, _):
+            return saveRetryError != nil ? "エラー" : ""
         case .willShowDepartVC:
             return "注意"
         case .exitRoom:
@@ -115,6 +118,8 @@ enum AlertActionType {
             return error.errorDescription ?? ""
         case .willDeleteAccount:
             return "本当にアカウントを削除してもよろしいですか？"
+        case .savePendingUpdateData(let saveRetryError, _, _):
+            return "\(saveRetryError?.errorDescription ?? "前回の勉強記録が保存されていません。")\n保存しますか？"
         case .willShowDepartVC(_, _, let ticketInfo):
             return "次回の「\(ticketInfo.destination)」への訪問時以降、以下の項目は変更されません。\n\n必要な勉強時間：\(ticketInfo.requiredStudyHours)時間\n報酬コイン：\(ticketInfo.rewardCoin)コイン"
         case .exitRoom:
@@ -132,6 +137,8 @@ enum AlertActionType {
             return "OK"
         case .willDeleteAccount:
             return "削除"
+        case .savePendingUpdateData:
+            return "保存"
         case .willShowDepartVC:
             return "OK"
         case .exitRoom:
@@ -144,7 +151,12 @@ enum AlertActionType {
     }
     
     var onCancelTitle: String {
-        return "キャンセル"
+        switch self {
+        case .savePendingUpdateData:
+            return "破棄"
+        default:
+            return "キャンセル"
+        }
     }
     
     // キャンセルアクションの表示/非表示
@@ -189,6 +201,8 @@ enum AlertActionType {
         switch self {
         case .willDeleteAccount(let onConfirm, let onCancel):
             return (onConfirm: onConfirm, onCancel: onCancel)
+        case .savePendingUpdateData(_, let onConfirm, let onCancel):
+            return (onConfirm: { _, _ in onConfirm() }, onCancel: { onCancel() })
         case .willShowDepartVC(let onConfirm, _, _),
                 .exitRoom(let onConfirm, _),
                 .breakTime(let onConfirm, _),

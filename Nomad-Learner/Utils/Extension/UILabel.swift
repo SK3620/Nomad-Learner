@@ -16,7 +16,7 @@ extension UILabel {
         }
         set {
             // 通常フォントのみ適用
-            if font.fontName.range(of: "Medium") == nil {
+            if font.fontName.range(of: "Regular") != nil {
                 font = UIFont(name: newValue, size: font.pointSize)
             }
         }
@@ -28,7 +28,7 @@ extension UILabel {
         }
         set {
             // ボールドフォントのみ適用
-            if font.fontName.range(of: "Medium") != nil {
+            if font.fontName.range(of: "Semibold") != nil {
                 font = UIFont(name: newValue, size: font.pointSize)
             }
         }

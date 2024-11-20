@@ -13,7 +13,7 @@ class ValidationLabel: UILabel {
     init() {
         super.init(frame: .zero)
         self.textColor = .red
-        self.font = UIFont.systemFont(ofSize: UIConstants.UILabel.fontSize)
+        self.font = UIFont.systemFont(ofSize: 13)
         self.text = ""
     }
     

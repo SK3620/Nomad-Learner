@@ -21,7 +21,7 @@ class ProfileCollectionViewCell: UICollectionViewCell {
     
     // 名前
     private let userNameLabel: UILabel = UILabel().then {
-        $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.semiMedium)
+        $0.font = UIFont.boldSystemFont(ofSize: 16)
         $0.textColor = .black
         $0.numberOfLines = 1
     }
@@ -31,7 +31,7 @@ class ProfileCollectionViewCell: UICollectionViewCell {
         $0.textColor = .black
         $0.numberOfLines = 3
         $0.sizeToFit()
-        $0.font = .systemFont(ofSize: UIConstants.TextSize.extraSmall, weight: .ultraLight)
+        $0.font = .systemFont(ofSize: 12)
     }
     
     override init(frame: CGRect) {
@@ -50,23 +50,23 @@ class ProfileCollectionViewCell: UICollectionViewCell {
         
         // プロフィール画像
         profileImageView.snp.makeConstraints {
-            $0.left.equalTo(contentView.snp.left).offset(UIConstants.Layout.smallPadding)
+            $0.left.equalTo(contentView.snp.left).offset(8)
             $0.verticalEdges.equalToSuperview().inset(UIConstants.Layout.smallPadding)
-            $0.width.equalTo(contentView.snp.height).offset(-(UIConstants.Layout.smallPadding * 2))
+            $0.width.equalTo(contentView.snp.height).offset(-8 * 2)
         }
 
         // 名前
         userNameLabel.snp.makeConstraints {
             $0.top.equalTo(profileImageView.snp.top)
-            $0.left.equalTo(profileImageView.snp.right).offset(UIConstants.Layout.smallPadding)
-            $0.right.equalToSuperview().inset(UIConstants.Layout.smallPadding)
+            $0.left.equalTo(profileImageView.snp.right).offset(8)
+            $0.right.equalToSuperview().inset(8)
         }
 
         // 内容
         contentLabel.snp.makeConstraints {
             $0.left.equalTo(userNameLabel.snp.left)
-            $0.top.equalTo(userNameLabel.snp.bottom)
-            $0.right.equalToSuperview().offset(-UIConstants.Layout.smallPadding)
+            $0.top.equalTo(userNameLabel.snp.bottom).offset(3) // 微調整
+            $0.right.equalToSuperview().offset(-8)
         }
     }
     

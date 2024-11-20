@@ -31,7 +31,7 @@ class StudyRoomViewController: UIViewController {
     }
     
     // 休憩中に表示する背景View
-    private let breakTimeView: UIView = UIView().then {
+    private let breakTimeView = UIView().then {
         $0.backgroundColor = UIColor(white: 0.1, alpha: 0.8)
         $0.isHidden = true
         // 休憩コーヒーアイコン

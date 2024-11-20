@@ -9,7 +9,7 @@ import UIKit
 
 class ProfileTableViewCell: UITableViewCell {
     
-    static let identifer: String = "ProfileTableViewCell"
+    static let identifer = "ProfileTableViewCell"
     
     /*
     let livingPlaceAndWorkTitle: ProfileLabel = ProfileLabel(text: "Country / Occupation", fontSize: UIConstants.TextSize.semiMedium, textColor: .white, isRounded: true).then {
@@ -19,23 +19,23 @@ class ProfileTableViewCell: UITableViewCell {
     let livingPlaceAndWork: ProfileLabel = ProfileLabel(fontSize: UIConstants.TextSize.medium, textColor: .darkGray)
     */
     
-    let studyContentTitle: ProfileLabel = ProfileLabel(text: "勉強内容", fontSize: UIConstants.TextSize.semiMedium, textColor: .white, isRounded: true).then {
+    let studyContentTitle: ProfileLabel = ProfileLabel(text: "勉強内容", fontSize: 16, textColor: .white, isRounded: true).then {
         $0.backgroundColor = ColorCodes.primaryPurple.color()
     }
     
-    let studyContent: ProfileLabel = ProfileLabel(fontSize: UIConstants.TextSize.medium, textColor: .darkGray)
+    let studyContent: ProfileLabel = ProfileLabel(fontSize: 16, textColor: .black)
     
-    let goalTitle: ProfileLabel = ProfileLabel(text: "目標", fontSize: UIConstants.TextSize.semiMedium, textColor: .white, isRounded: true).then {
+    let goalTitle: ProfileLabel = ProfileLabel(text: "目標", fontSize: 16, textColor: .white, isRounded: true).then {
         $0.backgroundColor = ColorCodes.primaryPurple.color()
     }
     
-    let goal: ProfileLabel = ProfileLabel(fontSize: UIConstants.TextSize.medium, textColor: .darkGray)
+    let goal: ProfileLabel = ProfileLabel(fontSize: 16, textColor: .black)
     
-    let othersTitle: ProfileLabel = ProfileLabel(text: "その他", fontSize: UIConstants.TextSize.semiMedium, textColor: .white, isRounded: true).then {
+    let othersTitle: ProfileLabel = ProfileLabel(text: "その他", fontSize: 16, textColor: .white, isRounded: true).then {
         $0.backgroundColor = ColorCodes.primaryPurple.color()
     }
     
-    let others: ProfileLabel = ProfileLabel(fontSize: UIConstants.TextSize.medium, textColor: .darkGray)
+    let others: ProfileLabel = ProfileLabel(fontSize: 16, textColor: .black)
     
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -63,36 +63,36 @@ class ProfileTableViewCell: UITableViewCell {
         contentView.addSubview(others)
         
         studyContentTitle.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(UIConstants.Layout.semiStandardPadding)
-            $0.left.equalToSuperview().offset(UIConstants.Layout.standardPadding)
+            $0.top.equalToSuperview().offset(12)
+            $0.left.equalToSuperview().offset(16)
         }
         
         studyContent.numberOfLines = 0
         studyContent.snp.makeConstraints {
-            $0.top.equalTo(studyContentTitle.snp.bottom).offset(UIConstants.Layout.semiSmallPadding)
-            $0.horizontalEdges.equalToSuperview().inset(UIConstants.Layout.mediumPadding)
+            $0.top.equalTo(studyContentTitle.snp.bottom).offset(6)
+            $0.horizontalEdges.equalToSuperview().inset(24)
         }
         
         goalTitle.snp.makeConstraints {
-            $0.top.equalTo(studyContent.snp.bottom).offset(UIConstants.Layout.semiStandardPadding)
-            $0.left.equalToSuperview().offset(UIConstants.Layout.standardPadding)
+            $0.top.equalTo(studyContent.snp.bottom).offset(12)
+            $0.left.equalToSuperview().offset(16)
         }
         
         goal.numberOfLines = 0
         goal.snp.makeConstraints {
-            $0.top.equalTo(goalTitle.snp.bottom).offset(UIConstants.Layout.semiSmallPadding)
-            $0.horizontalEdges.equalToSuperview().inset(UIConstants.Layout.mediumPadding)
+            $0.top.equalTo(goalTitle.snp.bottom).offset(6)
+            $0.horizontalEdges.equalToSuperview().inset(24)
         }
         
         othersTitle.snp.makeConstraints {
-            $0.top.equalTo(goal.snp.bottom).offset(UIConstants.Layout.semiStandardPadding)
-            $0.left.equalToSuperview().offset(UIConstants.Layout.standardPadding)
+            $0.top.equalTo(goal.snp.bottom).offset(12)
+            $0.left.equalToSuperview().offset(16)
         }
         
         others.numberOfLines = 0
         others.snp.makeConstraints {
-            $0.top.equalTo(othersTitle.snp.bottom).offset(UIConstants.Layout.semiSmallPadding)
-            $0.horizontalEdges.equalToSuperview().inset(UIConstants.Layout.mediumPadding)
+            $0.top.equalTo(othersTitle.snp.bottom).offset(6)
+            $0.horizontalEdges.equalToSuperview().inset(24)
             $0.bottom.equalToSuperview()
         }
     }

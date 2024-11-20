@@ -40,10 +40,6 @@ struct UIConstants {
         static let height: CGFloat = 70
     }
     
-    struct Font {
-        static let smallFont: CGFloat = 17
-    }
-    
     // Image
     struct Image {
         static let small: CGFloat = 16
@@ -73,23 +69,6 @@ struct UIConstants {
     }
     
     struct Style {
-       
-    }
-    
-    struct Layer {
-        static let radius: CGFloat = 32
-    }
-    
-    struct TextSize {
-        static let extraSmall: CGFloat = 12
-        static let small: CGFloat = 14
-        static let semiMedium: CGFloat = 16
-        static let medium: CGFloat = 18
-        static let semiLarge: CGFloat = 20
-        static let large: CGFloat = 22
-        static let semiExtraLarge: CGFloat = 24
-        static let extraLarge: CGFloat = 26
-        static let semiSuperLarge: CGFloat = 28
-        static let superLarge: CGFloat = 30
+        
     }
 }

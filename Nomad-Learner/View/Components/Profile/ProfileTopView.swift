@@ -27,27 +27,27 @@ class ProfileTopView: UIView {
         $0.backgroundColor = UIColor(white: 0.85, alpha: 1)
         $0.layer.borderColor = ColorCodes.primaryPurple.color().cgColor
         $0.layer.borderWidth = 1
-        $0.layer.cornerRadius = (self.pictureSize - UIConstants.Layout.semiStandardPadding) / 2
+        $0.layer.cornerRadius = (self.pictureSize - 12) / 2
         $0.layer.masksToBounds = true
     }
     
     // 今日の勉強時間タイトル
-    private let todayStudyTimeTitle = ProfileLabel(text: "今日", fontSize: UIConstants.TextSize.semiMedium, textColor: ColorCodes.primaryPurple.color(), isRounded: true)
+    private let todayStudyTimeTitle = ProfileLabel(text: "今日", fontSize: 16, textColor: ColorCodes.primaryPurple.color(), isRounded: true)
     
     // 今日の勉強時間
-    private let todayStudyTime = ProfileLabel(text: "--:--", fontSize: UIConstants.TextSize.medium, textColor: .white)
+    private let todayStudyTime = ProfileLabel(text: "--:--", fontSize: 18, textColor: .white)
     
     // 一週間の勉強時間タイトル
-    private let weeklyStudyTimeTitle = ProfileLabel(text: "週ごと", fontSize: UIConstants.TextSize.semiMedium, textColor: ColorCodes.primaryPurple.color(), isRounded: true)
+    private let weeklyStudyTimeTitle = ProfileLabel(text: "週ごと", fontSize: 16, textColor: ColorCodes.primaryPurple.color(), isRounded: true)
     
     // 一週間の勉強時間
-    private let weeklyStudyTime = ProfileLabel(text: "--:--", fontSize: UIConstants.TextSize.medium, textColor: .white)
+    private let weeklyStudyTime = ProfileLabel(text: "--:--", fontSize: 18, textColor: .white)
     
     // 合計勉強時間タイトル
-    private let totalStudyTimeTitle = ProfileLabel(text: "合計", fontSize: UIConstants.TextSize.semiMedium, textColor: ColorCodes.primaryPurple.color(), isRounded: true)
+    private let totalStudyTimeTitle = ProfileLabel(text: "合計", fontSize: 16, textColor: ColorCodes.primaryPurple.color(), isRounded: true)
     
     // 合計勉強時間
-    private let totalStudyTime = ProfileLabel(text: "--:--", fontSize: UIConstants.TextSize.medium, textColor: .white)
+    private let totalStudyTime = ProfileLabel(text: "--:--", fontSize: 18, textColor: .white)
     
     // 今日の勉強時間のスタックビュー
     private lazy var todayStackView: UIStackView = {
@@ -99,10 +99,10 @@ class ProfileTopView: UIView {
     }
     
     // 訪問したロケーション数
-    private let visitedLocationsLabel = ProfileLabel(text: "00", fontSize: UIConstants.TextSize.medium, textColor: ColorCodes.primaryPurple.color())
+    private let visitedLocationsLabel = ProfileLabel(text: "00", fontSize: 18, textColor: ColorCodes.primaryPurple.color())
     
     // 全ロケーション数
-    private let allLocationsLabel = ProfileLabel(text: " / 00", fontSize: UIConstants.TextSize.semiMedium, textColor: ColorCodes.primaryPurple.color())
+    private let allLocationsLabel = ProfileLabel(text: " / 00", fontSize: 15, textColor: ColorCodes.primaryPurple.color())
     
     //　完了マークアイコン背景View
     private let backgroundViewForCompleted = UIView().then {
@@ -113,12 +113,11 @@ class ProfileTopView: UIView {
     // 完了マークアイコン
     private let completedImageView = UIImageView().then {
         let configuration = UIImage.SymbolConfiguration(weight: .bold)
-//        $0.image = UIImage(systemName: "checkmark", withConfiguration: configuration)
         $0.image = UIImage(named: "MapPinGreen")
     }
     
     // クリアしたロケーション数
-    private let completedLocationsLabel = ProfileLabel(text: "00", fontSize: UIConstants.TextSize.medium, textColor: ColorCodes.primaryPurple.color())
+    private let completedLocationsLabel = ProfileLabel(text: "00", fontSize: 18, textColor: ColorCodes.primaryPurple.color())
     
     init(userProfile: User) {
         self.userProfile = userProfile
@@ -147,14 +146,14 @@ class ProfileTopView: UIView {
         addSubview(completedLocationsLabel)
         
         pictureOutsideView.snp.makeConstraints {
-            $0.left.equalToSuperview().inset(UIConstants.Layout.standardPadding)
+            $0.left.equalToSuperview().inset(16)
             $0.size.equalTo(pictureSize)
             $0.centerY.equalTo(self.snp.bottom)
         }
         
         pictureImageView.snp.makeConstraints {
             $0.center.equalTo(pictureOutsideView)
-            $0.size.equalTo(pictureSize - UIConstants.Layout.semiStandardPadding)
+            $0.size.equalTo(pictureSize - 12)
         }
         
         studyTimeStackView.snp.makeConstraints {

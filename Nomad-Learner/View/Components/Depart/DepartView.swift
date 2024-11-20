@@ -28,7 +28,7 @@ class DepartView: UIView {
         return self.knobImageButton.bounds.height / 2
     }()
     
-    private let ticketView: UIView = UIView().then {     
+    private let ticketView = UIView().then {
         $0.backgroundColor = UIColor(red: 0.86, green: 0.86, blue: 0.94, alpha: 1.0)
         $0.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         $0.layer.masksToBounds = true
@@ -36,7 +36,7 @@ class DepartView: UIView {
     }
 
     // 矢印画像
-    private let arrowImageView: UIImageView = UIImageView().then {
+    private let arrowImageView = UIImageView().then {
         let configuration = UIImage.SymbolConfiguration(weight: .ultraLight)
         $0.image = UIImage(systemName: "arrowshape.up.fill", withConfiguration: configuration)
         $0.tintColor = ColorCodes.primaryLightPurple.color()
@@ -62,13 +62,13 @@ class DepartView: UIView {
     }()
     
     // つまみが移動する範囲のView
-   private let knobBackgroundView: UIView = UIView().then {
+   private let knobBackgroundView = UIView().then {
        $0.backgroundColor = UIColor(red: 0.86, green: 0.86, blue: 0.94, alpha: 1.0)
         $0.layer.cornerRadius = 80 / 2
     }
     
     // つまみ
-    public let knobImageButton: UIButton = UIButton().then {
+    public let knobImageButton = UIButton().then {
         let configuration = UIImage.SymbolConfiguration(pointSize: 40)
         $0.backgroundColor = ColorCodes.primaryPurple.color()
         $0.tintColor = .white
@@ -83,35 +83,33 @@ class DepartView: UIView {
     private let ticketFrame: TicketView = TicketView()
     
     // お財布アイコンの背景View
-    private let backgroundViewForWallet: UIView = UIView().then {
+    private let backgroundViewForWallet = UIView().then {
         $0.backgroundColor = UIColor(red: 240/255, green: 224/255, blue: 207/255, alpha: 1)
         $0.layer.cornerRadius = 35 / 2
     }
     
     // お財布のアイコン
-    private let walletImageView: UIImageView = UIImageView().then {
+    private let walletImageView = UIImageView().then {
         $0.image = UIImage(named: "wallet")
     }
     
     // ユーザーが持つ現在の所持金
-    private let currentCoinLabel: UILabel = UILabel().then {
+    private let currentCoinLabel = UILabel().then {
         $0.textColor = .darkGray
-        $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.large)
-        $0.text = "111111"
+        $0.font = UIFont.boldSystemFont(ofSize: 20)
     }
     
     // 右矢印アイコン
-    private let arrowRightImageView: UIImageView = UIImageView().then {
+    private let arrowRightImageView = UIImageView().then {
         let configuration = UIImage.SymbolConfiguration(weight: .bold)
         $0.image = UIImage(systemName: "arrowtriangle.forward", withConfiguration: configuration)
         $0.tintColor = .lightGray
     }
     
     // 旅費支払い後の残高
-    private let remainingCoinLabel: UILabel = UILabel().then {
+    private let remainingCoinLabel = UILabel().then {
         $0.textColor = .darkGray
-        $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.large)
-        $0.text = "81900"
+        $0.font = UIFont.boldSystemFont(ofSize: 20)
         $0.textColor = .orange
     }
     
@@ -146,7 +144,7 @@ class DepartView: UIView {
             $0.top.equalToSuperview()
             $0.bottom.equalTo(ticketFrame.snp.top)
             $0.centerX.equalToSuperview()
-            $0.horizontalEdges.equalToSuperview().inset(-(UIConstants.Layout.standardPadding))
+            $0.horizontalEdges.equalToSuperview().inset(-16)
         }
         
         knobBackgroundView.snp.makeConstraints {
@@ -173,13 +171,13 @@ class DepartView: UIView {
         ticketFrame.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.centerY.equalTo(ticketView.snp.bottom)
-            $0.horizontalEdges.equalToSuperview().inset(UIConstants.Layout.largePadding)
+            $0.horizontalEdges.equalToSuperview().inset(32)
         }
         
         backgroundViewForWallet.snp.makeConstraints {
             $0.size.equalTo(35)
-            $0.top.equalTo(ticketFrame.snp.bottom).offset(UIConstants.Layout.standardPadding)
-            $0.left.equalTo(ticketFrame).inset(UIConstants.Layout.standardPadding)
+            $0.top.equalTo(ticketFrame.snp.bottom).offset(16)
+            $0.left.equalTo(ticketFrame).inset(16)
         }
         
         walletImageView.snp.makeConstraints {
@@ -188,18 +186,18 @@ class DepartView: UIView {
         }
         
         currentCoinLabel.snp.makeConstraints {
-            $0.bottom.equalTo(backgroundViewForWallet)
-            $0.left.equalTo(backgroundViewForWallet.snp.right).offset(UIConstants.Layout.standardPadding)
+            $0.centerY.equalTo(backgroundViewForWallet)
+            $0.left.equalTo(backgroundViewForWallet.snp.right).offset(16)
         }
         
         arrowRightImageView.snp.makeConstraints {
             $0.top.equalTo(currentCoinLabel)
-            $0.left.equalTo(currentCoinLabel.snp.right).offset(UIConstants.Layout.standardPadding)
+            $0.left.equalTo(currentCoinLabel.snp.right).offset(16)
         }
         
         remainingCoinLabel.snp.makeConstraints {
-            $0.bottom.equalTo(backgroundViewForWallet)
-            $0.left.equalTo(arrowRightImageView.snp.right).offset(UIConstants.Layout.standardPadding)
+            $0.centerY.equalTo(backgroundViewForWallet)
+            $0.left.equalTo(arrowRightImageView.snp.right).offset(16)
         }
     }
     

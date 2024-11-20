@@ -17,11 +17,17 @@ protocol AlertEnabled: UIViewController {}
 extension Reactive where Base: AlertEnabled {
     var showAlert: Binder<AlertActionType> {
         return Binder(self.base, binding: { base, alertAction in
-            let alertController = UIAlertController(
-                title: alertAction.title,
-                message: alertAction.message,
-                preferredStyle: .alert
-            )
+            
+            let alertController = UIAlertController(title: "", message: "", preferredStyle: .alert)
+            
+            let titleAttributes = [NSAttributedString.Key.font: UIFont(name: "HiraginoSans-W6", size: 20)!, NSAttributedString.Key.foregroundColor: UIColor.black]
+            let titleString = NSAttributedString(string: alertAction.title, attributes: titleAttributes)
+            
+            let messageAttributes = [NSAttributedString.Key.font: UIFont(name: "HiraginoSans-W3", size: 14)!, NSAttributedString.Key.foregroundColor: UIColor.black]
+            let messageString = NSAttributedString(string: alertAction.message, attributes: messageAttributes)
+            
+            alertController.setValue(titleString, forKey: "attributedTitle")
+            alertController.setValue(messageString, forKey: "attributedMessage")
             
             if alertAction.shouldAddTextField {
                 // 一つ目のアラートに追加するかの判断
@@ -90,7 +96,10 @@ enum AlertActionType {
     }
     
     var cancelActionStyle: UIAlertAction.Style {
-        return .cancel
+        switch self {
+        default:
+            return .cancel
+        }
     }
     
     var title: String {
@@ -102,7 +111,7 @@ enum AlertActionType {
         case .savePendingUpdateData(let saveRetryError, _, _):
             return saveRetryError != nil ? "エラー" : ""
         case .willShowDepartVC:
-            return "注意"
+            return "確認"
         case .exitRoom:
             return "終了する"
         case .breakTime:

@@ -12,51 +12,52 @@ import SnapKit
 
 class LocationDetailView: UIView {
     // 距離アイコンとコインアイコンをまとめる背景View
-    private let distanceAndCoinBackgroundView: UIView = UIView().then {
+    private let distanceAndCoinBackgroundView = UIView().then {
         $0.backgroundColor = UIColor(red: 240/255, green: 224/255, blue: 207/255, alpha: 1)
         $0.layer.cornerRadius = 35 / 2
     }
     
     // 距離のアイコン
-    private lazy var distanceImageView: UIImageView = UIImageView().then {
+    private let distanceImageView = UIImageView().then {
         $0.image = UIImage(named: "distance")
         $0.layer.masksToBounds = true
     }
     
     // 距離アイコンとコインアイコンの区切り線
-    private lazy var IconImageDivider: UIView = UIView().then {
+    private let IconImageDivider = UIView().then {
         $0.backgroundColor = .black
         $0.transform = CGAffineTransform(rotationAngle: -.pi / 2.5)
         $0.layer.masksToBounds = true
     }
     
     // コインのアイコン
-    private lazy var coinImageView: UIImageView = UIImageView().then {
+    private let coinImageView = UIImageView().then {
         $0.image = UIImage(named: "coin")
         $0.layer.masksToBounds = true
     }
     
     // 距離とコインの値
-    private lazy var distanceAndCoinValueLabel: UILabel = UILabel().then {
-        $0.text = "0"
-        $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.semiSuperLarge)
+    private let distanceAndCoinValueLabel = UILabel().then {
+        $0.font = UIFont.boldSystemFont(ofSize: 23)
         $0.textAlignment = .center
+        $0.text = "0"
     }
     
     // ミッションアイコン背景View
-    private let backgroundViewForMission: UIView = UIView().then {
+    private let backgroundViewForMission = UIView().then {
         $0.backgroundColor = UIColor(red: 240/255, green: 224/255, blue: 207/255, alpha: 1)
         $0.layer.cornerRadius = 35 / 2
     }
     
     // ミッションのアイコン
-    private let missionImageView: UIImageView = UIImageView(image: UIImage(named: "Study2"))
+    private let missionImageView = UIImageView(image: UIImage(named: "Study2"))
     
     // 合計勉強時間
-    private let totalStudyTimeLabel: UILabel = UILabel().then {
-        $0.text = "00:00"
+    private let totalStudyTimeLabel = UILabel().then {
         $0.textColor = .black
-        $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.semiSuperLarge)
+        $0.font = UIFont.boldSystemFont(ofSize: 23)
+        $0.adjustsFontSizeToFitWidth = true
+        $0.text = "00:00"
     }
     
     // スラッシュ線
@@ -65,23 +66,23 @@ class LocationDetailView: UIView {
         $0.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 4)
         $0.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi) * 2 * 15 / 360)
         $0.snp.makeConstraints {
-            $0.size.equalTo(CGSize(width: 2, height: 30))
+            $0.size.equalTo(CGSize(width: 1.5, height: 30))
         }
     }
     
     // 必要な勉強時間
-    private let requiredStudyHours: UILabel = UILabel().then {
-        $0.text = "00"
+    private let requiredStudyHours = UILabel().then {
         $0.textColor = .black
-        $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.semiMedium)
+        $0.font = UIFont.systemFont(ofSize: 16)
         $0.textAlignment = .right
+        $0.text = "0"
     }
     
     // "hours"テキスト
     private let hoursTextLabel = UILabel().then {
         $0.text = "時間"
         $0.textColor = .gray
-        $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.small)
+        $0.font = UIFont.systemFont(ofSize: 13)
     }
     
     // 「/ hours XX」を表示するstackView
@@ -98,19 +99,19 @@ class LocationDetailView: UIView {
     }()
     
     // 報酬アイコン背景View
-    private let backgroundViewForReward: UIView = UIView().then {
+    private let backgroundViewForReward = UIView().then {
         $0.backgroundColor = UIColor(red: 240/255, green: 224/255, blue: 207/255, alpha: 1)
         $0.layer.cornerRadius = 35 / 2
     }
     
     // 報酬のアイコン
-    private let rewardImageView: UIImageView = UIImageView(image: UIImage(named: "Reward"))
+    private let rewardImageView = UIImageView(image: UIImage(named: "Reward"))
     
     // 報酬label
-    private let rewardCoinLabel: UILabel = UILabel().then {
+    private let rewardCoinLabel = UILabel().then {
         $0.text = "0＋"
         $0.textColor = .black
-        $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.semiSuperLarge)
+        $0.font = UIFont.boldSystemFont(ofSize: 23)
     }
     
     // スラッシュ線2
@@ -119,7 +120,7 @@ class LocationDetailView: UIView {
         $0.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 4)
         $0.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi) * 2 * 15 / 360)
         $0.snp.makeConstraints {
-            $0.size.equalTo(CGSize(width: 2, height: 17))
+            $0.size.equalTo(CGSize(width: 1.5, height: 17))
         }
     }
     
@@ -127,10 +128,10 @@ class LocationDetailView: UIView {
     private let bonusTitleLabel = UILabel().then {
         $0.text = "1時間ごと"
         $0.textColor = .darkGray
-        $0.font = .systemFont(ofSize: UIConstants.TextSize.semiMedium)
+        $0.font = .systemFont(ofSize: 16)
     }
     
-    lazy var bonusStackView: UIStackView = {
+    private lazy var bonusStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [slashView2, bonusTitleLabel])
         stackView.axis = .horizontal
         stackView.spacing = 5
@@ -139,12 +140,12 @@ class LocationDetailView: UIView {
     }()
     
     // 縦の区切り線
-    private lazy var verticalDivider: UIView = UIView().then {
+    private let verticalDivider = UIView().then {
         $0.backgroundColor = .lightGray
     }
     
     // 横の区切り線
-    private lazy var horizontalDivider: UIView = UIView().then {
+    private let horizontalDivider = UIView().then {
         $0.backgroundColor = .lightGray
     }
     
@@ -184,15 +185,15 @@ class LocationDetailView: UIView {
         
         // 距離アイコンとコインアイコンをまとめる背景View
         distanceAndCoinBackgroundView.snp.makeConstraints {
-            $0.top.left.equalToSuperview().offset(UIConstants.Layout.semiStandardPadding)
+            $0.top.left.equalToSuperview().offset(12)
             $0.height.equalTo(35)
-            $0.right.equalTo(coinImageView).offset(UIConstants.Layout.smallPadding)
+            $0.right.equalTo(coinImageView).offset(8)
         }
         
         // 距離アイコン
         distanceImageView.snp.makeConstraints {
             $0.size.equalTo(CGSize(width: 45, height: 25))
-            $0.left.equalToSuperview().inset(UIConstants.Layout.smallPadding)
+            $0.left.equalToSuperview().inset(8)
             $0.centerY.equalToSuperview()
         }
         
@@ -213,13 +214,13 @@ class LocationDetailView: UIView {
         // 距離とコインの値
         distanceAndCoinValueLabel.snp.makeConstraints {
             $0.centerX.equalTo(distanceAndCoinBackgroundView)
-            $0.bottom.equalTo(rewardCoinLabel.snp.bottom)
+            $0.centerY.equalTo(rewardCoinLabel)
         }
         
         // 縦の区切り線
         verticalDivider.snp.makeConstraints {
             $0.width.equalTo(1)
-            $0.left.equalTo(distanceAndCoinBackgroundView.snp.right).inset(-UIConstants.Layout.standardPadding)
+            $0.left.equalTo(distanceAndCoinBackgroundView.snp.right).inset(-16)
             $0.top.equalTo(distanceAndCoinBackgroundView)
             $0.bottom.equalTo(backgroundViewForReward)
         }
@@ -228,13 +229,13 @@ class LocationDetailView: UIView {
         horizontalDivider.snp.makeConstraints {
             $0.height.equalTo(1)
             $0.centerY.equalToSuperview()
-            $0.horizontalEdges.equalToSuperview().inset(UIConstants.Layout.standardPadding)
+            $0.horizontalEdges.equalToSuperview().inset(16)
         }
         
         // ミッションアイコン背景View
         backgroundViewForMission.snp.makeConstraints {
             $0.size.equalTo(35)
-            $0.left.equalTo(verticalDivider.snp.right).inset(-UIConstants.Layout.standardPadding)
+            $0.left.equalTo(verticalDivider.snp.right).inset(-16)
             $0.centerY.equalTo(distanceAndCoinBackgroundView)
         }
         
@@ -246,20 +247,20 @@ class LocationDetailView: UIView {
         
         // 合計勉強時間
         totalStudyTimeLabel.snp.makeConstraints {
-            $0.bottom.equalTo(backgroundViewForMission)
-            $0.left.equalTo(backgroundViewForMission.snp.right).offset(UIConstants.Layout.semiStandardPadding)
+            $0.centerY.equalTo(missionImageView)
+            $0.left.equalTo(backgroundViewForMission.snp.right).offset(12)
         }
         
         // 「/ hours XX」を表示するstackView
         requiredStudyHoursStackView.snp.makeConstraints {
-            $0.right.equalToSuperview().inset(UIConstants.Layout.standardPadding)
+            $0.right.equalToSuperview().inset(16)
             $0.centerY.equalTo(totalStudyTimeLabel)
         }
         
         // 報酬アイコン背景View
         backgroundViewForReward.snp.makeConstraints {
             $0.size.equalTo(35)
-            $0.top.equalTo(backgroundViewForMission.snp.bottom).offset(UIConstants.Layout.semiSmallPadding)
+            $0.top.equalTo(backgroundViewForMission.snp.bottom).offset(6)
             $0.left.equalTo(backgroundViewForMission)
         }
         
@@ -271,8 +272,8 @@ class LocationDetailView: UIView {
         
         // 報酬label
         rewardCoinLabel.snp.makeConstraints {
-            $0.bottom.equalTo(backgroundViewForReward)
-            $0.left.equalTo(backgroundViewForReward.snp.right).offset(UIConstants.Layout.semiStandardPadding)
+            $0.centerY.equalTo(backgroundViewForReward)
+            $0.left.equalTo(backgroundViewForReward.snp.right).offset(12)
         }
         
         // ボーナスタイトルlabel

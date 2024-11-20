@@ -24,7 +24,7 @@ class MarkerIconView: UIView {
     // 勉強中の人数
     private let userCountLabel: UILabel = UILabel().then {
         $0.textColor = .black
-        $0.font = .systemFont(ofSize: UIConstants.TextSize.small)
+        $0.font = .boldSystemFont(ofSize: 13)
     }
     
     init(frame: CGRect, locationStatus: LocationStatus) {

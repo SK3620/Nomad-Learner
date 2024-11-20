@@ -12,7 +12,7 @@ class ProfileLabel: UILabel {
     
     private var textPadding: UIEdgeInsets = UIEdgeInsets.zero
     
-    init(text: String = "", fontSize: CGFloat, textColor: UIColor, isRounded: Bool = false, horizontalPadding: CGFloat = UIConstants.Layout.smallPadding, verticalPadding: CGFloat = UIConstants.Layout.extraSmallPadding) {
+    init(text: String = "", fontSize: CGFloat, textColor: UIColor, isRounded: Bool = false, horizontalPadding: CGFloat = 8, verticalPadding: CGFloat = 4) {
         super.init(frame: .zero)
         
         self.text = text
@@ -21,7 +21,8 @@ class ProfileLabel: UILabel {
         
         // 各丸の枠線をつける
         if isRounded {
-            self.layer.cornerRadius = (intrinsicContentSize.height + verticalPadding * 2) / 2
+            self.font = UIFont.boldSystemFont(ofSize: fontSize)
+            self.layer.cornerRadius = (intrinsicContentSize.height + verticalPadding) / 2
             self.layer.masksToBounds = true
             self.backgroundColor = .white
             self.textPadding = UIEdgeInsets(top: verticalPadding, left: horizontalPadding, bottom: verticalPadding, right: horizontalPadding)

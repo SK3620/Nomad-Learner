@@ -22,8 +22,7 @@ class MarkerInfoWindow: UIView {
     // 目的地labelと地域・国labelをまとめる
     private lazy var stackView: UIStackView = UIStackView().then {
         $0.axis = .vertical
-        $0.alignment = .fill
-        $0.distribution = .fillProportionally
+        $0.distribution = .fillEqually
         $0.addArrangedSubview(self.destinationLabel)
         $0.addArrangedSubview(self.regionLabel)
     }
@@ -31,7 +30,7 @@ class MarkerInfoWindow: UIView {
     // 目的地label
     private let destinationLabel: UILabel = UILabel().then {
         $0.textColor = .white
-        $0.font = .systemFont(ofSize: UIConstants.TextSize.semiMedium)
+        $0.font = .boldSystemFont(ofSize: 16)
         // フォントサイズ自動調整
         $0.adjustsFontSizeToFitWidth = true
     }
@@ -39,7 +38,7 @@ class MarkerInfoWindow: UIView {
     // 地域・国label
     private let regionLabel: UILabel = UILabel().then {
         $0.textColor = .white
-        $0.font = .systemFont(ofSize: UIConstants.TextSize.extraSmall)
+        $0.font = .systemFont(ofSize: 12)
         // フォントサイズ自動調整
         $0.adjustsFontSizeToFitWidth = true
     }
@@ -60,14 +59,14 @@ class MarkerInfoWindow: UIView {
         
         locationImageView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.left.equalToSuperview().inset(UIConstants.Layout.semiStandardPadding / 2)
-            $0.size.equalTo(CGSize(width: 80, height: self.viewHeight - UIConstants.Layout.semiStandardPadding))
+            $0.left.equalToSuperview().inset(12 / 2)
+            $0.size.equalTo(CGSize(width: 80, height: self.viewHeight - 12))
         }
         
         stackView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.left.equalTo(locationImageView.snp.right).offset(UIConstants.Layout.smallPadding)
-            $0.right.equalToSuperview().inset(UIConstants.Layout.standardPadding)
+            $0.left.equalTo(locationImageView.snp.right).offset(8)
+            $0.right.equalToSuperview().inset(16)
         }
     }
     

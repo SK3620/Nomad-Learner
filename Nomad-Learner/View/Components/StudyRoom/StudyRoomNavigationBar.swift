@@ -12,7 +12,7 @@ import Then
 class StudyRoomNavigationBar: UIView {
     
     // ナビゲーションバーレイアウト変更ボタン
-    public let switchLayoutButton = UIButton().then {
+    let switchLayoutButton = UIButton().then {
         $0.setImage(UIImage(systemName: "repeat"), for: .normal)
         $0.tintColor = ColorCodes.primaryPurple.color()
         $0.backgroundColor = UIColor(white: 1.0, alpha: 0.3)
@@ -20,8 +20,8 @@ class StudyRoomNavigationBar: UIView {
     }
     
     // 合計時間ラベル
-    private let timeLabel: UILabel = UILabel().then {
-        $0.font = .systemFont(ofSize: UIConstants.TextSize.small)
+    private let timeLabel = UILabel().then {
+        $0.font = .boldSystemFont(ofSize: 14)
         $0.textColor = .lightGray
     }
     
@@ -35,13 +35,13 @@ class StudyRoomNavigationBar: UIView {
     }
     
     // 現在地ラベル
-    private let currentPositionLabel: UILabel = UILabel().then {
-        $0.font = .systemFont(ofSize: UIConstants.TextSize.small)
+    private let currentPositionLabel = UILabel().then {
+        $0.font = .boldSystemFont(ofSize: 14)
         $0.textColor = .lightGray
     }
     
     // 現在地ラベルスクロールビュー
-    private lazy var currentPositionScrollView: UIScrollView = UIScrollView().then {
+    private lazy var currentPositionScrollView = UIScrollView().then {
         $0.isScrollEnabled = true
         $0.showsVerticalScrollIndicator = false
         $0.showsHorizontalScrollIndicator = false
@@ -99,18 +99,18 @@ class StudyRoomNavigationBar: UIView {
         }
         
         ellipsisButton.snp.makeConstraints {
-            $0.left.equalTo(switchLayoutButton.snp.right).offset(UIConstants.Layout.standardPadding)
+            $0.left.equalTo(switchLayoutButton.snp.right).offset(16)
             $0.centerY.equalToSuperview()
             $0.size.equalTo(24)
         }
         
         timeLabel.snp.makeConstraints {
-            $0.left.equalTo(ellipsisButton.snp.right).offset(UIConstants.Layout.standardPadding)
+            $0.left.equalTo(ellipsisButton.snp.right).offset(16)
             $0.centerY.equalToSuperview()
         }
         
         currentPositionScrollView.snp.makeConstraints {
-            $0.left.equalTo(timeLabel.snp.right).offset(UIConstants.Layout.standardPadding)
+            $0.left.equalTo(timeLabel.snp.right).offset(16)
             $0.centerY.equalToSuperview()
             $0.height.equalToSuperview()
             $0.right.equalToSuperview()

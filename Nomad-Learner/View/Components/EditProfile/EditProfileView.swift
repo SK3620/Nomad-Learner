@@ -21,14 +21,14 @@ class EditProfileView: UIView {
     private let othersView = EditProfileView.createRoundedView()
     
     // 画像ライブラリ表示ボタン
-    let addPictureButton: UIButton = UIButton(type: .system).then {
+    let addPictureButton = UIButton(type: .system).then {
         let plusImage = UIImage(systemName: "plus")
         $0.setImage(plusImage, for: .normal)
         $0.tintColor = ColorCodes.primaryPurple.color()
         $0.imageView?.contentMode = .scaleAspectFit
     }
     // デフォルト画像適用ボタン
-    let applyDefaultPictureButton: UIButton = UIButton(type: .system).then {
+    let applyDefaultPictureButton = UIButton(type: .system).then {
         let plusImage = UIImage(systemName: "minus")
         $0.setImage(plusImage, for: .normal)
         $0.tintColor = ColorCodes.primaryPurple.color()
@@ -43,7 +43,7 @@ class EditProfileView: UIView {
         $0.layer.masksToBounds = true
     }
     
-    private let usernameTitle = ProfileLabel(text: "名前", fontSize: UIConstants.TextSize.semiMedium, textColor: .white, isRounded: true).then {
+    private let usernameTitle: ProfileLabel = ProfileLabel(text: "名前", fontSize: 16, textColor: .white, isRounded: true).then {
         $0.backgroundColor = ColorCodes.primaryPurple.color()
     }
     let usernameTextView = EditProfileTextView()
@@ -55,17 +55,17 @@ class EditProfileView: UIView {
     let livingPlaceAndWorkTextView = EditProfileTextView(text: "")
      */
     
-    private let studyContentTitle = ProfileLabel(text: "勉強内容", fontSize: UIConstants.TextSize.semiMedium, textColor: .white, isRounded: true).then {
+    private let studyContentTitle: ProfileLabel = ProfileLabel(text: "勉強内容", fontSize: 16, textColor: .white, isRounded: true).then {
         $0.backgroundColor = ColorCodes.primaryPurple.color()
     }
     let studyContentTextView = EditProfileTextView()
     
-    private let goalTitle = ProfileLabel(text: "目標", fontSize: UIConstants.TextSize.semiMedium, textColor: .white, isRounded: true).then {
+    private let goalTitle: ProfileLabel = ProfileLabel(text: "目標", fontSize: 16, textColor: .white, isRounded: true).then {
         $0.backgroundColor = ColorCodes.primaryPurple.color()
     }
     let goalTextView = EditProfileTextView()
     
-    private let othersTitle: ProfileLabel = ProfileLabel(text: "その他", fontSize: UIConstants.TextSize.semiMedium, textColor: .white, isRounded: true).then {
+    private let othersTitle: ProfileLabel = ProfileLabel(text: "その他", fontSize: 16, textColor: .white, isRounded: true).then {
         $0.backgroundColor = ColorCodes.primaryPurple.color()
     }
     
@@ -93,7 +93,7 @@ class EditProfileView: UIView {
             $0.width.equalTo(pictureAndUsernameStackView.snp.width).multipliedBy(0.35)
         }
         usernameView.snp.makeConstraints {
-            $0.left.equalTo(pictureView.snp.right).offset(UIConstants.Layout.standardPadding)
+            $0.left.equalTo(pictureView.snp.right).offset(16)
             $0.right.equalToSuperview()
         }
         
@@ -125,12 +125,12 @@ class EditProfileView: UIView {
         
         navigationBar.snp.makeConstraints {
             $0.top.left.right.equalToSuperview()
-            $0.height.equalTo(UIConstants.NavigationBar.standardHeight)
+            $0.height.equalTo(44)
         }
         
         stackView.snp.makeConstraints {
-            $0.top.equalTo(navigationBar.snp.bottom).offset(UIConstants.Layout.standardPadding)
-            $0.left.right.equalToSuperview().inset(UIConstants.Layout.standardPadding)
+            $0.top.equalTo(navigationBar.snp.bottom).offset(16)
+            $0.left.right.equalToSuperview().inset(16)
             $0.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom)
         }
         
@@ -140,47 +140,47 @@ class EditProfileView: UIView {
         }
         
         addPictureButton.snp.makeConstraints {
-            $0.bottom.right.equalToSuperview().inset(UIConstants.Layout.semiStandardPadding)
+            $0.bottom.right.equalToSuperview().inset(12)
         }
         
         applyDefaultPictureButton.snp.makeConstraints {
-            $0.bottom.left.equalToSuperview().inset(UIConstants.Layout.semiStandardPadding)
+            $0.bottom.left.equalToSuperview().inset(12)
         }
         
         usernameTitle.snp.makeConstraints {
-            $0.top.left.equalToSuperview().inset(UIConstants.Layout.standardPadding)
+            $0.top.left.equalToSuperview().inset(16)
         }
         
         usernameTextView.snp.makeConstraints {
             $0.top.equalTo(usernameTitle.snp.bottom)
-            $0.left.right.bottom.equalToSuperview().inset(UIConstants.Layout.standardPadding)
+            $0.left.right.bottom.equalToSuperview().inset(16)
         }
         
         studyContentTitle.snp.makeConstraints {
-            $0.top.left.equalToSuperview().inset(UIConstants.Layout.standardPadding)
+            $0.top.left.equalToSuperview().inset(16)
         }
         
         studyContentTextView.snp.makeConstraints {
             $0.top.equalTo(studyContentTitle.snp.bottom)
-            $0.left.right.bottom.equalToSuperview().inset(UIConstants.Layout.standardPadding)
+            $0.left.right.bottom.equalToSuperview().inset(16)
         }
         
         goalTitle.snp.makeConstraints {
-            $0.top.left.equalToSuperview().inset(UIConstants.Layout.standardPadding)
+            $0.top.left.equalToSuperview().inset(16)
         }
         
         goalTextView.snp.makeConstraints {
             $0.top.equalTo(goalTitle.snp.bottom)
-            $0.left.right.bottom.equalToSuperview().inset(UIConstants.Layout.standardPadding)
+            $0.left.right.bottom.equalToSuperview().inset(16)
         }
         
         othersTitle.snp.makeConstraints {
-            $0.top.left.equalToSuperview().inset(UIConstants.Layout.standardPadding)
+            $0.top.left.equalToSuperview().inset(16)
         }
         
         othersTextView.snp.makeConstraints {
             $0.top.equalTo(othersTitle.snp.bottom)
-            $0.left.right.bottom.equalToSuperview().inset(UIConstants.Layout.standardPadding)
+            $0.left.right.bottom.equalToSuperview().inset(16)
         }
     }
     

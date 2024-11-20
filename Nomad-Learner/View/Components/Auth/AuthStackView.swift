@@ -46,8 +46,8 @@ class AuthStackView: UIStackView {
     
     // SignUp/SignInボタン
     lazy var authButton = UIButton(type: .system).then {
-        $0.layer.cornerRadius = UIConstants.Button.height / 2
-        $0.titleLabel?.font = UIFont.systemFont(ofSize: UIConstants.Font.smallFont)
+        $0.layer.cornerRadius = 44 / 2
+        $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         $0.tintColor = .white
         $0.backgroundColor = ColorCodes.primaryPurple.color()
     }
@@ -67,15 +67,15 @@ class AuthStackView: UIStackView {
     
     // SignIn/SignUp画面切り替え
     lazy var authModeToggleButton = UIButton(type: .system).then {
-        $0.titleLabel?.font = UIFont.systemFont(ofSize: UIConstants.Font.smallFont)
+        $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         $0.setTitle("パスワードを忘れた", for: .normal)
         $0.tintColor = ColorCodes.primaryPurple.color()
     }
     
     // アカウント削除ボタン
     let deleteAccountButton = UIButton(type: .system).then {
-        $0.titleLabel?.font = UIFont.systemFont(ofSize: UIConstants.Font.smallFont)
-        $0.setTitle("アカウントを削除する", for: .normal)
+        $0.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        $0.setTitle("アカウントを削除する▶︎", for: .normal)
         $0.tintColor = .red
     }
     
@@ -110,21 +110,21 @@ class AuthStackView: UIStackView {
         
         // ユーザー名バリデーションメッセージ
         usernameValidation.snp.makeConstraints {
-            $0.top.equalTo(usernameTextField.snp.bottom).offset(UIConstants.Layout.extraSmallPadding)
+            $0.top.equalTo(usernameTextField.snp.bottom).offset(4)
             $0.right.equalToSuperview()
         }
         
         // メールアドレスバリデーションメッセージ
         emailValidation.snp.makeConstraints {
             $0.top.equalTo(emailTextField.snp.bottom)
-                .offset(UIConstants.Layout.extraSmallPadding)
+                .offset(4)
             $0.right.equalToSuperview()
         }
         
         // パスワードバリデーションメッセージ
         passwordValidation.snp.makeConstraints {
             $0.top.equalTo(passwordTextField.snp.bottom)
-                .offset(UIConstants.Layout.extraSmallPadding)
+                .offset(4)
             $0.right.equalToSuperview()
         }
         
@@ -138,22 +138,22 @@ class AuthStackView: UIStackView {
         
         // 間隔を空けるための空のView
         emptyView.snp.makeConstraints {
-            $0.height.equalTo(UIConstants.StackViewElement.height)
+            $0.height.equalTo(44)
         }
         
         // SignUp/SignInボタン
         authButton.snp.makeConstraints {
-            $0.height.equalTo(UIConstants.StackViewElement.height)
+            $0.height.equalTo(44)
         }
         
         // テキスト付き区切り線
         separatorWithText.snp.makeConstraints {
-            $0.height.equalTo(UIConstants.StackViewElement.height)
+            $0.height.equalTo(44)
         }
         
         // Google, Apple, Twitterボタン
         providerButtonStackView.snp.makeConstraints {
-            $0.height.equalTo(UIConstants.StackViewElement.height)
+            $0.height.equalTo(44)
             $0.horizontalEdges.equalTo(separatorWithText).inset(UIConstants.Layout.largePadding * 2)
         }
         

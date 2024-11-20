@@ -22,7 +22,7 @@ class OnFlightView: UIView {
     private let loadingLabel: UILabel = UILabel().then {
         $0.text = "on a flight to the destination . . ."
         $0.textColor = ColorCodes.primaryPurple.color()
-        $0.font = .systemFont(ofSize: UIConstants.TextSize.semiMedium)
+        $0.font = .systemFont(ofSize: 16)
         $0.textAlignment = .center
     }
     

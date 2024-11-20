@@ -14,8 +14,8 @@ class EditProfileTextView: UITextView {
         super.init(frame: .zero, textContainer: nil)
         self.text = text
         self.backgroundColor = .clear
-        self.font = UIFont.systemFont(ofSize: UIConstants.TextSize.medium, weight: .medium)
-        self.textColor = .darkGray
+        self.font = UIFont.systemFont(ofSize: 16)
+        self.textColor = .black
         // キーボードに完了ボタン表示
         self.addDoneToolbar(onDone: (target: self, action: #selector(doneButtonTapped)))
     }

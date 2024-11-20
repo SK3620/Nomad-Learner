@@ -9,11 +9,11 @@ import UIKit
 
 class ProfileCollectionView: UICollectionView {
     // cellの縦間隔
-    private let verticalGap: CGFloat = UIConstants.Layout.semiStandardPadding
+    private let verticalGap: CGFloat = 12
     // cellの横間隔
-    private let horizontalGap: CGFloat = UIConstants.Layout.semiLargePadding
+    private let horizontalGap: CGFloat = 28
     // 右側に余白を空けてスクロールインジケーターと被らないようにする
-    private let edgeInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: UIConstants.Layout.semiStandardPadding)
+    private let edgeInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 12)
     
     private var layout: UICollectionViewFlowLayout
     

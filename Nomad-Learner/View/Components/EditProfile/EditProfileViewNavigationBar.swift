@@ -11,12 +11,12 @@ import Then
 class EditProfileViewNavigationBar: UINavigationBar {
     
     // プロフィール画面へ戻るボタン
-    public lazy var closeButton = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: nil, action: nil).then {
+    public let closeButton = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: nil, action: nil).then {
         $0.tintColor = .white
     }
     
     // 保存ボタン
-    lazy var saveButton = UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.down"), style: .done, target: nil, action: nil).then {
+    let saveButton = UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.down"), style: .done, target: nil, action: nil).then {
         $0.tintColor = .white
     }
         

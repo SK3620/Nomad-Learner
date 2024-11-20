@@ -37,15 +37,15 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
     private let disposeBag = DisposeBag()
     
     // 認証画面へ戻るボタン
-    private lazy var backBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: nil, action: nil).then {
+    private let backBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: nil, action: nil).then {
         $0.tintColor = .lightGray
     }
     // リローディングボタン
-    private lazy var reloadButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.circlepath"), style: .plain, target: nil, action: nil).then {
+    private let reloadButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.circlepath"), style: .plain, target: nil, action: nil).then {
         $0.tintColor = ColorCodes.primaryPurple.color()
     }
     // プロフィール画面遷移ボタン
-    private lazy var profileBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person"), style: .plain, target: nil, action: nil).then {
+    private let profileBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person"), style: .plain, target: nil, action: nil).then {
         $0.tintColor = ColorCodes.primaryPurple.color()
     }
     // お財布アイコンと所持金ラベルのスタックビュー
@@ -58,14 +58,14 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
     }()
     
     // 現在の所持金
-    private let currentCoinLabel: UILabel = UILabel().then {
-        $0.text = "100000"
-        $0.font = .systemFont(ofSize: UIConstants.TextSize.semiSuperLarge, weight: .heavy)
+    private let currentCoinLabel = UILabel().then {
+        $0.font = .boldSystemFont(ofSize: 24)
         $0.textColor = .black
+        $0.text = "0"
     }
     
     // お財布アイコン
-    private let walletImageView: UIImageView = UIImageView().then {
+    private let walletImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFit
         $0.image = UIImage(named: "wallet")
         $0.snp.makeConstraints { $0.size.equalTo(26) }
@@ -118,21 +118,21 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
         }
         
         mapView.snp.makeConstraints {
-            $0.top.equalTo(navigationBoxBar.snp.bottom).inset(UIConstants.Layout.mediumPadding)
+            $0.top.equalTo(navigationBoxBar.snp.bottom).inset(24)
             $0.right.left.bottom.equalToSuperview()
         }
         
         locationDetailView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.width.equalToSuperview().inset(UIConstants.Layout.standardPadding)
+            $0.width.equalToSuperview().inset(16)
             $0.top.equalToSuperview().inset(NavigationHeightProvidable.totalTopBarHeight(navigationController: navigationController))
             $0.height.equalTo(195)
         }
         
         mapTabBar.snp.makeConstraints {
-            $0.height.equalTo(UIConstants.TabBarHeight.height)
-            $0.horizontalEdges.equalToSuperview().inset(UIConstants.Layout.standardPadding)
-            $0.bottom.equalToSuperview().inset(UIConstants.Layout.semiMediumPadding)
+            $0.height.equalTo(70)
+            $0.horizontalEdges.equalToSuperview().inset(16)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
                 
         moveToCurrentLocationButton.snp.makeConstraints {
@@ -396,7 +396,7 @@ extension MapViewController {
         mapView.removeInfoWindow()
         
         // 遅延させてUIを調整
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             // 現在地ピンの位置を更新
             self.mapView.updateCurrentLocationPin()
             

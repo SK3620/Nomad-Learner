@@ -34,7 +34,7 @@ class AuthTextField: UITextField {
         self.placeholder = placeholder
         self.isSecureTextEntry = isSecureTextEntry
         self.keyboardType = keyboardType
-        self.font = UIFont.systemFont(ofSize: UIConstants.TextField.fontSize)
+        self.font = UIFont.systemFont(ofSize: 16)
         
         setupUI()
         setupLeftView(with: leftImageName)

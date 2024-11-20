@@ -16,46 +16,44 @@ class SeparatorWithLabelView: UIStackView {
     
     private lazy var leftLineView = UIView().then {
         $0.backgroundColor = .lightGray
+        $0.snp.makeConstraints {
+            $0.height.equalTo(1.5)
+        }
     }
     
     private lazy var rightLineView = UIView().then {
         $0.backgroundColor = .lightGray
+        $0.snp.makeConstraints {
+            $0.height.equalTo(1.5)
+        }
     }
     
     private lazy var label = UILabel().then {
         $0.textColor = .gray
-        $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.semiMedium)
+        $0.font = UIFont.systemFont(ofSize: 16)
         $0.textAlignment = .center
     }
     
     init(text: String? = nil) {
         super.init(frame: .zero)
-        label.text = text
-        setupUI()
-    }
-    
-    required init(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func setupUI() {
         axis = .horizontal
         alignment = .center
         distribution = .fillEqually
-
+        label.text = text
+        
+        setupUI()
+    }
+    
+    private func setupUI() {
         addArrangedSubview(leftLineView)
         // 中央にテキストを表示するか否か
         if label.text != nil {
             addArrangedSubview(label)
         }
         addArrangedSubview(rightLineView)
-        
-        leftLineView.snp.makeConstraints {
-            $0.height.equalTo(1.5)
-        }
-     
-        rightLineView.snp.makeConstraints {
-            $0.height.equalTo(1.5)
-        }
+    }
+    
+    required init(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

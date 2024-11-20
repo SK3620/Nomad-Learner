@@ -21,7 +21,7 @@ class DepartViewController: UIViewController {
     var knobDidReachTopRelay = PublishRelay<Void>()
     
     // 基本のView
-    private let basicView: UIView = UIView().then {
+    private let basicView = UIView().then {
         $0.backgroundColor = .white
     }
     
@@ -29,9 +29,9 @@ class DepartViewController: UIViewController {
     private lazy var departView: DepartView = DepartView(locationInfo: self.locationInfo)
     
     // 出発キャンセルボタン
-    private let cancelButton: UIButton = UIButton(type: .system).then {
+    private let cancelButton = UIButton(type: .system).then {
         $0.setTitle("Cancel", for: .normal)
-        $0.titleLabel?.font = UIFont.systemFont(ofSize: UIConstants.TextSize.large)
+        $0.titleLabel?.font = UIFont.systemFont(ofSize: 22)
         $0.tintColor = .red
         $0.layer.borderColor = UIColor.red.cgColor
         $0.layer.borderWidth = 1
@@ -80,7 +80,7 @@ extension DepartViewController {
         cancelButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
-            $0.horizontalEdges.equalToSuperview().inset(UIConstants.Layout.extraLargePadding)
+            $0.horizontalEdges.equalToSuperview().inset(40)
             $0.height.equalTo(60)
         }
     }

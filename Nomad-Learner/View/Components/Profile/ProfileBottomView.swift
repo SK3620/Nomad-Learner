@@ -15,10 +15,13 @@ class ProfileBottomView: UIView {
     var userProfile: User
     
     // profileTableViewのアニメーション時のデフォルト位置
-    private var defaultPositionY: CGFloat = CGFloat()
+    private var defaultPositionY = CGFloat()
     
     // 名前
-    private let usernameLabel: ProfileLabel = ProfileLabel(text: "Peder Elias", fontSize: UIConstants.TextSize.semiLarge, textColor: .darkGray)
+    private let usernameLabel = UILabel().then {
+        $0.font = .boldSystemFont(ofSize: 18)
+        $0.textColor = .black
+    }
     
     // インフォメーションアイコンボタン（開発中の機能）
     let inDevelopmentButton = UIButton().then {
@@ -29,12 +32,12 @@ class ProfileBottomView: UIView {
     }
     
     // 区切り線
-    private let borderView: UIView = UIView().then {
+    private let borderView = UIView().then {
         $0.backgroundColor = .lightGray
     }
     
     // 詳細な自己紹介
-    private var profileTableView: UITableView = UITableView().then {
+    private var profileTableView = UITableView().then {
         $0.backgroundColor = UIColor(white: 0.96, alpha: 1.0)
         $0.layer.borderColor = UIColor.clear.cgColor
         $0.separatorColor = .clear
@@ -63,8 +66,8 @@ class ProfileBottomView: UIView {
         addSubview(profileTableView)
         
         usernameLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(UIConstants.Layout.smallPadding)
-            $0.left.equalToSuperview().inset(UIConstants.Layout.standardPadding)
+            $0.top.equalToSuperview().inset(8)
+            $0.left.equalToSuperview().inset(16)
             $0.right.equalTo(inDevelopmentButton.snp.left)
         }
         
@@ -74,7 +77,7 @@ class ProfileBottomView: UIView {
         }
         
         borderView.snp.makeConstraints {
-            $0.top.equalTo(usernameLabel.snp.bottom).offset(UIConstants.Layout.smallPadding)
+            $0.top.equalTo(usernameLabel.snp.bottom).offset(8)
             $0.horizontalEdges.equalToSuperview()
             $0.height.equalTo(1)
         }

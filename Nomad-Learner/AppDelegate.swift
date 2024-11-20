@@ -21,15 +21,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         FirebaseApp.configure()
         
-        // 指定したフォントを全画面のUILabelに適用
-        UILabel.appearance().substituteFontName = "AppleSDGothicNeo-Bold"
-        // 指定したフォントを全画面のUITextFieldに適用
-        UITextField.appearance().substituteFontName = "AppleSDGothicNeo-Bold"
+        // 指定したフォントを全画面に適用
+        UILabel.appearance().substituteFontName = "HiraginoSans-W3"
+        UILabel.appearance().substituteFontBoldName = "HiraginoSans-W6"
+        
+        UITextField.appearance().substituteFontName = "HiraginoSans-W3"
         
         // GoogleMapSDKとiOSとの紐付け
         let googleMapAPIKey = APIKeys.googleMapAPIKey
         GMSServices.provideAPIKey(googleMapAPIKey)
-                
+        
         return true
     }
     

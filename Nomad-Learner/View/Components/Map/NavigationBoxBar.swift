@@ -13,7 +13,7 @@ class NavigationBoxBar: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .white
-        self.layer.cornerRadius = UIConstants.Layer.radius
+        self.layer.cornerRadius = 32
     }
     
     required init?(coder: NSCoder) {

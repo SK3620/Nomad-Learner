@@ -39,7 +39,7 @@ class ProfileView: UIView {
         
         navigationBar.snp.makeConstraints {
             $0.top.right.left.equalToSuperview()
-            $0.height.equalTo(UIConstants.NavigationBar.standardHeight)
+            $0.height.equalTo(44)
         }
         
         profileTopView.snp.makeConstraints {
@@ -49,7 +49,7 @@ class ProfileView: UIView {
         }
         
         profileBottomView.snp.makeConstraints {
-            $0.top.equalTo(UIConstants.NavigationBar.standardHeight + profileTopViewHeight + profileTopView.pictureSize / 2)
+            $0.top.equalTo(44 + profileTopViewHeight + profileTopView.pictureSize / 2)
             $0.right.left.bottom.equalToSuperview()
         }
     }

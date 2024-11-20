@@ -33,7 +33,7 @@ class LocationCategoryCollectionViewCell: UICollectionViewCell {
     private lazy var titleLabel = UILabel().then {
         $0.textAlignment = .center
         $0.textColor = .lightGray
-        $0.font = UIFont.systemFont(ofSize: UIConstants.TextSize.small)
+        $0.font = UIFont.systemFont(ofSize: 14)
     }
     
     private lazy var categoryButton = UIButton(type: .system).then {

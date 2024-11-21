@@ -98,7 +98,7 @@ extension LocationCategoryCollectionViewCell {
     func bind(indexPath: IndexPath, viewModel: MapViewModel) {
         categoryButtonTaps
             .emit(onNext: {
-                viewModel.selectedCategoryIndex.accept(indexPath)
+                viewModel.selectedCategoryIndexRelay.accept(indexPath)
             })
             .disposed(by: disposeBag)
     }

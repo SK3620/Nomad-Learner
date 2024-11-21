@@ -111,3 +111,28 @@ extension LocationsInfo {
         )
     }
 }
+
+struct LocationsInfo2 {
+    let locationId: String
+    let fixedLocations: FixedLocation
+    let dynamicLocations: DynamicLocation
+    let visitedLocations: VisitedLocation
+    let ticketsInfo: TicketInfo
+    let locationsStatus: LocationStatus
+    
+    init(
+        locationId: String,
+        fixedLocations: FixedLocation,
+        dynamicLocations: DynamicLocation,
+        visitedLocations: VisitedLocation,
+        ticketsInfo: TicketInfo,
+        locationStatus: LocationStatus
+    ) {
+        self.locationId = locationId
+        self.fixedLocations = fixedLocations
+        self.dynamicLocations = dynamicLocations
+        self.visitedLocations = visitedLocations
+        self.ticketsInfo = ticketsInfo
+        self.locationsStatus = locationStatus
+    }
+}

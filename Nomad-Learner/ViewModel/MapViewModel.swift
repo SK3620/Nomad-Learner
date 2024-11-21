@@ -22,7 +22,7 @@ class MapViewModel {
     
     // MARK: - Output
     let categories: Driver<[LocationCategoryItem]> = Driver.just(LocationCategoryItem.categories)
-    var selectedIndex: Driver<IndexPath> { return selectedCategoryIndex.asDriver(onErrorDriveWith: .empty())}
+    var selectedIndex: Driver<IndexPath> { return selectedCategoryIndexRelay.asDriver(onErrorDriveWith: .empty())}
     
     // 更新保留中の勉強記録データ
     var pendingUpdateData: Driver<(pendingUpdateData: PendingUpdateData?, saveRetryError: MyAppError?)> {
@@ -32,6 +32,9 @@ class MapViewModel {
     var isPendingUpdateDataHandlingCompleted: Driver<Bool> {
         self.isPendingUpdateDataHandlingCompletedRelay.asDriver()
     }
+    // 絞り込み検索結果
+//    let filteredLocationsInfo: Driver<LocationsInfo>
+
     let locationsAndUserInfo: Driver<(LocationsInfo, User)> // 各ロケーション情報
     let monitoredLocationsAndUserInfo: Driver<(LocationsInfo, User)> // 各ロケーション情報
     let isLoading: Driver<Bool> // ローディングインジケーター
@@ -43,7 +46,7 @@ class MapViewModel {
     // 更新保留中の勉強記録データの保存/削除完了
     let isPendingUpdateDataHandlingCompletedRelay = BehaviorRelay<Bool>(value: false)
     // タップされたカテゴリーのインデックスを監視、最新の値を保持する
-    let selectedCategoryIndex = BehaviorRelay<IndexPath>(value: IndexPath(item: 0, section: 0))
+    let selectedCategoryIndexRelay = BehaviorRelay<IndexPath>(value: IndexPath(item: 0, section: 0))
     
     private let realmService: RealmServiceProtocol
     private let mainService: MainServiceProtocol
@@ -139,6 +142,14 @@ extension MapViewModel {
             ImageCacheManager.prefetch(from: [URL(string: userProfile.profileImageUrl)!])
         }
         
+        for fixedLocation in fixedLocations {
+            let dynamicLocation = dynamicLocations.first(where: { $0.locationId == fixedLocation.locationId })
+            let visitedLocation = visitedLocations.first(where: { $0.locationId == fixedLocation.locationId })
+            
+            
+        }
+        
+        /*
         var mutableUserProfile = userProfile
         var locationsInfo = LocationsInfo(
             fixedLocations: fixedLocations,
@@ -160,10 +171,14 @@ extension MapViewModel {
         
         mutableUserProfile.progressSum = progressSum
         return (locationsInfo, mutableUserProfile)
+         */
     }
 }
 
 extension MapViewModel {
+    func getFilteredLocationsInfo() {
+        
+    }
     // 更新保留中の勉強記録データの保存/削除
     func handlePendingUpdateData(pendingUpdateData: PendingUpdateData, shouldSave: Bool = true) {
         // データの整形

@@ -15,12 +15,13 @@ struct RewardCoinProgressHUDInfo {
     let bonusCoin: Int
     let studyHoursForBonus: Int
     
-    init(completionFlag: Int, 
-         currentCoin: Int,
-         originalCoin: Int,
-         rewardCoin: Int,
-         bonusCoin: Int,
-         studyHoursForBonus: Int
+    init(
+        completionFlag: Int,
+        currentCoin: Int,
+        originalCoin: Int,
+        rewardCoin: Int,
+        bonusCoin: Int,
+        studyHoursForBonus: Int
     ) {
         self.completionFlag = completionFlag
         self.currentCoin = currentCoin

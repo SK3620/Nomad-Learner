@@ -34,4 +34,37 @@ struct LocationStatus {
         self.isInitialLocation = isInitialLocation
     }
     
+    init (
+        currentLocationId: String,
+        fixedLocation: FixedLocation,
+        visitedLocation: VisitedLocation?,
+        dynamicLocation: DynamicLocation?,
+        ticketInfo: TicketInfo
+    ) {
+        let locationId = fixedLocation.locationId
+        // 参加人数を取得
+        let userCount = dynamicLocation?.userCount ?? 0
+        // 固定ロケーションIDを取得
+        let fixedLocationId = fixedLocation.locationId
+        // 過去に訪問したロケーションかどうか
+        let hasVisited = (visitedLocation?.locationId == fixedLocationId)
+        // 所持金が足りてるか否か
+        let isSufficientCoin = (ticketInfo.currentCoin >= ticketInfo.travelDistanceAndCost)
+        // 現在地か否か
+        let isMyCurrentLocation = (currentLocationId == fixedLocationId)
+        // 訪問履歴がある && 必要な合計勉強時間をクリアしているか否か
+        let isCompleted = (hasVisited && ticketInfo.totalStudyHours >= ticketInfo.requiredStudyHours)
+        // 訪問履歴がある && 必要な合計勉強時間に到達していないか否か（進行中か否か）
+        let isOngoing = (hasVisited && ticketInfo.totalStudyHours < ticketInfo.requiredStudyHours)
+        // 初期位置か否か
+        let isInitialLocation = (fixedLocation.locationId == MyAppSettings.userInitialLocationId)
+        
+        self.locationId = locationId
+        self.userCount = userCount
+        self.isSufficientCoin = isSufficientCoin
+        self.isMyCurrentLocation = isMyCurrentLocation
+        self.isCompleted = isCompleted
+        self.isOngoing = isOngoing
+        self.isInitialLocation = isInitialLocation
+    }
 }

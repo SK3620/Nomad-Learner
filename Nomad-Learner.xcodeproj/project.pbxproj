@@ -27,12 +27,10 @@
 		831E5C752CC2740A001A90C4 /* MarkerInfoWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831E5C742CC2740A001A90C4 /* MarkerInfoWindow.swift */; };
 		831E5C862CC4AAC3001A90C4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831E5C852CC4AAC3001A90C4 /* User.swift */; };
 		831E5C882CC4B493001A90C4 /* VisitedLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831E5C872CC4B493001A90C4 /* VisitedLocation.swift */; };
-		831E5C8A2CC4B4C1001A90C4 /* StudyRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831E5C892CC4B4C1001A90C4 /* StudyRoom.swift */; };
 		831E5C8C2CC4B4F6001A90C4 /* FixedLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831E5C8B2CC4B4F6001A90C4 /* FixedLocation.swift */; };
 		834478612CCA4A680038C7B9 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834478602CCA4A680038C7B9 /* ImageCacheManager.swift */; };
 		834478632CCA65380038C7B9 /* UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834478622CCA65380038C7B9 /* UITextView.swift */; };
 		834478652CCD52680038C7B9 /* DynamicLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834478642CCD52680038C7B9 /* DynamicLocation.swift */; };
-		834478672CCF6BDE0038C7B9 /* LocationsInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834478662CCF6BDE0038C7B9 /* LocationsInfo.swift */; };
 		834478692CCF9CE60038C7B9 /* TicketInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834478682CCF9CE60038C7B9 /* TicketInfo.swift */; };
 		8344786B2CCFB61E0038C7B9 /* LocationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8344786A2CCFB61E0038C7B9 /* LocationInfo.swift */; };
 		8344786D2CD213BE0038C7B9 /* LocationStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8344786C2CD213BE0038C7B9 /* LocationStatus.swift */; };
@@ -113,6 +111,7 @@
 		83C9F3B62CA907B900CF0D73 /* ColorCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C9F3B52CA907B900CF0D73 /* ColorCodes.swift */; };
 		83C9F3BA2CA9161300CF0D73 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C9F3B92CA9161300CF0D73 /* UITextField.swift */; };
 		83C9F3BC2CA931F400CF0D73 /* KeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C9F3BB2CA931F400CF0D73 /* KeyboardManager.swift */; };
+		83ECC1532CF22A2500E51EEC /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83ECC1522CF22A2500E51EEC /* Array.swift */; };
 		83F315DB2CC7888D0003B7E2 /* FirebaseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F315DA2CC7888D0003B7E2 /* FirebaseConfig.swift */; };
 		E1B4908C044C675F5B284480 /* Pods_Nomad_Learner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4FC40ED509727A95F858024 /* Pods_Nomad_Learner.framework */; };
 /* End PBXBuildFile section */
@@ -140,12 +139,10 @@
 		831E5C742CC2740A001A90C4 /* MarkerInfoWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerInfoWindow.swift; sourceTree = "<group>"; };
 		831E5C852CC4AAC3001A90C4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		831E5C872CC4B493001A90C4 /* VisitedLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisitedLocation.swift; sourceTree = "<group>"; };
-		831E5C892CC4B4C1001A90C4 /* StudyRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyRoom.swift; sourceTree = "<group>"; };
 		831E5C8B2CC4B4F6001A90C4 /* FixedLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedLocation.swift; sourceTree = "<group>"; };
 		834478602CCA4A680038C7B9 /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
 		834478622CCA65380038C7B9 /* UITextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextView.swift; sourceTree = "<group>"; };
 		834478642CCD52680038C7B9 /* DynamicLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicLocation.swift; sourceTree = "<group>"; };
-		834478662CCF6BDE0038C7B9 /* LocationsInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsInfo.swift; sourceTree = "<group>"; };
 		834478682CCF9CE60038C7B9 /* TicketInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketInfo.swift; sourceTree = "<group>"; };
 		8344786A2CCFB61E0038C7B9 /* LocationInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationInfo.swift; sourceTree = "<group>"; };
 		8344786C2CD213BE0038C7B9 /* LocationStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationStatus.swift; sourceTree = "<group>"; };
@@ -228,6 +225,7 @@
 		83C9F3B52CA907B900CF0D73 /* ColorCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCodes.swift; sourceTree = "<group>"; };
 		83C9F3B92CA9161300CF0D73 /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 		83C9F3BB2CA931F400CF0D73 /* KeyboardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardManager.swift; sourceTree = "<group>"; };
+		83ECC1522CF22A2500E51EEC /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		83F315DA2CC7888D0003B7E2 /* FirebaseConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseConfig.swift; sourceTree = "<group>"; };
 		A2D42D523F052595228AA30F /* Pods-Nomad-Learner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nomad-Learner.release.xcconfig"; path = "Target Support Files/Pods-Nomad-Learner/Pods-Nomad-Learner.release.xcconfig"; sourceTree = "<group>"; };
 		B4FC40ED509727A95F858024 /* Pods_Nomad_Learner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Nomad_Learner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -276,10 +274,8 @@
 				83A6D7B02CB3F39300D18A30 /* LocationCategory.swift */,
 				831E5C852CC4AAC3001A90C4 /* User.swift */,
 				831E5C872CC4B493001A90C4 /* VisitedLocation.swift */,
-				831E5C892CC4B4C1001A90C4 /* StudyRoom.swift */,
 				831E5C8B2CC4B4F6001A90C4 /* FixedLocation.swift */,
 				834478642CCD52680038C7B9 /* DynamicLocation.swift */,
-				834478662CCF6BDE0038C7B9 /* LocationsInfo.swift */,
 				8344786A2CCFB61E0038C7B9 /* LocationInfo.swift */,
 				834478682CCF9CE60038C7B9 /* TicketInfo.swift */,
 				8344786C2CD213BE0038C7B9 /* LocationStatus.swift */,
@@ -544,6 +540,7 @@
 			isa = PBXGroup;
 			children = (
 				83A9C2C42CA7DA5000898F0B /* UILabel.swift */,
+				83ECC1522CF22A2500E51EEC /* Array.swift */,
 				831731C52CDE031D0092AE89 /* Int.swift */,
 				83C9F3B92CA9161300CF0D73 /* UITextField.swift */,
 				834478622CCA65380038C7B9 /* UITextView.swift */,
@@ -730,7 +727,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				831E5C8A2CC4B4C1001A90C4 /* StudyRoom.swift in Sources */,
 				83AFB3B12CB2B75F00501FEE /* NavigationHeightProvidable.swift in Sources */,
 				831731CA2CE220560092AE89 /* RewardCoinProgressHUDInfo.swift in Sources */,
 				835BD2F12CA413560088CA02 /* AppDelegate.swift in Sources */,
@@ -791,6 +787,7 @@
 				831731C82CE1C1680092AE89 /* TicketConfirmViewController.swift in Sources */,
 				83A6D7AF2CB3F0F800D18A30 /* MapViewModel.swift in Sources */,
 				838753ED2CB0EEED001EE8F1 /* Router.swift in Sources */,
+				83ECC1532CF22A2500E51EEC /* Array.swift in Sources */,
 				83A6D7D92CB80C8F00D18A30 /* EditProfileView.swift in Sources */,
 				8344786F2CD498700038C7B9 /* OnFlightViewModel.swift in Sources */,
 				8344786D2CD213BE0038C7B9 /* LocationStatus.swift in Sources */,
@@ -810,7 +807,6 @@
 				834478632CCA65380038C7B9 /* UITextView.swift in Sources */,
 				83AAA0CC2CEB44C000D5DC00 /* PendingUpdateData.swift in Sources */,
 				838753D42CABFDB7001EE8F1 /* AuthInputValidation.swift in Sources */,
-				834478672CCF6BDE0038C7B9 /* LocationsInfo.swift in Sources */,
 				8344D0312CE6474F007559E0 /* NationalFlagImageUrlString.swift in Sources */,
 				83A6D7C62CB682D600D18A30 /* ProfileTopView.swift in Sources */,
 				83C5E1332CBF851D001C27E1 /* NavigationControllerForAuthVC.swift in Sources */,

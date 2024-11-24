@@ -94,28 +94,18 @@ extension MapView {
     }
     
     // マップの各ロケーションにマーカーを立てる
-    func addMarkersForLocations(locationsInfo: LocationsInfo) {
-        // 固定ロケーション取得
-        let fixedLocations = locationsInfo.fixedLocations
-        
+    func addMarkersForLocations(locationsInfo: [LocationInfo]) {
         // 各固定ロケーションに対してマーカーを作成
-        for fixedLocation in fixedLocations {
-            // 固定ロケーションのIDを取得
-            let fixedLocationId = fixedLocation.locationId
-            // ロケーション状態を取得
-            let locationStatus = locationsInfo.locationsStatus.first(where: { $0.locationId == fixedLocationId})!
-            
+        for locationInfo in locationsInfo {
             // 新しいマーカーを作成
-            let marker = GMSMarker()
-            marker.position = CLLocationCoordinate2D(latitude: fixedLocation.latitude, longitude: fixedLocation.longitude)
-            
+            let marker = GMSMarker(position: locationInfo.fixedLocation.coordinate)
             // マーカーのアイコンビューを作成
             let markerIconView = MarkerIconView(
                 frame: CGRect(origin: .zero, size: CGSize(width: 26, height: IconViewHeight)),
-                locationStatus: locationStatus
+                locationStatus: locationInfo.locationStatus
             )
             marker.iconView = markerIconView
-            marker.userData = fixedLocation // マーカーに関連するデータを保存
+            marker.userData = locationInfo // マーカーに関連するデータを保存
             
             marker.map = self
         }

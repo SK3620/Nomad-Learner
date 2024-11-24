@@ -35,8 +35,8 @@ class MapViewModel {
     // 絞り込み検索結果
 //    let filteredLocationsInfo: Driver<LocationsInfo>
 
-    let locationsAndUserInfo: Driver<(LocationsInfo, User)> // 各ロケーション情報
-    let monitoredLocationsAndUserInfo: Driver<(LocationsInfo, User)> // 各ロケーション情報
+    let locationsAndUserInfo: Driver<([LocationInfo], User)> // 各ロケーション情報
+    let monitoredLocationsAndUserInfo: Driver<([LocationInfo], User)> // 各ロケーション情報
     let isLoading: Driver<Bool> // ローディングインジケーター
     let myAppError: Driver<MyAppError> // エラー
     
@@ -103,12 +103,12 @@ class MapViewModel {
         // マップに配置するロケーション情報を流す
         self.locationsAndUserInfo = fetchLocationsInfoResult
             .compactMap { $0.event.element }
-            .asDriver(onErrorJustReturn: (LocationsInfo(), User()))
+            .asDriver(onErrorJustReturn: ([], User()))
         
         // マップに配置するロケーション情報を流す（監視）
         self.monitoredLocationsAndUserInfo = monitorLocationsInfoResult
             .compactMap { $0.event.element }
-            .asDriver(onErrorJustReturn: (LocationsInfo(), User()))
+            .asDriver(onErrorJustReturn: ([], User()))
         
         // 発生したエラーを一つに集約
         self.myAppError = myAppErrorRelay
@@ -129,7 +129,7 @@ class MapViewModel {
 
 extension MapViewModel {
     // 共通処理 取得データの整形
-    private static func createLocationsInfoAndUserProfile(tuple: ([FixedLocation], [DynamicLocation], [VisitedLocation], User)) -> (LocationsInfo, User) {
+    private static func createLocationsInfoAndUserProfile(tuple: ([FixedLocation], [DynamicLocation], [VisitedLocation], User)) -> ([LocationInfo], User) {
         let (fixedLocations, dynamicLocations, visitedLocations, userProfile) = tuple
         
         // キャッシュのクリアと画像のプリフェッチ
@@ -142,43 +142,51 @@ extension MapViewModel {
             ImageCacheManager.prefetch(from: [URL(string: userProfile.profileImageUrl)!])
         }
         
-        for fixedLocation in fixedLocations {
-            let dynamicLocation = dynamicLocations.first(where: { $0.locationId == fixedLocation.locationId })
-            let visitedLocation = visitedLocations.first(where: { $0.locationId == fixedLocation.locationId })
-            
-            
-        }
-        
-        /*
         var mutableUserProfile = userProfile
-        var locationsInfo = LocationsInfo(
+        let progressSum = StudyProgressSummary(
             fixedLocations: fixedLocations,
-            dynamicLocations: dynamicLocations,
             visitedLocations: visitedLocations
         )
-        
-        let ticketsInfo = MapViewModel.createTicketsInfo(userProfile: userProfile, locationsInfo: locationsInfo)
-        let locationsStatus = MapViewModel.createLocationStatus(currentLocationId: userProfile.currentLocationId, ticketsInfo: ticketsInfo, locationsInfo: locationsInfo)
-        let progressSum = MapViewModel.createStudyProgressSummary(fixedLocations: fixedLocations, visitedLocations: visitedLocations, locationsStatus: locationsStatus)
-        
-        locationsInfo = LocationsInfo(
-            fixedLocations: fixedLocations,
-            dynamicLocations: dynamicLocations,
-            visitedLocations: visitedLocations,
-            ticketsInfo: ticketsInfo,
-            locationStatus: locationsStatus
-        )
-        
         mutableUserProfile.progressSum = progressSum
+        
+        // ユーザーの現在地のロケーション情報取得
+        let currentLocationInfo = fixedLocations.first(where: { $0.locationId == userProfile.currentLocationId })!
+        
+        var locationsInfo: [LocationInfo] = []
+        for fixedLocation in fixedLocations {
+            let visitedLocation = visitedLocations.first(where: { $0.locationId == fixedLocation.locationId })
+            let dynamicLocation = dynamicLocations.first(where: { $0.locationId == fixedLocation.locationId })
+            
+            let ticketInfo = TicketInfo(
+                currentCoin: userProfile.currentCoin,
+                currentLocationInfo: currentLocationInfo,
+                fixedLocation: fixedLocation,
+                visitedLocation: visitedLocation
+            )
+            
+            let locationStatus = LocationStatus(
+                currentLocationId: userProfile.currentLocationId,
+                fixedLocation: fixedLocation,
+                visitedLocation: visitedLocation,
+                dynamicLocation: dynamicLocation,
+                ticketInfo: ticketInfo
+            )
+            
+            let locationInfo = LocationInfo(
+                locationId: fixedLocation.locationId,
+                fixedLocation: fixedLocation,
+                dynamicLocation: dynamicLocation,
+                visitedLocation: visitedLocation,
+                ticketInfo: ticketInfo,
+                locationStatus: locationStatus
+            )
+            locationsInfo.append(locationInfo)
+        }
         return (locationsInfo, mutableUserProfile)
-         */
     }
 }
 
 extension MapViewModel {
-    func getFilteredLocationsInfo() {
-        
-    }
     // 更新保留中の勉強記録データの保存/削除
     func handlePendingUpdateData(pendingUpdateData: PendingUpdateData, shouldSave: Bool = true) {
         // データの整形
@@ -205,6 +213,7 @@ extension MapViewModel {
                 })
                 .disposed(by: disposeBag)
         } else {
+            // 削除処理
             mainService.removeUserIdFromLocation(locationId: pendingUpdateData.locationId)
                 .subscribe(onDisposed: { [weak self] in // 全てのイベントを検知
                     self?.realmService.deletePendingUpdateData() // Realmからデータ削除
@@ -212,106 +221,5 @@ extension MapViewModel {
                 })
                 .disposed(by: disposeBag)
         }
-    }
-}
-
-extension MapViewModel {
-    // 各ロケーションごとに、チケットの各UIに表示する情報を配列で生成
-    private static func createTicketsInfo(
-        userProfile: User,
-        locationsInfo: LocationsInfo
-    ) -> [TicketInfo] {
-        // ユーザーの現在の所持金を取得
-        let currentCoin = userProfile.currentCoin
-        // 固定ロケーション取得
-        let fixedLocations = locationsInfo.fixedLocations
-        // ユーザーの現在地のロケーション情報取得
-        let currentLocationInfo = fixedLocations.first(where: { $0.locationId == userProfile.currentLocationId })!
-        // ユーザーの現在地のロケーションの座標取得
-        let currentLocationCoordinate = CLLocationCoordinate2D(
-            latitude: currentLocationInfo.latitude,
-            longitude: currentLocationInfo.longitude
-        )
-        
-        // チケットの各UIに表示する情報を格納
-        var ticketsInfo: [TicketInfo] = []
-        for fixedLocation in fixedLocations {
-            // マップ上の各固定ロケーションの座標を取得
-            let fixedLocationCoordinate = CLLocationCoordinate2D(latitude: fixedLocation.latitude, longitude: fixedLocation.longitude)
-            
-            // チケット情報構造体を生成
-            let ticketInfo = TicketInfo(
-                coordinate: (
-                    from: currentLocationCoordinate,
-                    to: fixedLocationCoordinate
-                ),
-                locationDetials: locationsInfo.getLocationDetailsForTicketInfo(for: fixedLocation.locationId),
-                currentCoin: currentCoin, 
-                currentCountry: currentLocationInfo.country
-            )
-            // 配列に格納
-            ticketsInfo.append(ticketInfo)
-        }
-        return ticketsInfo
-    }
-    
-    // 各ロケーションごとの状態を配列で生成
-    private static func createLocationStatus(
-        currentLocationId: String,
-        ticketsInfo: [TicketInfo],
-        locationsInfo: LocationsInfo
-    ) -> [LocationStatus] {
-        // 固定ロケーション取得
-        let fixedLocations = locationsInfo.fixedLocations
-        // 訪問情報を取得
-        let visitedLocations = locationsInfo.visitedLocations
-        
-        var locationsStatus: [LocationStatus] = []
-        for fixedLocation in fixedLocations {
-            // 参加人数を取得
-            let userCount = locationsInfo.dynamicLocations.first(where: { $0.locationId == fixedLocation.locationId })?.userCount ?? 0
-            // 固定ロケーションIDを取得
-            let fixedLocationId = fixedLocation.locationId
-            // 過去に訪問したロケーションかどうか
-            let hasVisited = visitedLocations.contains(where: { $0.locationId == fixedLocationId })
-            // チケット情報を取得
-            let ticketInfo = ticketsInfo.first(where: { $0.locationId == fixedLocationId })!
-            // 所持金が足りてるか否か
-            let isSufficientCoin = ticketInfo.currentCoin >= ticketInfo.travelDistanceAndCost
-            // 現在地か否か
-            let isMyCurrentLocation = currentLocationId == fixedLocationId
-            // 訪問履歴がある && 必要な合計勉強時間をクリアしているか否か
-            let isCompleted = hasVisited && ticketInfo.totalStudyHours >= ticketInfo.requiredStudyHours
-            // 訪問履歴がある && 必要な合計勉強時間に到達していないか否か（進行中か否か）
-            let isOngoing = hasVisited && ticketInfo.totalStudyHours < ticketInfo.requiredStudyHours
-            // 初期位置か否か
-            let isInitialLocation = fixedLocation.locationId == MyAppSettings.userInitialLocationId
-            
-            // ロケーション状態構造体を生成
-            let locationStatus = LocationStatus(
-                locationId: fixedLocationId,
-                userCount: userCount,
-                isSufficientCoin: isSufficientCoin,
-                isMyCurrentLocation: isMyCurrentLocation,
-                isCompleted: isCompleted,
-                isOngoing: isOngoing,
-                isInitialLocation: isInitialLocation
-            )
-            // 配列に格納
-            locationsStatus.append(locationStatus)
-        }
-        return locationsStatus
-    }
-    
-    private static func createStudyProgressSummary(
-        fixedLocations: [FixedLocation],
-        visitedLocations: [VisitedLocation],
-        locationsStatus: [LocationStatus]
-    ) -> StudyProgressSummary {
-        return StudyProgressSummary(
-            fixedLocations: fixedLocations,
-            visitedLocations: visitedLocations,
-            locationsStatus: locationsStatus
-        )
     }
 }

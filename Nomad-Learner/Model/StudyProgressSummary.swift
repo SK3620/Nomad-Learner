@@ -16,15 +16,14 @@ struct StudyProgressSummary {
     
     init(
         fixedLocations: [FixedLocation],
-        visitedLocations: [VisitedLocation],
-        locationsStatus: [LocationStatus]
+        visitedLocations: [VisitedLocation]
     ) {
         let studyTime = StudyProgressSummary.getTotalStudyTimeForAllLocations(visitedLocations: visitedLocations)
         self.totalStudyHours = studyTime.hours
         self.totalStudyMins = studyTime.mins
         self.visitedLocationsCount = visitedLocations.count
         self.allLocationsCount = fixedLocations.count
-        self.completedLocationsCount = StudyProgressSummary.getCompletedLocationsCount(locationsStatus: locationsStatus)
+        self.completedLocationsCount = StudyProgressSummary.getCompletedLocationsCount(visitedLocations: visitedLocations)
     }
     
     // 全ロケーションの合計勉強時間（時間/分数単位）
@@ -46,10 +45,10 @@ struct StudyProgressSummary {
     }
     
     // 完了数
-    private static func getCompletedLocationsCount(locationsStatus: [LocationStatus]) -> Int {
+    private static func getCompletedLocationsCount(visitedLocations: [VisitedLocation]) -> Int {
         var completedLocationsCount: Int = 0
-        for locationStatus in locationsStatus {
-            if locationStatus.isCompleted {
+        for visitedLocation in visitedLocations {
+            if visitedLocation.completionFlag >= 1 {
                 completedLocationsCount += 1
             }
         }

@@ -34,7 +34,9 @@ struct VisitedLocation {
         self.completionFlag = completionFlag
         self.bonusCoin = bonusCoin
     }
-    
+}
+
+extension VisitedLocation {
     // 辞書形式への変換
     var toDictionary: [String: Any] {
         return [
@@ -46,5 +48,19 @@ struct VisitedLocation {
             "completionFlag": completionFlag,
             "bonusCoin": bonusCoin
         ]
+    }
+    // チケット情報作成用にフォーマットされたデータ
+    var formattedDataForTicketInfo2: (
+        totalStudyHours: Int,
+        totalStudyMins: Int,
+        fixedRequiredStudyHours: Int?,
+        fixedRewardCoin: Int?
+    ) {
+        return (
+            totalStudyHours: totalStudyHours,
+            totalStudyMins: totalStudyMins,
+            fixedRequiredStudyHours: fixedRequiredStudyHours,
+            fixedRewardCoin: fixedRewardCoin
+        )
     }
 }

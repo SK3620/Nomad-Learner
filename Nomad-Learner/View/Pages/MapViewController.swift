@@ -15,7 +15,7 @@ import GoogleMapsUtils
 
 class MapViewController: UIViewController, GMSMapViewDelegate {
     // 各ロケーションの情報
-    private var locationsInfo: LocationsInfo = LocationsInfo()
+    private var locationsInfo: [LocationInfo] = []
     // タップされたマーカーのロケーション情報
     private var locationInfo: LocationInfo?
     // ユーザープロフィール情報
@@ -311,7 +311,7 @@ extension MapViewController {
         return Binder(self) { base, _ in Router.dismissModal(vc: base) }
     }
     // 取得したロケーション情報とユーザー情報を制御
-    private var handleLocationsInfo: Binder<((LocationsInfo, User), DataHandlingType)> {
+    private var handleLocationsInfo: Binder<(([LocationInfo], User), DataHandlingType)> {
         return Binder(self) { base, tuple in
             let ((locationsInfo, userProfile), dataHandlingType) = tuple
             
@@ -338,8 +338,7 @@ extension MapViewController {
         return Binder(self) { base, _ in
             guard let currentCoordinate = base.mapView.currentCoordinate else { return }
             let marker = GMSMarker(position: currentCoordinate)
-            marker.userData = base.locationsInfo.getCurrentLocation(currentLocationId: base.userProfile.currentLocationId)
-            
+            marker.userData = base.locationsInfo.getCurrentLocationInfo(with: base.userProfile.currentLocationId)
             base.markerTapped(marker: marker)
             base.moveToCurrentLocation.onNext(())
         }
@@ -374,12 +373,12 @@ extension MapViewController {
 
 extension MapViewController {
     // マップの初期化
-    private func resetMapView(with locationsInfo: LocationsInfo, userProfile: User) {
+    private func resetMapView(with locationsInfo: [LocationInfo], userProfile: User) {
         // マーカーを削除してリセット
         mapView.clear()
         
         // 現在地の座標を保持
-        mapView.currentCoordinate = locationsInfo.getCurrentCoordinate(currentLocationId: userProfile.currentLocationId)
+        mapView.currentCoordinate = locationsInfo.getCurrentCoordinate(with: userProfile.currentLocationId)
         
         // 取得したロケーションをマーカーとして配置
         addMarkersForLocations()
@@ -406,7 +405,8 @@ extension MapViewController {
     }
     // 現在地のロケーション情報を取得し、UIを更新
     private func updateUI() {
-        locationInfo = locationsInfo.createLocationInfo(of: userProfile.currentLocationId)
+        let currentLocationId = userProfile.currentLocationId
+        locationInfo = locationsInfo.getCurrentLocationInfo(with: currentLocationId)
         locationDetailView.update(ticketInfo: locationInfo!.ticketInfo, locationStatus: locationInfo!.locationStatus)
         currentCoinLabel.text = userProfile.currentCoin.toString
     }
@@ -419,7 +419,7 @@ extension MapViewController {
     
     // 報酬コイン獲得ProgressHUDを表示
     private func showRewardCoinProgressHUD() {
-        guard let rewardCoinProgressHUDInfo = locationsInfo.createRewardCoinProgressHUDInfo(userProfile: userProfile) else { return }
+        guard let rewardCoinProgressHUDInfo = locationsInfo.createRewardCoinProgressHUDInfo(with: userProfile) else { return }
         // ProgressHUD表示
         self.rx.showMessage.onNext(.getRewardCoin(info: rewardCoinProgressHUDInfo))
     }
@@ -430,11 +430,8 @@ extension MapViewController {
         self.mapView.tappedMarker = marker
         
         // マーカーの関連情報を取得
-        guard let fixedLocation = marker.userData as? FixedLocation else { return }
-        locationInfo = locationsInfo.createLocationInfo(of: fixedLocation.locationId)
-        
-        // locationInfoがnilでないことを確認
-        guard let locationInfo = locationInfo else { return }
+        guard let locationInfo = marker.userData as? LocationInfo else { return }
+        self.locationInfo = locationInfo
         
         // LocationDetailViewのUIを更新
         locationDetailView.update(ticketInfo: locationInfo.ticketInfo, locationStatus: locationInfo.locationStatus)

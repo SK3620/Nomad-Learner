@@ -22,34 +22,22 @@ struct TicketInfo {
     let nationalFlagImageUrlString: (current: String, destination: String) // 現在地と目的地の国旗画像URL文字列
     
     init(
-        coordinate: (
-            from: CLLocationCoordinate2D,
-            to: CLLocationCoordinate2D
-        ),
-        locationDetials: (
-            locationId: String,
-            destination: String,
-            country: String,
-            region: String,
-            totalStudyHours: Int,
-            totalStudyMins: Int,
-            fixedRequiredStudyHours: Int?,
-            fixedRewardCoin: Int?
-        ),
         currentCoin: Int,
-        currentCountry: String
+        currentLocationInfo: FixedLocation,
+        fixedLocation: FixedLocation,
+        visitedLocation: VisitedLocation?
     ) {
-        self.locationId = locationDetials.locationId
-        self.travelDistanceAndCost = TicketInfo.calculateTravelDistanceAndCost(from: coordinate.from, to: coordinate.to)
-        self.requiredStudyHours = locationDetials.fixedRequiredStudyHours ?? TicketInfo.calculateMissionStudyTime(for: self.travelDistanceAndCost)
-        self.rewardCoin = locationDetials.fixedRewardCoin ?? TicketInfo.calculateRewardCoin(for: self.travelDistanceAndCost)
-        self.totalStudyHours = locationDetials.totalStudyHours
-        self.totalStudyMins = locationDetials.totalStudyMins
-        self.destination = locationDetials.destination
-        self.countryAndRegion = locationDetials.country + " / " + locationDetials.region
+        self.locationId = fixedLocation.locationId
+        self.travelDistanceAndCost = TicketInfo.calculateTravelDistanceAndCost(from: currentLocationInfo.coordinate, to: fixedLocation.coordinate)
+        self.requiredStudyHours = visitedLocation?.fixedRequiredStudyHours ?? TicketInfo.calculateRequiredStudyHours(for: travelDistanceAndCost)
+        self.rewardCoin = visitedLocation?.fixedRewardCoin ?? TicketInfo.calculateRewardCoin(for: travelDistanceAndCost)
+        self.totalStudyHours = visitedLocation?.totalStudyHours ?? 0
+        self.totalStudyMins = visitedLocation?.totalStudyMins ?? 0
+        self.destination = fixedLocation.location
+        self.countryAndRegion = fixedLocation.country + " / " + fixedLocation.region
         self.currentCoin = currentCoin
-        self.remainingCoin = self.currentCoin - self.travelDistanceAndCost
-        self.nationalFlagImageUrlString = TicketInfo.getNationalFlagImageStringURLs(of: currentCountry, of: locationDetials.country)
+        self.remainingCoin = currentCoin - travelDistanceAndCost
+        self.nationalFlagImageUrlString = TicketInfo.getNationalFlagImageStringURLs(of: currentLocationInfo.country, of: fixedLocation.country)
     }
     
     init() {
@@ -76,7 +64,7 @@ extension TicketInfo {
     }
     
     // 必要な合計勉強時間を計算
-    private static func calculateMissionStudyTime(for distance: Int) -> Int {
+    private static func calculateRequiredStudyHours(for distance: Int) -> Int {
         // アプリ内で定める最低距離よりも小さい場合、最低限必要な勉強時間（固定値）を返す
         MyAppSettings.minDistance > distance
         ? MyAppSettings.minRequiredStudyHours

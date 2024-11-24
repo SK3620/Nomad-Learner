@@ -11,7 +11,8 @@ import Firebase
 final class FixedLocationParser {
     // FixedLocationをパース
     static func parse(_ locationId: String, _ data: [String: Any]) -> FixedLocation? {
-        guard let location = data["location"] as? String,
+        guard let category = data["category"] as? String,
+              let location = data["location"] as? String,
               let country = data["country"] as? String,
               let region = data["region"] as? String,
               let latitude = data["latitude"] as? Double,
@@ -20,16 +21,16 @@ final class FixedLocationParser {
             return nil
         }
         
-        let locationObj = FixedLocation()
-        locationObj.locationId = locationId
-        locationObj.location = location
-        locationObj.country = country
-        locationObj.region = region
-        locationObj.latitude = latitude
-        locationObj.longitude = longitude
-        locationObj.imageUrls.append(objectsIn: imageUrls)
-        
-        return locationObj
+        return FixedLocation(
+            locationId: locationId,
+            category: category,
+            location: location,
+            country: country,
+            region: region,
+            latitude: latitude,
+            longitude: longitude,
+            imageUrls: imageUrls
+        )
     }
 }
 

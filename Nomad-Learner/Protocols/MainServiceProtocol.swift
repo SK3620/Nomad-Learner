@@ -80,16 +80,18 @@ final class MainService: MainServiceProtocol {
                     observer.onError(MyAppError.fetchLocationInfoFailed(error))
                 }
                 else if let children = snapshot?.children {
-                    var locations = [FixedLocation]()
+                    var fixedLocations: [FixedLocation] = []
                     for child in children {
                         if let childSnapshot = child as? DataSnapshot,
                            let locationData = childSnapshot.value as? [String: Any],
-                           let location = FixedLocationParser.parse(childSnapshot.key, locationData)
+                           let fixedLocation = FixedLocationParser.parse(childSnapshot.key, locationData)
                         {
-                            locations.append(location)
+                            fixedLocations.append(fixedLocation)
+                        } else {
+                            observer.onError(MyAppError.fetchLocationInfoFailed(nil))
                         }
                     }
-                    observer.onNext(locations)
+                    observer.onNext(fixedLocations)
                     observer.onCompleted()
                 }
             }

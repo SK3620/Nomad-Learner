@@ -10,6 +10,7 @@
 //
 // Created by 鈴木 健太 on 2024/11/14.
 
+/*
 struct NationalFlagImageStringURLs {
     public static let dic: [String: String] = [
         "asean": "https://freesozai.jp/sozai/nation_flag/ntf_001/ntf_001.svg",
@@ -205,5 +206,4 @@ struct NationalFlagImageStringURLs {
         "serbia": "https://freesozai.jp/sozai/nation_flag/ntf_741/ntf_741.svg"
     ]
 }
-
-
+ */

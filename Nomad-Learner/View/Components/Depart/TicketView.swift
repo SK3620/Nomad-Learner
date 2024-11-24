@@ -11,9 +11,6 @@ import Then
 
 class TicketView: UIView {
     
-    // 国旗画像
-    private let nationalFlagImageStringURLs: [String: String] = NationalFlagImageStringURLs.dic
-    
     // ダッシュ線のX座標
     private let dashPointX: CGFloat = 80
     // ダッシュ線の幅

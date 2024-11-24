@@ -75,12 +75,4 @@ extension TicketInfo {
     private static func calculateRewardCoin(for distance: Int) -> Int {
         Int(Double(distance) * 1.2)
     }
-    
-    private static func getNationalFlagImageStringURLs(
-        of currentCountry: String,
-        of destinationCountry: String
-    ) -> (current: String, destination: String) {
-        let dic = NationalFlagImageStringURLs.dic
-        return (current: dic[currentCountry] ?? "", destination: dic[destinationCountry] ?? "")
-    }
 }

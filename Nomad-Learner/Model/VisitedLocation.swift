@@ -49,18 +49,4 @@ extension VisitedLocation {
             "bonusCoin": bonusCoin
         ]
     }
-    // チケット情報作成用にフォーマットされたデータ
-    var formattedDataForTicketInfo2: (
-        totalStudyHours: Int,
-        totalStudyMins: Int,
-        fixedRequiredStudyHours: Int?,
-        fixedRewardCoin: Int?
-    ) {
-        return (
-            totalStudyHours: totalStudyHours,
-            totalStudyMins: totalStudyMins,
-            fixedRequiredStudyHours: fixedRequiredStudyHours,
-            fixedRewardCoin: fixedRewardCoin
-        )
-    }
 }

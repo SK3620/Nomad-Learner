@@ -46,20 +46,4 @@ extension FixedLocation {
     var coordinate: CLLocationCoordinate2D {
         return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
-    // チケット情報作成用にフォーマットされたデータ
-    var formattedDataForTicketInfo: (
-        locationId: String,
-        coordinate: CLLocationCoordinate2D,
-        destination: String,
-        country: String,
-        region: String
-    ) {
-        return (
-            locationId: locationId,
-            coordinate: coordinate,
-            destination: location,
-            country: country,
-            region: region
-        )
-    }
 }

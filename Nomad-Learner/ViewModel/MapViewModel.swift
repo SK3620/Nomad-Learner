@@ -18,6 +18,21 @@ enum DataHandlingType {
     case fetchWithRewardAlert //　データ取得後にアラート表示
 }
 
+enum LocationCategory: String, CaseIterable {
+    case all = "all"
+    case mountain = "moutain"
+    case sea = "sea"
+    case library = "library"
+    case museum = "museum"
+    case architecture = "architecture"
+    case waterfall = "waterfall"
+
+    // カテゴリ一覧を取得
+    static var categories: [LocationCategory] {
+        return Array(self.allCases)
+    }
+}
+
 class MapViewModel {
     
     // MARK: - Output
@@ -26,15 +41,13 @@ class MapViewModel {
     
     // 更新保留中の勉強記録データ
     var pendingUpdateData: Driver<(pendingUpdateData: PendingUpdateData?, saveRetryError: MyAppError?)> {
-        self.pendingUpdateDataRelay.asDriver()
+        return self.pendingUpdateDataRelay.asDriver()
     }
     // 更新保留中の勉強記録データ保存/削除完了か否か
     var isPendingUpdateDataHandlingCompleted: Driver<Bool> {
-        self.isPendingUpdateDataHandlingCompletedRelay.asDriver()
+        return self.isPendingUpdateDataHandlingCompletedRelay.asDriver()
     }
-    // 絞り込み検索結果
-//    let filteredLocationsInfo: Driver<LocationsInfo>
-
+    
     let locationsAndUserInfo: Driver<([LocationInfo], User)> // 各ロケーション情報
     let monitoredLocationsAndUserInfo: Driver<([LocationInfo], User)> // 各ロケーション情報
     let isLoading: Driver<Bool> // ローディングインジケーター
@@ -53,6 +66,7 @@ class MapViewModel {
     private let disposeBag = DisposeBag()
     
     init(
+        locationCategoryRelay: BehaviorRelay<LocationCategory>,
         mainService: MainServiceProtocol,
         realmService: RealmServiceProtocol
     ) {
@@ -61,6 +75,10 @@ class MapViewModel {
         
         // エラーを流す
         let myAppErrorRelay = BehaviorRelay<MyAppError?>(value: nil)
+        // 発生したエラーを一つに集約
+        self.myAppError = myAppErrorRelay
+            .compactMap { $0 }
+            .asDriver(onErrorJustReturn: .unknown)
         
         // インジケーター
         let indicator = ActivityIndicator()
@@ -99,21 +117,68 @@ class MapViewModel {
             }
             .materialize()
             .share(replay: 1)
+        /*
+        // マップに配置するロケーション情報を流す
+//        self.locationsAndUserInfo = fetchLocationsInfoResult
+//            .compactMap { $0.event.element }
+//            .asDriver(onErrorJustReturn: ([], User()))
+        
+//        self.locationsAndUserInfo = fetchLocationsInfoResult
+//            .compactMap { $0.event.element } // エラーでないことを確認
+//            .flatMap { locationsAndUserInfo in
+//                Observable.combineLatest( // 選択されているカテゴリーで絞り込み
+//                    Observable.just(locationsAndUserInfo),
+//                    locationCategoryRelay
+//                ) { locationsAndUserInfo, category in
+//                    let (locationsInfo, userProfile) = locationsAndUserInfo
+//                    let filteredLocationsInfo = locationsInfo.filter { $0.fixedLocation.category == category.rawValue }
+//                    return (filteredLocationsInfo, userProfile)
+//                }
+//            }
+//            .asDriver(onErrorJustReturn: ([], User()))
+            
+        // マップに配置するロケーション情報を流す（監視）
+//        self.monitoredLocationsAndUserInfo = monitorLocationsInfoResult
+//            .compactMap { $0.event.element }
+//            .asDriver(onErrorJustReturn: ([], User()))
+//        
+//        self.monitoredLocationsAndUserInfo = monitorLocationsInfoResult
+//            .compactMap { $0.event.element } // エラーでないことを確認
+//            .flatMap { locationsAndUserInfo in
+//                Observable.combineLatest( // 選択されているカテゴリーで絞り込み
+//                    Observable.just(locationsAndUserInfo),
+//                    locationCategoryRelay
+//                ) { locationsAndUserInfo, category in
+//                    let (locationsInfo, userProfile) = locationsAndUserInfo
+//                    let filteredLocationsInfo = locationsInfo.filter { $0.fixedLocation.category == category.rawValue }
+//                    return (filteredLocationsInfo, userProfile)
+//                }
+//            }
+//            .asDriver(onErrorJustReturn: ([], User()))
+         */
+        // 選択されているカテゴリーで絞り込み（共通処理）
+        let filterLocationsInfoByCategory = { (locationsInfoResult: Observable<Event<([LocationInfo], User)>>) -> Driver<([LocationInfo], User)> in
+            locationsInfoResult
+                .compactMap { $0.event.element }
+                .flatMap { locationsAndUserInfo in
+                    Observable.combineLatest(
+                        Observable.just(locationsAndUserInfo),
+                        locationCategoryRelay
+                    ) { locationsAndUserInfo, category in
+                        // .allの場合は全てのロケーション情報を流す
+                        guard category != .all else { return locationsAndUserInfo }
+                        let (locationsInfo, user) = locationsAndUserInfo
+                        let filteredLocationsInfo = locationsInfo.filter { $0.fixedLocation.category == category.rawValue }
+                        return (filteredLocationsInfo, user)
+                    }
+                }
+                .asDriver(onErrorJustReturn: ([], User()))
+        }
         
         // マップに配置するロケーション情報を流す
-        self.locationsAndUserInfo = fetchLocationsInfoResult
-            .compactMap { $0.event.element }
-            .asDriver(onErrorJustReturn: ([], User()))
-        
+        self.locationsAndUserInfo = filterLocationsInfoByCategory(fetchLocationsInfoResult)
         // マップに配置するロケーション情報を流す（監視）
-        self.monitoredLocationsAndUserInfo = monitorLocationsInfoResult
-            .compactMap { $0.event.element }
-            .asDriver(onErrorJustReturn: ([], User()))
-        
-        // 発生したエラーを一つに集約
-        self.myAppError = myAppErrorRelay
-            .compactMap { $0 }
-            .asDriver(onErrorJustReturn: .unknown)
+        self.monitoredLocationsAndUserInfo = filterLocationsInfoByCategory(monitorLocationsInfoResult)
         
         // ロケーション情報取得完了後にRealmから更新保留中の勉強記録データを取得
         fetchLocationsInfoResult
@@ -134,7 +199,7 @@ extension MapViewModel {
         
         // キャッシュのクリアと画像のプリフェッチ
         ImageCacheManager.clearCache()
-        let imageUrls = fixedLocations.flatMap(\.imageUrlsArr).compactMap(URL.init)
+        let imageUrls = fixedLocations.flatMap(\.imageUrls).compactMap(URL.init)
         ImageCacheManager.prefetch(from: imageUrls)
         
         // プロフィール画像をプリフェッチ（空の場合はスキップ）

@@ -183,7 +183,11 @@ extension MapViewController: KRProgressHUDEnabled, AlertEnabled {
             .bind(to: self.rx.showMessage)
             .disposed(by: disposeBag)
         
+        // 初回は全てのカテゴリーのロケーションを表示
+        let locationCategoryRelay = BehaviorRelay<LocationCategory>(value: .all)
+        
         self.viewModel = MapViewModel(
+            locationCategoryRelay: locationCategoryRelay,
             mainService: MainService.shared,
             realmService: RealmService.shared
         )
@@ -202,6 +206,7 @@ extension MapViewController: KRProgressHUDEnabled, AlertEnabled {
         
         viewModel.selectedIndex
             .drive(onNext:  { indexPath in
+                locationCategoryRelay.accept(LocationCategory.categories[indexPath.row]) // 選択されたカテゴリーを流す
                 collectionView.reloadData()
                 collectionView.scrollToCenter(indexPath: indexPath)
             })

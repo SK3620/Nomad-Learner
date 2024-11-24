@@ -75,7 +75,7 @@ class MarkerInfoWindow: UIView {
         let fixedLocation = locationInfo.fixedLocation
         let isMyCurrentLocation = locationInfo.locationStatus.isMyCurrentLocation
 
-        locationImageView.setImage(with: fixedLocation.imageUrlsArr[0])
+        locationImageView.setImage(with: fixedLocation.imageUrls[0])
         destinationLabel.text = fixedLocation.location
         regionLabel.text = "\(fixedLocation.country) / \(fixedLocation.region)"
         

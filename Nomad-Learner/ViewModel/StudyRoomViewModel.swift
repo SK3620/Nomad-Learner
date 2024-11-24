@@ -148,7 +148,7 @@ class StudyRoomViewModel {
         
         // 背景画像切り替え
         self.backgroundImageUrl = Observable<Int>.interval(.seconds(10), scheduler: MainScheduler.instance)
-            .map { index in locationInfo.fixedLocation.imageUrlsArr[index % locationInfo.fixedLocation.imageUrlsArr.count] }
+            .map { index in locationInfo.fixedLocation.imageUrls[index % locationInfo.fixedLocation.imageUrls.count] }
             .asDriver(onErrorJustReturn: "Globe")
         
         // 1秒ごとに勉強時間をカウント

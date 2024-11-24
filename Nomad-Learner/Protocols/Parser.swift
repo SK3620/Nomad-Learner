@@ -12,6 +12,7 @@ final class FixedLocationParser {
     // FixedLocationをパース
     static func parse(_ locationId: String, _ data: [String: Any]) -> FixedLocation? {
         guard let category = data["category"] as? String,
+              let nationalFlagImageUrl = data["nationalFlagImageUrl"] as? String,
               let location = data["location"] as? String,
               let country = data["country"] as? String,
               let region = data["region"] as? String,
@@ -22,8 +23,9 @@ final class FixedLocationParser {
         }
         
         return FixedLocation(
-            locationId: locationId,
+            locationId: locationId, 
             category: category,
+            nationalFlagImageUrl: nationalFlagImageUrl,
             location: location,
             country: country,
             region: region,

@@ -13,6 +13,7 @@ import GoogleMaps
 struct FixedLocation {
     var locationId: String
     var category: String
+    var nationalFlagImageUrl: String
     var location: String
     var country: String
     var region: String
@@ -23,6 +24,7 @@ struct FixedLocation {
     init(
         locationId: String,
         category: String,
+        nationalFlagImageUrl: String,
         location: String,
         country: String,
         region: String,
@@ -32,6 +34,7 @@ struct FixedLocation {
     ) {
         self.locationId = locationId
         self.category = category
+        self.nationalFlagImageUrl = nationalFlagImageUrl
         self.location = location
         self.country = country
         self.region = region

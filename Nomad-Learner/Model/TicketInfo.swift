@@ -37,7 +37,7 @@ struct TicketInfo {
         self.countryAndRegion = fixedLocation.country + " / " + fixedLocation.region
         self.currentCoin = currentCoin
         self.remainingCoin = currentCoin - travelDistanceAndCost
-        self.nationalFlagImageUrlString = TicketInfo.getNationalFlagImageStringURLs(of: currentLocationInfo.country, of: fixedLocation.country)
+        self.nationalFlagImageUrlString = (currentLocationInfo.nationalFlagImageUrl, fixedLocation.nationalFlagImageUrl)
     }
     
     init() {

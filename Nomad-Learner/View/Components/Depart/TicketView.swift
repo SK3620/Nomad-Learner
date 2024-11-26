@@ -416,8 +416,8 @@ extension TicketView {
         requiredStudyHours.text = ticketInfo.requiredStudyHours.toString
         
         // 国旗画像をセット
-        currentNationalFlag.setImage(with: ticketInfo.nationalFlagImageUrlString.current)
-        destinationNationalFlag.setImage(with: ticketInfo.nationalFlagImageUrlString.destination)
+        currentNationalFlag.setSVGImage(with: ticketInfo.nationalFlagImageUrlString.current)
+        destinationNationalFlag.setSVGImage(with: ticketInfo.nationalFlagImageUrlString.destination)
         
         // 達成状況に応じた色設定とボーナス表示
         let completedColor = ColorCodes.completedGreen.color()

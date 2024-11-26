@@ -222,7 +222,7 @@ extension MapViewModel {
         // 現在地のロケーション情報を取得
         let myLocationsInfo = locationsInfo.getCurrentLocationInfo(with: userProfile.currentLocationId)
         // カテゴリーで絞り込み＋現在地のロケーション情報を含める
-        let filteredLocationsInfo    = locationsInfo.filter { $0.fixedLocation.category == category.rawValue } + [myLocationsInfo!]
+        let filteredLocationsInfo = locationsInfo.filter { $0.fixedLocation.category == category.rawValue } + [myLocationsInfo!]
         return (filteredLocationsInfo, userProfile)
     }
 }

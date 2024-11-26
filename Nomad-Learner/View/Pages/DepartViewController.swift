@@ -15,7 +15,7 @@ import SwiftUI
 class DepartViewController: UIViewController {
     
     // タップされたマーカーのロケーション情報
-    var locationInfo: LocationInfo!
+    var locationInfo: LocationInfo?
     
     // つまみの位置が最上部に達した時にイベントを流す
     var knobDidReachTopRelay = PublishRelay<Void>()
@@ -26,7 +26,7 @@ class DepartViewController: UIViewController {
     }
     
     // 出発View
-    private lazy var departView: DepartView = DepartView(locationInfo: self.locationInfo)
+    private lazy var departView: DepartView = DepartView(locationInfo: self.locationInfo!)
     
     // 出発キャンセルボタン
     private let cancelButton = UIButton(type: .system).then {
@@ -115,7 +115,7 @@ extension DepartViewController {
     
     // OnFlightVC（出発準備画面）へ遷移
     private var toOnFlightVC: Binder<Void> {
-        return Binder(self) { base, _ in Router.showOnFlightVC(vc: self, locationInfo: base.locationInfo) }
+        return Binder(self) { base, _ in Router.showOnFlightVC(vc: self, locationInfo: base.locationInfo!) }
     }
 }
 

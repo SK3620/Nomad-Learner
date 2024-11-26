@@ -85,9 +85,9 @@ extension LocationCategoryCollectionViewCell {
         let unselectedTitleColor = UIColor.lightGray
     }
     
-    func configure(with item: LocationCategoryItem, isSelected: Bool) {
+    func configure(with item: LocationCategory, isSelected: Bool) {
         titleLabel.text = item.title
-        categoryButton.setImage(UIImage(systemName: item.systemImageName), for: .normal)
+        categoryButton.setImage(UIImage(systemName: item.imageName), for: .normal)
         
         self.categoryButton.backgroundColor = isSelected ? self.selectionColor.selectedBackgroundColor : self.selectionColor.unselectedBackgroundColor
         self.categoryButton.tintColor = isSelected ? self.selectionColor.selectedTintColor : self.selectionColor.unselectedTintColor
@@ -95,11 +95,9 @@ extension LocationCategoryCollectionViewCell {
     }
     
     // ViewModelへのバインディング
-    func bind(indexPath: IndexPath, viewModel: MapViewModel) {
+    func bind(buttonDidTap: @escaping () -> Void) {
         categoryButtonTaps
-            .emit(onNext: {
-                viewModel.selectedCategoryIndexRelay.accept(indexPath)
-            })
+            .emit(onNext: { buttonDidTap() })
             .disposed(by: disposeBag)
     }
 }

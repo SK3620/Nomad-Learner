@@ -21,15 +21,49 @@ enum DataHandlingType {
 
 enum LocationCategory: String, CaseIterable {
     case all = "all"
-    case mountain = "moutain"
-    case sea = "sea"
-    case library = "library"
-    case museum = "museum"
-    case architecture = "architecture"
-    case waterfall = "waterfall"
+    case buildings = "buildings"
+    case nature = "nature"
+    
+    case hasntVisited = "hasntVisisted"
+    case isOngoing = "isOngoing"
+    case isCompleted = "isCompleted"
+    
+    var title: String {
+        switch self {
+        case .all:
+            return "全て"
+        case .buildings:
+            return "建造物"
+        case .nature:
+            return "自然"
+        case .hasntVisited:
+            return "未訪問"
+        case .isOngoing:
+            return "進行中"
+        case .isCompleted:
+            return "完了"
+        }
+    }
+    
+    var imageName: String {
+        switch self {
+        case .all:
+            return "globe"
+        case .buildings:
+            return "building.columns"
+        case .nature:
+            return "leaf"
+        case .hasntVisited:
+            return "leaf"
+        case .isOngoing:
+            return "leaf"
+        case .isCompleted:
+            return "leaf"
+        }
+    }
 
     // カテゴリ一覧を取得
-    static var categories: [LocationCategory] {
+   static var categories: [LocationCategory] {
         return Array(self.allCases)
     }
 }
@@ -37,8 +71,8 @@ enum LocationCategory: String, CaseIterable {
 class MapViewModel {
     
     // MARK: - Output
-    let categories: Driver<[LocationCategoryItem]> = Driver.just(LocationCategoryItem.categories)
-    var selectedIndex: Driver<IndexPath> { return selectedCategoryIndexRelay.asDriver(onErrorDriveWith: .empty())}
+    let categories: Driver<[LocationCategory]> = Driver.just(LocationCategory.categories)
+    var selectedIndexPath = IndexPath(row: 0, section: 0)
     
     // 更新保留中の勉強記録データ
     var pendingUpdateData: Driver<(pendingUpdateData: PendingUpdateData?, saveRetryError: MyAppError?)> {
@@ -64,9 +98,7 @@ class MapViewModel {
     private let pendingUpdateDataRelay = BehaviorRelay<(pendingUpdateData: PendingUpdateData?, saveRetryError: MyAppError?)>(value: (nil, nil))
     // 更新保留中の勉強記録データの保存/削除完了
     private let isPendingUpdateDataHandlingCompletedRelay = BehaviorRelay<Bool>(value: false)
-    // タップされたカテゴリーのインデックスを監視、最新の値を保持する
-    let selectedCategoryIndexRelay = BehaviorRelay<IndexPath>(value: IndexPath(item: 0, section: 0))
-    
+   
     // 全てのロケーション情報を保持
     private static var allLocationsAndUserInfo: ([LocationInfo], User)?
     
@@ -217,13 +249,24 @@ extension MapViewModel {
         by category: LocationCategory
     ) -> ([LocationInfo], User) {
         guard let (locationsInfo, userProfile) = allLocationsAndUserInfo else { return ([], User()) }
-        // .allの場合は全てのロケーション情報を流す
-        guard category != .all else { return (locationsInfo, userProfile) }
         // 現在地のロケーション情報を取得
         let myLocationsInfo = locationsInfo.getCurrentLocationInfo(with: userProfile.currentLocationId)
-        // カテゴリーで絞り込み＋現在地のロケーション情報を含める
-        let filteredLocationsInfo = locationsInfo.filter { $0.fixedLocation.category == category.rawValue } + [myLocationsInfo!]
-        return (filteredLocationsInfo, userProfile)
+        // 絞り込み結果
+        var filteredLocationsInfo: [LocationInfo] = []
+        switch category {
+        case .all:
+            return (locationsInfo, userProfile)
+        case .buildings, .nature:
+            filteredLocationsInfo = locationsInfo.filter { $0.fixedLocation.category == category.rawValue }
+        case .hasntVisited:
+            filteredLocationsInfo = locationsInfo.filter { !$0.locationStatus.isCompleted && !$0.locationStatus.isOngoing }
+        case .isOngoing:
+            filteredLocationsInfo = locationsInfo.filter { $0.locationStatus.isOngoing }
+        case .isCompleted:
+            filteredLocationsInfo = locationsInfo.filter { $0.locationStatus.isCompleted }
+        }
+        // 現在地のロケーション情報も含める
+        return (filteredLocationsInfo + [myLocationsInfo!], userProfile)
     }
 }
 

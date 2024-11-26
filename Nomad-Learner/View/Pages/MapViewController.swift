@@ -198,20 +198,18 @@ extension MapViewController: KRProgressHUDEnabled, AlertEnabled {
             .drive(collectionView.rx.items(cellIdentifier: LocationCategoryCollectionViewCell.identifier, cellType: LocationCategoryCollectionViewCell.self)) { [weak self] row, item, cell in
                 guard let self = self else { return }
                 // 選択されたセルかどうか
-                let isSelected = self.viewModel.selectedIndex.value?.row == row
+                let isSelected = self.viewModel.selectedIndexPath.row == row
+                let indexPath = IndexPath(row: row, section: 0)
                 cell.configure(with: item, isSelected: isSelected)
-                cell.bind(indexPath: IndexPath(row: row, section: 0), viewModel: self.viewModel)
+                cell.bind(buttonDidTap: {
+                    collectionView.reloadData()
+                    collectionView.scrollToCenter(indexPath: indexPath)
+                    locationCategoryRelay.accept(item)
+                    self.viewModel.selectedIndexPath = indexPath
+                })
             }
             .disposed(by: disposeBag)
-        
-        viewModel.selectedIndex
-            .drive(onNext:  { indexPath in
-                locationCategoryRelay.accept(LocationCategory.categories[indexPath.row]) // 選択されたカテゴリーを流す
-                collectionView.reloadData()
-                collectionView.scrollToCenter(indexPath: indexPath)
-            })
-            .disposed(by: disposeBag)
-        
+                
         // 現在地までcamera移動
         moveToCurrentLocationButton.rx.tap
             .bind(to: moveToCurrentLocation)
@@ -237,11 +235,7 @@ extension MapViewController: KRProgressHUDEnabled, AlertEnabled {
         // カテゴリーで絞り込み取得
         locationCategoryRelay.asDriver()
             .skip(1) // 初回起動時はスキップ
-            .compactMap { [weak self] category -> ([LocationInfo], User)? in
-                guard let self = self else { return nil }
-                return MapViewModel.filter(by: category)
-            }
-            .map { ($0, DataHandlingType.filtering) }
+            .map { category in (MapViewModel.filter(by: category), DataHandlingType.filtering) }
             .drive(handleLocationsInfo)
             .disposed(by: disposeBag)
         
@@ -346,7 +340,7 @@ extension MapViewController {
             // 絞り込みによるデータの場合
             if dataHandlingType == .filtering {
                 base.mapView.removeInfoWindow() // 既存InfoWindowを非表示
-                base.displayCurrentLocationInfoWindow.onNext(()) // 現在地のInfoWindowを表示
+                base.mapTabBar.airplaneItem.isEnabled = false // 出発ボタンを非活性化
             }
             
             // リスナー以外のデータ取得と絞り込みによるデータ以外の場合

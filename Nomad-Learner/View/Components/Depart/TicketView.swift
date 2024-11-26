@@ -255,14 +255,14 @@ class TicketView: UIView {
         // 現在地の国旗
         currentNationalFlag.snp.makeConstraints {
             $0.centerX.equalTo(nationalFlagBackgroundView)
-            $0.centerY.equalTo(nationalFlagBackgroundView.snp.bottom)
+            $0.centerY.equalTo(nationalFlagBackgroundView.snp.bottom) // 微調整
             $0.size.equalTo(44)
         }
         
         // 目的地の国旗
         destinationNationalFlag.snp.makeConstraints {
             $0.centerX.equalTo(nationalFlagBackgroundView)
-            $0.centerY.equalTo(nationalFlagBackgroundView.snp.top)
+            $0.centerY.equalTo(nationalFlagBackgroundView.snp.top) // 微調整
             $0.size.equalTo(44)
         }
         
@@ -324,7 +324,7 @@ class TicketView: UIView {
         
         // 地域・国label
         countryAndRegion.snp.makeConstraints {
-            $0.top.equalTo(destinationLabel.snp.bottom)
+            $0.top.equalTo(destinationLabel.snp.bottom).offset(8)
             $0.right.left.equalTo(destinationLabel)
             $0.bottom.equalTo(backgroundViewForMission.snp.top).inset(-15)
         }

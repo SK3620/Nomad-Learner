@@ -234,9 +234,20 @@ extension MapViewController: KRProgressHUDEnabled, AlertEnabled {
             .drive(handleLocationsInfo)
             .disposed(by: disposeBag)
         
+        // カテゴリーで絞り込み取得
+        locationCategoryRelay.asDriver()
+            .skip(1) // 初回起動時はスキップ
+            .compactMap { [weak self] category -> ([LocationInfo], User)? in
+                guard let self = self else { return nil }
+                return MapViewModel.filter(by: category)
+            }
+            .map { ($0, DataHandlingType.filtering) }
+            .drive(handleLocationsInfo)
+            .disposed(by: disposeBag)
+        
         // リロードボタンで各ロケーション情報を再取得
-        reloadButtonItem.rx.tap.asDriver()
-            .flatMap { [weak self] _ in
+        reloadButtonItem.rx.tap.asSignal()
+            .flatMapLatest { [weak self] _ in
                 guard let self = self else { return .empty() }
                 return self.viewModel.locationsAndUserInfo
             }
@@ -325,15 +336,21 @@ extension MapViewController {
             base.userProfile = userProfile
             
             // マップの初期化
-            base.resetMapView(with: locationsInfo, userProfile: userProfile)
-            
+            base.resetMapView()
+          
             // データ取得に伴い、報酬コイン獲得アラートの表示を行う場合
             if dataHandlingType == .fetchWithRewardAlert {
                 base.showRewardCoinProgressHUD()
             }
             
-            // リスナー以外のデータ取得の場合
-            if dataHandlingType != .listenerTriggered {
+            // 絞り込みによるデータの場合
+            if dataHandlingType == .filtering {
+                base.mapView.removeInfoWindow() // 既存InfoWindowを非表示
+                base.displayCurrentLocationInfoWindow.onNext(()) // 現在地のInfoWindowを表示
+            }
+            
+            // リスナー以外のデータ取得と絞り込みによるデータ以外の場合
+            if ![.listenerTriggered, .filtering].contains(dataHandlingType) {
                 base.moveCameraAndUpdateUIOnCurrentLocation()
             }
         }
@@ -378,7 +395,7 @@ extension MapViewController {
 
 extension MapViewController {
     // マップの初期化
-    private func resetMapView(with locationsInfo: [LocationInfo], userProfile: User) {
+    private func resetMapView() {
         // マーカーを削除してリセット
         mapView.clear()
         

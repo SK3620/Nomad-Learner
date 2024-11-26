@@ -12,8 +12,9 @@ import Kingfisher
 import GoogleMaps
 
 enum DataHandlingType {
-    case initialFetch      // 初回の自動取得
-    case manualReload      // リロードボタンで取得
+    case initialFetch // 初回の自動取得
+    case manualReload // リロードボタンで取得
+    case filtering // カテゴリーで絞り込み
     case listenerTriggered // リアルタイムリスナーで取得
     case fetchWithRewardAlert //　データ取得後にアラート表示
 }
@@ -47,26 +48,34 @@ class MapViewModel {
     var isPendingUpdateDataHandlingCompleted: Driver<Bool> {
         return self.isPendingUpdateDataHandlingCompletedRelay.asDriver()
     }
-    
-    let locationsAndUserInfo: Driver<([LocationInfo], User)> // 各ロケーション情報
-    let monitoredLocationsAndUserInfo: Driver<([LocationInfo], User)> // 各ロケーション情報
-    let isLoading: Driver<Bool> // ローディングインジケーター
-    let myAppError: Driver<MyAppError> // エラー
+    // 各ロケーション情報
+    var locationsAndUserInfo: Driver<([LocationInfo], User)>
+    // 各ロケーション情報（監視）
+    var monitoredLocationsAndUserInfo: Driver<([LocationInfo], User)>
+    // ローディングインジケーター
+    let isLoading: Driver<Bool>
+    // エラー
+    let myAppError: Driver<MyAppError>
     
     // MARK: - Input
+    // 各ロケーション情報
+    private let locationsAndUserInfoRelay = BehaviorRelay<([LocationInfo], User)?>(value: nil)
     // 更新保留中の勉強記録データの存在有無
-    let pendingUpdateDataRelay = BehaviorRelay<(pendingUpdateData: PendingUpdateData?, saveRetryError: MyAppError?)>(value: (nil, nil))
+    private let pendingUpdateDataRelay = BehaviorRelay<(pendingUpdateData: PendingUpdateData?, saveRetryError: MyAppError?)>(value: (nil, nil))
     // 更新保留中の勉強記録データの保存/削除完了
-    let isPendingUpdateDataHandlingCompletedRelay = BehaviorRelay<Bool>(value: false)
+    private let isPendingUpdateDataHandlingCompletedRelay = BehaviorRelay<Bool>(value: false)
     // タップされたカテゴリーのインデックスを監視、最新の値を保持する
     let selectedCategoryIndexRelay = BehaviorRelay<IndexPath>(value: IndexPath(item: 0, section: 0))
+    
+    // 全てのロケーション情報を保持
+    private static var allLocationsAndUserInfo: ([LocationInfo], User)?
     
     private let realmService: RealmServiceProtocol
     private let mainService: MainServiceProtocol
     private let disposeBag = DisposeBag()
     
     init(
-        locationCategoryRelay: BehaviorRelay<LocationCategory>,
+        locationCategoryRelay: BehaviorRelay<LocationCategory>, // カテゴリーを保持
         mainService: MainServiceProtocol,
         realmService: RealmServiceProtocol
     ) {
@@ -89,13 +98,16 @@ class MapViewModel {
             mainService.fetchVisitedLocations(),
             mainService.fetchUserProfile()
         )
-        
+
         // マップに配置するロケーション関連の情報取得
         let fetchLocationsInfoResult = mainService.fetchFixedLocations()
             .flatMap { fixedLocations in
                 zip.map { dynamicLocations, visitedLocations, userProfile in
                     let tuple = (fixedLocations, dynamicLocations, visitedLocations, userProfile)
-                    return MapViewModel.createLocationsInfoAndUserProfile(tuple: tuple)
+                    let locationsAndUserInfo = MapViewModel.createLocationsInfoAndUserProfile(tuple: tuple)
+                    MapViewModel.allLocationsAndUserInfo = locationsAndUserInfo
+                    let filteredLocationsInfo = MapViewModel.filter(locationsAndUserInfo, by: locationCategoryRelay.value)
+                    return filteredLocationsInfo
                 }
             }
             .catch { error in // ストリームを終了させない
@@ -108,77 +120,26 @@ class MapViewModel {
         
         // 固定ロケーションをリアルタイム監視で取得
         let monitorLocationsInfoResult = mainService.monitorFixedLocationsChanges()
-            .skip(1) // 初回起動時、取得した値の整形は行わない
+            .skip(1) // 初回起動時、取得した値の整形は行わず、監視の開始のみ実行させる
             .flatMap { fixedLocations in
                 zip.map { dynamicLocations, visitedLocations, userProfile in
                     let tuple = (fixedLocations, dynamicLocations, visitedLocations, userProfile)
-                    return MapViewModel.createLocationsInfoAndUserProfile(tuple: tuple)
+                    let locationsAndUserInfo = MapViewModel.createLocationsInfoAndUserProfile(tuple: tuple)
+                    MapViewModel.allLocationsAndUserInfo = locationsAndUserInfo
+                    let filteredLocationsInfo = MapViewModel.filter(locationsAndUserInfo, by: locationCategoryRelay.value)
+                    return filteredLocationsInfo
                 }
             }
             .materialize()
             .share(replay: 1)
-        /*
-        // マップに配置するロケーション情報を流す
-//        self.locationsAndUserInfo = fetchLocationsInfoResult
-//            .compactMap { $0.event.element }
-//            .asDriver(onErrorJustReturn: ([], User()))
-        
-//        self.locationsAndUserInfo = fetchLocationsInfoResult
-//            .compactMap { $0.event.element } // エラーでないことを確認
-//            .flatMap { locationsAndUserInfo in
-//                Observable.combineLatest( // 選択されているカテゴリーで絞り込み
-//                    Observable.just(locationsAndUserInfo),
-//                    locationCategoryRelay
-//                ) { locationsAndUserInfo, category in
-//                    let (locationsInfo, userProfile) = locationsAndUserInfo
-//                    let filteredLocationsInfo = locationsInfo.filter { $0.fixedLocation.category == category.rawValue }
-//                    return (filteredLocationsInfo, userProfile)
-//                }
-//            }
-//            .asDriver(onErrorJustReturn: ([], User()))
             
-        // マップに配置するロケーション情報を流す（監視）
-//        self.monitoredLocationsAndUserInfo = monitorLocationsInfoResult
-//            .compactMap { $0.event.element }
-//            .asDriver(onErrorJustReturn: ([], User()))
-//        
-//        self.monitoredLocationsAndUserInfo = monitorLocationsInfoResult
-//            .compactMap { $0.event.element } // エラーでないことを確認
-//            .flatMap { locationsAndUserInfo in
-//                Observable.combineLatest( // 選択されているカテゴリーで絞り込み
-//                    Observable.just(locationsAndUserInfo),
-//                    locationCategoryRelay
-//                ) { locationsAndUserInfo, category in
-//                    let (locationsInfo, userProfile) = locationsAndUserInfo
-//                    let filteredLocationsInfo = locationsInfo.filter { $0.fixedLocation.category == category.rawValue }
-//                    return (filteredLocationsInfo, userProfile)
-//                }
-//            }
-//            .asDriver(onErrorJustReturn: ([], User()))
-         */
-        // 選択されているカテゴリーで絞り込み（共通処理）
-        let filterLocationsInfoByCategory = { (locationsInfoResult: Observable<Event<([LocationInfo], User)>>) -> Driver<([LocationInfo], User)> in
-            locationsInfoResult
-                .compactMap { $0.event.element }
-                .flatMap { locationsAndUserInfo in
-                    Observable.combineLatest(
-                        Observable.just(locationsAndUserInfo),
-                        locationCategoryRelay
-                    ) { locationsAndUserInfo, category in
-                        // .allの場合は全てのロケーション情報を流す
-                        guard category != .all else { return locationsAndUserInfo }
-                        let (locationsInfo, user) = locationsAndUserInfo
-                        let filteredLocationsInfo = locationsInfo.filter { $0.fixedLocation.category == category.rawValue }
-                        return (filteredLocationsInfo, user)
-                    }
-                }
-                .asDriver(onErrorJustReturn: ([], User()))
-        }
+        self.locationsAndUserInfo = fetchLocationsInfoResult
+            .compactMap { $0.event.element }
+            .asDriver(onErrorJustReturn: ([], User()))
         
-        // マップに配置するロケーション情報を流す
-        self.locationsAndUserInfo = filterLocationsInfoByCategory(fetchLocationsInfoResult)
-        // マップに配置するロケーション情報を流す（監視）
-        self.monitoredLocationsAndUserInfo = filterLocationsInfoByCategory(monitorLocationsInfoResult)
+        self.monitoredLocationsAndUserInfo = monitorLocationsInfoResult
+            .compactMap { $0.event.element }
+            .asDriver(onErrorJustReturn: ([], User()))
         
         // ロケーション情報取得完了後にRealmから更新保留中の勉強記録データを取得
         fetchLocationsInfoResult
@@ -248,6 +209,21 @@ extension MapViewModel {
             locationsInfo.append(locationInfo)
         }
         return (locationsInfo, mutableUserProfile)
+    }
+    
+    // カテゴリーで絞り込み
+    public static func filter(
+        _ allLocationsAndUserInfo: ([LocationInfo], User)? = MapViewModel.allLocationsAndUserInfo,
+        by category: LocationCategory
+    ) -> ([LocationInfo], User) {
+        guard let (locationsInfo, userProfile) = allLocationsAndUserInfo else { return ([], User()) }
+        // .allの場合は全てのロケーション情報を流す
+        guard category != .all else { return (locationsInfo, userProfile) }
+        // 現在地のロケーション情報を取得
+        let myLocationsInfo = locationsInfo.getCurrentLocationInfo(with: userProfile.currentLocationId)
+        // カテゴリーで絞り込み＋現在地のロケーション情報を含める
+        let filteredLocationsInfo    = locationsInfo.filter { $0.fixedLocation.category == category.rawValue } + [myLocationsInfo!]
+        return (filteredLocationsInfo, userProfile)
     }
 }
 

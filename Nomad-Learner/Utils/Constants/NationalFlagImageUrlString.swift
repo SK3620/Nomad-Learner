@@ -10,6 +10,7 @@
 //
 // Created by 鈴木 健太 on 2024/11/14.
 
+// 不使用中
 /*
 struct NationalFlagImageStringURLs {
     public static let dic: [String: String] = [

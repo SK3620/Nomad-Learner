@@ -51,7 +51,7 @@ class ProfileCollectionViewCell: UICollectionViewCell {
         // プロフィール画像
         profileImageView.snp.makeConstraints {
             $0.left.equalTo(contentView.snp.left).offset(8)
-            $0.verticalEdges.equalToSuperview().inset(UIConstants.Layout.smallPadding)
+            $0.verticalEdges.equalToSuperview().inset(8)
             $0.width.equalTo(contentView.snp.height).offset(-8 * 2)
         }
 

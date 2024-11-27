@@ -140,8 +140,8 @@ extension ProfileBottomView: UITableViewDelegate, UITableViewDataSource {
     private func adjustConstraintsForNegativeOffset() {
         // usernameLabelの制約を更新
         self.usernameLabel.snp.remakeConstraints {
-            $0.top.equalToSuperview().inset(UIConstants.Layout.smallPadding)
-            $0.left.equalToSuperview().inset(UIConstants.Layout.standardPadding)
+            $0.top.equalToSuperview().inset(8)
+            $0.left.equalToSuperview().inset(16)
         }
         
         // ProfileBottomViewの制約を更新
@@ -155,14 +155,14 @@ extension ProfileBottomView: UITableViewDelegate, UITableViewDataSource {
     private func adjustConstraintsForPositiveOffset() {
         // ProfileBottomViewの制約を更新
         self.snp.remakeConstraints {
-            $0.top.equalToSuperview().inset(UIConstants.NavigationBar.standardHeight)
+            $0.top.equalToSuperview().inset(16)
             $0.right.left.bottom.equalToSuperview()
         }
         
         // usernameLabelの制約を更新
         self.usernameLabel.snp.remakeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalToSuperview().inset(UIConstants.Layout.smallPadding)
+            $0.top.equalToSuperview().inset(8)
         }
     }
 }

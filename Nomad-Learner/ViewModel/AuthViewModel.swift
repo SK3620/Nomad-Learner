@@ -12,38 +12,6 @@ import FirebaseAuth
 
 class AuthViewModel {
     
-    // MARK: - Auth mode
-    enum AuthMode {
-        // サインイン画面
-        case signIn
-        // サインアップ画面
-        case signUp
-        
-        var authButtonTitleToString: String {
-            switch self {
-            case .signIn:
-                return "サインイン"
-            case .signUp:
-                return "サインアップ"
-            }
-        }
-        
-        var sectionSwitchTitleToString: String {
-            switch self {
-            case .signIn:
-                return "アカウントを作成する▶︎"
-            case .signUp:
-                return "すでにアカウントを持っている▶︎"
-            }
-        }
-    }
-    
-    // MARK: - SignIn With Auth Provider Result
-    enum SignInWithAuthProviderResult {
-        case success(FirebaseAuth.User)
-        case failure(MyAppError)
-    }
-    
     // MARK: - Output
     let usernameValidation: Driver<AuthInputValidation>
     let emailValidation: Driver<AuthInputValidation>

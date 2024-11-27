@@ -84,7 +84,7 @@ class EditProfileView: UIView {
         // Picture and Username Horizontal Stack
         let pictureAndUsernameStackView = UIStackView(arrangedSubviews: [pictureView, usernameView])
         pictureAndUsernameStackView.axis = .horizontal
-        pictureAndUsernameStackView.spacing = UIConstants.Layout.standardPadding
+        pictureAndUsernameStackView.spacing = 16
         pictureAndUsernameStackView.alignment = .fill
         pictureAndUsernameStackView.distribution = .fill
         
@@ -105,7 +105,7 @@ class EditProfileView: UIView {
             othersView
         ])
         stackView.axis = .vertical
-        stackView.spacing = UIConstants.Layout.standardPadding
+        stackView.spacing = 16
         stackView.alignment = .fill
         stackView.distribution = .fillEqually
         

@@ -61,7 +61,7 @@ class AuthTextField: UITextField {
         autocorrectionType = .no
         // 高さ調整
         self.snp.makeConstraints {
-            $0.height.equalTo(UIConstants.StackViewElement.height)
+            $0.height.equalTo(44)
         }
         // キーボードに完了ボタン表示
         self.addDoneToolbar(onDone: (target: self, action: #selector(doneButtonTapped)))
@@ -86,8 +86,8 @@ extension AuthTextField {
         
         // 画像
         imageView.snp.makeConstraints {
-            $0.size.equalTo(UIConstants.Image.medium) // アイコンサイズ
-            $0.left.equalToSuperview().offset(UIConstants.Layout.smallPadding) // 左側の余白
+            $0.size.equalTo(24) // アイコンサイズ
+            $0.left.equalToSuperview().offset(8) // 左側の余白
             $0.centerY.equalToSuperview()
         }
         

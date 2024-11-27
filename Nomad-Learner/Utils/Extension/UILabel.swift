@@ -43,6 +43,4 @@ extension UILabel {
     func contentSizeHeight() -> CGFloat {
         return intrinsicContentSize.height
     }
-    
 }
-

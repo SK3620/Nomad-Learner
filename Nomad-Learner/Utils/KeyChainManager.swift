@@ -7,6 +7,8 @@
 
 import Foundation
 
+// 不使用中
+/*
 protocol KeyChainManagerProtocol {
     // 認証情報をキーチェーンに保存
     func saveCredentials(apiToken: String, email: String, password: String)
@@ -111,3 +113,4 @@ extension KeyChainManager {
         }
     }
 }
+*/

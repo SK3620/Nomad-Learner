@@ -12,23 +12,6 @@ import Firebase
 
 class StudyRoomViewModel {
     
-    // 画面レイアウト切り替え
-    enum RoomLayout {
-        case displayAll // 全て表示
-        case hideProfile // プロフィール欄非表示
-        case hideChat // チャット欄非表示
-        case hideAll // 全て非表示
-    }
-    
-    // UIメニューアクション
-    enum MenuAction {
-        case breakTime // 休憩
-        case restart // 勉強再開
-        case confirmTicket // チケット確認
-        case community // コミュニティ
-        case exitRoom // 退出
-    }
-    
     private var lastVisibleDocument: DocumentSnapshot? // 最後に取得したドキュメント
     private let limit: Int = 16 // 一度に取得するユーザーの数
     

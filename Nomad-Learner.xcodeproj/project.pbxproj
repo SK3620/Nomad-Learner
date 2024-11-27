@@ -96,6 +96,14 @@
 		83A9C2C52CA7DA5000898F0B /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2C42CA7DA5000898F0B /* UILabel.swift */; };
 		83A9C2C92CA8378C00898F0B /* UIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2C82CA8378C00898F0B /* UIConstants.swift */; };
 		83AAA0CC2CEB44C000D5DC00 /* PendingUpdateData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AAA0CB2CEB44C000D5DC00 /* PendingUpdateData.swift */; };
+		83AC8EFC2CF6CBFC00FB57B3 /* DataHandlingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AC8EFB2CF6CBFC00FB57B3 /* DataHandlingType.swift */; };
+		83AC8F002CF6CCCA00FB57B3 /* ProgressHUDMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AC8EFF2CF6CCCA00FB57B3 /* ProgressHUDMessage.swift */; };
+		83AC8F022CF6CD2F00FB57B3 /* AlertActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AC8F012CF6CD2F00FB57B3 /* AlertActionType.swift */; };
+		83AC8F042CF6CDFC00FB57B3 /* AuthMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AC8F032CF6CDFC00FB57B3 /* AuthMode.swift */; };
+		83AC8F062CF6CE4400FB57B3 /* SignInWithAuthProviderResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AC8F052CF6CE4400FB57B3 /* SignInWithAuthProviderResult.swift */; };
+		83AC8F092CF6CEE600FB57B3 /* RoomLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AC8F082CF6CEE600FB57B3 /* RoomLayout.swift */; };
+		83AC8F0B2CF6CF0600FB57B3 /* MenuAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AC8F0A2CF6CF0600FB57B3 /* MenuAction.swift */; };
+		83AC8F0D2CF6CF8300FB57B3 /* Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AC8F0C2CF6CF8300FB57B3 /* Driver.swift */; };
 		83AFB3A82CB1A94400501FEE /* MapTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AFB3A72CB1A94400501FEE /* MapTabBar.swift */; };
 		83AFB3AA2CB2902C00501FEE /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AFB3A92CB2902C00501FEE /* UIView.swift */; };
 		83AFB3AC2CB29AC500501FEE /* NavigationBoxBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AFB3AB2CB29AC500501FEE /* NavigationBoxBar.swift */; };
@@ -210,6 +218,14 @@
 		83A9C2C42CA7DA5000898F0B /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
 		83A9C2C82CA8378C00898F0B /* UIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIConstants.swift; sourceTree = "<group>"; };
 		83AAA0CB2CEB44C000D5DC00 /* PendingUpdateData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingUpdateData.swift; sourceTree = "<group>"; };
+		83AC8EFB2CF6CBFC00FB57B3 /* DataHandlingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHandlingType.swift; sourceTree = "<group>"; };
+		83AC8EFF2CF6CCCA00FB57B3 /* ProgressHUDMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressHUDMessage.swift; sourceTree = "<group>"; };
+		83AC8F012CF6CD2F00FB57B3 /* AlertActionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertActionType.swift; sourceTree = "<group>"; };
+		83AC8F032CF6CDFC00FB57B3 /* AuthMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthMode.swift; sourceTree = "<group>"; };
+		83AC8F052CF6CE4400FB57B3 /* SignInWithAuthProviderResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAuthProviderResult.swift; sourceTree = "<group>"; };
+		83AC8F082CF6CEE600FB57B3 /* RoomLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomLayout.swift; sourceTree = "<group>"; };
+		83AC8F0A2CF6CF0600FB57B3 /* MenuAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuAction.swift; sourceTree = "<group>"; };
+		83AC8F0C2CF6CF8300FB57B3 /* Driver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Driver.swift; sourceTree = "<group>"; };
 		83AFB3A72CB1A94400501FEE /* MapTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTabBar.swift; sourceTree = "<group>"; };
 		83AFB3A92CB2902C00501FEE /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		83AFB3AB2CB29AC500501FEE /* NavigationBoxBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBoxBar.swift; sourceTree = "<group>"; };
@@ -271,7 +287,6 @@
 			children = (
 				836180EF2CBC93900059937E /* Profile.swift */,
 				836180F12CBC9D850059937E /* Message.swift */,
-				83A6D7B02CB3F39300D18A30 /* LocationCategory.swift */,
 				831E5C852CC4AAC3001A90C4 /* User.swift */,
 				831E5C872CC4B493001A90C4 /* VisitedLocation.swift */,
 				831E5C8B2CC4B4F6001A90C4 /* FixedLocation.swift */,
@@ -321,6 +336,7 @@
 			children = (
 				831731CB2CE228670092AE89 /* MyAppSettings.swift */,
 				8344D0302CE6474F007559E0 /* NationalFlagImageUrlString.swift */,
+				83A9C2C82CA8378C00898F0B /* UIConstants.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -346,10 +362,8 @@
 		835BD2EF2CA413560088CA02 /* Nomad-Learner */ = {
 			isa = PBXGroup;
 			children = (
+				83AC8EF92CF6CB8300FB57B3 /* Enums */,
 				83C5E1402CC0C0DE001C27E1 /* Identifiers */,
-				836180E42CBB81C80059937E /* ScreenSizeProvidable */,
-				837DE58C2CBA2FB200819964 /* SafeAreaHeightProvidable */,
-				83AFB3AF2CB2B6F900501FEE /* NavigationHeightProvidable */,
 				838753EB2CB0EEDF001EE8F1 /* Transition */,
 				838753CE2CABDEDC001EE8F1 /* Protocols */,
 				83A9C2C32CA7D61600898F0B /* Utils */,
@@ -377,22 +391,6 @@
 			path = Configurations;
 			sourceTree = "<group>";
 		};
-		836180E42CBB81C80059937E /* ScreenSizeProvidable */ = {
-			isa = PBXGroup;
-			children = (
-				836180E52CBB81E80059937E /* ScreenSizeProvidable.swift */,
-			);
-			path = ScreenSizeProvidable;
-			sourceTree = "<group>";
-		};
-		837DE58C2CBA2FB200819964 /* SafeAreaHeightProvidable */ = {
-			isa = PBXGroup;
-			children = (
-				837DE58D2CBA2FDE00819964 /* SafeAreaHeightProvidable.swift */,
-			);
-			path = SafeAreaHeightProvidable;
-			sourceTree = "<group>";
-		};
 		837DE5932CBAD0F400819964 /* StudyRoom */ = {
 			isa = PBXGroup;
 			children = (
@@ -410,19 +408,12 @@
 		838753CE2CABDEDC001EE8F1 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				838753D32CABFDB7001EE8F1 /* AuthInputValidation.swift */,
-				830498BE2CC5072C003973EC /* MyAppError.swift */,
-				838753D52CAC19D1001EE8F1 /* AuthInputValidator.swift */,
 				838753D72CACE930001EE8F1 /* ActivityIndicator.swift */,
 				838753D92CACF2D0001EE8F1 /* KRProgressHUDEnabled.swift */,
 				838753DB2CAD33E2001EE8F1 /* AuthServiceProtocol.swift */,
 				830498C72CC656EF003973EC /* MainServiceProtocol.swift */,
 				830498CB2CC666DD003973EC /* RealmServiceProtocol.swift */,
-				83F315DA2CC7888D0003B7E2 /* FirebaseConfig.swift */,
-				830498C92CC661C5003973EC /* Parser.swift */,
 				838753E12CAF9E53001EE8F1 /* AlertEnabled.swift */,
-				838753E72CB02B42001EE8F1 /* FBAuth.swift */,
-				834478602CCA4A680038C7B9 /* ImageCacheManager.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -483,14 +474,78 @@
 		83A9C2C32CA7D61600898F0B /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				83AC8F0E2CF6D29E00FB57B3 /* Firebase */,
 				83C9F3B82CA915EF00CF0D73 /* Extension */,
-				83A9C2C82CA8378C00898F0B /* UIConstants.swift */,
-				83C9F3BB2CA931F400CF0D73 /* KeyboardManager.swift */,
-				83C9F3B52CA907B900CF0D73 /* ColorCodes.swift */,
-				83A6D7B82CB56C7400D18A30 /* KeyChainManager.swift */,
 				831731CD2CE312CF0092AE89 /* Constants */,
+				83C9F3BB2CA931F400CF0D73 /* KeyboardManager.swift */,
+				834478602CCA4A680038C7B9 /* ImageCacheManager.swift */,
+				836180E52CBB81E80059937E /* ScreenSizeProvidable.swift */,
+				837DE58D2CBA2FDE00819964 /* SafeAreaHeightProvidable.swift */,
+				83AFB3B02CB2B75F00501FEE /* NavigationHeightProvidable.swift */,
+				83A6D7B82CB56C7400D18A30 /* KeyChainManager.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		83AC8EF92CF6CB8300FB57B3 /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				83AC8EFE2CF6CC6F00FB57B3 /* Common */,
+				83AC8EFD2CF6CC4400FB57B3 /* Auth */,
+				83AC8EFA2CF6CBB600FB57B3 /* Map */,
+				83AC8F072CF6CEC500FB57B3 /* StudyRoom */,
+			);
+			path = Enums;
+			sourceTree = "<group>";
+		};
+		83AC8EFA2CF6CBB600FB57B3 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				83A6D7B02CB3F39300D18A30 /* LocationCategory.swift */,
+				83AC8EFB2CF6CBFC00FB57B3 /* DataHandlingType.swift */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
+		83AC8EFD2CF6CC4400FB57B3 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				838753D52CAC19D1001EE8F1 /* AuthInputValidator.swift */,
+				838753D32CABFDB7001EE8F1 /* AuthInputValidation.swift */,
+				83AC8F032CF6CDFC00FB57B3 /* AuthMode.swift */,
+				83AC8F052CF6CE4400FB57B3 /* SignInWithAuthProviderResult.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		83AC8EFE2CF6CC6F00FB57B3 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				830498BE2CC5072C003973EC /* MyAppError.swift */,
+				83AC8EFF2CF6CCCA00FB57B3 /* ProgressHUDMessage.swift */,
+				83AC8F012CF6CD2F00FB57B3 /* AlertActionType.swift */,
+				83C9F3B52CA907B900CF0D73 /* ColorCodes.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		83AC8F072CF6CEC500FB57B3 /* StudyRoom */ = {
+			isa = PBXGroup;
+			children = (
+				83AC8F082CF6CEE600FB57B3 /* RoomLayout.swift */,
+				83AC8F0A2CF6CF0600FB57B3 /* MenuAction.swift */,
+			);
+			path = StudyRoom;
+			sourceTree = "<group>";
+		};
+		83AC8F0E2CF6D29E00FB57B3 /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				830498C92CC661C5003973EC /* Parser.swift */,
+				83F315DA2CC7888D0003B7E2 /* FirebaseConfig.swift */,
+				838753E72CB02B42001EE8F1 /* FBAuth.swift */,
+			);
+			path = Firebase;
 			sourceTree = "<group>";
 		};
 		83AFB3A62CB1A91500501FEE /* Map */ = {
@@ -509,14 +564,6 @@
 				831E5C6E2CC13205001A90C4 /* Location.swift */,
 			);
 			path = Map;
-			sourceTree = "<group>";
-		};
-		83AFB3AF2CB2B6F900501FEE /* NavigationHeightProvidable */ = {
-			isa = PBXGroup;
-			children = (
-				83AFB3B02CB2B75F00501FEE /* NavigationHeightProvidable.swift */,
-			);
-			path = NavigationHeightProvidable;
 			sourceTree = "<group>";
 		};
 		83C5E1362CBFB021001C27E1 /* OnFlight */ = {
@@ -548,6 +595,7 @@
 				83A6D7A82CB3D7B000D18A30 /* UIScrollView.swift */,
 				830498CD2CC6A714003973EC /* UIImageView.swift */,
 				83A6D7B42CB4BF2500D18A30 /* Observable.swift */,
+				83AC8F0C2CF6CF8300FB57B3 /* Driver.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -727,6 +775,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83AC8F022CF6CD2F00FB57B3 /* AlertActionType.swift in Sources */,
 				83AFB3B12CB2B75F00501FEE /* NavigationHeightProvidable.swift in Sources */,
 				831731CA2CE220560092AE89 /* RewardCoinProgressHUDInfo.swift in Sources */,
 				835BD2F12CA413560088CA02 /* AppDelegate.swift in Sources */,
@@ -734,6 +783,7 @@
 				83A6D7D42CB807F100D18A30 /* EditProfileViewController.swift in Sources */,
 				83C5E1352CBFB019001C27E1 /* OnFlightViewController.swift in Sources */,
 				83AFB3AE2CB2ABD300501FEE /* LocationDetailView.swift in Sources */,
+				83AC8EFC2CF6CBFC00FB57B3 /* DataHandlingType.swift in Sources */,
 				830498C62CC64F87003973EC /* FixedLocationsInfo.json in Sources */,
 				83A6D7E02CB8DA8600D18A30 /* DepartViewController.swift in Sources */,
 				837DE5952CBAD11500819964 /* StudyRoomViewController.swift in Sources */,
@@ -751,6 +801,7 @@
 				838753E82CB02B42001EE8F1 /* FBAuth.swift in Sources */,
 				83A6D7DB2CB80D9100D18A30 /* EditProfileViewNavigationBar.swift in Sources */,
 				83A6D7E42CB8FD4E00D18A30 /* DepartView.swift in Sources */,
+				83AC8F092CF6CEE600FB57B3 /* RoomLayout.swift in Sources */,
 				83A6D7B12CB3F39300D18A30 /* LocationCategory.swift in Sources */,
 				83C9F3BA2CA9161300CF0D73 /* UITextField.swift in Sources */,
 				83AFB3AA2CB2902C00501FEE /* UIView.swift in Sources */,
@@ -779,6 +830,7 @@
 				837DE5972CBAD12E00819964 /* StudyRoomViewModel.swift in Sources */,
 				831E5C732CC271EF001A90C4 /* MarkerIconView.swift in Sources */,
 				834478612CCA4A680038C7B9 /* ImageCacheManager.swift in Sources */,
+				83AC8F0D2CF6CF8300FB57B3 /* Driver.swift in Sources */,
 				83A6D7A92CB3D7B000D18A30 /* UIScrollView.swift in Sources */,
 				8344786B2CCFB61E0038C7B9 /* LocationInfo.swift in Sources */,
 				831E5C882CC4B493001A90C4 /* VisitedLocation.swift in Sources */,
@@ -802,12 +854,14 @@
 				836180E32CBB7E220059937E /* StudyRoomNavigationBar.swift in Sources */,
 				830498CE2CC6A714003973EC /* UIImageView.swift in Sources */,
 				836180F02CBC93900059937E /* Profile.swift in Sources */,
+				83AC8F042CF6CDFC00FB57B3 /* AuthMode.swift in Sources */,
 				838753D62CAC19D1001EE8F1 /* AuthInputValidator.swift in Sources */,
 				831E5C6F2CC13205001A90C4 /* Location.swift in Sources */,
 				834478632CCA65380038C7B9 /* UITextView.swift in Sources */,
 				83AAA0CC2CEB44C000D5DC00 /* PendingUpdateData.swift in Sources */,
 				838753D42CABFDB7001EE8F1 /* AuthInputValidation.swift in Sources */,
 				8344D0312CE6474F007559E0 /* NationalFlagImageUrlString.swift in Sources */,
+				83AC8F0B2CF6CF0600FB57B3 /* MenuAction.swift in Sources */,
 				83A6D7C62CB682D600D18A30 /* ProfileTopView.swift in Sources */,
 				83C5E1332CBF851D001C27E1 /* NavigationControllerForAuthVC.swift in Sources */,
 				83A6D7C42CB6630700D18A30 /* ProfileNavigationBar.swift in Sources */,
@@ -825,7 +879,9 @@
 				83A6D7B52CB4BF2500D18A30 /* Observable.swift in Sources */,
 				836180E12CBB68490059937E /* ProfileCollectionView.swift in Sources */,
 				83A9C2C02CA7C9B700898F0B /* AuthStackView.swift in Sources */,
+				83AC8F002CF6CCCA00FB57B3 /* ProgressHUDMessage.swift in Sources */,
 				83A6D7BD2CB61A8000D18A30 /* ProfileViewModel.swift in Sources */,
+				83AC8F062CF6CE4400FB57B3 /* SignInWithAuthProviderResult.swift in Sources */,
 				83A9C2C52CA7DA5000898F0B /* UILabel.swift in Sources */,
 				836180E82CBBA1620059937E /* ChatCollectionView.swift in Sources */,
 				838753DA2CACF2D1001EE8F1 /* KRProgressHUDEnabled.swift in Sources */,

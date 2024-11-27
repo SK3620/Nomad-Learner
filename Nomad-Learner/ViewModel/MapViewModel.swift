@@ -11,63 +11,6 @@ import RxCocoa
 import Kingfisher
 import GoogleMaps
 
-enum DataHandlingType {
-    case initialFetch // 初回の自動取得
-    case manualReload // リロードボタンで取得
-    case filtering // カテゴリーで絞り込み
-    case listenerTriggered // リアルタイムリスナーで取得
-    case fetchWithRewardAlert //　データ取得後にアラート表示
-}
-
-enum LocationCategory: String, CaseIterable {
-    case all = "all"
-    case buildings = "buildings"
-    case nature = "nature"
-    
-    case hasntVisited = "hasntVisisted"
-    case isOngoing = "isOngoing"
-    case isCompleted = "isCompleted"
-    
-    var title: String {
-        switch self {
-        case .all:
-            return "全て"
-        case .buildings:
-            return "建造物"
-        case .nature:
-            return "自然"
-        case .hasntVisited:
-            return "未訪問"
-        case .isOngoing:
-            return "進行中"
-        case .isCompleted:
-            return "完了"
-        }
-    }
-    
-    var imageName: String {
-        switch self {
-        case .all:
-            return "globe"
-        case .buildings:
-            return "building.columns"
-        case .nature:
-            return "leaf"
-        case .hasntVisited:
-            return "leaf"
-        case .isOngoing:
-            return "leaf"
-        case .isCompleted:
-            return "leaf"
-        }
-    }
-
-    // カテゴリ一覧を取得
-   static var categories: [LocationCategory] {
-        return Array(self.allCases)
-    }
-}
-
 class MapViewModel {
     
     // MARK: - Output

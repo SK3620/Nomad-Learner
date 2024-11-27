@@ -13,7 +13,7 @@ class MarkerInfoWindow: UIView {
     
     //　ロケーション画像
     private lazy var locationImageView = UIImageView().then {
-        $0.layer.cornerRadius = (self.viewHeight - UIConstants.Layout.semiStandardPadding) / 2
+        $0.layer.cornerRadius = (self.viewHeight - 12) / 2
         $0.layer.masksToBounds = true
         $0.layer.borderColor = UIColor.white.cgColor
         $0.layer.borderWidth = 1

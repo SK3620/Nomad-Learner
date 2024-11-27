@@ -27,7 +27,7 @@ class LocationCategoryCollectionViewCell: UICollectionViewCell {
     private lazy var stackView = UIStackView().then {
         $0.axis = .vertical
         $0.alignment = .center
-        $0.spacing = UIConstants.Layout.smallPadding
+        $0.spacing = 8
     }
     
     private lazy var titleLabel = UILabel().then {
@@ -37,8 +37,7 @@ class LocationCategoryCollectionViewCell: UICollectionViewCell {
     }
     
     private lazy var categoryButton = UIButton(type: .system).then {
-        $0.tintColor = ColorCodes.primaryPurple.color()
-         $0.layer.cornerRadius = UIConstants.Button.smallHeight / 2
+        $0.layer.cornerRadius = 42 / 2
     }
 
     override init(frame: CGRect) {

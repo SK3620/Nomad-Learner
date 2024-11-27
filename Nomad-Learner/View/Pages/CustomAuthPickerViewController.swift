@@ -32,7 +32,7 @@ class CustomAuthPickerViewController: FUIAuthPickerViewController {
     private lazy var authStackView: AuthStackView = AuthStackView().then {
         $0.axis = .vertical
         $0.distribution = .fillProportionally
-        $0.spacing = UIConstants.Layout.semiMediumPadding
+        $0.spacing = 20
     }
     
     var viewModel: AuthViewModel!
@@ -63,7 +63,7 @@ class CustomAuthPickerViewController: FUIAuthPickerViewController {
         // 最下部に設置
         authStackView.snp.makeConstraints {
             $0.bottom.equalTo(view.snp.bottom)
-            $0.horizontalEdges.equalToSuperview().inset(UIConstants.Layout.standardPadding)
+            $0.horizontalEdges.equalToSuperview().inset(16)
         }
         
         // FirebaseUIのボタンを取得してauthStackViewに追加

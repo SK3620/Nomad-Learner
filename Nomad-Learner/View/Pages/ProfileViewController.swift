@@ -56,11 +56,11 @@ class ProfileViewController: UIViewController {
             $0.center.equalToSuperview()
             // 縦向き
             if orientation == .portrait {
-                $0.horizontalEdges.equalToSuperview().inset(UIConstants.Layout.semiMediumPadding)
+                $0.horizontalEdges.equalToSuperview().inset(20)
                 $0.height.equalToSuperview().multipliedBy(0.55)
                 // 横向き
             } else if orientation == .landscape {
-                $0.verticalEdges.equalToSuperview().inset(UIConstants.Layout.semiMediumPadding)
+                $0.verticalEdges.equalToSuperview().inset(20)
                 $0.width.equalToSuperview().multipliedBy(0.45)
             }
         }

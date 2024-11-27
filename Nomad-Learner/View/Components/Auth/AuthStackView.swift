@@ -154,22 +154,22 @@ class AuthStackView: UIStackView {
         // Google, Apple, Twitterボタン
         providerButtonStackView.snp.makeConstraints {
             $0.height.equalTo(44)
-            $0.horizontalEdges.equalTo(separatorWithText).inset(UIConstants.Layout.largePadding * 2)
+            $0.horizontalEdges.equalTo(separatorWithText).inset(32 * 2)
         }
         
         // 区切り線
         separator.snp.makeConstraints {
-            $0.height.equalTo(UIConstants.StackViewElement.height)
+            $0.height.equalTo(44)
         }
         
         // Dont't you have an account? ボタン
         authModeToggleButton.snp.makeConstraints {
-            $0.height.equalTo(UIConstants.StackViewElement.height)
+            $0.height.equalTo(44)
         }
         
         // アカウント削除ボタン
         deleteAccountButton.snp.makeConstraints {
-            $0.height.equalTo(UIConstants.StackViewElement.height)
+            $0.height.equalTo(44)
         }
     }
     
@@ -177,14 +177,14 @@ class AuthStackView: UIStackView {
     func addProviderButton(_ button: UIButton) {
         // ボタンのタイトルを空に設定
         button.setTitle("", for: .normal)
-        button.layer.cornerRadius = UIConstants.Button.height / 2
+        button.layer.cornerRadius = 44 / 2
         button.snp.makeConstraints {
-            $0.size.equalTo(UIConstants.Button.height)
+            $0.size.equalTo(44)
         }
         // UIImageViewプロパティをカスタマイズ
         if let imageView = button.imageView {
             imageView.snp.makeConstraints {
-                $0.size.equalTo(button).inset(UIConstants.Layout.smallPadding)
+                $0.size.equalTo(button).inset(8)
                 $0.center.equalTo(button) // ボタン中央に配置
             }
         }

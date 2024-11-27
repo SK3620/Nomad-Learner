@@ -127,7 +127,7 @@ extension StudyRoomViewController {
         profileCollectionView.snp.makeConstraints {
             $0.top.equalTo(studyRoomNavigationBar.snp.bottom)
             $0.left.equalTo(view.safeAreaLayoutGuide.snp.left)
-            $0.right.equalTo(chatCollectionView.snp.left).inset(-UIConstants.Layout.smallPadding)
+            $0.right.equalTo(chatCollectionView.snp.left).inset(-8)
             $0.bottom.equalToSuperview()
         }
     }

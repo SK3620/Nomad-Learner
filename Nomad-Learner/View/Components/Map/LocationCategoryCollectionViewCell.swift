@@ -58,7 +58,7 @@ class LocationCategoryCollectionViewCell: UICollectionViewCell {
         }
         
         categoryButton.snp.makeConstraints {
-            $0.size.equalTo(UIConstants.Button.smallHeight)
+            $0.size.equalTo(42)
         }
     }
     
@@ -79,19 +79,34 @@ extension LocationCategoryCollectionViewCell {
     struct SelectionColor {
         let selectedBackgroundColor = ColorCodes.primaryPurple.color()
         let unselectedBackgroundColor = UIColor.white
-        let selectedTintColor = UIColor.white
-        let unselectedTintColor = ColorCodes.primaryPurple.color()
         let selectedTitleColor = ColorCodes.primaryPurple.color()
         let unselectedTitleColor = UIColor.lightGray
     }
     
     func configure(with item: LocationCategory, isSelected: Bool) {
-        titleLabel.text = item.title
-        categoryButton.setImage(UIImage(systemName: item.imageName), for: .normal)
+        categoryButton.setImage(item.image, for: .normal)
         
-        self.categoryButton.backgroundColor = isSelected ? self.selectionColor.selectedBackgroundColor : self.selectionColor.unselectedBackgroundColor
-        self.categoryButton.tintColor = isSelected ? self.selectionColor.selectedTintColor : self.selectionColor.unselectedTintColor
-        self.titleLabel.textColor = isSelected ? self.selectionColor.selectedTitleColor : self.selectionColor.unselectedTitleColor
+        titleLabel.text = item.title
+        
+        categoryButton.backgroundColor = isSelected
+        ? selectionColor.selectedBackgroundColor
+        : selectionColor.unselectedBackgroundColor
+        
+        categoryButton.tintColor = isSelected
+        ? item.selectedColor
+        : item.unSelectedColor
+        
+        titleLabel.textColor = isSelected
+        ? selectionColor.selectedTitleColor
+        : selectionColor.unselectedTitleColor
+        
+        // イメージビューのサイズ調整
+        if [.hasntVisited, .isOngoing, .isCompleted].contains(item) {
+            categoryButton.imageView?.snp.remakeConstraints { $0.size.equalTo(26) }
+        } else {
+            // デフォルトのサイズに戻す
+            categoryButton.imageView?.snp.removeConstraints()
+        }
     }
     
     // ViewModelへのバインディング

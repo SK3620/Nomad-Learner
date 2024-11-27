@@ -95,8 +95,11 @@ extension DepartViewController {
         departView.knobDidReachTopHandler = { [weak self] in
             self?.knobDidReachTopRelay.accept(())
         }
-        // OnFlightVC（出発準備画面）へ遷移
+        
+        // 1秒遅延でOnFlightVC（出発準備画面）へ遷移
         knobDidReachTopRelay
+            .delay(.seconds(1), scheduler: MainScheduler.instance) // メインスレッドで遅延処理
+            .observe(on: MainScheduler.instance) // 遅延後もメインスレッドで実行
             .bind(to: toOnFlightVC)
             .disposed(by: disposeBag)
     }

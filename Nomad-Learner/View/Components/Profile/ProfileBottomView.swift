@@ -155,7 +155,7 @@ extension ProfileBottomView: UITableViewDelegate, UITableViewDataSource {
     private func adjustConstraintsForPositiveOffset() {
         // ProfileBottomViewの制約を更新
         self.snp.remakeConstraints {
-            $0.top.equalToSuperview().inset(16)
+            $0.top.equalToSuperview().inset(44)
             $0.right.left.bottom.equalToSuperview()
         }
         

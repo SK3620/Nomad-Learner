@@ -200,7 +200,7 @@ extension MapViewModel {
         case .all:
             return (locationsInfo, userProfile)
         case .buildings, .nature:
-            filteredLocationsInfo = locationsInfo.filter { $0.fixedLocation.category == category.rawValue }
+            filteredLocationsInfo = locationsInfo.filter { $0.fixedLocation.category.contains(category.rawValue) }
         case .hasntVisited:
             filteredLocationsInfo = locationsInfo.filter { !$0.locationStatus.isCompleted && !$0.locationStatus.isOngoing }
         case .isOngoing:

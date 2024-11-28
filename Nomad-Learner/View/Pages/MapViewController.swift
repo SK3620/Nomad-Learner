@@ -165,7 +165,6 @@ extension MapViewController {
     
     // クラスターマネージャーのセットアップメソッド
     private func setupClusterManager() {
-        
         let iconGenerator = GMUDefaultClusterIconGenerator()
         let algorithm = GMUNonHierarchicalDistanceBasedAlgorithm()
         let renderer = GMUDefaultClusterRenderer(mapView: mapView, clusterIconGenerator: iconGenerator)

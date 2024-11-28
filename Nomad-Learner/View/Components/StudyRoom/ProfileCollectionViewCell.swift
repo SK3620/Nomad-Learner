@@ -84,7 +84,7 @@ extension ProfileCollectionViewCell {
             profileImageView.setImage(with: userProfile.profileImageUrl)
         }
         
-        let content = "\(userProfile.livingPlaceAndWork) / \(userProfile.studyContent) / \(userProfile.goal)"
+        let content = "\(userProfile.studyContent) / \(userProfile.goal) / \(userProfile.others)"
         userNameLabel.text = userProfile.username
         contentLabel.text = content
     }

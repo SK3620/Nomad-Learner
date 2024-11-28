@@ -99,7 +99,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
         // 固定ロケーションの更新の監視を解除
-        viewModel.removeObserverForFixedLocationsChanges()
+        // viewModel.removeObserverForFixedLocationsChanges()
     }
     
     override func viewDidLayoutSubviews() {
@@ -239,10 +239,12 @@ extension MapViewController: KRProgressHUDEnabled, AlertEnabled {
             .disposed(by: disposeBag)
         
         // 各ロケーション情報をリアルタイムリッスンで取得
+        /*
         viewModel.monitoredLocationsAndUserInfo
             .map { ($0, DataHandlingType.listenerTriggered) }
             .drive(handleLocationsInfo)
             .disposed(by: disposeBag)
+         */
         
         // カテゴリーで絞り込み取得
         locationCategoryRelay.asDriver()

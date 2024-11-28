@@ -28,7 +28,7 @@ class MapViewModel {
     // 各ロケーション情報
     var locationsAndUserInfo: Driver<([LocationInfo], User)>
     // 各ロケーション情報（監視）
-    var monitoredLocationsAndUserInfo: Driver<([LocationInfo], User)>
+    // var monitoredLocationsAndUserInfo: Driver<([LocationInfo], User)>
     // ローディングインジケーター
     let isLoading: Driver<Bool>
     // エラー
@@ -93,6 +93,7 @@ class MapViewModel {
             .materialize()
             .share(replay: 1)
         
+        /*
         // 固定ロケーションをリアルタイム監視で取得
         let monitorLocationsInfoResult = mainService.monitorFixedLocationsChanges()
             .skip(1) // 初回起動時、取得した値の整形は行わず、監視の開始のみ実行させる
@@ -107,14 +108,17 @@ class MapViewModel {
             }
             .materialize()
             .share(replay: 1)
+         */
             
         self.locationsAndUserInfo = fetchLocationsInfoResult
             .compactMap { $0.event.element }
             .asDriver(onErrorJustReturn: ([], User()))
         
+        /*
         self.monitoredLocationsAndUserInfo = monitorLocationsInfoResult
             .compactMap { $0.event.element }
             .asDriver(onErrorJustReturn: ([], User()))
+         */
         
         // ロケーション情報取得完了後にRealmから更新保留中の勉強記録データを取得
         fetchLocationsInfoResult
@@ -251,8 +255,10 @@ extension MapViewModel {
         }
     }
     
+    /*
     // 固定ロケーションの更新の監視を解除
     func removeObserverForFixedLocationsChanges() {
         mainService.removeObserver()
     }
+     */
 }

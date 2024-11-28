@@ -17,7 +17,7 @@ protocol MainServiceProtocol {
     // Firebaseからロケーションデータ取得
     func fetchFixedLocations() -> Observable<[FixedLocation]>
     // ロケーション情報の変更を監視
-    func monitorFixedLocationsChanges() -> Observable<[FixedLocation]>
+    // func monitorFixedLocationsChanges() -> Observable<[FixedLocation]>
     // プロフィール画像保存
     func saveProfileImage(image: UIImage) -> Observable<String>
     // ユーザープロフィール保存
@@ -49,8 +49,10 @@ protocol MainServiceProtocol {
     // 所持金に報酬コインを加算
     func updateCurrentCoin(addedRewardCoin: Int) -> Observable<Void>
     
+    /*
     // 監視解除
     func removeObserver()
+     */
     // リスナー解除
     func removeListeners()
 }
@@ -67,10 +69,12 @@ final class MainService: MainServiceProtocol {
     private var listenerForUsersExit: ListenerRegistration?
     private var listenerForNewUsersParticipation: ListenerRegistration?
     
+    /*
     func removeObserver() {
         guard let observer = observerForFixedLocationsChanges else { return }
         firebaseConfig.fixedLocationsReference().removeObserver(withHandle: observer)
     }
+     */
     
     func removeListeners() {
         listenerForUsersExit?.remove()
@@ -107,6 +111,7 @@ final class MainService: MainServiceProtocol {
         }
     }
     
+    /*
     // ロケーション情報の変更を監視
     func monitorFixedLocationsChanges() -> Observable<[FixedLocation]> {
         return Observable.create { observer in
@@ -125,6 +130,7 @@ final class MainService: MainServiceProtocol {
             return Disposables.create()
         }
     }
+     */
     
     // プロフィール画像保存
     func saveProfileImage(image: UIImage) -> Observable<String> {

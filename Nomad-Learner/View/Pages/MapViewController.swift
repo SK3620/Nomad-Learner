@@ -33,6 +33,8 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
     private var viewModel: MapViewModel!
     // マップ
     private var mapView: MapView!
+    // マーカーのクラスタリング
+    private var clusterManager: GMUClusterManager!
     
     private let disposeBag = DisposeBag()
     
@@ -159,6 +161,17 @@ extension MapViewController {
             $0.centerY.equalTo(mapTabBar.snp.top)
             $0.size.equalTo(44)
         }
+    }
+    
+    // クラスターマネージャーのセットアップメソッド
+    private func setupClusterManager() {
+        
+        let iconGenerator = GMUDefaultClusterIconGenerator()
+        let algorithm = GMUNonHierarchicalDistanceBasedAlgorithm()
+        let renderer = GMUDefaultClusterRenderer(mapView: mapView, clusterIconGenerator: iconGenerator)
+        clusterManager = GMUClusterManager(map: mapView, algorithm: algorithm, renderer: renderer)
+        clusterManager.clearItems() // 既存のクラスターをリセット
+        clusterManager.setMapDelegate(self)
     }
     
     // StudyRoomVC（勉強部屋画面）から戻ってきた時、ロケーション情報再取得
@@ -443,8 +456,10 @@ extension MapViewController {
     
     // 取得したロケーションをマーカーとしてマップ上に配置
     private func addMarkersForLocations() {
-        mapView.clear() // 一度リセット
-        mapView.addMarkersForLocations(locationsInfo: locationsInfo)
+        setupClusterManager()
+        // ロケーションマーカーを追加し、クラスタリング
+        clusterManager.add(mapView.addMarkersForLocations(locationsInfo: locationsInfo))
+        clusterManager.cluster()
     }
     
     // 報酬コイン獲得ProgressHUDを表示

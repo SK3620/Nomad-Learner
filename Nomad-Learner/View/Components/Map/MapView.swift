@@ -93,8 +93,9 @@ extension MapView {
         infoWindow?.removeFromSuperview()
     }
     
-    // マップの各ロケーションにマーカーを立てる
-    func addMarkersForLocations(locationsInfo: [LocationInfo]) {
+    func addMarkersForLocations(locationsInfo: [LocationInfo]) -> [GMSMarker] {
+        // マーカーを格納する配列
+        var markerArray: [GMSMarker] = []
         // 各固定ロケーションに対してマーカーを作成
         for locationInfo in locationsInfo {
             // 新しいマーカーを作成
@@ -107,8 +108,10 @@ extension MapView {
             marker.iconView = markerIconView
             marker.userData = locationInfo // マーカーに関連するデータを保存
             
-            marker.map = self
+            // 作成したマーカーを配列に追加
+            markerArray.append(marker)
         }
+        return markerArray
     }
 }
 

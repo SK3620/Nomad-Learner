@@ -23,6 +23,12 @@ class OnFlightViewModel {
     
     init(mainService: MainServiceProtocol, locationInfo: LocationInfo) {
         
+        // 一度全キャッシュクリア
+        ImageCacheManager.clearCache()
+        // 必要な画像のみプリフェッチ
+        let imageUrls = locationInfo.fixedLocation.imageUrls.compactMap { URL(string: $0) }
+        ImageCacheManager.prefetch(from: imageUrls)
+        
         let locationId = locationInfo.fixedLocation.locationId // ロケーションID
         let remainingCoin = locationInfo.ticketInfo.remainingCoin // 旅費支払い後の残高
         

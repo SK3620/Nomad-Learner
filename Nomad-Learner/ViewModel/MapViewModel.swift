@@ -133,9 +133,10 @@ extension MapViewModel {
     private static func createLocationsInfoAndUserProfile(tuple: ([FixedLocation], [DynamicLocation], [VisitedLocation], User)) -> ([LocationInfo], User) {
         let (fixedLocations, dynamicLocations, visitedLocations, userProfile) = tuple
         
-        // キャッシュのクリアと画像のプリフェッチ
+        // 全てのキャッシュのクリア
         ImageCacheManager.clearCache()
-        let imageUrls = fixedLocations.flatMap(\.imageUrls).compactMap(URL.init)
+        // 各ロケーションの最初の画像のみプリフェッチ
+        let imageUrls = fixedLocations.compactMap(\.imageUrls.first).compactMap(URL.init)
         ImageCacheManager.prefetch(from: imageUrls)
         
         // プロフィール画像をプリフェッチ（空の場合はスキップ）
@@ -248,5 +249,10 @@ extension MapViewModel {
                 })
                 .disposed(by: disposeBag)
         }
+    }
+    
+    // 固定ロケーションの更新の監視を解除
+    func removeObserverForFixedLocationsChanges() {
+        mainService.removeObserver()
     }
 }

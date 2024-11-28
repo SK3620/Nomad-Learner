@@ -49,6 +49,8 @@ protocol MainServiceProtocol {
     // 所持金に報酬コインを加算
     func updateCurrentCoin(addedRewardCoin: Int) -> Observable<Void>
     
+    // 監視解除
+    func removeObserver()
     // リスナー解除
     func removeListeners()
 }
@@ -61,8 +63,14 @@ final class MainService: MainServiceProtocol {
     
     private init(){}
     
+    private var observerForFixedLocationsChanges: UInt?
     private var listenerForUsersExit: ListenerRegistration?
     private var listenerForNewUsersParticipation: ListenerRegistration?
+    
+    func removeObserver() {
+        guard let observer = observerForFixedLocationsChanges else { return }
+        firebaseConfig.fixedLocationsReference().removeObserver(withHandle: observer)
+    }
     
     func removeListeners() {
         listenerForUsersExit?.remove()
@@ -103,7 +111,7 @@ final class MainService: MainServiceProtocol {
     func monitorFixedLocationsChanges() -> Observable<[FixedLocation]> {
         return Observable.create { observer in
             let ref = self.firebaseConfig.fixedLocationsReference()
-            let handle = ref.observe(.value) { snapshot in
+            self.observerForFixedLocationsChanges = ref.observe(.value) { snapshot in
                 var locations = [FixedLocation]()
                 for child in snapshot.children {
                     if let childSnapshot = child as? DataSnapshot,
@@ -114,9 +122,7 @@ final class MainService: MainServiceProtocol {
                 }
                 observer.onNext(locations)
             }
-            return Disposables.create {
-                ref.removeObserver(withHandle: handle)
-            }
+            return Disposables.create()
         }
     }
     

@@ -85,12 +85,31 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // UIのセットアップ
+        // UIセットアップ＆バインディング
         setupUI()
-        // viewModelとのバインディング
         bind()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        // StudyRoomVC（勉強部屋画面）から戻ってきた時、ロケーション情報再取得
+        fetchLocationsInfoWithRewardAlert()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        // 固定ロケーションの更新の監視を解除
+        viewModel.removeObserverForFixedLocationsChanges()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        // 子ビューのレイアウト完了後にcollectionViewのitemSizeを決定する
+        let layout = locationDetailView.locationCategoryCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        layout.itemSize = CGSize(width: locationDetailView.bounds.width / 4, height: locationDetailView.bounds.height / 2)
+    }
+}
+
+extension MapViewController {
     private func setupUI() {
         // マップを表示
         let options = GMSMapViewOptions()
@@ -142,21 +161,14 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        // StudyRoomVC（勉強部屋画面）から戻ってきた時、ロケーション情報再取得
+    // StudyRoomVC（勉強部屋画面）から戻ってきた時、ロケーション情報再取得
+    private func fetchLocationsInfoWithRewardAlert() {
         if fromScreen == .studyRoomVC {
             viewModel.locationsAndUserInfo
                 .map { ($0, DataHandlingType.fetchWithRewardAlert) }
                 .drive(handleLocationsInfo)
                 .disposed(by: disposeBag)
         }
-    }
-    
-    override func viewDidLayoutSubviews() {
-        // 子ビューのレイアウト完了後にcollectionViewのitemSizeを決定する
-        let layout = locationDetailView.locationCategoryCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
-        layout.itemSize = CGSize(width: locationDetailView.bounds.width / 4, height: locationDetailView.bounds.height / 2)
     }
 }
 

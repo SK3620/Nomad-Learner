@@ -12,9 +12,10 @@ import SVGKit
 
 extension UIImageView {
     
+    // ロケーション画像表示
     func setImage(with urlString: String) {
         guard let url = URL(string: urlString) else {
-            self.image = UIImage(named: "photo") // URLが不正の場合はデフォルトの画像
+            self.image = UIImage(systemName: "photo") // URLが不正の場合はデフォルトの画像
             return
         }
         
@@ -30,12 +31,22 @@ extension UIImageView {
         }
     }
     
+    // SVG国旗画像表示
     func setSVGImage(with urlString: String) {
         guard let url = URL(string: urlString) else {
-            self.image = UIImage(named: "photo") // URLが不正の場合はデフォルトの画像
+            self.image = UIImage(systemName: "photo") // URLが不正の場合はデフォルトの画像
             return
         }
-        self.kf.setImage(with: url, options: [.processor(SVGImgProcessor())])
+        self.kf.setImage(with: url, options: [.processor(SVGImgProcessor())]) { result in
+            switch result {
+            case .success(let value):
+                print("SVG画像国旗を表示しました")
+            case .failure(let error):
+                // SVGではない国旗画像（png等）の場合は、setImage(with:)で通常表示
+                print("Failed to load image, error: \(error)")
+                self.setImage(with: urlString)
+            }
+        }
     }
 }
 

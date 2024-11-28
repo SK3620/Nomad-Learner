@@ -99,6 +99,8 @@ extension LocationCategoryCollectionViewCell {
         ? selectionColor.selectedTitleColor
         : selectionColor.unselectedTitleColor
         
+        categoryButton.isUserInteractionEnabled = !isSelected
+        
         // イメージビューのサイズ調整
         if [.hasntVisited, .isOngoing, .isCompleted].contains(item) {
             categoryButton.imageView?.snp.remakeConstraints { $0.size.equalTo(26) }

@@ -17,7 +17,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
     // 各ロケーションの情報
     private var locationsInfo: [LocationInfo] = []
     // タップされたマーカーのロケーション情報
-    private var locationInfo: LocationInfo?
+    private var tappedLocationInfo: LocationInfo?
     // ユーザープロフィール情報
     var userProfile: User = User()
     // どの画面から戻ってきたかを記録するプロパティ
@@ -315,7 +315,7 @@ extension MapViewController {
     // DepartVC（出発画面）へ遷移制御
     private var departVCAccessControl: Binder<Void> {
         return Binder(self) { base, _ in
-            guard let locationInfo = base.locationInfo else { return }
+            guard let locationInfo = base.tappedLocationInfo else { return }
             
             let isSufficientCoin = locationInfo.locationStatus.isSufficientCoin
             let hasntVisited = locationInfo.visitedLocation == nil
@@ -379,10 +379,12 @@ extension MapViewController {
     // 現在地のInfoWindow表示
     private var displayCurrentLocationInfoWindow: Binder<Void> {
         return Binder(self) { base, _ in
-            guard let currentCoordinate = base.mapView.currentCoordinate else { return }
-            let marker = GMSMarker(position: currentCoordinate)
-            marker.userData = base.locationsInfo.getCurrentLocationInfo(with: base.userProfile.currentLocationId)
-            base.markerTapped(marker: marker)
+            guard let currentLocationInfo = base.locationsInfo.getCurrentLocationInfo(with: base.userProfile.currentLocationId),
+                  let currentCoordinate = base.mapView.currentCoordinate else {
+                return
+            }
+            base.mapView.tappedMarker = GMSMarker(position: currentCoordinate)
+            base.markerTapped(locationInfo: currentLocationInfo)
             base.moveToCurrentLocation.onNext(())
         }
     }
@@ -449,8 +451,8 @@ extension MapViewController {
     // 現在地のロケーション情報を取得し、UIを更新
     private func updateUI() {
         let currentLocationId = userProfile.currentLocationId
-        locationInfo = locationsInfo.getCurrentLocationInfo(with: currentLocationId)
-        locationDetailView.update(ticketInfo: locationInfo!.ticketInfo, locationStatus: locationInfo!.locationStatus)
+        tappedLocationInfo = locationsInfo.getCurrentLocationInfo(with: currentLocationId)
+        locationDetailView.update(ticketInfo: tappedLocationInfo!.ticketInfo, locationStatus: tappedLocationInfo!.locationStatus)
         currentCoinLabel.text = userProfile.currentCoin.toString
     }
     
@@ -470,27 +472,35 @@ extension MapViewController {
     }
     
     // マーカータップ時の処理
-    private func markerTapped(marker: GMSMarker) {
-        // プロパティを更新
-        self.mapView.tappedMarker = marker
-        
-        // マーカーの関連情報を取得
-        guard let locationInfo = marker.userData as? LocationInfo else { return }
-        self.locationInfo = locationInfo
+    private func markerTapped(locationInfo: LocationInfo) {
+        // タップされたマーカーのロケーション情報を保持させておく
+        self.tappedLocationInfo = locationInfo
         
         // LocationDetailViewのUIを更新
-        locationDetailView.update(ticketInfo: locationInfo.ticketInfo, locationStatus: locationInfo.locationStatus)
+        locationDetailView.update(ticketInfo: tappedLocationInfo!.ticketInfo, locationStatus: tappedLocationInfo!.locationStatus)
         
         // マーカーが初期位置なら出発ボタンを無効にする
-        mapTabBar.airplaneItem.isEnabled = !locationInfo.locationStatus.isInitialLocation
+        mapTabBar.airplaneItem.isEnabled = !(tappedLocationInfo!.locationStatus.isInitialLocation)
         
         // InfoWindowを生成・表示
-        self.mapView.addInfoWindow(locationInfo: locationInfo)
-        
+        mapView.addInfoWindow(locationInfo: tappedLocationInfo!)
+
         // 現在位置の場合はポリラインを削除 それ以外の場合はポリラインを描画
-        locationInfo.locationStatus.isMyCurrentLocation
-        ? self.mapView.clearPolyline()
-        : self.mapView.drawPolyline(from: self.mapView.currentCoordinate, to: marker.position)
+        tappedLocationInfo!.locationStatus.isMyCurrentLocation
+        ? mapView.clearPolyline()
+        : mapView.drawPolyline(from: mapView.currentCoordinate, to: tappedLocationInfo!.fixedLocation.coordinate)
+    }
+    
+    // クラスタータップ時の処理
+    private func clusterTapped(cluster: GMUCluster) {
+        // カメラズーム
+        mapView.animate(toZoom: mapView.currentZoom + 1)
+        // 表示中のInfoWindowを非表示
+        mapView.removeInfoWindow()
+        // 出発ボタンを無効
+        mapTabBar.airplaneItem.isEnabled = false
+        // ポリライン削除
+        mapView.clearPolyline()
     }
 }
 
@@ -498,7 +508,15 @@ extension MapViewController: CLLocationManagerDelegate {
     
     // マーカータップ時
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
-        markerTapped(marker: marker)
+        // マーカータップ
+        if let tappedLocationInfo = marker.userData as? LocationInfo  {
+            self.mapView.tappedMarker = marker
+            markerTapped(locationInfo: tappedLocationInfo)
+        }
+        // クラスタータップ
+        if let cluster = marker.userData as? GMUCluster {
+            clusterTapped(cluster: cluster)
+        }
         return false
     }
     

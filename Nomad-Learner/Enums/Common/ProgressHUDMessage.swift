@@ -71,7 +71,7 @@ enum ProgressHUDMessage {
 extension ProgressHUDMessage {
     private func configureMessage(info: RewardCoinProgressHUDInfo) -> String {
         let bonusCoinMessage = """
-            ＋\(info.bonusCoin)（50×\(info.studyHoursForBonus)時間)
+            ＋\(info.bonusCoin)（\(MyAppSettings.bonusCoinMultiplier)×\(info.studyHoursForBonus)時間)
         """
         
         let rewardCoinMessage: String

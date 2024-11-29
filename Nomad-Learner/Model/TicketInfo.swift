@@ -85,6 +85,6 @@ extension TicketInfo {
     
     // 報酬コインの計算
     private static func calculateRewardCoin(for distance: Int) -> Int {
-        Int(Double(distance) * 1.2)
+        Int(Double(distance) * MyAppSettings.rewardCoinMultiplier)
     }
 }

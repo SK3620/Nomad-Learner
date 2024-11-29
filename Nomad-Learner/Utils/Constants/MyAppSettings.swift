@@ -16,8 +16,10 @@ struct MyAppSettings {
     /// 必要な最大勉強時間（時間単位）
     public static let maxRequiredStudyHours: Int = 100
         
+    /// 報酬コイン計算用の固定値
+    public static let rewardCoinMultiplier: Double = 1.7
     /// ボーナスコイン計算用の固定値
-    public static let bonusCoinMultiplier: Int = 50
+    public static let bonusCoinMultiplier: Int = 100
     
     /// ユーザー初期位置
     public static let userInitialLocationId = "mount_fuji"

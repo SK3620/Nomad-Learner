@@ -65,10 +65,22 @@ extension TicketInfo {
     
     // 必要な合計勉強時間を計算
     private static func calculateRequiredStudyHours(for distance: Int) -> Int {
-        // アプリ内で定める最低距離よりも小さい場合、最低限必要な勉強時間（固定値）を返す
-        MyAppSettings.minDistance > distance
-        ? MyAppSettings.minRequiredStudyHours
-        : distance / 100
+        // 10000km以上は必要な最大勉強時間（固定値）を返す
+        if distance >= 10000 {
+            return MyAppSettings.maxRequiredStudyHours
+        }
+        
+        let requiredStudyHours: Int
+        
+        if distance < 1_000 {
+            // 1,000km未満の場合の計算
+            requiredStudyHours = (distance / 10) / 2
+            return max(requiredStudyHours, MyAppSettings.minRequiredStudyHours)
+        } else {
+            // 1,000km以上10,000km未満の場合の計算
+            requiredStudyHours = ((distance / 100) + 100) / 2
+            return requiredStudyHours
+        }
     }
     
     // 報酬コインの計算

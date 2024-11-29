@@ -28,6 +28,8 @@
 		831E5C862CC4AAC3001A90C4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831E5C852CC4AAC3001A90C4 /* User.swift */; };
 		831E5C882CC4B493001A90C4 /* VisitedLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831E5C872CC4B493001A90C4 /* VisitedLocation.swift */; };
 		831E5C8C2CC4B4F6001A90C4 /* FixedLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831E5C8B2CC4B4F6001A90C4 /* FixedLocation.swift */; };
+		83291A282CF9F3DE00C065CA /* WalkThroughViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83291A272CF9F3DE00C065CA /* WalkThroughViewController.swift */; };
+		83291A2A2CFA006200C065CA /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83291A292CFA006200C065CA /* UIImage.swift */; };
 		834478612CCA4A680038C7B9 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834478602CCA4A680038C7B9 /* ImageCacheManager.swift */; };
 		834478632CCA65380038C7B9 /* UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834478622CCA65380038C7B9 /* UITextView.swift */; };
 		834478652CCD52680038C7B9 /* DynamicLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834478642CCD52680038C7B9 /* DynamicLocation.swift */; };
@@ -148,6 +150,8 @@
 		831E5C852CC4AAC3001A90C4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		831E5C872CC4B493001A90C4 /* VisitedLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisitedLocation.swift; sourceTree = "<group>"; };
 		831E5C8B2CC4B4F6001A90C4 /* FixedLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedLocation.swift; sourceTree = "<group>"; };
+		83291A272CF9F3DE00C065CA /* WalkThroughViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalkThroughViewController.swift; sourceTree = "<group>"; };
+		83291A292CFA006200C065CA /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		834478602CCA4A680038C7B9 /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
 		834478622CCA65380038C7B9 /* UITextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextView.swift; sourceTree = "<group>"; };
 		834478642CCD52680038C7B9 /* DynamicLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicLocation.swift; sourceTree = "<group>"; };
@@ -308,6 +312,7 @@
 				8304A0E12CA5123300061B33 /* AuthViewController.swift */,
 				83A9C2BD2CA7BF2200898F0B /* CustomAuthPickerViewController.swift */,
 				838753E32CB00A4B001EE8F1 /* MapViewController.swift */,
+				83291A272CF9F3DE00C065CA /* WalkThroughViewController.swift */,
 				83A6D7BA2CB6195E00D18A30 /* ProfileViewController.swift */,
 				83A6D7D32CB807F100D18A30 /* EditProfileViewController.swift */,
 				83A6D7DF2CB8DA8600D18A30 /* DepartViewController.swift */,
@@ -594,6 +599,7 @@
 				83AFB3A92CB2902C00501FEE /* UIView.swift */,
 				83A6D7A82CB3D7B000D18A30 /* UIScrollView.swift */,
 				830498CD2CC6A714003973EC /* UIImageView.swift */,
+				83291A292CFA006200C065CA /* UIImage.swift */,
 				83A6D7B42CB4BF2500D18A30 /* Observable.swift */,
 				83AC8F0C2CF6CF8300FB57B3 /* Driver.swift */,
 			);
@@ -816,6 +822,7 @@
 				831731CC2CE228670092AE89 /* MyAppSettings.swift in Sources */,
 				83C5E1312CBF7AFE001C27E1 /* NavigationControllerForMapVC.swift in Sources */,
 				834478692CCF9CE60038C7B9 /* TicketInfo.swift in Sources */,
+				83291A2A2CFA006200C065CA /* UIImage.swift in Sources */,
 				83A6D7B72CB4D3CF00D18A30 /* LocationCategoryCollectionView.swift in Sources */,
 				831731C42CDB0F910092AE89 /* StudyProgressSummary.swift in Sources */,
 				836180E62CBB81E80059937E /* ScreenSizeProvidable.swift in Sources */,
@@ -877,6 +884,7 @@
 				83A6D7C82CB68A7700D18A30 /* StudyTimeLabel.swift in Sources */,
 				83A9C2C92CA8378C00898F0B /* UIConstants.swift in Sources */,
 				83A6D7B52CB4BF2500D18A30 /* Observable.swift in Sources */,
+				83291A282CF9F3DE00C065CA /* WalkThroughViewController.swift in Sources */,
 				836180E12CBB68490059937E /* ProfileCollectionView.swift in Sources */,
 				83A9C2C02CA7C9B700898F0B /* AuthStackView.swift in Sources */,
 				83AC8F002CF6CCCA00FB57B3 /* ProgressHUDMessage.swift in Sources */,

@@ -28,6 +28,8 @@ protocol RouterProtocol {
     static func showRoot(window: UIWindow)
     // AuthVC（認証画面）→ MapVC（マップ画面）
     static func showMap(vc: UIViewController)
+    // MapVC（マップ画面）→ WalkThrough（ウォークスルー画面）
+    static func showWalkThoughVC(vc: UIViewController)
     // MapVC（マップ画面）/ StudyRoomVC（勉強部屋画面）→ ProfileVC（プロフィール画面）
     static func showProfile(vc: UIViewController, with userProfile: User)
     // ProfileVC → EditProfileVC（プロフィール編集画面）
@@ -51,6 +53,11 @@ protocol RouterProtocol {
 }
 
 final class Router {
+    
+    public static let shared = Router()
+    
+    private init(){}
+    
     // from -> to にプッシュ遷移
     private static func push(from: UIViewController, to: UIViewController, animated: Bool = true) {
         if let nav = from.navigationController {
@@ -92,6 +99,13 @@ extension Router: RouterProtocol {
         navigationController.modalTransitionStyle = .crossDissolve
         navigationController.modalPresentationStyle = .fullScreen
         modal(from: vc, to: navigationController)
+    }
+    
+    // MapVC（マップ画面）→ WalkThrough（ウォークスルー画面）
+    static func showWalkThoughVC(vc: UIViewController) {
+        let walkThroughViewController = WalkThroughViewController()
+        walkThroughViewController.modalPresentationStyle = .fullScreen
+        modal(from: vc, to: walkThroughViewController)
     }
     
     // MapVC（マップ画面）/ StudyRoomVC（勉強部屋画面）→ ProfileVC（プロフィール画面）

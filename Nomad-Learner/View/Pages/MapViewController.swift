@@ -42,6 +42,15 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
     private let backBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: nil, action: nil).then {
         $0.tintColor = .lightGray
     }
+    // ウォークスルー画面遷移ボタン
+    private let walkThroughBarButtonItem: UIBarButtonItem = {
+        let originalImage = UIImage(named: "Webinar")!
+        // 画像のリサイズ
+        let resizedImage = originalImage.resize(to: CGSize(width: 28, height: 28))
+        // リサイズ後の画像に色を適用
+        let tintedImage = resizedImage?.withTintColor(.orange, renderingMode: .alwaysOriginal)
+        return UIBarButtonItem(image: tintedImage, style: .plain, target: nil, action: nil)
+    }()
     // リローディングボタン
     private let reloadButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.circlepath"), style: .plain, target: nil, action: nil).then {
         $0.tintColor = ColorCodes.primaryPurple.color()
@@ -69,7 +78,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
     // お財布アイコン
     private let walletImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFit
-        $0.image = UIImage(named: "wallet")
+        $0.image = UIImage(named: "Wallet")
         $0.snp.makeConstraints { $0.size.equalTo(26) }
     }
     
@@ -123,8 +132,8 @@ extension MapViewController {
         navigationController?.navigationBar.shadowImage = UIImage()
         
         // ナビゲーションバーボタンアイテムの設定
-        navigationItem.leftBarButtonItems = [backBarButtonItem, reloadButtonItem]
-        navigationItem.rightBarButtonItem = profileBarButtonItem
+        navigationItem.leftBarButtonItems = [backBarButtonItem, walkThroughBarButtonItem]
+        navigationItem.rightBarButtonItems = [profileBarButtonItem, reloadButtonItem]
         navigationItem.titleView = walletStackView
         
         view.addSubview(mapView)
@@ -189,6 +198,11 @@ extension MapViewController: KRProgressHUDEnabled, AlertEnabled {
         // AuthVC（認証画面）へ遷移
         backBarButtonItem.rx.tap
             .bind(to: backToAuthVC)
+            .disposed(by: disposeBag)
+        
+        // WalkThroughVC（ウォークスルー画面）へ遷移
+        walkThroughBarButtonItem.rx.tap
+            .bind(to: toWalkThroughVC)
             .disposed(by: disposeBag)
         
         // ProfileVC（プロフィール画面）へ遷移
@@ -343,9 +357,9 @@ extension MapViewController {
         }
     }
     // AuthVC（認証画面）へ遷移
-    private var backToAuthVC: Binder<Void> {
-        return Binder(self) { base, _ in Router.dismissModal(vc: base) }
-    }
+    private var backToAuthVC: Binder<Void> { Binder(self) { base, _ in Router.dismissModal(vc: base) } }
+    // WalkThroughVC（ウォークスルー画面）へ遷移
+    private var toWalkThroughVC: Binder<Void> { Binder(self) { base, _ in Router.showWalkThoughVC(vc: base) } }
     // 取得したロケーション情報とユーザー情報を制御
     private var handleLocationsInfo: Binder<(([LocationInfo], User), DataHandlingType)> {
         return Binder(self) { base, tuple in

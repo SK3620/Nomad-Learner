@@ -55,7 +55,7 @@ class TicketView: UIView {
     
     // 距離のアイコン
     private let distanceImageView = UIImageView().then {
-        $0.image = UIImage(named: "distance")
+        $0.image = UIImage(named: "TravelDistanceAndCost")
     }
     
     // 距離アイコンとコインアイコンの区切り線
@@ -66,7 +66,7 @@ class TicketView: UIView {
     
     // コインのアイコン
     private let coinImageView = UIImageView().then {
-        $0.image = UIImage(named: "coin")
+        $0.image = UIImage(named: "Coin")
     }
     
     // 距離と旅費（距離==旅費）
@@ -107,7 +107,7 @@ class TicketView: UIView {
     }
     
     // ミッションのアイコン
-    private let missionImageView = UIImageView(image: UIImage(named: "Study2"))
+    private let missionImageView = UIImageView(image: UIImage(named: "Study"))
     
     // 合計勉強時間
     private let totalStudyTimeLabel = UILabel().then {

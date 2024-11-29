@@ -90,7 +90,7 @@ class DepartView: UIView {
     
     // お財布のアイコン
     private let walletImageView = UIImageView().then {
-        $0.image = UIImage(named: "wallet")
+        $0.image = UIImage(named: "Wallet")
     }
     
     // ユーザーが持つ現在の所持金

@@ -24,7 +24,7 @@ struct User {
         username: String = "ー",
         profileImageUrl: String = "",
         currentLocationId: String = "",
-        currentCoin: Int = 100000,
+        currentCoin: Int = 0,
         livingPlaceAndWork: String = "ー",
         studyContent: String = "ー",
         goal: String = "ー",

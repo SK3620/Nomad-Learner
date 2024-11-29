@@ -114,7 +114,8 @@ class AuthViewModel {
                         .map { User(
                             userId: $0.uid,
                             username: $0.displayName!,
-                            currentLocationId: MyAppSettings.userInitialLocationId
+                            currentLocationId: MyAppSettings.userInitialLocationId,
+                            currentCoin: MyAppSettings.userInitialCurrentCoin
                         ) }
                         .flatMap { mainService.saveUserProfile(user: $0, shouldUpdate: false) }
                         .materialize()

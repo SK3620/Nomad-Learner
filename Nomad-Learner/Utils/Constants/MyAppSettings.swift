@@ -21,8 +21,10 @@ struct MyAppSettings {
     /// ボーナスコイン計算用の固定値
     public static let bonusCoinMultiplier: Int = 100
     
+    /// ユーザー初期所持金
+    public static let userInitialCurrentCoin: Int = 10000
     /// ユーザー初期位置
-    public static let userInitialLocationId = "mount_fuji"
+    public static let userInitialLocationId: String = "mount_fuji"
     /// ユーザー初期位置 座標
     public static let userInitialLocationCoordinate = CLLocationCoordinate2D(latitude: 35.361, longitude: 138.727)
     /// ユーザー初期位置 座標 カメラ

@@ -138,7 +138,8 @@ class AuthViewModel {
                                 let userProfile = User(
                                     userId: user.uid,
                                     username: user.displayName ?? "",
-                                    currentLocationId: MyAppSettings.userInitialLocationId
+                                    currentLocationId: MyAppSettings.userInitialLocationId,
+                                    currentCoin: MyAppSettings.userInitialCurrentCoin
                                 )
                                 return mainService.saveUserProfile(user: userProfile, shouldUpdate: false)
                             }

@@ -350,6 +350,8 @@ extension MapViewController {
     private var handleLocationsInfo: Binder<(([LocationInfo], User), DataHandlingType)> {
         return Binder(self) { base, tuple in
             let ((locationsInfo, userProfile), dataHandlingType) = tuple
+            // 現在地ロケーションIDは存在しなければならない
+            guard !(userProfile.currentLocationId.isEmpty) else { return }
             
             // プロパティ更新
             base.locationsInfo = locationsInfo

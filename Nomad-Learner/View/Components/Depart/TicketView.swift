@@ -174,19 +174,19 @@ class TicketView: UIView {
     
     // スラッシュ線2
     private let slashView2 = UIView().then {
-        $0.backgroundColor = .darkGray
+        $0.backgroundColor = .gray
         $0.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 4)
         $0.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi) * 2 * 15 / 360)
         $0.snp.makeConstraints {
-            $0.size.equalTo(CGSize(width: 2, height: 15))
+            $0.size.equalTo(CGSize(width: 1.5, height: 15))
         }
     }
     
     // ボーナスタイトルlabel（達成後に表示）
     private let bonusTitleLabel = UILabel().then {
-        $0.text = "1時間ごと"
-        $0.textColor = .darkGray
-        $0.font = .systemFont(ofSize: 14)
+        $0.text = "1時間毎"
+        $0.textColor = .gray
+        $0.font = .systemFont(ofSize: 13)
     }
     
     private lazy var bonusStackView: UIStackView = {
@@ -281,7 +281,7 @@ class TicketView: UIView {
         
         // 距離アイコン
         distanceImageView.snp.makeConstraints {
-            $0.size.equalTo(CGSize(width: 45, height: 25))
+            $0.size.equalTo(CGSize(width: 45, height: 45))
             $0.left.equalToSuperview().inset(8)
             $0.centerY.equalToSuperview()
         }
@@ -295,7 +295,7 @@ class TicketView: UIView {
         
         // コインアイコン
         coinImageView.snp.makeConstraints {
-            $0.size.equalTo(distanceImageView.snp.height)
+            $0.size.equalTo(CGSize(width: 25, height: 25))
             $0.left.equalTo(IconImageDivider.snp.right)
             $0.centerY.equalToSuperview()
         }

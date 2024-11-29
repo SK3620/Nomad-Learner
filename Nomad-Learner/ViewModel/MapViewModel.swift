@@ -75,14 +75,14 @@ class MapViewModel {
         )
 
         // マップに配置するロケーション関連の情報取得
-        let fetchLocationsInfoResult = mainService.fetchFixedLocations()
+        let fetchLocationsAndUserInfoResult = mainService.fetchFixedLocations()
             .flatMap { fixedLocations in
                 zip.map { dynamicLocations, visitedLocations, userProfile in
                     let tuple = (fixedLocations, dynamicLocations, visitedLocations, userProfile)
                     let locationsAndUserInfo = MapViewModel.createLocationsInfoAndUserProfile(tuple: tuple)
                     MapViewModel.allLocationsAndUserInfo = locationsAndUserInfo
-                    let filteredLocationsInfo = MapViewModel.filter(locationsAndUserInfo, by: locationCategoryRelay.value)
-                    return filteredLocationsInfo
+                    let filteredLocationsAndUserInfo = MapViewModel.filter(locationsAndUserInfo, by: locationCategoryRelay.value)
+                    return filteredLocationsAndUserInfo
                 }
             }
             .catch { error in // ストリームを終了させない
@@ -110,7 +110,7 @@ class MapViewModel {
             .share(replay: 1)
          */
             
-        self.locationsAndUserInfo = fetchLocationsInfoResult
+        self.locationsAndUserInfo = fetchLocationsAndUserInfoResult
             .compactMap { $0.event.element }
             .asDriver(onErrorJustReturn: ([], User()))
         
@@ -121,7 +121,7 @@ class MapViewModel {
          */
         
         // ロケーション情報取得完了後にRealmから更新保留中の勉強記録データを取得
-        fetchLocationsInfoResult
+        fetchLocationsAndUserInfoResult
             .compactMap { $0.event.element }
             .concatMap { _ in realmService.fetchPendingUpdateData() }
             .compactMap { $0 }
@@ -196,9 +196,11 @@ extension MapViewModel {
         _ allLocationsAndUserInfo: ([LocationInfo], User)? = MapViewModel.allLocationsAndUserInfo,
         by category: LocationCategory
     ) -> ([LocationInfo], User) {
-        guard let (locationsInfo, userProfile) = allLocationsAndUserInfo else { return ([], User()) }
+        guard let (locationsInfo, userProfile) = allLocationsAndUserInfo,
+              let myLocationsInfo = locationsInfo.getCurrentLocationInfo(with: userProfile.currentLocationId) else {
+            return ([], User())
+        }
         // 現在地のロケーション情報を取得
-        let myLocationsInfo = locationsInfo.getCurrentLocationInfo(with: userProfile.currentLocationId)
         // 絞り込み結果
         var filteredLocationsInfo: [LocationInfo] = []
         switch category {
@@ -214,7 +216,7 @@ extension MapViewModel {
             filteredLocationsInfo = locationsInfo.filter { $0.locationStatus.isCompleted }
         }
         // 現在地のロケーション情報も含める
-        return (filteredLocationsInfo + [myLocationsInfo!], userProfile)
+        return (filteredLocationsInfo + [myLocationsInfo], userProfile)
     }
 }
 

@@ -25,10 +25,10 @@ class ProfileViewController: UIViewController {
     private let disposeBag = DisposeBag()
     
     // ユーザープロフィール情報を渡す
-    private lazy var profileView: ProfileView = ProfileView(userProfile: self.userProfile)
+    private lazy var profileView: ProfileView = ProfileView(orientation: self.orientation, with: self.userProfile)
     
     // カスタムイニシャライザ
-    init(orientation: ScreenOrientation = .portrait, with userProfile: User) {
+    init(orientation: ScreenOrientation, with userProfile: User) {
         self.orientation = orientation
         self.userProfile = userProfile
         super.init(nibName: nil, bundle: nil)
@@ -61,7 +61,7 @@ class ProfileViewController: UIViewController {
                 // 横向き
             } else if orientation == .landscape {
                 $0.verticalEdges.equalToSuperview().inset(20)
-                $0.width.equalToSuperview().multipliedBy(0.45)
+                $0.width.equalTo(view.viewHeight - 32)
             }
         }
         

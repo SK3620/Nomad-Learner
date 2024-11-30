@@ -14,6 +14,8 @@ class ProfileBottomView: UIView {
     
     var userProfile: User
     
+    var orientation: ScreenOrientation
+    
     // profileTableViewのアニメーション時のデフォルト位置
     private var defaultPositionY = CGFloat()
     
@@ -46,8 +48,9 @@ class ProfileBottomView: UIView {
         $0.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
     }
     
-    init(userProfile: User) {
+    init(orientation: ScreenOrientation, with userProfile: User) {
         self.userProfile = userProfile
+        self.orientation = orientation
         
         super.init(frame: .zero)
         backgroundColor = .white
@@ -100,6 +103,10 @@ class ProfileBottomView: UIView {
         super.draw(rect)
         
         self.defaultPositionY = self.frame.origin.y
+        // 画面横向き時のUIの調整
+        if self.orientation == .landscape {
+            self.adjustConstraintsForPositiveOffset()
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -152,7 +159,7 @@ extension ProfileBottomView: UITableViewDelegate, UITableViewDataSource {
     }
     
     // 下にスクロールした場合の制約調整
-    private func adjustConstraintsForPositiveOffset() {
+    func adjustConstraintsForPositiveOffset() {
         // ProfileBottomViewの制約を更新
         self.snp.remakeConstraints {
             $0.top.equalToSuperview().inset(44)

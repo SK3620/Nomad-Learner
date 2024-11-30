@@ -14,16 +14,19 @@ class ProfileView: UIView {
     
     var userProfile: User
     
+    var orientation: ScreenOrientation
+    
     let navigationBar: ProfileNavigationBar = ProfileNavigationBar()
     
     lazy var profileTopView: ProfileTopView = ProfileTopView(userProfile: self.userProfile)
     
-    lazy var profileBottomView: ProfileBottomView = ProfileBottomView(userProfile: self.userProfile)
+    lazy var profileBottomView: ProfileBottomView = ProfileBottomView(orientation: self.orientation, with: self.userProfile)
     
     private let profileTopViewHeight: CGFloat = 80
     
-    init(userProfile: User) {
+    init(orientation: ScreenOrientation, with userProfile: User) {
         self.userProfile = userProfile
+        self.orientation = orientation
         super.init(frame: .zero)
         
         setupUI()

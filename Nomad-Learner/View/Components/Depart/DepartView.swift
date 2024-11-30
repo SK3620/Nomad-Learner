@@ -232,7 +232,7 @@ extension DepartView {
         
         if sender.state == .ended {
             // つまみから指が離れた時の処理
-            if knobCenterY < endCenterY * 2 {
+            if knobCenterY < endCenterY * 1.5 {
                 newCenterY = endCenterY
             } else {
                 newCenterY = self.startCenterY

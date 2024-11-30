@@ -61,7 +61,7 @@ class AuthTextField: UITextField {
         autocorrectionType = .no
         // 高さ調整
         self.snp.makeConstraints {
-            $0.height.equalTo(44)
+            $0.height.equalTo(40)
         }
         // キーボードに完了ボタン表示
         self.addDoneToolbar(onDone: (target: self, action: #selector(doneButtonTapped)))

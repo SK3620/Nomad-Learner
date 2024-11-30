@@ -38,6 +38,7 @@
 		8344786D2CD213BE0038C7B9 /* LocationStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8344786C2CD213BE0038C7B9 /* LocationStatus.swift */; };
 		8344786F2CD498700038C7B9 /* OnFlightViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8344786E2CD498700038C7B9 /* OnFlightViewModel.swift */; };
 		8344D0312CE6474F007559E0 /* NationalFlagImageUrlString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8344D0302CE6474F007559E0 /* NationalFlagImageUrlString.swift */; };
+		8352F9582CFB19A800BF6E35 /* AuthInfoInputStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8352F9572CFB19A800BF6E35 /* AuthInfoInputStackView.swift */; };
 		835BD2F12CA413560088CA02 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835BD2F02CA413560088CA02 /* AppDelegate.swift */; };
 		835BD2F32CA413560088CA02 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835BD2F22CA413560088CA02 /* SceneDelegate.swift */; };
 		835BD2FA2CA413570088CA02 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 835BD2F92CA413570088CA02 /* Assets.xcassets */; };
@@ -93,7 +94,7 @@
 		83A6D7E22CB8F88500D18A30 /* DepartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7E12CB8F88500D18A30 /* DepartViewModel.swift */; };
 		83A6D7E42CB8FD4E00D18A30 /* DepartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7E32CB8FD4E00D18A30 /* DepartView.swift */; };
 		83A9C2BE2CA7BF2200898F0B /* CustomAuthPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2BD2CA7BF2200898F0B /* CustomAuthPickerViewController.swift */; };
-		83A9C2C02CA7C9B700898F0B /* AuthStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2BF2CA7C9B700898F0B /* AuthStackView.swift */; };
+		83A9C2C02CA7C9B700898F0B /* BottomAuthStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2BF2CA7C9B700898F0B /* BottomAuthStackView.swift */; };
 		83A9C2C22CA7D08500898F0B /* AuthTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2C12CA7D08500898F0B /* AuthTextField.swift */; };
 		83A9C2C52CA7DA5000898F0B /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2C42CA7DA5000898F0B /* UILabel.swift */; };
 		83A9C2C92CA8378C00898F0B /* UIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2C82CA8378C00898F0B /* UIConstants.swift */; };
@@ -161,6 +162,7 @@
 		8344786C2CD213BE0038C7B9 /* LocationStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationStatus.swift; sourceTree = "<group>"; };
 		8344786E2CD498700038C7B9 /* OnFlightViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnFlightViewModel.swift; sourceTree = "<group>"; };
 		8344D0302CE6474F007559E0 /* NationalFlagImageUrlString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NationalFlagImageUrlString.swift; sourceTree = "<group>"; };
+		8352F9572CFB19A800BF6E35 /* AuthInfoInputStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInfoInputStackView.swift; sourceTree = "<group>"; };
 		835BD2ED2CA413560088CA02 /* Nomad-Learner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Nomad-Learner.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		835BD2F02CA413560088CA02 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		835BD2F22CA413560088CA02 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -218,7 +220,7 @@
 		83A6D7E12CB8F88500D18A30 /* DepartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartViewModel.swift; sourceTree = "<group>"; };
 		83A6D7E32CB8FD4E00D18A30 /* DepartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartView.swift; sourceTree = "<group>"; };
 		83A9C2BD2CA7BF2200898F0B /* CustomAuthPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAuthPickerViewController.swift; sourceTree = "<group>"; };
-		83A9C2BF2CA7C9B700898F0B /* AuthStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStackView.swift; sourceTree = "<group>"; };
+		83A9C2BF2CA7C9B700898F0B /* BottomAuthStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomAuthStackView.swift; sourceTree = "<group>"; };
 		83A9C2C12CA7D08500898F0B /* AuthTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTextField.swift; sourceTree = "<group>"; };
 		83A9C2C42CA7DA5000898F0B /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
 		83A9C2C82CA8378C00898F0B /* UIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIConstants.swift; sourceTree = "<group>"; };
@@ -467,7 +469,8 @@
 		83A9C2BC2CA7BE6200898F0B /* Auth */ = {
 			isa = PBXGroup;
 			children = (
-				83A9C2BF2CA7C9B700898F0B /* AuthStackView.swift */,
+				83A9C2BF2CA7C9B700898F0B /* BottomAuthStackView.swift */,
+				8352F9572CFB19A800BF6E35 /* AuthInfoInputStackView.swift */,
 				83A9C2C12CA7D08500898F0B /* AuthTextField.swift */,
 				838753DD2CAED385001EE8F1 /* ValidationLabel.swift */,
 				83C9F3B32CA85BC300CF0D73 /* SeparatorWithLabelView.swift */,
@@ -867,6 +870,7 @@
 				838753D42CABFDB7001EE8F1 /* AuthInputValidation.swift in Sources */,
 				8344D0312CE6474F007559E0 /* NationalFlagImageUrlString.swift in Sources */,
 				83AC8F0B2CF6CF0600FB57B3 /* MenuAction.swift in Sources */,
+				8352F9582CFB19A800BF6E35 /* AuthInfoInputStackView.swift in Sources */,
 				83A6D7C62CB682D600D18A30 /* ProfileTopView.swift in Sources */,
 				83C5E1332CBF851D001C27E1 /* NavigationControllerForAuthVC.swift in Sources */,
 				83A6D7C42CB6630700D18A30 /* ProfileNavigationBar.swift in Sources */,
@@ -884,7 +888,7 @@
 				83A6D7B52CB4BF2500D18A30 /* Observable.swift in Sources */,
 				83291A282CF9F3DE00C065CA /* WalkThroughViewController.swift in Sources */,
 				836180E12CBB68490059937E /* ProfileCollectionView.swift in Sources */,
-				83A9C2C02CA7C9B700898F0B /* AuthStackView.swift in Sources */,
+				83A9C2C02CA7C9B700898F0B /* BottomAuthStackView.swift in Sources */,
 				83AC8F002CF6CCCA00FB57B3 /* ProgressHUDMessage.swift in Sources */,
 				83A6D7BD2CB61A8000D18A30 /* ProfileViewModel.swift in Sources */,
 				83AC8F062CF6CE4400FB57B3 /* SignInWithAuthProviderResult.swift in Sources */,

@@ -29,11 +29,20 @@ class CustomAuthPickerViewController: FUIAuthPickerViewController {
         $0.backgroundColor = .white
     }
     
-    private lazy var authStackView: AuthStackView = AuthStackView().then {
-        $0.axis = .vertical
-        $0.distribution = .fillProportionally
-        $0.spacing = 20
-    }
+    private let authTextFieldStackView: AuthInfoInputStackView = AuthInfoInputStackView()
+    
+    private let bottomAuthStackView: BottomAuthStackView = BottomAuthStackView()
+    
+    private lazy var authStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [
+            self.authTextFieldStackView,
+            self.bottomAuthStackView
+        ])
+        stackView.axis = .vertical
+        stackView.distribution = .fillProportionally
+        stackView.spacing = 56
+        return stackView
+    }()
     
     var viewModel: AuthViewModel!
     private let disposeBag = DisposeBag()
@@ -53,6 +62,7 @@ class CustomAuthPickerViewController: FUIAuthPickerViewController {
     }
     
     private func setupUI() {
+      
         // 入力欄＋認証ボタン等追加
         contentView.addSubview(authStackView)
         
@@ -60,17 +70,17 @@ class CustomAuthPickerViewController: FUIAuthPickerViewController {
         contentView.snp.makeConstraints {
             $0.size.edges.equalTo(view)
         }
-        // 最下部に設置
+        
         authStackView.snp.makeConstraints {
-            $0.bottom.equalTo(view.snp.bottom)
             $0.horizontalEdges.equalToSuperview().inset(16)
+            $0.bottom.equalToSuperview().inset(16)
         }
         
         // FirebaseUIのボタンを取得してauthStackViewに追加
         self.view.subviews[0].subviews[0].subviews[0].subviews.forEach { (view: UIView) in
             if let button = view as? UIButton {
                 // 新しい制約でStackViewに追加
-                authStackView.addProviderButton(button)
+                bottomAuthStackView.addProviderButton(button)
             }
         }
     }
@@ -86,18 +96,18 @@ extension CustomAuthPickerViewController: AlertEnabled, KRProgressHUDEnabled {
     private func bind() {
         
         // パスワード表示/非表示切り替え
-        authStackView.passwordTextField.togglePasswordVisibilityButton.rx.tap
+        authTextFieldStackView.passwordTextField.togglePasswordVisibilityButton.rx.tap
             .bind(to: togglePasswordVisibility)
             .disposed(by: disposeBag)
         
         self.viewModel = AuthViewModel(
             input:
                 (
-                    username: authStackView.usernameTextField.rx.text.orEmpty.asDriver(),
-                    email: authStackView.emailTextField.rx.text.orEmpty.asDriver(),
-                    password: authStackView.passwordTextField.rx.text.orEmpty.asDriver(),
-                    authButtonTaps: authStackView.authButton.rx.tap.asSignal(),
-                    authModeToggleTaps: authStackView.authModeToggleButton.rx.tap.asSignal()
+                    username: authTextFieldStackView.usernameTextField.rx.text.orEmpty.asDriver(),
+                    email: authTextFieldStackView.emailTextField.rx.text.orEmpty.asDriver(),
+                    password: authTextFieldStackView.passwordTextField.rx.text.orEmpty.asDriver(),
+                    authButtonTaps: bottomAuthStackView.authButton.rx.tap.asSignal(),
+                    authModeToggleTaps: bottomAuthStackView.authModeToggleButton.rx.tap.asSignal()
                 ),
             authService: AuthService.shared, 
             mainService: MainService.shared
@@ -105,15 +115,15 @@ extension CustomAuthPickerViewController: AlertEnabled, KRProgressHUDEnabled {
         
         // 各入力欄の真下にバリデーションメッセージを表示
         viewModel.usernameValidation
-            .drive(authStackView.usernameValidation.rx.validationResult)
+            .drive(authTextFieldStackView.usernameValidation.rx.validationResult)
             .disposed(by: disposeBag)
         
         viewModel.emailValidation
-            .drive(authStackView.emailValidation.rx.validationResult)
+            .drive(authTextFieldStackView.emailValidation.rx.validationResult)
             .disposed(by: disposeBag)
         
         viewModel.passwordValidation
-            .drive(authStackView.passwordValidation.rx.validationResult)
+            .drive(authTextFieldStackView.passwordValidation.rx.validationResult)
             .disposed(by: disposeBag)
         
         // SignIn/SignUp画面モードの切り替え
@@ -143,7 +153,7 @@ extension CustomAuthPickerViewController: AlertEnabled, KRProgressHUDEnabled {
             .disposed(by: disposeBag)
         
         // アカウント削除 アラート表示
-        authStackView.deleteAccountButton.rx.tap.asDriver()
+        bottomAuthStackView.deleteAccountButton.rx.tap.asDriver()
             .map { self.viewModel.willDeleteAccountActionType }
             .drive(self.rx.showAlert)
             .disposed(by: disposeBag)
@@ -158,21 +168,26 @@ extension CustomAuthPickerViewController: AlertEnabled, KRProgressHUDEnabled {
 extension CustomAuthPickerViewController {
     // パスワード表示/非表示切り替え
     private var togglePasswordVisibility: Binder<Void> {
-        return Binder(self, binding: { base, _ in base.authStackView.passwordTextField.togglePasswordVisibility() })
+        return Binder(self, binding: { base, _ in base.authTextFieldStackView.passwordTextField.togglePasswordVisibility() })
     }
     // SignIn/SignUp画面モードの切り替え
     private var switchAuthScreenMode: Binder<AuthViewModel.AuthMode> {
-        return Binder(self) { base, authMode in base.authStackView.apply(.transform(to: authMode)) }
+        return Binder(self) { base, authMode in
+            base.authTextFieldStackView.transform(to: authMode)
+            base.bottomAuthStackView.transform(to: authMode)
+        }
     }
     // 認証ボタンの非/活性判定
     private var updateAuthButtonState: Binder<Bool> {
-        return Binder(self) { base, isValid in base.authStackView.apply(.updateAuthButtonState(isValid)) }
+        return Binder(self) { base, isValid in
+            base.bottomAuthStackView.updateAuthButtonState(isValid)
+        }
     }
     // 認証完了後の処理
     private var processWhenAutheticated: Binder<Bool> {
         return Binder(self) { base, authenticated in
             guard authenticated else { return }
-            base.authStackView.apply(.clearTextField)
+            base.authTextFieldStackView.clearTextField()
             // 暫定でdismissを呼ぶ（なぜか認証成功時ProgressHudが非表示にならない）
             KRProgressHUD.dismiss()
             // 画面遷移

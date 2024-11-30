@@ -80,6 +80,7 @@ class EditProfileView: UIView {
     private func setupUI() {
         self.backgroundColor = .white
         self.layer.cornerRadius = 20
+        self.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         
         // Picture and Username Horizontal Stack
         let pictureAndUsernameStackView = UIStackView(arrangedSubviews: [pictureView, usernameView])
@@ -131,7 +132,7 @@ class EditProfileView: UIView {
         stackView.snp.makeConstraints {
             $0.top.equalTo(navigationBar.snp.bottom).offset(16)
             $0.left.right.equalToSuperview().inset(16)
-            $0.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom)
+            $0.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom).inset(16)
         }
         
         pictureImageView.snp.makeConstraints {

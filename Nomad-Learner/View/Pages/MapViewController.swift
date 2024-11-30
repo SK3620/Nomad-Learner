@@ -164,7 +164,7 @@ extension MapViewController {
         mapTabBar.snp.makeConstraints {
             $0.height.equalTo(70)
             $0.horizontalEdges.equalToSuperview().inset(16)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(8)
         }
                 
         moveToCurrentLocationButton.snp.makeConstraints {

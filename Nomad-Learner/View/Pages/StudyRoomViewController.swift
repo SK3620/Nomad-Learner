@@ -112,9 +112,9 @@ extension StudyRoomViewController {
         
         studyRoomNavigationBar.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.left.equalTo(view.safeAreaLayoutGuide.snp.left)
+            $0.left.equalTo(view.safeAreaLayoutGuide.snp.left).inset(16)
             $0.height.equalTo(44)
-            $0.width.equalTo(view.screenWidth * 0.68)
+            $0.width.equalToSuperview().multipliedBy(0.66)
         }
         
         chatCollectionView.snp.makeConstraints {
@@ -126,7 +126,7 @@ extension StudyRoomViewController {
         
         profileCollectionView.snp.makeConstraints {
             $0.top.equalTo(studyRoomNavigationBar.snp.bottom)
-            $0.left.equalTo(view.safeAreaLayoutGuide.snp.left)
+            $0.left.equalTo(view.safeAreaLayoutGuide.snp.left).inset(16)
             $0.right.equalTo(chatCollectionView.snp.left).inset(-8)
             $0.bottom.equalToSuperview()
         }

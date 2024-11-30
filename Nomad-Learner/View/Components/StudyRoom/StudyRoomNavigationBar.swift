@@ -15,14 +15,8 @@ class StudyRoomNavigationBar: UIView {
     let switchLayoutButton = UIButton().then {
         $0.setImage(UIImage(systemName: "repeat"), for: .normal)
         $0.tintColor = ColorCodes.primaryPurple.color()
-        $0.backgroundColor = UIColor(white: 1.0, alpha: 0.3)
+        $0.backgroundColor = UIColor(white: 1.0, alpha: 0.4)
         $0.layer.cornerRadius = 24 / 2
-    }
-    
-    // 合計時間ラベル
-    private let timeLabel = UILabel().then {
-        $0.font = .boldSystemFont(ofSize: 14)
-        $0.textColor = .lightGray
     }
     
     // メニュー表示ボタン
@@ -30,14 +24,21 @@ class StudyRoomNavigationBar: UIView {
         $0.setImage(UIImage(systemName: "ellipsis"), for: .normal)
         $0.tintColor = ColorCodes.primaryPurple.color()
         $0.showsMenuAsPrimaryAction = true
-        $0.backgroundColor = UIColor(white: 1.0, alpha: 0.3)
+        $0.backgroundColor = UIColor(white: 1.0, alpha: 0.4)
         $0.layer.cornerRadius = 24 / 2
+    }
+    
+    // 合計時間ラベル
+    private let timeLabel = UILabel().then {
+        $0.font = .boldSystemFont(ofSize: 14)
+        $0.textColor = .black
     }
     
     // 現在地ラベル
     private let currentPositionLabel = UILabel().then {
         $0.font = .boldSystemFont(ofSize: 14)
-        $0.textColor = .lightGray
+        $0.font = .systemFont(ofSize: 14)
+        $0.textColor = .black
     }
     
     // 現在地ラベルスクロールビュー
@@ -48,6 +49,14 @@ class StudyRoomNavigationBar: UIView {
         $0.backgroundColor = .clear
         // スクロール範囲
         $0.contentSize.width = self.currentPositionLabel.contentSizeHeight()
+        $0.addSubview(currentPositionLabel)
+    }
+    
+    private lazy var backgroundViewForTimeAndPositionLabel = UIView().then {
+        $0.backgroundColor = .init(white: 1.0, alpha: 0.4)
+        $0.layer.cornerRadius = 24 / 2
+        $0.addSubview(timeLabel)
+        $0.addSubview(currentPositionScrollView)
     }
     
     // UIMenuを生成
@@ -81,17 +90,13 @@ class StudyRoomNavigationBar: UIView {
         setupUI()
     }
     
-    // ナビゲーションバーにアイテムを設定
     private func setupUI() {
         backgroundColor = .clear
         
-        // ビューに各要素を追加
         addSubview(switchLayoutButton)
         addSubview(ellipsisButton)
-        addSubview(timeLabel)
-        currentPositionScrollView.addSubview(currentPositionLabel)
-        addSubview(currentPositionScrollView)
-        
+        addSubview(backgroundViewForTimeAndPositionLabel)
+                
         switchLayoutButton.snp.makeConstraints {
             $0.left.equalToSuperview()
             $0.centerY.equalToSuperview()
@@ -104,8 +109,15 @@ class StudyRoomNavigationBar: UIView {
             $0.size.equalTo(24)
         }
         
-        timeLabel.snp.makeConstraints {
+        backgroundViewForTimeAndPositionLabel.snp.makeConstraints {
             $0.left.equalTo(ellipsisButton.snp.right).offset(16)
+            $0.centerY.equalToSuperview()
+            $0.right.equalToSuperview()
+            $0.height.equalTo(24)
+        }
+                
+        timeLabel.snp.makeConstraints {
+            $0.left.equalToSuperview().inset(16)
             $0.centerY.equalToSuperview()
         }
         
@@ -113,7 +125,7 @@ class StudyRoomNavigationBar: UIView {
             $0.left.equalTo(timeLabel.snp.right).offset(16)
             $0.centerY.equalToSuperview()
             $0.height.equalToSuperview()
-            $0.right.equalToSuperview()
+            $0.right.equalToSuperview().inset(16)
         }
         
         currentPositionLabel.snp.makeConstraints {

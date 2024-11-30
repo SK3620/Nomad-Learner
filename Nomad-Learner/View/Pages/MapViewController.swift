@@ -122,6 +122,8 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
 
 extension MapViewController {
     private func setupUI() {
+        view.backgroundColor = .white
+        
         // マップを表示
         let options = GMSMapViewOptions()
         mapView = MapView(options: options)

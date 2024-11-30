@@ -79,7 +79,7 @@ extension DepartViewController {
         
         cancelButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(8)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(16)
             $0.horizontalEdges.equalToSuperview().inset(40)
             $0.height.equalTo(60)
         }

@@ -190,6 +190,7 @@ extension MapViewController {
                 .drive(handleLocationsInfo)
                 .disposed(by: disposeBag)
         }
+        fromScreen = nil // リセット
     }
 }
 

@@ -112,6 +112,7 @@
 		83AFB3AC2CB29AC500501FEE /* NavigationBoxBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AFB3AB2CB29AC500501FEE /* NavigationBoxBar.swift */; };
 		83AFB3AE2CB2ABD300501FEE /* LocationDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AFB3AD2CB2ABD300501FEE /* LocationDetailView.swift */; };
 		83AFB3B12CB2B75F00501FEE /* NavigationHeightProvidable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AFB3B02CB2B75F00501FEE /* NavigationHeightProvidable.swift */; };
+		83C5A1B72CFC757300ED500C /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C5A1B62CFC757300ED500C /* String.swift */; };
 		83C5E1312CBF7AFE001C27E1 /* NavigationControllerForMapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C5E1302CBF7AFE001C27E1 /* NavigationControllerForMapVC.swift */; };
 		83C5E1332CBF851D001C27E1 /* NavigationControllerForAuthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C5E1322CBF851D001C27E1 /* NavigationControllerForAuthVC.swift */; };
 		83C5E1352CBFB019001C27E1 /* OnFlightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C5E1342CBFB019001C27E1 /* OnFlightViewController.swift */; };
@@ -238,6 +239,7 @@
 		83AFB3AB2CB29AC500501FEE /* NavigationBoxBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBoxBar.swift; sourceTree = "<group>"; };
 		83AFB3AD2CB2ABD300501FEE /* LocationDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDetailView.swift; sourceTree = "<group>"; };
 		83AFB3B02CB2B75F00501FEE /* NavigationHeightProvidable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationHeightProvidable.swift; sourceTree = "<group>"; };
+		83C5A1B62CFC757300ED500C /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		83C5E1302CBF7AFE001C27E1 /* NavigationControllerForMapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationControllerForMapVC.swift; sourceTree = "<group>"; };
 		83C5E1322CBF851D001C27E1 /* NavigationControllerForAuthVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationControllerForAuthVC.swift; sourceTree = "<group>"; };
 		83C5E1342CBFB019001C27E1 /* OnFlightViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnFlightViewController.swift; sourceTree = "<group>"; };
@@ -597,6 +599,7 @@
 				83A9C2C42CA7DA5000898F0B /* UILabel.swift */,
 				83ECC1522CF22A2500E51EEC /* Array.swift */,
 				831731C52CDE031D0092AE89 /* Int.swift */,
+				83C5A1B62CFC757300ED500C /* String.swift */,
 				83C9F3B92CA9161300CF0D73 /* UITextField.swift */,
 				834478622CCA65380038C7B9 /* UITextView.swift */,
 				83AFB3A92CB2902C00501FEE /* UIView.swift */,
@@ -782,6 +785,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83C5A1B72CFC757300ED500C /* String.swift in Sources */,
 				83AC8F022CF6CD2F00FB57B3 /* AlertActionType.swift in Sources */,
 				83AFB3B12CB2B75F00501FEE /* NavigationHeightProvidable.swift in Sources */,
 				831731CA2CE220560092AE89 /* RewardCoinProgressHUDInfo.swift in Sources */,

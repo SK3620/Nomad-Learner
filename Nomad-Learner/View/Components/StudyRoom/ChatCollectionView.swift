@@ -9,12 +9,16 @@ import UIKit
 import SnapKit
 
 class ChatCollectionView: UICollectionView {
+    // cellの縦間隔
+    private let verticalGap: CGFloat = 16
+    // セクション全体の内側余白（上下左右のマージン）
+    private let edgeInsets: UIEdgeInsets = UIEdgeInsets(top: 16, left: 8, bottom: 16, right: 4)
     
     init() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        // self-sizing有効化 セルのサイズはセルの内容に応じて動的に変化させる
-        layout.estimatedItemSize = CGSizeMake(1.0, 1.0)
+        layout.minimumLineSpacing = verticalGap
+        layout.sectionInset = edgeInsets
         super.init(frame: .zero, collectionViewLayout: layout)
         
         self.backgroundColor = .clear

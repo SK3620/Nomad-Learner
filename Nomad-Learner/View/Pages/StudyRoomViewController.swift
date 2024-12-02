@@ -47,15 +47,12 @@ class StudyRoomViewController: UIViewController {
     private let studyRoomNavigationBar: StudyRoomNavigationBar = StudyRoomNavigationBar()
     
     // チャット欄
-    private let chatCollectionView: ChatCollectionView = ChatCollectionView()
+    private lazy var chatCollectionView = ChatCollectionView().then {
+        $0.delegate = self
+    }
     
     // プロフィール欄
     private let profileCollectionView: ProfileCollectionView = ProfileCollectionView()
-    
-    // contentLabelが使用可能な最大横幅 lazyで再取得を防ぐ
-    private lazy var contentLabelMaxWidth: CGFloat  = {
-        return self.chatCollectionView.bounds.width * 0.6
-    }()
     
     private let disposeBag = DisposeBag()
     
@@ -159,14 +156,16 @@ extension StudyRoomViewController: KRProgressHUDEnabled {
         // ViewModelへイベントを流す
         publishEvent(to: viewModel)
         
+        // ユーザープロフィール
         viewModel.userProfiles.drive(profileCollectionView.rx.items(cellIdentifier: ProfileCollectionViewCell.identifier, cellType: ProfileCollectionViewCell.self)) { row, item, cell in
             cell.configure(with: item)
         }
         .disposed(by: disposeBag)
         
-        viewModel.messages.drive(chatCollectionView.rx.items(cellIdentifier: ChatCollectionViewCell.identifier, cellType: ChatCollectionViewCell.self)) { [weak self]  row, item, cell in
-            guard let self = self else { return }
-            cell.configure(with: item, maxWidth: self.contentLabelMaxWidth)
+        // メッセージ
+        viewModel.messages
+            .drive(chatCollectionView.rx.items(cellIdentifier: ChatCollectionViewCell.identifier, cellType: ChatCollectionViewCell.self)) { row, item, cell in
+                cell.configure(with: item)
         }
         .disposed(by: disposeBag)
         
@@ -320,6 +319,27 @@ extension StudyRoomViewController: AlertEnabled {
                 base.rx.showAlert.onNext(alertActionType)
             }
         }
+    }
+}
+
+extension StudyRoomViewController: /*UICollectionViewDataSource,*/ UICollectionViewDelegateFlowLayout {
+    
+    // 固定な横幅と動的な高さのセルサイズを返す
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ChatCollectionViewCell.identifier, for: indexPath) as! ChatCollectionViewCell
+
+        let message = viewModel.messages.unwrappedValue[indexPath.row].content
+        
+        let width = chatCollectionView.bounds.width - cell.edgesSpacing * 2
+        let contentLabelHeight = message.height(width: width, font: UIFont.systemFont(ofSize: 14))
+        
+        let estimatedHeight =
+        cell.edgesSpacing * 2 // 微調整
+        + cell.spacing
+        + cell.profileImageViewHeight
+        + contentLabelHeight
+        
+        return CGSize(width: width, height: estimatedHeight)
     }
 }
 

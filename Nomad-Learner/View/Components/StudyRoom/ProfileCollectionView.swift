@@ -20,9 +20,9 @@ class ProfileCollectionView: UICollectionView {
     init() {
         layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.minimumLineSpacing = verticalGap
-        layout.minimumInteritemSpacing = horizontalGap
-        layout.sectionInset = edgeInsets
+        layout.minimumLineSpacing = verticalGap // 各セルの垂直間隔（行間）
+        layout.minimumInteritemSpacing = horizontalGap // 各セルの水平間隔（列間）
+        layout.sectionInset = edgeInsets // セクション全体の内側余白（上下左右のマージン）
         super.init(frame: .zero, collectionViewLayout: layout)
         
         backgroundColor = .clear

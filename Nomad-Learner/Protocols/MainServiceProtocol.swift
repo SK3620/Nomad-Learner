@@ -39,7 +39,7 @@ protocol MainServiceProtocol {
     // ページネーションで追加データ取得
     func fetchMoreUserIdsInLocation(locationId: String, limit: Int, oldestDocument: QueryDocumentSnapshot?) -> Observable<(userIds: [String], oldestDocument: QueryDocumentSnapshot?)>
     // ロケーションに参加する他ユーザーをリアルタイムリッスン
-    func listenForNewUsersParticipation(locationId: String, latestLoadedDocDate: Timestamp) -> Observable<(userIds: [String], latestLoadedDocDate: Timestamp)>
+    func listenForNewUsersParticipation(locationId: String) -> Observable<[String]>
     // 退出したユーザーをリッスン
     func listenForUsersExit(locationId: String) -> Observable<[String]>
     // 勉強部屋から退出
@@ -386,8 +386,8 @@ final class MainService: MainServiceProtocol {
             // 前回取得の最後のドキュメント以降のデータ
             let query = self.firebaseConfig.usersInLocationsReference(with: locationId)
                 .order(by: "createdAt", descending: true)
-                .limit(to: limit)
                 .start(afterDocument: oldestDocument)
+                .limit(to: limit)
             
             query.getDocuments { snapshots, error in
                 if let error = error {
@@ -404,6 +404,24 @@ final class MainService: MainServiceProtocol {
         }
     }
     
+    // ロケーションに参加する他ユーザーをリアルタイムリッスン
+    func listenForNewUsersParticipation(locationId: String) -> Observable<[String]> {
+        return Observable.create { [weak self] observer in
+            guard let self = self else { return Disposables.create() }
+
+            // 初期値を現在時刻に設定
+            let latestLoadedDocDate: Timestamp = Timestamp(date: Date())
+            
+            self.setupListenerForNewUsersParticipation(locationId: locationId, latestLoadedDocDate: latestLoadedDocDate, onDataChange: { userIds in
+                observer.onNext(userIds)
+            })
+            
+            return Disposables.create {
+                self.listenerForNewUsersParticipation?.remove()
+            }
+        }
+    }
+
     // ロケーションに参加する他ユーザーをリアルタイムリッスン
     func listenForNewUsersParticipation(locationId: String, latestLoadedDocDate: Timestamp) -> Observable<(userIds: [String], latestLoadedDocDate: Timestamp)> {
         Observable.create { observer in
@@ -528,6 +546,44 @@ final class MainService: MainServiceProtocol {
                 }
             }
             return Disposables.create()
+        }
+    }
+}
+
+extension MainService {
+    private func setupListenerForNewUsersParticipation(
+        locationId: String,
+        latestLoadedDocDate: Timestamp,
+        onDataChange: @escaping ([String]) -> Void
+    ) {
+        var latestLoadedDocDate: Timestamp = latestLoadedDocDate
+        // 以前のリスナーを停止
+        self.listenerForNewUsersParticipation?.remove()
+        
+        let query = self.firebaseConfig.usersInLocationsReference(with: locationId)
+            .order(by: "createdAt")
+            .start(after: [latestLoadedDocDate])
+            .limit(to: 3)
+        
+        self.listenerForNewUsersParticipation = query.addSnapshotListener { snapshots, error in
+            if let error = error {
+                print("ロケーションに参加する他ユーザーの情報取得エラー発生 エラー内容: \(error)")
+                return
+            }
+            else if let documents = snapshots?.documents, !documents.isEmpty {
+                // ユーザーのuuidを取得
+                let userIds: [String] = documents.compactMap { $0.documentID }
+                
+                // 最新の `createdAt` を更新
+                if let latestDocument = documents.last,
+                   let latestTimestamp = latestDocument.data()["createdAt"] as? Timestamp {
+                    latestLoadedDocDate = latestTimestamp
+                    onDataChange(userIds)
+                    
+                    // 再度リッスンを設定
+                    self.setupListenerForNewUsersParticipation(locationId: locationId, latestLoadedDocDate: latestLoadedDocDate, onDataChange: onDataChange)
+                }
+            }
         }
     }
 }

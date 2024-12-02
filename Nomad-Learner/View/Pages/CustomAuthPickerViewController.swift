@@ -29,6 +29,12 @@ class CustomAuthPickerViewController: FUIAuthPickerViewController {
         $0.backgroundColor = .white
     }
     
+    private lazy var backgroundViewForAppIcon = UIView().then {
+        $0.addSubview(self.appIconImageView)
+    }
+    
+    private let appIconImageView = UIImageView(image: UIImage(named: "Logo"))
+    
     private let authTextFieldStackView: AuthInfoInputStackView = AuthInfoInputStackView()
     
     private let bottomAuthStackView: BottomAuthStackView = BottomAuthStackView()
@@ -63,12 +69,22 @@ class CustomAuthPickerViewController: FUIAuthPickerViewController {
     
     private func setupUI() {
       
-        // 入力欄＋認証ボタン等追加
+        contentView.addSubview(backgroundViewForAppIcon)
         contentView.addSubview(authStackView)
         
         // 画面いっぱいに広げる
         contentView.snp.makeConstraints {
             $0.size.edges.equalTo(view)
+        }
+        
+        backgroundViewForAppIcon.snp.makeConstraints {
+            $0.bottom.equalTo(authStackView.snp.top)
+            $0.top.right.left.equalToSuperview()
+        }
+        
+        appIconImageView.snp.makeConstraints {
+            $0.center.equalToSuperview()
+            $0.size.equalTo(view.screenHeight * 0.11)
         }
         
         authStackView.snp.makeConstraints {

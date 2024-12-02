@@ -148,7 +148,6 @@ extension StudyRoomViewController: KRProgressHUDEnabled {
             realmService: RealmService.shared,
             locationInfo: locationInfo,
             initialLoadedUserProfiles: userProfiles,
-            latestLoadedDocDate: latestLoadedDocDate,
             oldestDocument: oldestDocument
         )
         self.viewModel = viewModel

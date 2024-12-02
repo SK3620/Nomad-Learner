@@ -101,7 +101,6 @@ class StudyRoomViewModel {
     private let realmService: RealmServiceProtocol
     private var locationInfo: LocationInfo
     private lazy var locationId: String = { self.locationInfo.fixedLocation.locationId }()
-    private var latestLoadedDocDate: Timestamp?
     private var oldestDocument: QueryDocumentSnapshot?
     
     init(
@@ -109,13 +108,11 @@ class StudyRoomViewModel {
         realmService: RealmServiceProtocol,
         locationInfo: LocationInfo,
         initialLoadedUserProfiles: [User],
-        latestLoadedDocDate: Timestamp?,
         oldestDocument: QueryDocumentSnapshot?
     ) {
         self.mainService = mainService
         self.realmService = realmService
         self.locationInfo = locationInfo
-        self.latestLoadedDocDate = latestLoadedDocDate
         self.oldestDocument = oldestDocument
         
         self.userProfilesRelay.accept(initialLoadedUserProfiles.sorted)
@@ -146,24 +143,19 @@ class StudyRoomViewModel {
             .disposed(by: disposeBag)
         
         // 参加してきた新規ユーザーをリッスン
-        let listenForNewUsersParticipationResult = mainService.listenForNewUsersParticipation(locationId: locationId, latestLoadedDocDate: latestLoadedDocDate!)
-            .flatMap { tuple -> Observable<([User], Timestamp?)> in
-                let (userIds, latestLoadedDocDate) = tuple
-                return self.mainService.fetchUserProfiles(userIds: userIds, isInitialFetch: false)
-                    .map { (userProfiles: $0, latestLoadedDocDate: latestLoadedDocDate) }
-            }
+        let listenForNewUsersParticipationResult = mainService.listenForNewUsersParticipation(locationId: locationId)
+            .flatMap { userIds in self.mainService.fetchUserProfiles(userIds: userIds, isInitialFetch: false) }
             .materialize()
         
         listenForNewUsersParticipationResult
             .compactMap { $0.event.element }
-            .subscribe(onNext: { [weak self] (userProfiles, latestLoadedDocDate) in
+            .subscribe(onNext: { [weak self] userProfiles in
                 guard let self = self else { return }
                 // 新規ユーザーのプロフィール画像をプリフェッチ
                 StudyRoomViewModel.prefetch(imageUrlsString: userProfiles.map { $0.profileImageUrl })
                 let addedUserProfiles: [UserProfileChange] = userProfiles.map { .added($0) }
                 self.messageRelay.accept(self.messageRelay.value + addedUserProfiles)
                 self.userProfilesRelay.accept((self.userProfilesRelay.value + userProfiles).sorted)
-                self.latestLoadedDocDate = latestLoadedDocDate
             })
             .disposed(by: disposeBag)
         

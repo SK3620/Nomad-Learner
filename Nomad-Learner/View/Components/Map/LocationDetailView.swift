@@ -150,7 +150,7 @@ class LocationDetailView: UIView {
     }
     
     // セクション選択colloectionView
-    lazy var locationCategoryCollectionView: LocationCategoryCollectionView = LocationCategoryCollectionView()
+    let locationCategoryCollectionView: LocationCategoryCollectionView = LocationCategoryCollectionView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)

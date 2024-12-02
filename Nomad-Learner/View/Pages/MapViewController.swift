@@ -23,9 +23,11 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
     // どの画面から戻ってきたかを記録するプロパティ
     var fromScreen: ScreenType?
     
-    private lazy var navigationBoxBar: NavigationBoxBar = NavigationBoxBar()
+    private let navigationBoxBar: NavigationBoxBar = NavigationBoxBar()
     
-    private lazy var locationDetailView: LocationDetailView = LocationDetailView()
+    private let locationDetailView: LocationDetailView = LocationDetailView()
+    
+    private lazy var locationCategoryCollectionView = self.locationDetailView.locationCategoryCollectionView
     // タブバー
     private lazy var mapTabBar: MapTabBar = MapTabBar()
     
@@ -232,19 +234,18 @@ extension MapViewController: KRProgressHUDEnabled, AlertEnabled {
             mainService: MainService.shared,
             realmService: RealmService.shared
         )
-        let collectionView = locationDetailView.locationCategoryCollectionView
         
         // カテゴリーをセルに表示
         viewModel.categories
-            .drive(collectionView.rx.items(cellIdentifier: LocationCategoryCollectionViewCell.identifier, cellType: LocationCategoryCollectionViewCell.self)) { [weak self] row, item, cell in
+            .drive(locationCategoryCollectionView.rx.items(cellIdentifier: LocationCategoryCollectionViewCell.identifier, cellType: LocationCategoryCollectionViewCell.self)) { [weak self] row, item, cell in
                 guard let self = self else { return }
                 // 選択されたセルかどうか
                 let isSelected = self.viewModel.selectedIndexPath.row == row
                 let indexPath = IndexPath(row: row, section: 0)
                 cell.configure(with: item, isSelected: isSelected)
                 cell.bind(buttonDidTap: {
-                    collectionView.reloadData()
-                    collectionView.scrollToCenter(indexPath: indexPath)
+                    self.locationCategoryCollectionView.reloadData()
+                    self.locationCategoryCollectionView.scrollToCenter(indexPath: indexPath)
                     locationCategoryRelay.accept(item)
                     self.viewModel.selectedIndexPath = indexPath
                 })

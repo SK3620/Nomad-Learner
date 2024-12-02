@@ -171,6 +171,7 @@ extension StudyRoomViewController: KRProgressHUDEnabled {
         
         // 新しいメッセージが追加されたらスクロール
         viewModel.messages
+            .delay(RxTimeInterval.seconds(1)) // 最新のcellが生成されるまで遅延させる
             .drive(onNext: { [weak self] _ in
                 guard let self = self else { return }
                 let bottomOffset = CGPoint(

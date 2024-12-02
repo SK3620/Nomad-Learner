@@ -118,8 +118,7 @@ class StudyRoomViewModel {
         self.latestLoadedDocDate = latestLoadedDocDate
         self.oldestDocument = oldestDocument
         
-        // 初回で取得したユーザープロフィール情報を流す
-        self.userProfilesRelay.accept(initialLoadedUserProfiles)
+        self.userProfilesRelay.accept(initialLoadedUserProfiles.sorted)
         
         // 自分のユーザープロフィールを取得しチャット一覧に"勉強開始"を表示させる
         if let myUserProfile = initialLoadedUserProfiles.first(where: { $0.userId == FBAuth.currentUserId }) {
@@ -163,7 +162,7 @@ class StudyRoomViewModel {
                 StudyRoomViewModel.prefetch(imageUrlsString: userProfiles.map { $0.profileImageUrl })
                 let addedUserProfiles: [UserProfileChange] = userProfiles.map { .added($0) }
                 self.messageRelay.accept(self.messageRelay.value + addedUserProfiles)
-                self.userProfilesRelay.accept(self.userProfilesRelay.value + userProfiles)
+                self.userProfilesRelay.accept((self.userProfilesRelay.value + userProfiles).sorted)
                 self.latestLoadedDocDate = latestLoadedDocDate
             })
             .disposed(by: disposeBag)
@@ -187,7 +186,7 @@ class StudyRoomViewModel {
                 self.messageRelay.accept(updatedMessages)
                 // ユーザープロフィールの更新
                 let updatedProfiles = self.userProfilesRelay.value.filter { !userIds.contains($0.userId) }
-                self.userProfilesRelay.accept(updatedProfiles)
+                self.userProfilesRelay.accept(updatedProfiles.sorted)
             })
             .disposed(by: disposeBag)
     }
@@ -243,7 +242,7 @@ extension StudyRoomViewModel {
             .compactMap { $0.event.element }
             .subscribe(onNext: { [weak self] (userProfiles, oldestDocument) in
                 guard let self = self else { return }
-                self.userProfilesRelay.accept(self.userProfilesRelay.value + userProfiles)
+                self.userProfilesRelay.accept((self.userProfilesRelay.value + userProfiles).sorted)
                 self.oldestDocument = oldestDocument
             })
             .disposed(by: disposeBag)
@@ -312,6 +311,7 @@ extension StudyRoomViewModel {
 }
 
 extension StudyRoomViewModel {
+    // ユーザープロフィール画像のプリフェッチ
     private static func prefetch(imageUrlsString: [String]) {
         let imageUrls = imageUrlsString.compactMap { URL(string: $0) }
         ImageCacheManager.prefetch(from: imageUrls)

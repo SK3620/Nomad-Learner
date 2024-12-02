@@ -26,7 +26,6 @@ extension Array {
     }
     // 報酬コイン獲得ProgressHUD構造体生成
     func createRewardCoinProgressHUDInfo(with userProfile: User) -> RewardCoinProgressHUDInfo? {
-        let locationsInfo = self as! [LocationInfo]
         let currentLocationId = userProfile.currentLocationId
         // completionFlag: 0→未達成, 1→初達成, 2以降→すでに達成 "0"の場合はProgressHUDを表示しない
         guard let currentLocationInfo = getCurrentLocationInfo(with: currentLocationId),
@@ -52,5 +51,12 @@ extension Array {
             bonusCoin: bonusCoin,
             studyHoursForBonus: studyHoursForBonus
         )
+    }
+    // 自分のユーザープロフィールが先頭に来るようにソート
+    var sorted: [User] {
+        guard let currentUserId = FBAuth.currentUserId, let userProfiles = self as? [User] else { return [] }
+        // 自分のプロフィールを最初に並べる
+        let sortedProfiles = userProfiles.sorted { $0.userId == currentUserId ? true : $1.userId == currentUserId ? false : true }
+        return sortedProfiles
     }
 }

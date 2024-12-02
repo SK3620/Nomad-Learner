@@ -16,7 +16,7 @@ class StudyRoomNavigationBar: UIView {
         $0.setImage(UIImage(systemName: "repeat"), for: .normal)
         $0.tintColor = ColorCodes.primaryPurple.color()
         $0.backgroundColor = UIColor(white: 1.0, alpha: 0.4)
-        $0.layer.cornerRadius = 24 / 2
+        $0.layer.cornerRadius = 26 / 2
     }
     
     // メニュー表示ボタン
@@ -25,7 +25,7 @@ class StudyRoomNavigationBar: UIView {
         $0.tintColor = ColorCodes.primaryPurple.color()
         $0.showsMenuAsPrimaryAction = true
         $0.backgroundColor = UIColor(white: 1.0, alpha: 0.4)
-        $0.layer.cornerRadius = 24 / 2
+        $0.layer.cornerRadius = 26 / 2
     }
     
     // 合計時間ラベル
@@ -54,7 +54,7 @@ class StudyRoomNavigationBar: UIView {
     
     private lazy var backgroundViewForTimeAndPositionLabel = UIView().then {
         $0.backgroundColor = .init(white: 1.0, alpha: 0.4)
-        $0.layer.cornerRadius = 24 / 2
+        $0.layer.cornerRadius = 26 / 2
         $0.addSubview(timeLabel)
         $0.addSubview(currentPositionScrollView)
     }
@@ -70,7 +70,7 @@ class StudyRoomNavigationBar: UIView {
         let communityAction = UIAction(title: "コミュニティ", image: UIImage(systemName: "person.3")) { _ in
             self.menuActionHandler?((.community))
         }
-        let exitAction = UIAction(title: "終了", image: UIImage(systemName: "door.left.hand.open")) { _ in
+        let exitAction = UIAction(title: "終了", image: UIImage(systemName: "door.left.hand.open")?.withTintColor(.red), attributes: .destructive) { _ in
             self.menuActionHandler?((.exitRoom))
         }
         
@@ -100,20 +100,20 @@ class StudyRoomNavigationBar: UIView {
         switchLayoutButton.snp.makeConstraints {
             $0.left.equalToSuperview()
             $0.centerY.equalToSuperview()
-            $0.size.equalTo(24)
+            $0.size.equalTo(26)
         }
         
         ellipsisButton.snp.makeConstraints {
             $0.left.equalTo(switchLayoutButton.snp.right).offset(16)
             $0.centerY.equalToSuperview()
-            $0.size.equalTo(24)
+            $0.size.equalTo(26)
         }
         
         backgroundViewForTimeAndPositionLabel.snp.makeConstraints {
             $0.left.equalTo(ellipsisButton.snp.right).offset(16)
             $0.centerY.equalToSuperview()
             $0.right.equalToSuperview()
-            $0.height.equalTo(24)
+            $0.height.equalTo(26)
         }
                 
         timeLabel.snp.makeConstraints {

@@ -68,8 +68,6 @@ class StudyRoomViewModel {
     private let roomLayoutRelay = BehaviorRelay<RoomLayout>(value: .displayAll)
     // UIメニューアクション
     private let menuActionRelay = BehaviorRelay<MenuAction?>(value: .none)
-    // 押下されたIndexPath
-    private let tappedIndexRelay = BehaviorRelay<IndexPath>(value: IndexPath(row: 0, section: 0))
     // エラー
     private let myAppErrorRelay = BehaviorRelay<MyAppError?>(value: nil)
     
@@ -92,9 +90,6 @@ class StudyRoomViewModel {
     }
     var menuAction: Driver<MenuAction?> {
         return menuActionRelay.asDriver()
-    }
-    var tappedIndex: Driver<IndexPath> {
-        return tappedIndexRelay.asDriver()
     }
     var myAppError: Driver<MyAppError> {
         return myAppErrorRelay.compactMap { $0 }.asDriver(onErrorJustReturn: .unknown)
@@ -188,12 +183,6 @@ class StudyRoomViewModel {
 }
 
 extension StudyRoomViewModel {
-    
-    // 押下されたcellのIndexPath情報を保持させる
-    func tappedProfile(at indexPath: IndexPath) {
-        tappedIndexRelay.accept(indexPath)
-    }
-    
     // レイアウトの切り替え
     func switchRoomLayout() {
         let layout = roomLayoutRelay.value

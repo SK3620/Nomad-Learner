@@ -186,7 +186,6 @@ extension StudyRoomViewController: KRProgressHUDEnabled {
             }
             .drive(onNext: { [weak self] (indexPath, userProfiles) in
                 guard let self = self else { return }
-                viewModel.tappedProfile(at: indexPath)
                 // ProfileVC（プロフィール画面）へ遷移
                 Router.showProfile(vc: self, with: userProfiles[indexPath.row])
             })

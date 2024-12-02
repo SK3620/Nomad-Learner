@@ -19,8 +19,11 @@ class ChatCollectionViewCell: UICollectionViewCell {
     private var disposeBag = DisposeBag()
     
     private lazy var profileImageView = UIImageView().then {
+        $0.backgroundColor = ColorCodes.primaryLightPurple.color()
         $0.layer.cornerRadius = self.profileImageViewHeight / 2
-        $0.backgroundColor = .orange
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = ColorCodes.primaryPurple.color().cgColor
+        $0.layer.masksToBounds = true
     }
     
     private let usernameLabel = UILabel().then {
@@ -43,6 +46,8 @@ class ChatCollectionViewCell: UICollectionViewCell {
     // セルが再利用されるたびにDisposeBagを新たに初期化 重複購読を防ぐ
     override func prepareForReuse() {
         super.prepareForReuse()
+        profileImageView.kf.cancelDownloadTask()
+        profileImageView.image = nil
         disposeBag = DisposeBag()
     }
     
@@ -78,8 +83,15 @@ class ChatCollectionViewCell: UICollectionViewCell {
 }
 
 extension ChatCollectionViewCell {
-    func configure(with item: Message) {
-        usernameLabel.text = item.senderName
-        contentLabel.text = item.content
+    func configure(with change: UserProfileChange) {
+        let (profileImageUrl, username) = change.userInfo
+        if profileImageUrl.isEmpty {
+            profileImageView.image = UIImage(named: "Globe") // 空の場合はデフォルト画像
+        } else {
+            profileImageView.setImage(with: profileImageUrl, options: [.keepCurrentImageWhileLoading])
+        }
+        usernameLabel.text = username
+        contentLabel.text = change.massage
+        contentLabel.textColor = change.colorOnChanges
     }
 }

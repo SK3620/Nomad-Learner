@@ -156,9 +156,9 @@ extension StudyRoomNavigationBar {
         
         switch action {
         case .breakTime:
-            actionInfo = ("Restart", UIImage(systemName: "restart")!)
+            actionInfo = ("再開", UIImage(systemName: "restart")!)
         case .restart:
-            actionInfo = ("Take a break", UIImage(systemName: "cup.and.saucer")!)
+            actionInfo = ("休憩", UIImage(systemName: "cup.and.saucer")!)
         default:
             return
         }

@@ -13,20 +13,20 @@ import SVGKit
 extension UIImageView {
     
     // ロケーション画像表示
-    func setImage(with urlString: String) {
+    func setImage(with urlString: String, options: KingfisherOptionsInfo? = nil) {
         guard let url = URL(string: urlString) else {
             self.image = UIImage(systemName: "photo") // URLが不正の場合はデフォルトの画像
             return
         }
         
         // Kingfisherを使用して画像を非同期に設定
-        self.kf.setImage(with: url) { result in
+        self.kf.setImage(with: url, options: options) { result in
             switch result {
             case .success(let value):
                 self.image = value.image
             case .failure(let error):
                 print("Failed to load image, error: \(error)")
-                self.image = UIImage(named: "photo")
+                self.image = UIImage(named: "Globe")
             }
         }
     }
@@ -39,7 +39,7 @@ extension UIImageView {
         }
         self.kf.setImage(with: url, options: [.processor(SVGImgProcessor())]) { result in
             switch result {
-            case .success(let value):
+            case .success(let _):
                 print("SVG画像国旗を表示しました")
             case .failure(let error):
                 // SVGではない国旗画像（png等）の場合は、setImage(with:)で通常表示

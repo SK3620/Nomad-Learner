@@ -14,8 +14,10 @@ class ProfileCollectionViewCell: UICollectionViewCell {
     
     // プロフィール画像
     private let profileImageView: UIImageView = UIImageView().then {
-        $0.backgroundColor = .orange
+        $0.backgroundColor = ColorCodes.primaryLightPurple.color()
         $0.layer.cornerRadius = 15.0
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = ColorCodes.primaryPurple.color().cgColor
         $0.layer.masksToBounds = true
     }
     
@@ -38,6 +40,12 @@ class ProfileCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         
         setupUI()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        profileImageView.kf.cancelDownloadTask()
+        profileImageView.image = nil
     }
     
     private func setupUI(){
@@ -81,7 +89,7 @@ extension ProfileCollectionViewCell {
         if userProfile.profileImageUrl.isEmpty {
             profileImageView.image = UIImage(named: "Globe") // 空の場合はデフォルト画像
         } else {
-            profileImageView.setImage(with: userProfile.profileImageUrl)
+            profileImageView.setImage(with: userProfile.profileImageUrl, options: [.keepCurrentImageWhileLoading])
         }
         
         let content = "\(userProfile.studyContent) / \(userProfile.goal) / \(userProfile.others)"

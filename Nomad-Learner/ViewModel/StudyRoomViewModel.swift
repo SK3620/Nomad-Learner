@@ -27,12 +27,12 @@ class StudyRoomViewModel {
     private var elapsedStudyTime: (hours: Int, mins: Int) {
         (hours: elapsedTime / 3600, mins: (elapsedTime % 3600) / 60)
     }
-
+    
     // 元々の勉強時間
     private var originalStudyTime: (hours: Int, mins: Int) {
         (hours: locationInfo.ticketInfo.totalStudyHours, mins: locationInfo.ticketInfo.totalStudyMins)
     }
-
+    
     // 合計勉強時間（時間/分単位）
     private var totalStudyTime: (hours: Int, mins: Int) {
         let totalHours = originalStudyTime.hours + elapsedStudyTime.hours
@@ -63,7 +63,7 @@ class StudyRoomViewModel {
     // プロフィール
     private let userProfilesRelay = BehaviorRelay<[User]>(value: [])
     // チャット欄のメッセージ
-    private let messageRelay = BehaviorRelay<[Message]>(value: [])
+    private let messageRelay = BehaviorRelay<[UserProfileChange]>(value: [])
     // 画面レイアウト
     private let roomLayoutRelay = BehaviorRelay<RoomLayout>(value: .displayAll)
     // UIメニューアクション
@@ -82,7 +82,7 @@ class StudyRoomViewModel {
     var userProfiles: Driver<[User]> {
         return userProfilesRelay.asDriver()
     }
-    var messages: Driver<[Message]> {
+    var messages: Driver<[UserProfileChange]> {
         return messageRelay.asDriver()
     }
     var roomLayout: Driver<RoomLayout> {
@@ -121,6 +121,11 @@ class StudyRoomViewModel {
         // 初回で取得したユーザープロフィール情報を流す
         self.userProfilesRelay.accept(initialLoadedUserProfiles)
         
+        // 自分のユーザープロフィールを取得しチャット一覧に"勉強開始"を表示させる
+        if let myUserProfile = initialLoadedUserProfiles.first(where: { $0.userId == FBAuth.currentUserId }) {
+            self.messageRelay.accept([.added(myUserProfile)])
+        }
+        
         // ローディングインジケーター
         self.isLoading = indicator.asDriver()
         
@@ -154,6 +159,10 @@ class StudyRoomViewModel {
             .compactMap { $0.event.element }
             .subscribe(onNext: { [weak self] (userProfiles, latestLoadedDocDate) in
                 guard let self = self else { return }
+                // 新規ユーザーのプロフィール画像をプリフェッチ
+                StudyRoomViewModel.prefetch(imageUrlsString: userProfiles.map { $0.profileImageUrl })
+                let addedUserProfiles: [UserProfileChange] = userProfiles.map { .added($0) }
+                self.messageRelay.accept(self.messageRelay.value + addedUserProfiles)
                 self.userProfilesRelay.accept(self.userProfilesRelay.value + userProfiles)
                 self.latestLoadedDocDate = latestLoadedDocDate
             })
@@ -167,18 +176,20 @@ class StudyRoomViewModel {
             .compactMap { $0.event.element }
             .subscribe(onNext: { [weak self] userIds in
                 guard let self = self else { return }
-                for userId in userIds {
-                    if let index = self.userProfilesRelay.value.firstIndex(where: { $0.userId == userId}) {
-                        var updatedProfiles = userProfilesRelay.value
-                        updatedProfiles.remove(at: index)
-                        self.userProfilesRelay.accept(updatedProfiles)
-                    }
-                }
+                // 退出したユーザーIDに基づいて更新処理
+                var profilesToRemove = self.userProfilesRelay.value.filter { userIds.contains($0.userId) }
+                // 自分のユーザープロフィールを除外
+                profilesToRemove.removeAll(where: { $0.userId == FBAuth.currentUserId })
+                // 退出ユーザーのプロフィール画像をプリフェッチ
+                StudyRoomViewModel.prefetch(imageUrlsString: profilesToRemove.map { $0.profileImageUrl })
+                // ユーザーの削除メッセージを追加
+                let updatedMessages = self.messageRelay.value + profilesToRemove.map { .removed($0) }
+                self.messageRelay.accept(updatedMessages)
+                // ユーザープロフィールの更新
+                let updatedProfiles = self.userProfilesRelay.value.filter { !userIds.contains($0.userId) }
+                self.userProfilesRelay.accept(updatedProfiles)
             })
             .disposed(by: disposeBag)
-        
-        // チャット一覧用メッセージ
-        messageRelay.accept(Message.messages)
     }
 }
 
@@ -261,9 +272,9 @@ extension StudyRoomViewModel {
         combinedObservableResult
             .compactMap { $0.event.element }
             .subscribe(onNext: { [weak self] _ in
-                completion() // MapVC（マップ画面）に戻る
                 self?.mainService.removeListeners() // 監視解除
                 self?.realmService.deletePendingUpdateData() // Realmの既存データを削除
+                completion() // MapVC（マップ画面）に戻る
             })
             .disposed(by: disposeBag)
     }
@@ -297,5 +308,12 @@ extension StudyRoomViewModel {
             completionFlag: updatedCompletionFlag,
             bonusCoin: bonusCoin
         )
+    }
+}
+
+extension StudyRoomViewModel {
+    private static func prefetch(imageUrlsString: [String]) {
+        let imageUrls = imageUrlsString.compactMap { URL(string: $0) }
+        ImageCacheManager.prefetch(from: imageUrls)
     }
 }

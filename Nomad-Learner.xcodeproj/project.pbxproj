@@ -113,6 +113,7 @@
 		83AFB3AE2CB2ABD300501FEE /* LocationDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AFB3AD2CB2ABD300501FEE /* LocationDetailView.swift */; };
 		83AFB3B12CB2B75F00501FEE /* NavigationHeightProvidable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AFB3B02CB2B75F00501FEE /* NavigationHeightProvidable.swift */; };
 		83C5A1B72CFC757300ED500C /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C5A1B62CFC757300ED500C /* String.swift */; };
+		83C5A1B92CFD9CFC00ED500C /* UserProfileChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C5A1B82CFD9CFC00ED500C /* UserProfileChange.swift */; };
 		83C5E1312CBF7AFE001C27E1 /* NavigationControllerForMapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C5E1302CBF7AFE001C27E1 /* NavigationControllerForMapVC.swift */; };
 		83C5E1332CBF851D001C27E1 /* NavigationControllerForAuthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C5E1322CBF851D001C27E1 /* NavigationControllerForAuthVC.swift */; };
 		83C5E1352CBFB019001C27E1 /* OnFlightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C5E1342CBFB019001C27E1 /* OnFlightViewController.swift */; };
@@ -240,6 +241,7 @@
 		83AFB3AD2CB2ABD300501FEE /* LocationDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDetailView.swift; sourceTree = "<group>"; };
 		83AFB3B02CB2B75F00501FEE /* NavigationHeightProvidable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationHeightProvidable.swift; sourceTree = "<group>"; };
 		83C5A1B62CFC757300ED500C /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		83C5A1B82CFD9CFC00ED500C /* UserProfileChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileChange.swift; sourceTree = "<group>"; };
 		83C5E1302CBF7AFE001C27E1 /* NavigationControllerForMapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationControllerForMapVC.swift; sourceTree = "<group>"; };
 		83C5E1322CBF851D001C27E1 /* NavigationControllerForAuthVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationControllerForAuthVC.swift; sourceTree = "<group>"; };
 		83C5E1342CBFB019001C27E1 /* OnFlightViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnFlightViewController.swift; sourceTree = "<group>"; };
@@ -544,6 +546,7 @@
 			children = (
 				83AC8F082CF6CEE600FB57B3 /* RoomLayout.swift */,
 				83AC8F0A2CF6CF0600FB57B3 /* MenuAction.swift */,
+				83C5A1B82CFD9CFC00ED500C /* UserProfileChange.swift */,
 			);
 			path = StudyRoom;
 			sourceTree = "<group>";
@@ -813,6 +816,7 @@
 				83A6D7DB2CB80D9100D18A30 /* EditProfileViewNavigationBar.swift in Sources */,
 				83A6D7E42CB8FD4E00D18A30 /* DepartView.swift in Sources */,
 				83AC8F092CF6CEE600FB57B3 /* RoomLayout.swift in Sources */,
+				83C5A1B92CFD9CFC00ED500C /* UserProfileChange.swift in Sources */,
 				83A6D7B12CB3F39300D18A30 /* LocationCategory.swift in Sources */,
 				83C9F3BA2CA9161300CF0D73 /* UITextField.swift in Sources */,
 				83AFB3AA2CB2902C00501FEE /* UIView.swift in Sources */,

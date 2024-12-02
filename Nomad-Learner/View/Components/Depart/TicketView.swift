@@ -25,7 +25,7 @@ class TicketView: UIView {
     // 現在地の国旗
     private let currentNationalFlag = UIImageView().then {
         $0.layer.borderWidth = 2
-        $0.layer.borderColor = UIColor.white.cgColor
+        $0.layer.borderColor = UIColor.brown.cgColor
         $0.layer.cornerRadius = 44 / 2
         $0.contentMode = .scaleToFill
         $0.layer.masksToBounds = true
@@ -34,7 +34,7 @@ class TicketView: UIView {
     // 目的地の国旗
     private let destinationNationalFlag = UIImageView().then {
         $0.layer.borderWidth = 2
-        $0.layer.borderColor = UIColor.white.cgColor
+        $0.layer.borderColor = UIColor.brown.cgColor
         $0.layer.cornerRadius = 44 / 2
         $0.contentMode = .scaleToFill
         $0.layer.masksToBounds = true

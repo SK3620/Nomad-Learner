@@ -43,7 +43,11 @@ class OnFlightViewModel {
         let fetchUsersInfoResult = mainService.fetchUserIdsInLocation(locationId: locationId, limit: limit)
             .flatMap { userIds, latestLoadedDocDate, oldestDocument in
                 mainService.fetchUserProfiles(userIds: userIds, isInitialFetch: true)
-                    .map { userProfiles in (userProfiles: userProfiles, latestLoadedDocDate: latestLoadedDocDate, oldestDocument: oldestDocument) }
+                    .map { userProfiles in
+                        // ユーザープロフィール画像をプリフェッチ
+                        OnFlightViewModel.prefetch(imageUrlsString: userProfiles.map { $0.profileImageUrl })
+                        return (userProfiles: userProfiles, latestLoadedDocDate: latestLoadedDocDate, oldestDocument: oldestDocument)
+                    }
             }
         
         let result = updateAndAddEventResult
@@ -67,5 +71,12 @@ class OnFlightViewModel {
         self.myAppError = result
             .compactMap { $0.event.error as? MyAppError }
             .asDriver(onErrorJustReturn: .unknown)
+    }
+}
+
+extension OnFlightViewModel {
+    private static func prefetch(imageUrlsString: [String]) {
+        let imageUrls = imageUrlsString.compactMap { URL(string: $0) }
+        ImageCacheManager.prefetch(from: imageUrls)
     }
 }

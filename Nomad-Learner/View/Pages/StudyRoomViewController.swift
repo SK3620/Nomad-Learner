@@ -164,6 +164,12 @@ extension StudyRoomViewController: KRProgressHUDEnabled {
         
         // メッセージ
         viewModel.messages
+            .do(onNext: { [weak self] messages in
+//                if !messages.isEmpty {
+//                    let indexPath = IndexPath(row: messages.count - 1, section: 0)
+//                    self?.chatCollectionView.scrollToItem(at: indexPath, at: .bottom, animated: true)
+//                }
+            })
             .drive(chatCollectionView.rx.items(cellIdentifier: ChatCollectionViewCell.identifier, cellType: ChatCollectionViewCell.self)) { row, item, cell in
                 cell.configure(with: item)
         }
@@ -327,7 +333,7 @@ extension StudyRoomViewController: /*UICollectionViewDataSource,*/ UICollectionV
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ChatCollectionViewCell.identifier, for: indexPath) as! ChatCollectionViewCell
 
-        let message = viewModel.messages.unwrappedValue[indexPath.row].content
+        let message = viewModel.messages.unwrappedValue[indexPath.row].massage
         
         let width = chatCollectionView.bounds.width - cell.edgesSpacing * 2
         let contentLabelHeight = message.height(width: width, font: UIFont.systemFont(ofSize: 14))

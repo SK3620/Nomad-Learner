@@ -164,16 +164,22 @@ extension StudyRoomViewController: KRProgressHUDEnabled {
         
         // メッセージ
         viewModel.messages
-            .do(onNext: { [weak self] messages in
-//                if !messages.isEmpty {
-//                    let indexPath = IndexPath(row: messages.count - 1, section: 0)
-//                    self?.chatCollectionView.scrollToItem(at: indexPath, at: .bottom, animated: true)
-//                }
-            })
             .drive(chatCollectionView.rx.items(cellIdentifier: ChatCollectionViewCell.identifier, cellType: ChatCollectionViewCell.self)) { row, item, cell in
                 cell.configure(with: item)
         }
         .disposed(by: disposeBag)
+        
+        // 新しいメッセージが追加されたらスクロール
+        viewModel.messages
+            .drive(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                let bottomOffset = CGPoint(
+                    x: 0,
+                    y: max(0, self.chatCollectionView.contentSize.height - self.chatCollectionView.bounds.height + self.chatCollectionView.contentInset.bottom)
+                )
+                self.chatCollectionView.setContentOffset(bottomOffset, animated: true)
+            })
+            .disposed(by: disposeBag)
         
         // タイマー表示
         viewModel.timerText

@@ -52,11 +52,18 @@ extension Array {
             studyHoursForBonus: studyHoursForBonus
         )
     }
-    // 自分のユーザープロフィールが先頭に来るようにソート
-    var sorted: [User] {
-        guard let currentUserId = FBAuth.currentUserId, let userProfiles = self as? [User] else { return [] }
-        // 自分のプロフィールを最初に並べる
-        let sortedProfiles = userProfiles.sorted { $0.userId == currentUserId ? true : $1.userId == currentUserId ? false : true }
-        return sortedProfiles
+}
+
+extension Array where Element == User {
+    func moveMyUserProfileToFront() -> [User] {
+        guard let myUserId = FBAuth.currentUserId else { return self }
+        
+        // 自分の User を探して先頭に移動させた新しい配列を作成
+        var updatedArray = self
+        if let currentUser = self.first(where: { $0.userId == myUserId }) {
+            updatedArray.removeAll { $0.userId == myUserId } // 既存の自分を削除
+            updatedArray.insert(currentUser, at: 0)         // 先頭に挿入
+        }
+        return updatedArray
     }
 }

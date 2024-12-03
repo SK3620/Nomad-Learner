@@ -18,8 +18,8 @@ extension UIScrollView {
         backgroundColor = .clear
     }
     
-    // 下端から20ポイント範囲内に達した場合trueを返す
-    func isNearBottomEdge(edgeOffset: CGFloat = 20.0) -> Bool {
-        return contentOffset.y + frame.size.height + edgeOffset > contentSize.height
+    // 下端から50ポイント以上さらに下にスクロールさせた場合
+    func isNearBottomEdge(edgeOffset: CGFloat = 50) -> Bool {
+        return contentOffset.y + frame.size.height - edgeOffset >= contentSize.height
     }
 }

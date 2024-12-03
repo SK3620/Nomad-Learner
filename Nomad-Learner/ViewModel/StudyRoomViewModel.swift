@@ -115,7 +115,7 @@ class StudyRoomViewModel {
         self.locationInfo = locationInfo
         self.oldestDocument = oldestDocument
         
-        self.userProfilesRelay.accept(initialLoadedUserProfiles.sorted)
+        self.userProfilesRelay.accept(initialLoadedUserProfiles)
         
         // 自分のユーザープロフィールを取得しチャット一覧に"勉強開始"を表示させる
         if let myUserProfile = initialLoadedUserProfiles.first(where: { $0.userId == FBAuth.currentUserId }) {
@@ -155,7 +155,8 @@ class StudyRoomViewModel {
                 StudyRoomViewModel.prefetch(imageUrlsString: userProfiles.map { $0.profileImageUrl })
                 let addedUserProfiles: [UserProfileChange] = userProfiles.map { .added($0) }
                 self.messageRelay.accept(self.messageRelay.value + addedUserProfiles)
-                self.userProfilesRelay.accept((self.userProfilesRelay.value + userProfiles).sorted)
+                
+                self.userProfilesRelay.accept((userProfiles + self.userProfilesRelay.value).moveMyUserProfileToFront())
             })
             .disposed(by: disposeBag)
         
@@ -165,7 +166,7 @@ class StudyRoomViewModel {
         
         listenForUsersExitResult
             .compactMap { $0.event.element }
-            .subscribe(onNext: { [weak self] userIds in
+            .subscribe(onNext: { [weak self] userIds -> Void in
                 guard let self = self else { return }
                 // 退出したユーザーIDに基づいて更新処理
                 var profilesToRemove = self.userProfilesRelay.value.filter { userIds.contains($0.userId) }
@@ -178,7 +179,7 @@ class StudyRoomViewModel {
                 self.messageRelay.accept(updatedMessages)
                 // ユーザープロフィールの更新
                 let updatedProfiles = self.userProfilesRelay.value.filter { !userIds.contains($0.userId) }
-                self.userProfilesRelay.accept(updatedProfiles.sorted)
+                self.userProfilesRelay.accept(updatedProfiles.moveMyUserProfileToFront())
             })
             .disposed(by: disposeBag)
     }
@@ -233,7 +234,7 @@ extension StudyRoomViewModel {
             .compactMap { $0.event.element }
             .subscribe(onNext: { [weak self] (userProfiles, oldestDocument) in
                 guard let self = self else { return }
-                self.userProfilesRelay.accept((self.userProfilesRelay.value + userProfiles).sorted)
+                self.userProfilesRelay.accept((self.userProfilesRelay.value + userProfiles).moveMyUserProfileToFront())
                 self.oldestDocument = oldestDocument
             })
             .disposed(by: disposeBag)

@@ -369,7 +369,11 @@ final class MainService: MainServiceProtocol {
                     let userProfiles = snapshots?.documents.compactMap {
                         UserParser.parse($0.documentID, $0.data())
                     } ?? []
-                    observer.onNext(userProfiles)
+                    // userIdsの順にuserProfilesを並べ替える
+                    let sortedUserProfiles = userIds.compactMap { userId in
+                        userProfiles.first(where: { $0.userId == userId })
+                    }
+                    observer.onNext(sortedUserProfiles)
                 }
             }
             return Disposables.create()
@@ -395,9 +399,12 @@ final class MainService: MainServiceProtocol {
                 } else {
                     // ユーザーのuuidを取得
                     let userIds: [String] = snapshots?.documents.compactMap { $0.documentID } ?? []
-                    let oldestDocument = snapshots?.documents.last // 最後のスナップショットを保持
-                    observer.onNext((userIds: userIds, oldestDocument: oldestDocument))
-                    observer.onCompleted()
+                    
+                    if !userIds.isEmpty {
+                        let oldestDocument = snapshots?.documents.last // 最後のスナップショットを保持
+                        observer.onNext((userIds: userIds, oldestDocument: oldestDocument))
+                        observer.onCompleted()
+                    }
                 }
             }
             return Disposables.create()
@@ -571,18 +578,23 @@ extension MainService {
                 return
             }
             else if let documents = snapshots?.documents, !documents.isEmpty {
-                // ユーザーのuuidを取得
-                let userIds: [String] = documents.compactMap { $0.documentID }
-                
-                // 最新の `createdAt` を更新
+
                 if let latestDocument = documents.last,
                    let latestTimestamp = latestDocument.data()["createdAt"] as? Timestamp {
+                    // ドキュメントの最新取得日を更新
                     latestLoadedDocDate = latestTimestamp
-                    onDataChange(userIds)
+                    
+                    // ユーザーのuuidを取得
+                    let userIds: [String] = documents.compactMap { $0.documentID }
+                    // 最新の順番に並べる
+                    let reversedUserIds: [String] = userIds.reversed()
+                    onDataChange(reversedUserIds)
                     
                     // 再度リッスンを設定
                     self.setupListenerForNewUsersParticipation(locationId: locationId, latestLoadedDocDate: latestLoadedDocDate, onDataChange: onDataChange)
                 }
+            } else {
+                print("日付が「\(latestLoadedDocDate.dateValue().timeIntervalSince1970)」より後のドキュメントが存在しません。")
             }
         }
     }

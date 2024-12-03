@@ -205,7 +205,7 @@ extension StudyRoomViewController: KRProgressHUDEnabled {
         
         // 追加データ取得（ページネーション）
         profileCollectionView.rx.contentOffset.asDriver()
-            .map { _ in self.shouldRequestNextPage() }
+            .compactMap { [weak self] _ in self?.shouldRequestNextPage() }
             .distinctUntilChanged() // 無駄なリクエストの発生を防止
             .filter { $0 }
             .drive(onNext: { _ in viewModel.fetchMoreUserProfiles() })

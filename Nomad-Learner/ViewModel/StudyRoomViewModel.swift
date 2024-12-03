@@ -12,7 +12,6 @@ import Firebase
 
 class StudyRoomViewModel {
     
-    private var lastVisibleDocument: DocumentSnapshot? // 最後に取得したドキュメント
     private let limit: Int = 16 // 一度に取得するユーザーの数
     
     // 勉強経過時間を秒数で保持

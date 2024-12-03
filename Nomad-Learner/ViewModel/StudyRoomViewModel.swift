@@ -227,7 +227,6 @@ extension StudyRoomViewModel {
                 return self.mainService.fetchUserProfiles(userIds: userIds, isInitialFetch: false)
                     .map { (userProfiles: $0, oldestDocument: oldestDocument) }
             }
-            .trackActivity(indicator)
             .materialize()
         
         fetchMoreUserProfiles

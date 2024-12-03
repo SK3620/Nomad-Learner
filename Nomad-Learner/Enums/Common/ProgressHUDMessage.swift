@@ -59,7 +59,11 @@ enum ProgressHUDMessage {
         case .insufficientCoin:
             KRProgressHUD.showWarning(withMessage: message)
         case .getRewardCoin:
-            KRProgressHUD.showImage(UIImage(named: "Reward")!, message: message)
+            // ローディング表示制御のdismiss()よりも後に実行させる
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                KRProgressHUD.set(duration: 5.0)
+                KRProgressHUD.showImage(UIImage(named: "Reward")!, message: message)
+            }
         case .inDevelopment, .inDevelopment2:
             KRProgressHUD.showInfo(withMessage: message)
         case .none:
@@ -70,28 +74,20 @@ enum ProgressHUDMessage {
 
 extension ProgressHUDMessage {
     private func configureMessage(info: RewardCoinProgressHUDInfo) -> String {
-        let bonusCoinMessage = """
-            ＋\(info.bonusCoin)（\(MyAppSettings.bonusCoinMultiplier)×\(info.studyHoursForBonus)時間)
-        """
+        let bonusCoinMessage = "ボーナス\n＋\(info.bonusCoin)（\(MyAppSettings.bonusCoinMultiplier)×\(info.studyHoursForBonus)時間)"
         
-        let rewardCoinMessage: String
         // "1"（初達成）の場合のみrewardCoinを表示
-        if info.completionFlag == 1 {
-            rewardCoinMessage = """
-                ＋\(info.rewardCoin)
-            """
-        } else {
-            rewardCoinMessage = ""
-        }
+        let rewardCoinMessage = info.completionFlag == 1
+        ? "報酬\n＋\(info.rewardCoin)"
+        : "報酬\n＋\(info.rewardCoin)（獲得済み）"
         
-        let balanceChangeMessage = """
-            所持金: \(info.originalCoin) → \(info.currentCoin)
-        """
+        let balanceChangeMessage = "所持金: \(info.originalCoin) ▶︎ \(info.currentCoin)"
         
-        return "\(rewardCoinMessage)\(bonusCoinMessage)\n\(balanceChangeMessage)"
+        return info.completionFlag == 1
+        ? "\(rewardCoinMessage)\n\n\(bonusCoinMessage)\n\n\(balanceChangeMessage)"
+        : "\(bonusCoinMessage)\n\n\(balanceChangeMessage)"
     }
 }
-
 
 // 状況別のカスタムスタイルを定義
 enum ProgressHUDStyle {

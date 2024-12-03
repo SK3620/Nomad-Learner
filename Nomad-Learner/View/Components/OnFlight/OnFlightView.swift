@@ -20,9 +20,9 @@ class OnFlightView: UIView {
     }
     
     private let loadingLabel: UILabel = UILabel().then {
-        $0.text = "on a flight to the destination . . ."
+        $0.text = "目的地までフライト中 . . ."
         $0.textColor = ColorCodes.primaryPurple.color()
-        $0.font = .systemFont(ofSize: 16)
+        $0.font = .boldSystemFont(ofSize: 16)
         $0.textAlignment = .center
     }
     
@@ -69,7 +69,7 @@ extension OnFlightView {
                 guard let self = self else { return }
                 dotCount = (dotCount + 1) % (maxDots + 1) // 0から3までのサイクル
                 let dots = String(repeating: " .", count: dotCount) // 現在の点の数を反映
-                self.loadingLabel.text = "on a flight to the destination \(dots)"
+                self.loadingLabel.text = "目的地までフライト中 \(dots)"
             })
             .disposed(by: animationDisposeBag)
     }

@@ -125,7 +125,7 @@ class StudyRoomViewModel {
         self.isLoading = indicator.asDriver()
         
         // 背景画像切り替え
-        self.backgroundImageUrl = Observable<Int>.interval(.seconds(10), scheduler: MainScheduler.instance)
+        self.backgroundImageUrl = Observable<Int>.interval(MyAppSettings.backgroundImageSwitchInterval, scheduler: MainScheduler.instance)
             .map { index in locationInfo.fixedLocation.imageUrls[index % locationInfo.fixedLocation.imageUrls.count] }
             .asDriver(onErrorJustReturn: "Globe")
         

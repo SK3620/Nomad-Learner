@@ -67,6 +67,8 @@ class StudyRoomViewModel {
     private let roomLayoutRelay = BehaviorRelay<RoomLayout>(value: .displayAll)
     // UIメニューアクション
     private let menuActionRelay = BehaviorRelay<MenuAction?>(value: .none)
+    // ユーザーが選択したインターバル時間を保持する
+    public let selectedIntervalTimeRelay = BehaviorRelay<Int>(value: MyAppSettings.backgroundImageSwitchInterval)
     // エラー
     private let myAppErrorRelay = BehaviorRelay<MyAppError?>(value: nil)
     
@@ -125,7 +127,9 @@ class StudyRoomViewModel {
         self.isLoading = indicator.asDriver()
         
         // 背景画像切り替え
-        self.backgroundImageUrl = Observable<Int>.interval(MyAppSettings.backgroundImageSwitchInterval, scheduler: MainScheduler.instance)
+        self.backgroundImageUrl = selectedIntervalTimeRelay
+            .map { RxTimeInterval.seconds(Int($0 * 60)) } // 分を秒に変換
+            .flatMapLatest { Observable<Int>.interval($0, scheduler: MainScheduler.instance) }
             .map { index in locationInfo.fixedLocation.imageUrls[index % locationInfo.fixedLocation.imageUrls.count] }
             .asDriver(onErrorJustReturn: "Globe")
         
@@ -202,19 +206,14 @@ extension StudyRoomViewModel {
     
     // メニューで選択されたアクション（休憩、退出、コミュニティ）を発行
     func handleMenuAction(action: MenuAction) {
+        menuActionRelay.accept(action)
         switch action {
         case .breakTime:
-            menuActionRelay.accept(.breakTime)
-            self.isPaused = true
+            isPaused = true
         case .restart:
-            menuActionRelay.accept(.restart)
-            self.isPaused = false
-        case .confirmTicket:
-            menuActionRelay.accept(.confirmTicket)
-        case .community:
-            menuActionRelay.accept(.community)
-        case .exitRoom:
-            menuActionRelay.accept(.exitRoom)
+            isPaused = false
+        default:
+            break
         }
     }
     

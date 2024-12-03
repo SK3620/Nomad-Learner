@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import Firebase
 import FirebaseAuth
+import RxSwift
 
 // 画面の向き
 enum ScreenOrientation {
@@ -40,8 +41,10 @@ protocol RouterProtocol {
     static func showOnFlightVC(vc: UIViewController, locationInfo: LocationInfo)
     // OnFlightVC（飛行中画面）→ StudyRoomVC（勉強部屋画面）
     static func showStudyRoomVC(vc: UIViewController, locationInfo: LocationInfo, userProfiles: [User], latestLoadedDocDate: Timestamp?, oldestDocument: QueryDocumentSnapshot?)
-    // StudyRoomVC（勉強部屋画面）→ TicketBackgroundView（チケット確認画面）
+    // StudyRoomVC（勉強部屋画面）→ TicketBackgroundVC（チケット確認画面）
     static func showTicketConfirmVC(vc: UIViewController, locationInfo: LocationInfo)
+    // StudyRoomVC（勉強部屋画面）→ BackgroundImageSwitchIntervalSelectVC（背景画像切り替えインターバル時間選択画面）
+    static func showBackgroundImageSwitchIntervalSelectVC(vc: UIViewController, currentIntervalTime: Int, didIntervalTimeSelect: @escaping (Int) -> Void)
 
     // StudyRoomVC（勉強部屋画面）/ EditProfileVC（プロフィール編集画面）→ MapVC（マップ画面）
     static func backToMapVC(vc: UIViewController, _ updatedUserProfile: User)
@@ -162,6 +165,16 @@ extension Router: RouterProtocol {
         ticketConfirmViewController.modalPresentationStyle = .overFullScreen
         ticketConfirmViewController.modalTransitionStyle = .crossDissolve
         modal(from: vc, to: ticketConfirmViewController)
+    }
+    
+    // StudyRoomVC（勉強部屋画面）→ BackgroundImageSwitchIntervalSelectVC（背景画像切り替えインターバル時間選択画面）
+    static func showBackgroundImageSwitchIntervalSelectVC(vc: UIViewController, currentIntervalTime: Int, didIntervalTimeSelect: @escaping (Int) -> Void) {
+        let backgroundImageSwitchIntervalSelectVC = BackgroundImageSwitchIntervalSelectViewController()
+        backgroundImageSwitchIntervalSelectVC.currentIntervalTime = currentIntervalTime
+        backgroundImageSwitchIntervalSelectVC.didIntervalTimeSelect = didIntervalTimeSelect
+        backgroundImageSwitchIntervalSelectVC.modalPresentationStyle = .overFullScreen
+        backgroundImageSwitchIntervalSelectVC.modalTransitionStyle = .crossDissolve
+        modal(from: vc, to: backgroundImageSwitchIntervalSelectVC)
     }
     
     // StudyRoomVC（勉強部屋画面）/ EditProfileVC（プロフィール編集画面）→ MapVC（マップ画面）

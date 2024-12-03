@@ -67,6 +67,9 @@ class StudyRoomNavigationBar: UIView {
         let confirmTicketAction =  UIAction(title: "チケット", image: UIImage(systemName: "ticket")) { _ in
             self.menuActionHandler?((.confirmTicket))
         }
+        let changeBackgroundImageSwitchIntervalTimeAction = UIAction(title: "画像切り替え", image: UIImage(systemName: "photo.stack")) { _ in
+            self.menuActionHandler?((.changeBackgroundImageSwitchIntervalTime))
+        }
         let communityAction = UIAction(title: "コミュニティ", image: UIImage(systemName: "person.3")) { _ in
             self.menuActionHandler?((.community))
         }
@@ -74,7 +77,7 @@ class StudyRoomNavigationBar: UIView {
             self.menuActionHandler?((.exitRoom))
         }
         
-        return [breakAction, confirmTicketAction ,communityAction, exitAction]
+        return [breakAction, confirmTicketAction, changeBackgroundImageSwitchIntervalTimeAction, communityAction, exitAction]
     }()
     
     // UIActionでのメニュー選択通知用のクロージャ

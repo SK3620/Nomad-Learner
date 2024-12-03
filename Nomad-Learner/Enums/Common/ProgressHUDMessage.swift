@@ -14,6 +14,7 @@ enum ProgressHUDMessage {
     case didDeleteAccount
     case insufficientCoin
     case getRewardCoin(info: RewardCoinProgressHUDInfo)
+    case didIntervalSelect(Int)
     case inDevelopment
     case inDevelopment2
     case none
@@ -26,6 +27,8 @@ enum ProgressHUDMessage {
             return "所持金が足りません。"
         case .getRewardCoin(let info):
             return configureMessage(info: info)
+        case .didIntervalSelect(let interval):
+            return "背景画像を\(interval)分ごとに切り替えます。"
         case .inDevelopment:
             return "現在開発中の機能です。\n乞うご期待を！"
         case .inDevelopment2:
@@ -64,7 +67,7 @@ enum ProgressHUDMessage {
                 KRProgressHUD.set(duration: 5.0)
                 KRProgressHUD.showImage(UIImage(named: "Reward")!, message: message)
             }
-        case .inDevelopment, .inDevelopment2:
+        case .didIntervalSelect, .inDevelopment, .inDevelopment2:
             KRProgressHUD.showInfo(withMessage: message)
         case .none:
             break

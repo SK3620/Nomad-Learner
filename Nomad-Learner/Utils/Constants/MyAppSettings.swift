@@ -37,11 +37,11 @@ struct MyAppSettings {
 
 extension MyAppSettings {
     /// 背景画像切り替えインターバル時間
-    private static var dynamicBackgroundImageSwitchInterval: RxTimeInterval {
+    private static var dynamicBackgroundImageSwitchInterval: Int {
         #if DEVELOP // 開発環境
-        return RxTimeInterval.seconds(10) // 10秒
+        return 1 // 1分
         #else // 本番環境
-        return RxTimeInterval.seconds(300) // 5分
+        return 5 // 5分
         #endif
     }
 }

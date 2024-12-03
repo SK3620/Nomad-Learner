@@ -317,6 +317,14 @@ extension StudyRoomViewController: AlertEnabled {
                 base.studyRoomNavigationBar.switchBreakOrRestartAction(action)
             case .confirmTicket:
                 Router.showTicketConfirmVC(vc: base, locationInfo: base.locationInfo)
+            case .changeBackgroundImageSwitchIntervalTime:
+                Router.showBackgroundImageSwitchIntervalSelectVC(
+                    vc: base,
+                    currentIntervalTime: base.viewModel.selectedIntervalTimeRelay.value,
+                    didIntervalTimeSelect: { interval in
+                        base.viewModel.selectedIntervalTimeRelay.accept(interval)
+                        base.rx.showMessage.onNext(.didIntervalSelect(interval))
+                })
             case .community:
                 base.rx.showMessage.onNext(.inDevelopment)
             case .exitRoom:

@@ -93,6 +93,7 @@
 		83A6D7E02CB8DA8600D18A30 /* DepartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7DF2CB8DA8600D18A30 /* DepartViewController.swift */; };
 		83A6D7E22CB8F88500D18A30 /* DepartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7E12CB8F88500D18A30 /* DepartViewModel.swift */; };
 		83A6D7E42CB8FD4E00D18A30 /* DepartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7E32CB8FD4E00D18A30 /* DepartView.swift */; };
+		83A73A102CFF382A00C87742 /* BackgroundImageSwitchIntervalSelecViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A73A0F2CFF382A00C87742 /* BackgroundImageSwitchIntervalSelecViewController.swift */; };
 		83A9C2BE2CA7BF2200898F0B /* CustomAuthPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2BD2CA7BF2200898F0B /* CustomAuthPickerViewController.swift */; };
 		83A9C2C02CA7C9B700898F0B /* BottomAuthStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2BF2CA7C9B700898F0B /* BottomAuthStackView.swift */; };
 		83A9C2C22CA7D08500898F0B /* AuthTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2C12CA7D08500898F0B /* AuthTextField.swift */; };
@@ -221,6 +222,7 @@
 		83A6D7DF2CB8DA8600D18A30 /* DepartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartViewController.swift; sourceTree = "<group>"; };
 		83A6D7E12CB8F88500D18A30 /* DepartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartViewModel.swift; sourceTree = "<group>"; };
 		83A6D7E32CB8FD4E00D18A30 /* DepartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartView.swift; sourceTree = "<group>"; };
+		83A73A0F2CFF382A00C87742 /* BackgroundImageSwitchIntervalSelecViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundImageSwitchIntervalSelecViewController.swift; sourceTree = "<group>"; };
 		83A9C2BD2CA7BF2200898F0B /* CustomAuthPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAuthPickerViewController.swift; sourceTree = "<group>"; };
 		83A9C2BF2CA7C9B700898F0B /* BottomAuthStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomAuthStackView.swift; sourceTree = "<group>"; };
 		83A9C2C12CA7D08500898F0B /* AuthTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTextField.swift; sourceTree = "<group>"; };
@@ -324,6 +326,7 @@
 				83A6D7DF2CB8DA8600D18A30 /* DepartViewController.swift */,
 				83C5E1342CBFB019001C27E1 /* OnFlightViewController.swift */,
 				831731C72CE1C1680092AE89 /* TicketConfirmViewController.swift */,
+				83A73A0F2CFF382A00C87742 /* BackgroundImageSwitchIntervalSelecViewController.swift */,
 			);
 			path = Pages;
 			sourceTree = "<group>";
@@ -810,6 +813,7 @@
 				838753D82CACE930001EE8F1 /* ActivityIndicator.swift in Sources */,
 				830498BF2CC5072C003973EC /* MyAppError.swift in Sources */,
 				837DE5902CBA564A00819964 /* TicketView.swift in Sources */,
+				83A73A102CFF382A00C87742 /* BackgroundImageSwitchIntervalSelecViewController.swift in Sources */,
 				83A9C2C22CA7D08500898F0B /* AuthTextField.swift in Sources */,
 				83A6D7D22CB7D7DD00D18A30 /* ProfileTextView.swift in Sources */,
 				838753E82CB02B42001EE8F1 /* FBAuth.swift in Sources */,

@@ -70,7 +70,9 @@ final class VisitedLocationParser {
         guard let totalStudyHours = data["totalStudyHours"] as? Int,
               let totalStudyMins = data["totalStudyMins"] as? Int,
               let fixedRequiredStudyHours = data["fixedRequiredStudyHours"] as? Int,
-              let fixedRewardCoin = data["fixedRewardCoin"] as? Int else {
+              let fixedRewardCoin = data["fixedRewardCoin"] as? Int ,
+              let completionFlag = data["completionFlag"] as? Int,
+              let bonusCoin = data["bonusCoin"] as? Int else {
             return nil
         }
                 
@@ -79,7 +81,9 @@ final class VisitedLocationParser {
             totalStudyHours: totalStudyHours,
             totalStudyMins: totalStudyMins,
             fixedRequiredStudyHours: fixedRequiredStudyHours,
-            fixedRewardCoin: fixedRewardCoin
+            fixedRewardCoin: fixedRewardCoin,
+            completionFlag: completionFlag,
+            bonusCoin: bonusCoin
         )
     }
 }

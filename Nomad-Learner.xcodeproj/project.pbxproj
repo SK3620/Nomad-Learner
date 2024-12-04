@@ -20,7 +20,6 @@
 		831731CA2CE220560092AE89 /* RewardCoinProgressHUDInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831731C92CE220560092AE89 /* RewardCoinProgressHUDInfo.swift */; };
 		831731CC2CE228670092AE89 /* MyAppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831731CB2CE228670092AE89 /* MyAppSettings.swift */; };
 		831E5C6F2CC13205001A90C4 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831E5C6E2CC13205001A90C4 /* Location.swift */; };
-		831E5C712CC136E0001A90C4 /* GoogleMapID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831E5C702CC136E0001A90C4 /* GoogleMapID.swift */; };
 		831E5C732CC271EF001A90C4 /* MarkerIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831E5C722CC271EF001A90C4 /* MarkerIconView.swift */; };
 		831E5C752CC2740A001A90C4 /* MarkerInfoWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831E5C742CC2740A001A90C4 /* MarkerInfoWindow.swift */; };
 		831E5C862CC4AAC3001A90C4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831E5C852CC4AAC3001A90C4 /* User.swift */; };
@@ -52,6 +51,8 @@
 		836180F22CBC9D850059937E /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836180F12CBC9D850059937E /* Message.swift */; };
 		837422FE2D00328E00C6DE41 /* GoogleService-Info-Nomad-LearnerDev.plist in Resources */ = {isa = PBXBuildFile; fileRef = 837422FC2D00328E00C6DE41 /* GoogleService-Info-Nomad-LearnerDev.plist */; };
 		837422FF2D00328E00C6DE41 /* GoogleService-Info-Nomad-Learner.plist in Resources */ = {isa = PBXBuildFile; fileRef = 837422FD2D00328E00C6DE41 /* GoogleService-Info-Nomad-Learner.plist */; };
+		837423012D00335100C6DE41 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837423002D00335100C6DE41 /* APIKeys.swift */; };
+		837423032D00335C00C6DE41 /* GoogleMapID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837423022D00335C00C6DE41 /* GoogleMapID.swift */; };
 		837DE58E2CBA2FDE00819964 /* SafeAreaHeightProvidable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837DE58D2CBA2FDE00819964 /* SafeAreaHeightProvidable.swift */; };
 		837DE5902CBA564A00819964 /* TicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837DE58F2CBA564A00819964 /* TicketView.swift */; };
 		837DE5952CBAD11500819964 /* StudyRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837DE5942CBAD11500819964 /* StudyRoomViewController.swift */; };
@@ -120,7 +121,6 @@
 		83C5E1352CBFB019001C27E1 /* OnFlightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C5E1342CBFB019001C27E1 /* OnFlightViewController.swift */; };
 		83C5E13C2CBFBCC2001C27E1 /* OnFlightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C5E13B2CBFBCC2001C27E1 /* OnFlightView.swift */; };
 		83C5E13E2CC0BEFC001C27E1 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C5E13D2CC0BEFC001C27E1 /* MapView.swift */; };
-		83C5E1422CC0C0EF001C27E1 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C5E1412CC0C0EF001C27E1 /* APIKeys.swift */; };
 		83C9F3B42CA85BC300CF0D73 /* SeparatorWithLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C9F3B32CA85BC300CF0D73 /* SeparatorWithLabelView.swift */; };
 		83C9F3B62CA907B900CF0D73 /* ColorCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C9F3B52CA907B900CF0D73 /* ColorCodes.swift */; };
 		83C9F3BA2CA9161300CF0D73 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C9F3B92CA9161300CF0D73 /* UITextField.swift */; };
@@ -147,7 +147,6 @@
 		831731C92CE220560092AE89 /* RewardCoinProgressHUDInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardCoinProgressHUDInfo.swift; sourceTree = "<group>"; };
 		831731CB2CE228670092AE89 /* MyAppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAppSettings.swift; sourceTree = "<group>"; };
 		831E5C6E2CC13205001A90C4 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
-		831E5C702CC136E0001A90C4 /* GoogleMapID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapID.swift; sourceTree = "<group>"; };
 		831E5C722CC271EF001A90C4 /* MarkerIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerIconView.swift; sourceTree = "<group>"; };
 		831E5C742CC2740A001A90C4 /* MarkerInfoWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerInfoWindow.swift; sourceTree = "<group>"; };
 		831E5C852CC4AAC3001A90C4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -181,6 +180,8 @@
 		836180F12CBC9D850059937E /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		837422FC2D00328E00C6DE41 /* GoogleService-Info-Nomad-LearnerDev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Nomad-LearnerDev.plist"; sourceTree = "<group>"; };
 		837422FD2D00328E00C6DE41 /* GoogleService-Info-Nomad-Learner.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Nomad-Learner.plist"; sourceTree = "<group>"; };
+		837423002D00335100C6DE41 /* APIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
+		837423022D00335C00C6DE41 /* GoogleMapID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapID.swift; sourceTree = "<group>"; };
 		837DE58D2CBA2FDE00819964 /* SafeAreaHeightProvidable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeAreaHeightProvidable.swift; sourceTree = "<group>"; };
 		837DE58F2CBA564A00819964 /* TicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketView.swift; sourceTree = "<group>"; };
 		837DE5942CBAD11500819964 /* StudyRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyRoomViewController.swift; sourceTree = "<group>"; };
@@ -249,7 +250,6 @@
 		83C5E1342CBFB019001C27E1 /* OnFlightViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnFlightViewController.swift; sourceTree = "<group>"; };
 		83C5E13B2CBFBCC2001C27E1 /* OnFlightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnFlightView.swift; sourceTree = "<group>"; };
 		83C5E13D2CC0BEFC001C27E1 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
-		83C5E1412CC0C0EF001C27E1 /* APIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
 		83C9F3B32CA85BC300CF0D73 /* SeparatorWithLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorWithLabelView.swift; sourceTree = "<group>"; };
 		83C9F3B52CA907B900CF0D73 /* ColorCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCodes.swift; sourceTree = "<group>"; };
 		83C9F3B92CA9161300CF0D73 /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
@@ -593,8 +593,8 @@
 		83C5E1402CC0C0DE001C27E1 /* Identifiers */ = {
 			isa = PBXGroup;
 			children = (
-				83C5E1412CC0C0EF001C27E1 /* APIKeys.swift */,
-				831E5C702CC136E0001A90C4 /* GoogleMapID.swift */,
+				837423002D00335100C6DE41 /* APIKeys.swift */,
+				837423022D00335C00C6DE41 /* GoogleMapID.swift */,
 			);
 			path = Identifiers;
 			sourceTree = "<group>";
@@ -799,6 +799,7 @@
 				831731C62CDE031D0092AE89 /* Int.swift in Sources */,
 				83A6D7D42CB807F100D18A30 /* EditProfileViewController.swift in Sources */,
 				83C5E1352CBFB019001C27E1 /* OnFlightViewController.swift in Sources */,
+				837423032D00335C00C6DE41 /* GoogleMapID.swift in Sources */,
 				83AFB3AE2CB2ABD300501FEE /* LocationDetailView.swift in Sources */,
 				83AC8EFC2CF6CBFC00FB57B3 /* DataHandlingType.swift in Sources */,
 				830498C62CC64F87003973EC /* FixedLocationsInfo.json in Sources */,
@@ -826,7 +827,6 @@
 				83AFB3AA2CB2902C00501FEE /* UIView.swift in Sources */,
 				83C9F3B42CA85BC300CF0D73 /* SeparatorWithLabelView.swift in Sources */,
 				838753E42CB00A4B001EE8F1 /* MapViewController.swift in Sources */,
-				83C5E1422CC0C0EF001C27E1 /* APIKeys.swift in Sources */,
 				83A6D7B92CB56C7400D18A30 /* KeyChainManager.swift in Sources */,
 				831E5C862CC4AAC3001A90C4 /* User.swift in Sources */,
 				831E5C752CC2740A001A90C4 /* MarkerInfoWindow.swift in Sources */,
@@ -865,7 +865,6 @@
 				8344786D2CD213BE0038C7B9 /* LocationStatus.swift in Sources */,
 				83A6D7AB2CB3D93E00D18A30 /* LocationLabel.swift in Sources */,
 				838753E22CAF9E53001EE8F1 /* AlertEnabled.swift in Sources */,
-				831E5C712CC136E0001A90C4 /* GoogleMapID.swift in Sources */,
 				83A6D7E22CB8F88500D18A30 /* DepartViewModel.swift in Sources */,
 				837DE59A2CBAD8D400819964 /* NavigationControllerForStudyRoomVC.swift in Sources */,
 				830498CA2CC661C5003973EC /* Parser.swift in Sources */,
@@ -894,6 +893,7 @@
 				831E5C8C2CC4B4F6001A90C4 /* FixedLocation.swift in Sources */,
 				836180EE2CBBE2820059937E /* PaddingLabel.swift in Sources */,
 				83A6D7C22CB61E6B00D18A30 /* ProfileView.swift in Sources */,
+				837423012D00335100C6DE41 /* APIKeys.swift in Sources */,
 				83AFB3AC2CB29AC500501FEE /* NavigationBoxBar.swift in Sources */,
 				83A6D7C82CB68A7700D18A30 /* StudyTimeLabel.swift in Sources */,
 				83A9C2C92CA8378C00898F0B /* UIConstants.swift in Sources */,

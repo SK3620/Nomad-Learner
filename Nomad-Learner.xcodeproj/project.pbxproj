@@ -50,6 +50,8 @@
 		836180EE2CBBE2820059937E /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836180ED2CBBE2820059937E /* PaddingLabel.swift */; };
 		836180F02CBC93900059937E /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836180EF2CBC93900059937E /* Profile.swift */; };
 		836180F22CBC9D850059937E /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836180F12CBC9D850059937E /* Message.swift */; };
+		837422FE2D00328E00C6DE41 /* GoogleService-Info-Nomad-LearnerDev.plist in Resources */ = {isa = PBXBuildFile; fileRef = 837422FC2D00328E00C6DE41 /* GoogleService-Info-Nomad-LearnerDev.plist */; };
+		837422FF2D00328E00C6DE41 /* GoogleService-Info-Nomad-Learner.plist in Resources */ = {isa = PBXBuildFile; fileRef = 837422FD2D00328E00C6DE41 /* GoogleService-Info-Nomad-Learner.plist */; };
 		837DE58E2CBA2FDE00819964 /* SafeAreaHeightProvidable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837DE58D2CBA2FDE00819964 /* SafeAreaHeightProvidable.swift */; };
 		837DE5902CBA564A00819964 /* TicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837DE58F2CBA564A00819964 /* TicketView.swift */; };
 		837DE5952CBAD11500819964 /* StudyRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837DE5942CBAD11500819964 /* StudyRoomViewController.swift */; };
@@ -92,8 +94,6 @@
 		83A6D7E22CB8F88500D18A30 /* DepartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7E12CB8F88500D18A30 /* DepartViewModel.swift */; };
 		83A6D7E42CB8FD4E00D18A30 /* DepartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7E32CB8FD4E00D18A30 /* DepartView.swift */; };
 		83A73A102CFF382A00C87742 /* BackgroundImageSwitchIntervalSelecViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A73A0F2CFF382A00C87742 /* BackgroundImageSwitchIntervalSelecViewController.swift */; };
-		83A73A172D0013E200C87742 /* GoogleService-Info-Nomad-Learner.plist in Resources */ = {isa = PBXBuildFile; fileRef = 83A73A152D0013E200C87742 /* GoogleService-Info-Nomad-Learner.plist */; };
-		83A73A182D0013E200C87742 /* GoogleService-Info-Nomad-LearnerDev.plist in Resources */ = {isa = PBXBuildFile; fileRef = 83A73A162D0013E200C87742 /* GoogleService-Info-Nomad-LearnerDev.plist */; };
 		83A9C2BE2CA7BF2200898F0B /* CustomAuthPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2BD2CA7BF2200898F0B /* CustomAuthPickerViewController.swift */; };
 		83A9C2C02CA7C9B700898F0B /* BottomAuthStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2BF2CA7C9B700898F0B /* BottomAuthStackView.swift */; };
 		83A9C2C22CA7D08500898F0B /* AuthTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2C12CA7D08500898F0B /* AuthTextField.swift */; };
@@ -179,6 +179,8 @@
 		836180ED2CBBE2820059937E /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		836180EF2CBC93900059937E /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		836180F12CBC9D850059937E /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		837422FC2D00328E00C6DE41 /* GoogleService-Info-Nomad-LearnerDev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Nomad-LearnerDev.plist"; sourceTree = "<group>"; };
+		837422FD2D00328E00C6DE41 /* GoogleService-Info-Nomad-Learner.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Nomad-Learner.plist"; sourceTree = "<group>"; };
 		837DE58D2CBA2FDE00819964 /* SafeAreaHeightProvidable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeAreaHeightProvidable.swift; sourceTree = "<group>"; };
 		837DE58F2CBA564A00819964 /* TicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketView.swift; sourceTree = "<group>"; };
 		837DE5942CBAD11500819964 /* StudyRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyRoomViewController.swift; sourceTree = "<group>"; };
@@ -221,8 +223,6 @@
 		83A6D7E12CB8F88500D18A30 /* DepartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartViewModel.swift; sourceTree = "<group>"; };
 		83A6D7E32CB8FD4E00D18A30 /* DepartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartView.swift; sourceTree = "<group>"; };
 		83A73A0F2CFF382A00C87742 /* BackgroundImageSwitchIntervalSelecViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundImageSwitchIntervalSelecViewController.swift; sourceTree = "<group>"; };
-		83A73A152D0013E200C87742 /* GoogleService-Info-Nomad-Learner.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Nomad-Learner.plist"; sourceTree = "<group>"; };
-		83A73A162D0013E200C87742 /* GoogleService-Info-Nomad-LearnerDev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Nomad-LearnerDev.plist"; sourceTree = "<group>"; };
 		83A9C2BD2CA7BF2200898F0B /* CustomAuthPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAuthPickerViewController.swift; sourceTree = "<group>"; };
 		83A9C2BF2CA7C9B700898F0B /* BottomAuthStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomAuthStackView.swift; sourceTree = "<group>"; };
 		83A9C2C12CA7D08500898F0B /* AuthTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTextField.swift; sourceTree = "<group>"; };
@@ -399,8 +399,8 @@
 		835BD30D2CA4EB920088CA02 /* Configurations */ = {
 			isa = PBXGroup;
 			children = (
-				83A73A152D0013E200C87742 /* GoogleService-Info-Nomad-Learner.plist */,
-				83A73A162D0013E200C87742 /* GoogleService-Info-Nomad-LearnerDev.plist */,
+				837422FD2D00328E00C6DE41 /* GoogleService-Info-Nomad-Learner.plist */,
+				837422FC2D00328E00C6DE41 /* GoogleService-Info-Nomad-LearnerDev.plist */,
 			);
 			path = Configurations;
 			sourceTree = "<group>";
@@ -701,9 +701,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				835BD2FA2CA413570088CA02 /* Assets.xcassets in Resources */,
-				83A73A172D0013E200C87742 /* GoogleService-Info-Nomad-Learner.plist in Resources */,
+				837422FF2D00328E00C6DE41 /* GoogleService-Info-Nomad-Learner.plist in Resources */,
+				837422FE2D00328E00C6DE41 /* GoogleService-Info-Nomad-LearnerDev.plist in Resources */,
 				835BD2FD2CA413570088CA02 /* Base in Resources */,
-				83A73A182D0013E200C87742 /* GoogleService-Info-Nomad-LearnerDev.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

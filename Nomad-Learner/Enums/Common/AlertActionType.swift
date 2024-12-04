@@ -61,7 +61,7 @@ enum AlertActionType {
         case .savePendingUpdateData(let saveRetryError, _, _):
             return "\(saveRetryError?.errorDescription ?? "前回の勉強記録が保存されていません。")\n保存しますか？"
         case .willShowDepartVC(_, _, let ticketInfo):
-            return "次回の「\(ticketInfo.destination)」への訪問時以降、以下の項目は変更されません。\n\n必要な勉強時間：\(ticketInfo.requiredStudyHours)時間\n報酬コイン：\(ticketInfo.rewardCoin)コイン"
+            return "一度訪問すると、次回の「\(ticketInfo.destination)」への訪問時以降、以下の項目は変更されません。\n\n必要な勉強時間：\(ticketInfo.requiredStudyHours)時間\n報酬コイン：\(ticketInfo.rewardCoin)コイン"
         case .exitRoom:
             return "本当に終了してもよろしいですか？\n（終了後、勉強時間が記録されます。）"
         case .breakTime:

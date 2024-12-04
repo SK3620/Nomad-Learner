@@ -164,7 +164,7 @@
 		8344786E2CD498700038C7B9 /* OnFlightViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnFlightViewModel.swift; sourceTree = "<group>"; };
 		8344D0302CE6474F007559E0 /* NationalFlagImageUrlString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NationalFlagImageUrlString.swift; sourceTree = "<group>"; };
 		8352F9572CFB19A800BF6E35 /* AuthInfoInputStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInfoInputStackView.swift; sourceTree = "<group>"; };
-		835BD2ED2CA413560088CA02 /* Nomad-Learner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Nomad-Learner.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		835BD2ED2CA413560088CA02 /* Dev-Nomad-Learner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dev-Nomad-Learner.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		835BD2F02CA413560088CA02 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		835BD2F22CA413560088CA02 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		835BD2F92CA413570088CA02 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -368,7 +368,7 @@
 		835BD2EE2CA413560088CA02 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				835BD2ED2CA413560088CA02 /* Nomad-Learner.app */,
+				835BD2ED2CA413560088CA02 /* Dev-Nomad-Learner.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -656,7 +656,7 @@
 			);
 			name = "Nomad-Learner";
 			productName = "Nomad-Learner";
-			productReference = 835BD2ED2CA413560088CA02 /* Nomad-Learner.app */;
+			productReference = 835BD2ED2CA413560088CA02 /* Dev-Nomad-Learner.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1108,7 +1108,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kenta-suzuki.Nomad-LearnerDev";
-				PRODUCT_NAME = "Nomad-Learner";
+				PRODUCT_NAME = "Dev-Nomad-Learner";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Nomad-LearnerDevProfile";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEVELOP;

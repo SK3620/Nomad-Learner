@@ -21,6 +21,9 @@ import KRProgressHUD
 // MARK: - Customize AuthPickerViewController
 class CustomAuthPickerViewController: FUIAuthPickerViewController {
     
+    // iPadの場合キーボードと被らないようAuthStackViewを上げる
+    private let bottomEdgeInset: CGFloat = UIDevice.current.userInterfaceIdiom != .pad ? 16 : 150
+    
     private lazy var scrollView = view.subviews[0].then {
         $0.backgroundColor = .white
     }
@@ -68,7 +71,7 @@ class CustomAuthPickerViewController: FUIAuthPickerViewController {
     }
     
     private func setupUI() {
-      
+        
         contentView.addSubview(backgroundViewForAppIcon)
         contentView.addSubview(authStackView)
         
@@ -89,7 +92,7 @@ class CustomAuthPickerViewController: FUIAuthPickerViewController {
         
         authStackView.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview().inset(16)
-            $0.bottom.equalToSuperview().inset(16)
+            $0.bottom.equalToSuperview().inset(bottomEdgeInset)
         }
         
         // FirebaseUIのボタンを取得してauthStackViewに追加

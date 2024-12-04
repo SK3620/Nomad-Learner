@@ -6,6 +6,9 @@ GoogleService-Info.plist
 APIKeys.swift
 GoogleMapID.swift
 
+GoogleService-Info-Nomad-Learner.plist
+GoogleService-Info-Nomad-LearnerDev.plist
+
 .DS_Store
 
 xcuserdata/

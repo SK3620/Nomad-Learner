@@ -14,8 +14,6 @@
 		830498CC2CC666DD003973EC /* RealmServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830498CB2CC666DD003973EC /* RealmServiceProtocol.swift */; };
 		830498CE2CC6A714003973EC /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830498CD2CC6A714003973EC /* UIImageView.swift */; };
 		8304A0E22CA5123300061B33 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8304A0E12CA5123300061B33 /* AuthViewController.swift */; };
-		8304A0E42CA5437800061B33 /* GoogleService-Info-Nomad-LearnerDev.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8304A0E32CA5437800061B33 /* GoogleService-Info-Nomad-LearnerDev.plist */; };
-		8304A0E62CA546F700061B33 /* GoogleService-Info-Nomad-Learner.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8304A0E52CA546F700061B33 /* GoogleService-Info-Nomad-Learner.plist */; };
 		831731C42CDB0F910092AE89 /* StudyProgressSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831731C32CDB0F910092AE89 /* StudyProgressSummary.swift */; };
 		831731C62CDE031D0092AE89 /* Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831731C52CDE031D0092AE89 /* Int.swift */; };
 		831731C82CE1C1680092AE89 /* TicketConfirmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831731C72CE1C1680092AE89 /* TicketConfirmViewController.swift */; };
@@ -141,8 +139,6 @@
 		830498CD2CC6A714003973EC /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
 		8304A0D92CA4F83700061B33 /* Nomad-Learner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Nomad-Learner.entitlements"; sourceTree = "<group>"; };
 		8304A0E12CA5123300061B33 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
-		8304A0E32CA5437800061B33 /* GoogleService-Info-Nomad-LearnerDev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Nomad-LearnerDev.plist"; sourceTree = "<group>"; };
-		8304A0E52CA546F700061B33 /* GoogleService-Info-Nomad-Learner.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Nomad-Learner.plist"; sourceTree = "<group>"; };
 		831731C32CDB0F910092AE89 /* StudyProgressSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyProgressSummary.swift; sourceTree = "<group>"; };
 		831731C52CDE031D0092AE89 /* Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Int.swift; sourceTree = "<group>"; };
 		831731C72CE1C1680092AE89 /* TicketConfirmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketConfirmViewController.swift; sourceTree = "<group>"; };
@@ -399,8 +395,6 @@
 		835BD30D2CA4EB920088CA02 /* Configurations */ = {
 			isa = PBXGroup;
 			children = (
-				8304A0E52CA546F700061B33 /* GoogleService-Info-Nomad-Learner.plist */,
-				8304A0E32CA5437800061B33 /* GoogleService-Info-Nomad-LearnerDev.plist */,
 			);
 			path = Configurations;
 			sourceTree = "<group>";
@@ -701,9 +695,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				835BD2FA2CA413570088CA02 /* Assets.xcassets in Resources */,
-				8304A0E62CA546F700061B33 /* GoogleService-Info-Nomad-Learner.plist in Resources */,
 				835BD2FD2CA413570088CA02 /* Base in Resources */,
-				8304A0E42CA5437800061B33 /* GoogleService-Info-Nomad-LearnerDev.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

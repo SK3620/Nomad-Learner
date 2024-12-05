@@ -14,7 +14,6 @@ class OnFlightViewModel {
     
     // MARK: - Output
     let userProfiles: Driver<[User]>
-    let latestLoadedDocDate: Driver<Timestamp?>
     let oldestDocument: Driver<QueryDocumentSnapshot?>
     let isLoading: Driver<Bool>
     let myAppError: Driver<MyAppError>
@@ -32,6 +31,9 @@ class OnFlightViewModel {
         let locationId = locationInfo.fixedLocation.locationId // ロケーションID
         let remainingCoin = locationInfo.ticketInfo.remainingCoin // 旅費支払い後の残高
         
+        // お試し利用中か否か
+        let checkTrialUse = mainService.checkTrialUse()
+        
         let indicator = ActivityIndicator()
         self.isLoading = indicator.asDriver()
         
@@ -41,16 +43,17 @@ class OnFlightViewModel {
         )
         
         let fetchUsersInfoResult = mainService.fetchUserIdsInLocation(locationId: locationId, limit: limit)
-            .flatMap { userIds, latestLoadedDocDate, oldestDocument in
+            .flatMap { userIds, oldestDocument in
                 mainService.fetchUserProfiles(userIds: userIds, isInitialFetch: true)
                     .map { userProfiles in
                         // ユーザープロフィール画像をプリフェッチ
                         OnFlightViewModel.prefetch(imageUrlsString: userProfiles.map { $0.profileImageUrl })
-                        return (userProfiles: userProfiles, latestLoadedDocDate: latestLoadedDocDate, oldestDocument: oldestDocument)
+                        return (userProfiles: userProfiles, oldestDocument: oldestDocument)
                     }
             }
         
-        let result = updateAndAddEventResult
+        let result = checkTrialUse
+            .flatMap { _ in updateAndAddEventResult }
             .flatMap { _, _ in fetchUsersInfoResult }
             .trackActivity(indicator)
             .materialize()
@@ -59,10 +62,6 @@ class OnFlightViewModel {
         self.userProfiles = result
             .compactMap { $0.event.element?.userProfiles }
             .asDriver(onErrorJustReturn: [])
-        
-        self.latestLoadedDocDate = result
-            .compactMap { $0.event.element?.latestLoadedDocDate }
-            .asDriver(onErrorJustReturn: nil)
         
         self.oldestDocument = result
             .compactMap { $0.event.element?.oldestDocument }

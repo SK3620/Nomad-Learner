@@ -56,9 +56,8 @@ extension OnFlightViewController {
         
         Driver.combineLatest(
             viewModel.userProfiles,
-            viewModel.latestLoadedDocDate,
             viewModel.oldestDocument
-        ) { userProfiles, latestLoadedDocDate, oldestDocument in (userProfiles, latestLoadedDocDate, oldestDocument) }
+        ) { userProfiles, oldestDocument in (userProfiles, oldestDocument) }
         .drive(toStudyRoomVC)
         .disposed(by: disposeBag)
         
@@ -77,14 +76,13 @@ extension OnFlightViewController {
 
 extension OnFlightViewController {
     // StudyRoomVC（勉強部屋画面）へ遷移
-    private var toStudyRoomVC: Binder<([User], Timestamp?, QueryDocumentSnapshot?)> {
+    private var toStudyRoomVC: Binder<([User], QueryDocumentSnapshot?)> {
         return Binder(self) { base, tuple in
-            let (userProfiles, latestLoadedDocDate, oldestDocument) = tuple
+            let (userProfiles, oldestDocument) = tuple
             Router.showStudyRoomVC(
                 vc: base,
                 locationInfo: base.locationInfo,
                 userProfiles: userProfiles,
-                latestLoadedDocDate: latestLoadedDocDate,
                 oldestDocument: oldestDocument
             )
         }

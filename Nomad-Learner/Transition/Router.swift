@@ -40,7 +40,7 @@ protocol RouterProtocol {
     // DepartVC（出発画面）→ OnFlightVC（飛行中画面）
     static func showOnFlightVC(vc: UIViewController, locationInfo: LocationInfo)
     // OnFlightVC（飛行中画面）→ StudyRoomVC（勉強部屋画面）
-    static func showStudyRoomVC(vc: UIViewController, locationInfo: LocationInfo, userProfiles: [User], latestLoadedDocDate: Timestamp?, oldestDocument: QueryDocumentSnapshot?)
+    static func showStudyRoomVC(vc: UIViewController, locationInfo: LocationInfo, userProfiles: [User], oldestDocument: QueryDocumentSnapshot?)
     // StudyRoomVC（勉強部屋画面）→ TicketBackgroundVC（チケット確認画面）
     static func showTicketConfirmVC(vc: UIViewController, locationInfo: LocationInfo)
     // StudyRoomVC（勉強部屋画面）→ BackgroundImageSwitchIntervalSelectVC（背景画像切り替えインターバル時間選択画面）
@@ -146,11 +146,10 @@ extension Router: RouterProtocol {
     }
     
     // OnFlightVC（飛行中画面）→ StudyRoomVC（勉強部屋画面）
-    static func showStudyRoomVC(vc: UIViewController, locationInfo: LocationInfo, userProfiles: [User], latestLoadedDocDate: Timestamp?, oldestDocument: QueryDocumentSnapshot?) {
+    static func showStudyRoomVC(vc: UIViewController, locationInfo: LocationInfo, userProfiles: [User], oldestDocument: QueryDocumentSnapshot?) {
         let studyRoomViewController = StudyRoomViewController()
         studyRoomViewController.locationInfo = locationInfo
         studyRoomViewController.userProfiles = userProfiles
-        studyRoomViewController.latestLoadedDocDate = latestLoadedDocDate
         studyRoomViewController.oldestDocument = oldestDocument
         let navigationController = NavigationControllerForStudyRoomVC(rootViewController: studyRoomViewController)
         navigationController.modalPresentationStyle = .overFullScreen

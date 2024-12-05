@@ -16,7 +16,6 @@ class StudyRoomViewController: UIViewController {
     
     var locationInfo: LocationInfo!
     var userProfiles: [User] = []
-    var latestLoadedDocDate: Timestamp?
     var oldestDocument: QueryDocumentSnapshot?
     
     private var viewModel: StudyRoomViewModel!

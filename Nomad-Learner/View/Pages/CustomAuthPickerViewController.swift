@@ -22,8 +22,8 @@ import KRProgressHUD
 class CustomAuthPickerViewController: FUIAuthPickerViewController {
     
     // iPadの場合キーボードと被らないようAuthStackViewを上げる
-    private let bottomEdgeInset: CGFloat = UIDevice.current.userInterfaceIdiom != .pad ? 16 : 150
-    
+    private let bottomEdgeInset: CGFloat = UIDevice.current.userInterfaceIdiom != .pad ? 20 : 150
+            
     private lazy var scrollView = view.subviews[0].then {
         $0.backgroundColor = .white
     }
@@ -36,8 +36,14 @@ class CustomAuthPickerViewController: FUIAuthPickerViewController {
         $0.addSubview(self.appIconImageView)
     }
     
-    private let appIconImageView = UIImageView(image: UIImage(named: "Logo"))
+    private let appSupportBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "doc.questionmark"), style: .plain, target: nil, action: nil).then {
+        $0.tintColor = .lightGray
+    }
     
+    private let appSupportView: AppSupportView = AppSupportView()
+    
+    private let appIconImageView = UIImageView(image: UIImage(named: "Logo"))
+        
     private let authTextFieldStackView: AuthInfoInputStackView = AuthInfoInputStackView()
     
     private let bottomAuthStackView: BottomAuthStackView = BottomAuthStackView()
@@ -72,6 +78,8 @@ class CustomAuthPickerViewController: FUIAuthPickerViewController {
     
     private func setupUI() {
         
+        navigationItem.rightBarButtonItem = appSupportBarButtonItem
+        
         contentView.addSubview(backgroundViewForAppIcon)
         contentView.addSubview(authStackView)
         
@@ -79,10 +87,11 @@ class CustomAuthPickerViewController: FUIAuthPickerViewController {
         contentView.snp.makeConstraints {
             $0.size.edges.equalTo(view)
         }
-        
+
         backgroundViewForAppIcon.snp.makeConstraints {
             $0.bottom.equalTo(authStackView.snp.top)
-            $0.top.right.left.equalToSuperview()
+            $0.top.equalToSuperview().inset(NavigationHeightProvidable.totalTopBarHeight(navigationController: navigationController) + 44)
+            $0.right.left.equalToSuperview()
         }
         
         appIconImageView.snp.makeConstraints {
@@ -92,7 +101,7 @@ class CustomAuthPickerViewController: FUIAuthPickerViewController {
         
         authStackView.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview().inset(16)
-            $0.bottom.equalToSuperview().inset(bottomEdgeInset)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(bottomEdgeInset)
         }
         
         // FirebaseUIのボタンを取得してauthStackViewに追加
@@ -112,8 +121,41 @@ class CustomAuthPickerViewController: FUIAuthPickerViewController {
 }
 
 extension CustomAuthPickerViewController: AlertEnabled, KRProgressHUDEnabled {
-    private func bind() {
+    func bind() {
+        // アプリサポートView表示
+        appSupportBarButtonItem.rx.tap
+            .map { _ in true }
+            .bind(to: toggleAppSupportViewAppearence)
+            .disposed(by: disposeBag)
         
+        // アプリサポートView閉じる
+        appSupportView.tapGesture.rx.event
+            .map { [weak self] sender in
+                guard let self = self else { return false }
+                let tapLocation = sender.location(in: sender.view)
+                return !self.appSupportView.frame.contains(tapLocation)
+            }
+            .bind(to: toggleAppSupportViewAppearence)
+            .disposed(by: disposeBag)
+        
+        // アプリサポートView閉じる
+        appSupportView.backButton.rx.tap
+            .map { _ in false }
+            .bind(to: toggleAppSupportViewAppearence)
+            .disposed(by: disposeBag)
+        
+        // 問い合わせフォーム表示
+        appSupportView.contactButton.rx.tap
+            .compactMap { _ in MyAppSettings.contactFormUrl }
+            .bind(to: openURL)
+            .disposed(by: disposeBag)
+        
+        // プライバシーポリシー表示
+        appSupportView.privacyPolicyButton.rx.tap
+            .compactMap { _ in MyAppSettings.privacyPolicyUrl }
+            .bind(to: openURL)
+            .disposed(by: disposeBag)
+            
         // パスワード表示/非表示切り替え
         authTextFieldStackView.passwordTextField.togglePasswordVisibilityButton.rx.tap
             .bind(to: togglePasswordVisibility)
@@ -185,6 +227,23 @@ extension CustomAuthPickerViewController: AlertEnabled, KRProgressHUDEnabled {
 }
 
 extension CustomAuthPickerViewController {
+    // アプリサポート画面表示/非表示切り替え
+    private var toggleAppSupportViewAppearence: Binder<Bool> {
+        return Binder(self, binding: { base, shouldShow in
+            if shouldShow {
+                base.view.addSubview(base.appSupportView)
+                base.appSupportView.snp.makeConstraints {
+                    $0.edges.equalToSuperview()
+                }
+            } else {
+                base.appSupportView.removeFromSuperview()
+            }
+        })
+    }
+    // プライバシーポリシー/問い合わせフォームのリンク先にアクセス
+    private var openURL: Binder<URL> {
+        return Binder(self, binding: { base, url in UIApplication.shared.open(url) })
+    }
     // パスワード表示/非表示切り替え
     private var togglePasswordVisibility: Binder<Void> {
         return Binder(self, binding: { base, _ in base.authTextFieldStackView.passwordTextField.togglePasswordVisibility() })

@@ -18,6 +18,10 @@ import RxSwift
 
 class AuthViewController: UIViewController {
     
+    let containerView = UIView().then {
+        $0.backgroundColor = .white
+    }
+    
     private let authUI = FUIAuth.defaultAuthUI()!
     
     private lazy var customAuthPickerViewController = CustomAuthPickerViewController(authUI: self.authUI)
@@ -28,16 +32,25 @@ class AuthViewController: UIViewController {
         FUIOAuth.appleAuthProvider(withAuthUI: authUI),
         FUIOAuth.twitterAuthProvider(withAuthUI: authUI)
     ]
-        
+    
+    private let disposeBag = DisposeBag()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
-        setupFirebaseUI()
+        setupUI()
     }
+}
+
+extension AuthViewController {
     
-    // MARK: - Set up UI
-    private func setupFirebaseUI() {
+    private func setupUI() {
+        navigationController?.navigationBar.isHidden = true
+        view.backgroundColor = .white
+        
+        view.addSubview(containerView)
+        containerView.snp.makeConstraints { $0.edges.equalToSuperview() }
+        
         // キャンセル非表示
         authUI.shouldHideCancelButton = true
         // 値をセット
@@ -52,7 +65,7 @@ class AuthViewController: UIViewController {
         
         // セーフエリア内に設置
         authViewController.view.snp.makeConstraints {
-            $0.verticalEdges.equalTo(view.safeAreaLayoutGuide)
+            $0.verticalEdges.equalToSuperview()
             $0.horizontalEdges.equalTo(view.snp.horizontalEdges)
         }
     }

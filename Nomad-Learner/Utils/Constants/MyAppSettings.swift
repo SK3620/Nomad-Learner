@@ -10,6 +10,11 @@ import GoogleMaps
 import RxSwift
 
 struct MyAppSettings {
+    /// 問い合わせフォームURL
+    public static let contactFormUrl = URL(string: "https://tayori.com/form/7c23974951b748bcda08896854f1e7884439eb5c/")
+    /// プライバシーポリシーURL
+    public static let privacyPolicyUrl = URL(string: "https://doc-hosting.flycricket.io/nomad-learner-privacy-policy/5c0bb670-8511-4592-8740-ac71207bb2a4/privacy")
+    
     /// このアプリで定める最低距離（km）
     public static let minDistance: Int = 1000
     /// 必要な最低勉強時間（時間単位）

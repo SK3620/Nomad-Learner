@@ -35,6 +35,8 @@
 		8344786D2CD213BE0038C7B9 /* LocationStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8344786C2CD213BE0038C7B9 /* LocationStatus.swift */; };
 		8344786F2CD498700038C7B9 /* OnFlightViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8344786E2CD498700038C7B9 /* OnFlightViewModel.swift */; };
 		8344D0312CE6474F007559E0 /* NationalFlagImageUrlString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8344D0302CE6474F007559E0 /* NationalFlagImageUrlString.swift */; };
+		834F4CF02D00AFA00072329D /* AppSupportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834F4CEF2D00AFA00072329D /* AppSupportViewController.swift */; };
+		834F4CF22D00BD7B0072329D /* AppSupportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834F4CF12D00BD7B0072329D /* AppSupportView.swift */; };
 		8352F9582CFB19A800BF6E35 /* AuthInfoInputStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8352F9572CFB19A800BF6E35 /* AuthInfoInputStackView.swift */; };
 		835BD2F12CA413560088CA02 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835BD2F02CA413560088CA02 /* AppDelegate.swift */; };
 		835BD2F32CA413560088CA02 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835BD2F22CA413560088CA02 /* SceneDelegate.swift */; };
@@ -162,6 +164,8 @@
 		8344786C2CD213BE0038C7B9 /* LocationStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationStatus.swift; sourceTree = "<group>"; };
 		8344786E2CD498700038C7B9 /* OnFlightViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnFlightViewModel.swift; sourceTree = "<group>"; };
 		8344D0302CE6474F007559E0 /* NationalFlagImageUrlString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NationalFlagImageUrlString.swift; sourceTree = "<group>"; };
+		834F4CEF2D00AFA00072329D /* AppSupportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSupportViewController.swift; sourceTree = "<group>"; };
+		834F4CF12D00BD7B0072329D /* AppSupportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSupportView.swift; sourceTree = "<group>"; };
 		8352F9572CFB19A800BF6E35 /* AuthInfoInputStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInfoInputStackView.swift; sourceTree = "<group>"; };
 		835BD2ED2CA413560088CA02 /* Dev-Nomad-Learner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dev-Nomad-Learner.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		835BD2F02CA413560088CA02 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -319,6 +323,7 @@
 				837DE5942CBAD11500819964 /* StudyRoomViewController.swift */,
 				8304A0E12CA5123300061B33 /* AuthViewController.swift */,
 				83A9C2BD2CA7BF2200898F0B /* CustomAuthPickerViewController.swift */,
+				834F4CEF2D00AFA00072329D /* AppSupportViewController.swift */,
 				838753E32CB00A4B001EE8F1 /* MapViewController.swift */,
 				83291A272CF9F3DE00C065CA /* WalkThroughViewController.swift */,
 				83A6D7BA2CB6195E00D18A30 /* ProfileViewController.swift */,
@@ -477,6 +482,7 @@
 			isa = PBXGroup;
 			children = (
 				83A9C2BF2CA7C9B700898F0B /* BottomAuthStackView.swift */,
+				834F4CF12D00BD7B0072329D /* AppSupportView.swift */,
 				8352F9572CFB19A800BF6E35 /* AuthInfoInputStackView.swift */,
 				83A9C2C12CA7D08500898F0B /* AuthTextField.swift */,
 				838753DD2CAED385001EE8F1 /* ValidationLabel.swift */,
@@ -863,6 +869,7 @@
 				83A6D7D92CB80C8F00D18A30 /* EditProfileView.swift in Sources */,
 				8344786F2CD498700038C7B9 /* OnFlightViewModel.swift in Sources */,
 				8344786D2CD213BE0038C7B9 /* LocationStatus.swift in Sources */,
+				834F4CF22D00BD7B0072329D /* AppSupportView.swift in Sources */,
 				83A6D7AB2CB3D93E00D18A30 /* LocationLabel.swift in Sources */,
 				838753E22CAF9E53001EE8F1 /* AlertEnabled.swift in Sources */,
 				83A6D7E22CB8F88500D18A30 /* DepartViewModel.swift in Sources */,
@@ -875,6 +882,7 @@
 				836180F02CBC93900059937E /* Profile.swift in Sources */,
 				83AC8F042CF6CDFC00FB57B3 /* AuthMode.swift in Sources */,
 				838753D62CAC19D1001EE8F1 /* AuthInputValidator.swift in Sources */,
+				834F4CF02D00AFA00072329D /* AppSupportViewController.swift in Sources */,
 				831E5C6F2CC13205001A90C4 /* Location.swift in Sources */,
 				834478632CCA65380038C7B9 /* UITextView.swift in Sources */,
 				83AAA0CC2CEB44C000D5DC00 /* PendingUpdateData.swift in Sources */,

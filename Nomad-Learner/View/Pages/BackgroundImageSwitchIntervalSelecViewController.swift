@@ -144,9 +144,7 @@ extension BackgroundImageSwitchIntervalSelectViewController: UIPickerViewDelegat
 
 extension BackgroundImageSwitchIntervalSelectViewController {
     private var backToStudyRoomVC: Binder<Void> {
-        return Binder(self) { base, _ in
-            Router.dismissModal(vc: base)
-        }
+        return Binder(self) { base, _ in Router.dismissModal(vc: base) }
     }
 }
 

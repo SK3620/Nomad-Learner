@@ -70,7 +70,7 @@ enum AlertActionType {
         case .willDeleteAccount:
             return "\n本当にアカウントを削除してもよろしいですか？"
         case .savePendingUpdateData(let saveRetryError, _, _):
-            return "\(saveRetryError?.errorDescription ?? "\n前回の勉強記録が保存されていません。")\n保存しますか？"
+            return "\(saveRetryError?.errorDescription ?? "前回の勉強記録が保存されていません。")\n保存しますか？"
         case .willShowDepartVC(_, _, let ticketInfo):
             return "\n一度訪問すると、次回の「\(ticketInfo.destination)」への訪問時以降、以下の項目は変更されません。\n\n必要な勉強時間：\(ticketInfo.requiredStudyHours)時間\n報酬コイン：\(ticketInfo.rewardCoin)コイン"
         case .exitRoom:

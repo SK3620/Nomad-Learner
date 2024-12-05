@@ -26,6 +26,12 @@ class AppSupportView: UIView {
         $0.tintColor = ColorCodes.primaryPurple.color()
     }
     
+    let termsAndConditionsButton = UIButton(type: .system).then {
+        $0.setTitle("利用規約", for: .normal)
+        $0.titleLabel?.font = .boldSystemFont(ofSize: 16)
+        $0.tintColor = ColorCodes.primaryPurple.color()
+    }
+    
     let backButton = UIButton(type: .system).then {
         $0.setTitle("閉じる", for: .normal)
         $0.titleLabel?.font = .systemFont(ofSize: 16)
@@ -42,7 +48,7 @@ class AppSupportView: UIView {
         let stackView = UIStackView(arrangedSubviews: [
             contactButton,
             privacyPolicyButton,
-            backButton
+            termsAndConditionsButton
         ])
         stackView.axis = .vertical
         stackView.spacing = 20
@@ -67,6 +73,7 @@ class AppSupportView: UIView {
         
         addSubview(containerView)
         containerView.addSubview(stackView)
+        containerView.addSubview(backButton)
         
         containerView.snp.makeConstraints {
             $0.center.equalToSuperview()
@@ -74,7 +81,13 @@ class AppSupportView: UIView {
         }
         
         stackView.snp.makeConstraints {
-            $0.edges.equalToSuperview().inset(24)
+            $0.top.horizontalEdges.equalToSuperview().inset(24)
+            $0.bottom.equalTo(backButton.snp.top).offset(-40)
+        }
+        
+        backButton.snp.makeConstraints {
+            $0.bottom.equalToSuperview().inset(24)
+            $0.horizontalEdges.equalToSuperview().inset(24)
         }
     }
 }

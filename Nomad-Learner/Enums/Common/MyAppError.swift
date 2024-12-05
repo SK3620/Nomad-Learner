@@ -14,6 +14,9 @@ enum MyAppError: Error {
     case handleAll(Error?)
     case unknown
     
+    // 利用規約同意画面
+    case loadTermsAndConditionsFailed(Error?)
+    
     // 認証画面
     case signInFailed(Error)
     case signUpFailed(Error)
@@ -56,6 +59,8 @@ enum MyAppError: Error {
     // MARK: - Localized Descriptions (日本語版)
        var description: String {
            switch self {
+           case .loadTermsAndConditionsFailed:
+               return NSLocalizedString("ページの読み込みに失敗しました。インターネット接続を確認してください。", comment: "利用規約読み込み失敗メッセージ")
            case .signInFailed:
                return NSLocalizedString("サインインに失敗しました。もう一度お試しください。", comment: "サインイン失敗メッセージ")
            case .signUpFailed:
@@ -78,6 +83,8 @@ enum MyAppError: Error {
     // MARK: - Debug Descriptions (デバッグ用)
     var debugDescription: String {
         switch self {
+        case .loadTermsAndConditionsFailed(let error):
+            return NSLocalizedString("ページの読み込みに失敗しました。インターネット接続を確認してください。エラー: \(String(describing: error)).", comment: "利用規約読み込み失敗メッセージ")
         case .signInFailed(let error):
             return NSLocalizedString("サインインに失敗しました。エラー: \(error.localizedDescription)。入力したメールアドレスとパスワードを確認してください。", comment: "サインインエラーメッセージ")
             

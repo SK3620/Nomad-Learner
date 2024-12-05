@@ -21,6 +21,9 @@ import KRProgressHUD
 // MARK: - Customize AuthPickerViewController
 class CustomAuthPickerViewController: FUIAuthPickerViewController {
     
+    // 利用規約に同意したか否か
+    var didAgreeTermsAndConditions: Bool = false
+    
     // iPadの場合キーボードと被らないようAuthStackViewを上げる
     private let bottomEdgeInset: CGFloat = UIDevice.current.userInterfaceIdiom != .pad ? 20 : 150
             
@@ -62,18 +65,24 @@ class CustomAuthPickerViewController: FUIAuthPickerViewController {
     var viewModel: AuthViewModel!
     private let disposeBag = DisposeBag()
     
-    override func viewDidLoad() {
+    override func viewDidLoad(){
         super.viewDidLoad()
-        // UIのセットアップ等
+
         setupUI()
-        // 自動ログイン（UIの更新を待つ？）
-        if let _ = FBAuth.currentUser {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                Router.showMap(vc: self)
-            }
-        }
-        // viewModelとのバインディング
         bind()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+
+        if FBAuth.currentUser != nil {
+            // 自動ログイン（UIの更新を待つ？）
+            Router.showMap(vc: self)
+        } 
+        else if !didAgreeTermsAndConditions {
+            // 初回ログイン時は利用規約画面を表示
+            Router.showTermsAndConditionsVC(vc: self)
+        }
     }
     
     private func setupUI() {
@@ -153,6 +162,12 @@ extension CustomAuthPickerViewController: AlertEnabled, KRProgressHUDEnabled {
         // プライバシーポリシー表示
         appSupportView.privacyPolicyButton.rx.tap
             .compactMap { _ in MyAppSettings.privacyPolicyUrl }
+            .bind(to: openURL)
+            .disposed(by: disposeBag)
+        
+        // 利用規約表示
+        appSupportView.termsAndConditionsButton.rx.tap
+            .compactMap { _ in MyAppSettings.termsAndConditionsUrl }
             .bind(to: openURL)
             .disposed(by: disposeBag)
             

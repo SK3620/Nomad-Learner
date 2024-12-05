@@ -14,6 +14,8 @@ struct MyAppSettings {
     public static let contactFormUrl = URL(string: "https://tayori.com/form/7c23974951b748bcda08896854f1e7884439eb5c/")
     /// プライバシーポリシーURL
     public static let privacyPolicyUrl = URL(string: "https://doc-hosting.flycricket.io/nomad-learner-privacy-policy/5c0bb670-8511-4592-8740-ac71207bb2a4/privacy")
+    /// 利用規約URL
+    public static let termsAndConditionsUrl = URL(string: "https://doc-hosting.flycricket.io/nomad-learner-terms-of-use/fd03cd99-de62-4301-b93e-d04ce1176970/terms")
     
     /// このアプリで定める最低距離（km）
     public static let minDistance: Int = 1000

@@ -26,6 +26,16 @@ class EditProfileViewModel {
          currentUserProfile: User,
          mainService: MainServiceProtocol
     ) {
+        // エラーを流す
+        let myAppErrorRelay = BehaviorRelay<MyAppError?>(value: nil)
+        // 発生したエラーを一つに集約
+        self.myAppError = myAppErrorRelay
+            .compactMap { $0 }
+            .asDriver(onErrorJustReturn: .unknown)
+        
+        // お試し利用中か否か
+        let checkTrialUse = mainService.checkTrialUse()
+        
         // インジケーター
         let indicator = ActivityIndicator()
         self.isLoading = indicator.asDriver()
@@ -58,14 +68,21 @@ class EditProfileViewModel {
                 // 選択されたプロフィール画像がある場合、まず画像を保存する
                 if let image = input.profileImage.unwrappedValue {
                     // Storageにプロフィール画像を保存
-                    return mainService.saveProfileImage(image: image)
-                        .flatMap { downloadUrlString in
-                            // プロフィール画像をプリフェッチ
-                            ImageCacheManager.prefetch(from: [URL(string: downloadUrlString)!])
-                            // プロフィール画像ダウンロードURLを設定
-                            updatedUserProfile.profileImageUrl = downloadUrlString
-                            // 画像保存後にユーザープロフィールを保存
-                            return mainService.saveUserProfile(user: updatedUserProfile, shouldUpdate: true)
+                    return checkTrialUse
+                        .flatMap { _ in
+                            mainService.saveProfileImage(image: image)
+                                .flatMap { downloadUrlString in
+                                    // プロフィール画像をプリフェッチ
+                                    ImageCacheManager.prefetch(from: [URL(string: downloadUrlString)!])
+                                    // プロフィール画像ダウンロードURLを設定
+                                    updatedUserProfile.profileImageUrl = downloadUrlString
+                                    // 画像保存後にユーザープロフィールを保存
+                                    return mainService.saveUserProfile(user: updatedUserProfile, shouldUpdate: true)
+                                }
+                        }
+                        .catch { error in // ストリームを終了させない
+                            myAppErrorRelay.accept(error as? MyAppError)
+                            return .empty()
                         }
                         .materialize()
                         .trackActivity(indicator)
@@ -73,26 +90,22 @@ class EditProfileViewModel {
                     // ない場合は、空文字を設定し、デフォルト画像を適用
                     updatedUserProfile.profileImageUrl = ""
                     // ユーザープロフィールを保存
-                    return mainService.saveUserProfile(user: updatedUserProfile, shouldUpdate: true)
+                    return checkTrialUse
+                        .flatMap { _ in mainService.saveUserProfile(user: updatedUserProfile, shouldUpdate: true) }
+                        .catch { error in // ストリームを終了させない
+                            myAppErrorRelay.accept(error as? MyAppError)
+                            return .empty()
+                        }
                         .materialize()
                         .trackActivity(indicator)
                 }
             }
             .share(replay: 1)
-                        
+        
         // ユーザープロフィール保存完了した場合、更新対象のユーザープロフィール情報を流す
         self.didSaveUserProfile = saveUserProfileResult
             .compactMap { $0.event.element }
             .map { _ in updatedUserProfile }
             .asDriver(onErrorJustReturn: nil)
-        
-        // ユーザープロフィール保存エラー
-        let saveUserProfileError = saveUserProfileResult
-            .compactMap { $0.event.error as? MyAppError }
-        
-        // 発生したエラーを一つに集約
-        self.myAppError = Observable
-            .merge(saveUserProfileError)
-            .asDriver(onErrorJustReturn: .unknown)
     }
 }

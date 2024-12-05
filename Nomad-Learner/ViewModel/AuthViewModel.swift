@@ -26,12 +26,19 @@ class AuthViewModel {
     // MARK: - Private properties
     private let signInWithAuthProviderRelay = BehaviorRelay<SignInWithAuthProviderResult?>(value: nil)
     private let deleteAccountRelay = BehaviorRelay<(email: String, password: String)?>(value: nil)
+    private let useForFreeTrialRelay = BehaviorRelay<Void?>(value: nil)
     
     var willDeleteAccountActionType: AlertActionType {
-        AlertActionType.willDeleteAccount(
-            onConfirm: { email, password in self.deleteAccountRelay.accept((email: email!, password: password!))},
-            onCancel: {}
+        .willDeleteAccount(
+            onConfirm: { email, password in
+                self.deleteAccountRelay.accept((email: email!, password: password!))
+            }
         )
+    }
+    
+    var willFreeTrialUseActionType: AlertActionType {
+        .willFreeTrialUse(
+            onConfirm: { self.useForFreeTrialRelay.accept(()) })
     }
     
     init(input: (
@@ -158,7 +165,7 @@ class AuthViewModel {
         // アカウント削除
         let deleteAccountResult = self.deleteAccountRelay
             .compactMap { $0 }
-            .flatMap { email, password in
+            .flatMapLatest { email, password in
                 authService.signIn(email: email, password: password, shouldReauthenticate: true) // 再認証が必要
                     .concatMap { _ in authService.deleteAccount(email: email, password: password) }
                     .trackActivity(indicator)
@@ -168,9 +175,22 @@ class AuthViewModel {
                     }
             }
         
+        // お試し利用
+        let signInForFreeTrialUseResult = self.useForFreeTrialRelay
+            .compactMap { $0 }
+            .flatMapLatest { _ in
+                authService.signIn(email: MyAppSettings.emailForTrial, password: MyAppSettings.passwordForTrial, shouldReauthenticate: false)
+                    .trackActivity(indicator)
+                    .catch { error in // ストリームを終了させない
+                        myAppErrorRelay.accept(error as? MyAppError)
+                        return .empty()
+                    }
+            }
+            .materialize()
+        
         // SignIn, SingUp, プロバイダー認証後のユーザー情報保存処理結果を一つに集約
         let mergedAuthResults = Observable
-            .merge(authResults, saveUserProfileResultWithProvider)
+            .merge(authResults, saveUserProfileResultWithProvider, signInForFreeTrialUseResult)
             .share(replay: 1)
         
         // 認証完了

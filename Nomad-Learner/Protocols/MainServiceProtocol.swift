@@ -14,6 +14,7 @@ import FirebaseDatabase
 import FirebaseStorage
 
 protocol MainServiceProtocol {
+    func checkTrialUse() -> Observable<Void> 
     // Firebaseからロケーションデータ取得
     func fetchFixedLocations() -> Observable<[FixedLocation]>
     // ロケーション情報の変更を監視
@@ -33,7 +34,7 @@ protocol MainServiceProtocol {
     // 参加中のロケーションにuuidを追加
     func addUserIdToLocation(locationId: String) -> Observable<Void>
     // ロケーションに参加中のユーザーのuuidを取得
-    func fetchUserIdsInLocation(locationId: String, limit: Int) -> Observable<(userIds: [String], latestLoadedDocDate: Timestamp?, oldestDocument: QueryDocumentSnapshot?)>
+    func fetchUserIdsInLocation(locationId: String, limit: Int) -> Observable<(userIds: [String], oldestDocument: QueryDocumentSnapshot?)>
     // ロケーションに参加中のユーザーのプロフィール情報を取得
     func fetchUserProfiles(userIds: [String], isInitialFetch: Bool) -> Observable<[User]>
     // ページネーションで追加データ取得
@@ -81,6 +82,18 @@ final class MainService: MainServiceProtocol {
         listenerForNewUsersParticipation?.remove()
         listenerForUsersExit = nil
         listenerForNewUsersParticipation = nil
+    }
+    
+    func checkTrialUse() -> Observable<Void> {
+        Observable.create { observer in
+            if FBAuth.currentUserId == MyAppSettings.userIdForTrial {
+                observer.onError(MyAppError.featureAccessDeniedInTrial)
+            } else {
+                observer.onNext(())
+                observer.onCompleted()
+            }
+            return Disposables.create()
+        }
     }
     
     // マップのマーカーに設定するロケーション情報取得
@@ -139,6 +152,11 @@ final class MainService: MainServiceProtocol {
                 observer.onError(MyAppError.userNotFound)
                 return Disposables.create()
             }
+//            guard !self.isTrialUse else {
+//                observer.onError(MyAppError.featureAccessDeniedInTrial)
+//                return Disposables.create()
+//            }
+            
             // 画像をJPEG形式に変換する
             let imageData = image.jpegData(compressionQuality: 0.75)
             // 画像と投稿データの保存場所を定義する
@@ -273,6 +291,10 @@ final class MainService: MainServiceProtocol {
                 observer.onError(MyAppError.userNotFound)
                 return Disposables.create()
             }
+//            guard !self.isTrialUse else {
+//                observer.onError(MyAppError.featureAccessDeniedInTrial)
+//                return Disposables.create()
+//            }
             
             let updatedData = [
                 "currentCoin": currentCoin,
@@ -298,6 +320,10 @@ final class MainService: MainServiceProtocol {
                 observer.onError(MyAppError.userNotFound)
                 return Disposables.create()
             }
+//            guard !self.isTrialUse else {
+//                observer.onError(MyAppError.featureAccessDeniedInTrial)
+//                return Disposables.create()
+//            }
             
             // 初期データとして userCount のフィールドを 1 インクリメント
             let locationRef = self.firebaseConfig.locationsCollectionReference().document(locationId)
@@ -326,7 +352,7 @@ final class MainService: MainServiceProtocol {
     }
     
     // ロケーションに参加中のユーザーのuuidを取得（初回読み込み）
-    func fetchUserIdsInLocation(locationId: String, limit: Int) -> Observable<(userIds: [String], latestLoadedDocDate: Timestamp?, oldestDocument: QueryDocumentSnapshot?)> {
+    func fetchUserIdsInLocation(locationId: String, limit: Int) -> Observable<(userIds: [String], oldestDocument: QueryDocumentSnapshot?)> {
         Observable.create { observer in
             let query = self.firebaseConfig.usersInLocationsReference(with: locationId)
                 .order(by: "createdAt", descending: true)
@@ -338,9 +364,8 @@ final class MainService: MainServiceProtocol {
                 } else if let documents = snapshots?.documents, !documents.isEmpty {
                     // ユーザーのuuidを取得
                     let userIds: [String] = documents.compactMap { $0.documentID }
-                    let latestLoadedDocDate = documents.first?.data()["createdAt"] as? Timestamp // 最新のドキュメントのTimeStampを取得
                     let oldestDocument = documents.last // 一番古いドキュメントを取得
-                    observer.onNext((userIds: userIds, latestLoadedDocDate: latestLoadedDocDate, oldestDocument: oldestDocument))
+                    observer.onNext((userIds: userIds, oldestDocument: oldestDocument))
                     observer.onCompleted()
                 }
             }
@@ -558,6 +583,10 @@ final class MainService: MainServiceProtocol {
 }
 
 extension MainService {
+    
+    // お試し利用中か否か
+    private var isTrialUse: Bool { FBAuth.currentUserId == MyAppSettings.userIdForTrial }
+   
     private func setupListenerForNewUsersParticipation(
         locationId: String,
         latestLoadedDocDate: Timestamp,

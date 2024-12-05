@@ -10,9 +10,13 @@ import UIKit
 
 enum AlertActionType {
     case error(MyAppError, onConfim: () -> Void = {})
+    
     case willDeleteAccount(onConfirm: (String?, String?) -> Void, onCancel: () -> Void = {})
+    case willFreeTrialUse(onConfirm: () -> Void)
+    
     case savePendingUpdateData(saveRetryError: MyAppError? = nil, onConfirm: () -> Void, onCancel: () -> Void)
     case willShowDepartVC(onConfirm: () -> Void, onCancel: () -> Void = {}, ticketInfo: TicketInfo)
+    
     case exitRoom(onConfirm: () -> Void, onCancel: () -> Void = {})
     case breakTime(onConfirm: () -> Void, onCancel: () -> Void = {})
     case community(onConfirm: () -> Void, onCancel: () -> Void = {})
@@ -40,10 +44,12 @@ enum AlertActionType {
     
     var title: String {
         switch self {
-        case .error:
-            return "エラー"
+        case .error(let error, _):
+            return error.alertTitle
         case .willDeleteAccount:
             return "アカウントを削除する"
+        case .willFreeTrialUse:
+            return "お試しで使ってみる"
         case .savePendingUpdateData(let saveRetryError, _, _):
             return saveRetryError != nil ? "エラー" : ""
         case .willShowDepartVC:
@@ -69,6 +75,8 @@ enum AlertActionType {
             return "\n" + (error.errorDescription ?? "")
         case .willDeleteAccount:
             return "\n本当にアカウントを削除してもよろしいですか？"
+        case .willFreeTrialUse:
+            return "\nアプリの一部の機能をお試しで使用することができます。\n全ての機能にアクセスするにはアカウントを作成する必要があります。"
         case .savePendingUpdateData(let saveRetryError, _, _):
             return "\(saveRetryError?.errorDescription ?? "前回の勉強記録が保存されていません。")\n保存しますか？"
         case .willShowDepartVC(_, _, let ticketInfo):
@@ -88,6 +96,8 @@ enum AlertActionType {
         switch self {
         case .willDeleteAccount:
             return "削除"
+        case .willFreeTrialUse:
+            return "使ってみる"
         case .savePendingUpdateData:
             return "保存"
         case .exitRoom:
@@ -155,11 +165,12 @@ enum AlertActionType {
         switch self {
         case .willDeleteAccount(let onConfirm, let onCancel):
             return (onConfirm: onConfirm, onCancel: onCancel)
-            
+        
         case .savePendingUpdateData(_, let onConfirm, let onCancel):
             return (onConfirm: { _, _ in onConfirm() }, onCancel: { onCancel() })
             
         case .willShowDepartVC(let onConfirm, _, _),
+                .willFreeTrialUse(let onConfirm),
                 .exitRoom(let onConfirm, _),
                 .breakTime(let onConfirm, _),
                 .community(let onConfirm, _),

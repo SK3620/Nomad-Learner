@@ -41,6 +41,11 @@ class CustomAuthPickerViewController: FUIAuthPickerViewController {
         $0.tintColor = .lightGray
     }
     
+    // お試し
+    private let freeTrialBarButtonItem = UIBarButtonItem(title: "お試し", style: .plain, target: nil, action: nil).then {
+        $0.tintColor = ColorCodes.primaryPurple.color()
+    }
+    
     private let termsAndConditionsView: TermsAndConditionsView = TermsAndConditionsView()
     
     private let appSupportView: AppSupportView = AppSupportView()
@@ -86,7 +91,8 @@ class CustomAuthPickerViewController: FUIAuthPickerViewController {
     
     private func setupUI() {
         
-        navigationItem.rightBarButtonItem = appSupportBarButtonItem
+        navigationItem.leftBarButtonItem = appSupportBarButtonItem
+        navigationItem.rightBarButtonItem = freeTrialBarButtonItem
         
         contentView.addSubview(backgroundViewForAppIcon)
         contentView.addSubview(authStackView)
@@ -274,6 +280,12 @@ extension CustomAuthPickerViewController: AlertEnabled, KRProgressHUDEnabled {
         // アカウント削除成功
         viewModel.didDeleteAccount
             .drive(self.rx.showMessage)
+            .disposed(by: disposeBag)
+        
+        // お試し利用
+        freeTrialBarButtonItem.rx.tap.asDriver()
+            .map { self.viewModel.willFreeTrialUseActionType }
+            .drive(self.rx.showAlert)
             .disposed(by: disposeBag)
     }
 }

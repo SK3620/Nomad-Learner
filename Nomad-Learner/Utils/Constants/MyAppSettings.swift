@@ -13,6 +13,12 @@ struct MyAppSettings {
     /// 開発者メールアドレス
     public static let developerEmail = "k.n.t11193620@gmail.com"
     
+    /// お試し利用用のユーザー情報（固定）
+    public static let usernameForTrial = "Nomad-Learner"
+    public static let userIdForTrial = MyAppSettings.dynamicUserIdForTrial
+    public static let emailForTrial = "nomad@learner.jp"
+    public static let passwordForTrial = "NomadLearner1234"
+    
     /// 問い合わせフォームURL
     public static let contactFormUrl = URL(string: "https://tayori.com/form/7c23974951b748bcda08896854f1e7884439eb5c/")
     /// プライバシーポリシーURL
@@ -46,6 +52,15 @@ struct MyAppSettings {
 }
 
 extension MyAppSettings {
+    /// お試し利用用のユーザーのuserId（固定）
+    private static var dynamicUserIdForTrial: String {
+        #if DEVELOP // 開発環境
+        return "6Hlgc3PcXNVNfHJUHNjvrtGdnsd2"
+        #else // 本番環境
+        return "oaeQC4DAuaNm8X3dMN4p2n3xQrM2"
+        #endif
+    }
+
     /// 背景画像切り替えインターバル時間
     private static var dynamicBackgroundImageSwitchInterval: Int {
         #if DEVELOP // 開発環境

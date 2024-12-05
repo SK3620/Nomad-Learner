@@ -27,8 +27,6 @@ enum ScreenType {
 protocol RouterProtocol {
     // 初期画面表示
     static func showRoot(window: UIWindow)
-    // AuthVC（認証画面）→ TermsAndConditionsVC（利用規約同意画面）
-    static func showTermsAndConditionsVC(vc: UIViewController)
     // AuthVC（認証画面）→ MapVC（マップ画面）
     static func showMap(vc: UIViewController)
     // MapVC（マップ画面）→ WalkThrough（ウォークスルー画面）
@@ -104,13 +102,6 @@ extension Router: RouterProtocol {
         navigationController.modalTransitionStyle = .crossDissolve
         navigationController.modalPresentationStyle = .fullScreen
         modal(from: vc, to: navigationController)
-    }
-    // AuthVC（認証画面）→ TermsAndConditionsVC（利用規約同意画面）
-    static func showTermsAndConditionsVC(vc: UIViewController) {
-        let termsAndConditionsViewController = TermsAndConditionsViewController()
-        termsAndConditionsViewController.modalTransitionStyle = .crossDissolve
-        termsAndConditionsViewController.modalPresentationStyle = .overFullScreen
-        modal(from: vc, to: termsAndConditionsViewController)
     }
     
     // MapVC（マップ画面）→ WalkThrough（ウォークスルー画面）

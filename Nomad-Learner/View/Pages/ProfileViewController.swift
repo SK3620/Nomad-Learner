@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 import Then
 import SnapKit
+import MessageUI
 
 class ProfileViewController: UIViewController {
     
@@ -65,8 +66,10 @@ class ProfileViewController: UIViewController {
             }
         }
         
-        // StudyRommVC（勉強部屋画面）の場合は編集ボタン非表示
-        profileView.navigationBar.editButton.isHidden = (orientation == .landscape)
+        // StudyRommVC（勉強部屋画面）の場合は編集ボタン非表示＆報告ボタン表示
+        let isLandscape = (orientation == .landscape)
+        profileView.navigationBar.editButton.isHidden = isLandscape
+        profileView.navigationBar.reportButton.isHidden = !isLandscape
     }
 }
 
@@ -100,6 +103,12 @@ extension ProfileViewController: KRProgressHUDEnabled {
         profileView.navigationBar.editButton.rx.tap
             .bind(to: self.toEditProfileVC)
             .disposed(by: disposeBag)
+        
+        // 報告
+        profileView.navigationBar.reportButton.rx.tap
+            .withLatestFrom(Observable.just(userProfile))
+            .bind(to: report)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -111,6 +120,57 @@ extension ProfileViewController {
     // EditProfileVC（編集画面）へ遷移
     private var toEditProfileVC: Binder<Void> {
         return Binder(self) { base, _ in Router.showEditProfile(vc: base, with: base.userProfile) }
+    }
+}
+
+extension ProfileViewController: MFMailComposeViewControllerDelegate, AlertEnabled {
+    private var report: Binder<User> {
+        return Binder(self) { base, userProfile in
+            if MFMailComposeViewController.canSendMail() == false {
+                print("Email Send Failed")
+                return
+            }
+
+            guard let userEmail = FBAuth.currentUserEmail else {
+                print("メールアドレスの取得失敗")
+                return
+            }
+
+            let mailViewController = MFMailComposeViewController()
+            let toRecipients = [MyAppSettings.developerEmail]
+            let CcRecipients = [userEmail]
+            let BccRecipients = [userEmail]
+
+            mailViewController.mailComposeDelegate = self
+            let text = "【通報】ユーザー名：\(userProfile.username)" + "\n" + "ユーザーID：\(userProfile.userId)"
+            mailViewController.setToRecipients(toRecipients) // 宛先メールアドレスの表示
+            mailViewController.setCcRecipients(CcRecipients)
+            mailViewController.setBccRecipients(BccRecipients)
+            mailViewController.setMessageBody(text + "\n" + "内容：(ex.プロフィール内容が不適切。○○さんのプロフィール画像が不快。等）", isHTML: false)
+            mailViewController.title = "【通報】"
+
+            self.present(mailViewController, animated: true, completion: nil)
+        }
+    }
+    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true, completion: nil)
+        
+        var alertActionType: AlertActionType?
+        switch result {
+        case .cancelled:
+            alertActionType = .didCancelMail()
+        case .saved:
+            alertActionType = .didSaveMail()
+        case .sent:
+            alertActionType = .didSendMail()
+        case .failed:
+            alertActionType = .error(.mailSendFailed(error))
+        default:
+            break
+        }
+        // アラート表示
+        self.rx.showAlert.onNext(alertActionType!)
     }
 }
 

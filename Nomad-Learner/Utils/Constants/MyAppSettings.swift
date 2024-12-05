@@ -10,6 +10,9 @@ import GoogleMaps
 import RxSwift
 
 struct MyAppSettings {
+    /// 開発者メールアドレス
+    public static let developerEmail = "k.n.t11193620@gmail.com"
+    
     /// 問い合わせフォームURL
     public static let contactFormUrl = URL(string: "https://tayori.com/form/7c23974951b748bcda08896854f1e7884439eb5c/")
     /// プライバシーポリシーURL

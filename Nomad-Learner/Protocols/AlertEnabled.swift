@@ -20,7 +20,7 @@ extension Reactive where Base: AlertEnabled {
             
             let alertController = UIAlertController(title: "", message: "", preferredStyle: .alert)
             
-            let titleAttributes = [NSAttributedString.Key.font: UIFont(name: "HiraginoSans-W6", size: 20)!, NSAttributedString.Key.foregroundColor: UIColor.black]
+            let titleAttributes = [NSAttributedString.Key.font: UIFont(name: "HiraginoSans-W6", size: 18)!, NSAttributedString.Key.foregroundColor: UIColor.black]
             let titleString = NSAttributedString(string: alertAction.title, attributes: titleAttributes)
             
             let messageAttributes = [NSAttributedString.Key.font: UIFont(name: "HiraginoSans-W3", size: 14)!, NSAttributedString.Key.foregroundColor: UIColor.black]

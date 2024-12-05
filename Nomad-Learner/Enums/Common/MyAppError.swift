@@ -45,6 +45,9 @@ enum MyAppError: Error {
     case saveStudyProgressAndRewardsFailed(Error?)
     case updateCurrentCoinFailed(Error?)
     
+    // メール送信
+    case mailSendFailed(Error?)
+    
     // テスト用
     case testError(String)
     // MARK: - LocalizedError Implementation
@@ -71,6 +74,8 @@ enum MyAppError: Error {
                return NSLocalizedString("アカウントの削除に失敗しました。もう一度お試しください。", comment: "アカウント削除失敗メッセージ")
            case .savePendingUpdateDataRetryFailed:
                return NSLocalizedString("前回の勉強記録の保存に失敗しました。", comment: "勉強記録保存失敗のメッセージ")
+           case .mailSendFailed:
+               return NSLocalizedString("メールを送信できませんでした。もう一度お試しください。", comment: "メール送信失敗メッセージ")
            case .testError(let text):
                return NSLocalizedString("テストエラー: \(text)", comment: "テストエラーメッセージ")
            case .unknown:
@@ -141,6 +146,9 @@ enum MyAppError: Error {
             
         case .updateCurrentCoinFailed(let error):
             return NSLocalizedString("現在のコインの更新に失敗しました。エラー: \(String(describing: error)).", comment: "コイン更新失敗エラーメッセージ")
+            
+        case .mailSendFailed(let error):
+            return NSLocalizedString("メールを正常に送信できませんでした。エラー:\(String(describing: error)).", comment: "メール送信失敗メッセージ")
             
         case .handleAll(let error):
             return NSLocalizedString("エラーが発生しました。もう一度お試しください。エラー: \(String(describing: error)).", comment: "一般的なエラーメッセージ")

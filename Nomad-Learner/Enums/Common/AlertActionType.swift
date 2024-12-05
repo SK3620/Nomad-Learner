@@ -17,6 +17,11 @@ enum AlertActionType {
     case breakTime(onConfirm: () -> Void, onCancel: () -> Void = {})
     case community(onConfirm: () -> Void, onCancel: () -> Void = {})
     
+    case didCancelMail(onConfirm: () -> Void = {})
+    case didSaveMail(onConfirm: () -> Void = {})
+    case didSendMail(onConfirm: () -> Void = {})
+    
+    
     var comfirmActionStyle: UIAlertAction.Style {
         switch self {
         case .exitRoom, .willDeleteAccount:
@@ -49,44 +54,50 @@ enum AlertActionType {
             return "休憩する"
         case .community:
             return "コミュニティ"
+        case .didSaveMail:
+            return "メールを保存しました"
+        case .didCancelMail:
+            return "メールの送信をキャンセルしました"
+        case .didSendMail:
+            return "メールを送信しました"
         }
     }
     
     var message: String {
         switch self {
         case .error(let error, _):
-            return error.errorDescription ?? ""
+            return "\n" + (error.errorDescription ?? "")
         case .willDeleteAccount:
-            return "本当にアカウントを削除してもよろしいですか？"
+            return "\n本当にアカウントを削除してもよろしいですか？"
         case .savePendingUpdateData(let saveRetryError, _, _):
-            return "\(saveRetryError?.errorDescription ?? "前回の勉強記録が保存されていません。")\n保存しますか？"
+            return "\(saveRetryError?.errorDescription ?? "\n前回の勉強記録が保存されていません。")\n保存しますか？"
         case .willShowDepartVC(_, _, let ticketInfo):
-            return "一度訪問すると、次回の「\(ticketInfo.destination)」への訪問時以降、以下の項目は変更されません。\n\n必要な勉強時間：\(ticketInfo.requiredStudyHours)時間\n報酬コイン：\(ticketInfo.rewardCoin)コイン"
+            return "\n一度訪問すると、次回の「\(ticketInfo.destination)」への訪問時以降、以下の項目は変更されません。\n\n必要な勉強時間：\(ticketInfo.requiredStudyHours)時間\n報酬コイン：\(ticketInfo.rewardCoin)コイン"
         case .exitRoom:
-            return "本当に終了してもよろしいですか？\n（終了後、勉強時間が記録されます。）"
+            return "\n本当に終了してもよろしいですか？\n（終了後、勉強時間が記録されます。）"
         case .breakTime:
-            return "It's time to take a break."
+            return "\nIt's time to take a break."
         case .community:
-            return "Join the community and connect with others!"
+            return "\nJoin the community and connect with others!"
+        default:
+            return ""
         }
     }
     
     var onComfirmTitle: String {
         switch self {
-        case .error:
-            return "OK"
         case .willDeleteAccount:
             return "削除"
         case .savePendingUpdateData:
             return "保存"
-        case .willShowDepartVC:
-            return "OK"
         case .exitRoom:
             return "終了"
         case .breakTime:
             return "休憩"
         case .community:
             return "Join"
+        default:
+            return "OK"
         }
     }
     
@@ -102,7 +113,10 @@ enum AlertActionType {
     // キャンセルアクションの表示/非表示
     var shouldShowCancelAction: Bool {
         switch self {
-        case .error:
+        case .error,
+                .didSaveMail,
+                .didSendMail,
+                .didCancelMail:
             return false
         default:
             return true
@@ -141,13 +155,19 @@ enum AlertActionType {
         switch self {
         case .willDeleteAccount(let onConfirm, let onCancel):
             return (onConfirm: onConfirm, onCancel: onCancel)
+            
         case .savePendingUpdateData(_, let onConfirm, let onCancel):
             return (onConfirm: { _, _ in onConfirm() }, onCancel: { onCancel() })
+            
         case .willShowDepartVC(let onConfirm, _, _),
                 .exitRoom(let onConfirm, _),
                 .breakTime(let onConfirm, _),
-                .community(let onConfirm, _):
+                .community(let onConfirm, _),
+                .didSendMail(let onConfirm),
+                .didCancelMail(let onConfirm),
+                .didSaveMail(let onConfirm):
             return (onConfirm: { _, _ in onConfirm() }, onCancel: {})
+            
         case .error(_, let onConfirm):
             return (onConfirm: { _, _ in onConfirm() }, onCancel: {})
         }

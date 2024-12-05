@@ -90,3 +90,15 @@ extension AuthViewController {
         return customAuthPickerViewController
     }
 }
+
+extension AuthViewController {
+    // 自動的に回転を許可しない
+    override var shouldAutorotate: Bool {
+        return false
+    }
+    
+    // 回転の向き
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
+}

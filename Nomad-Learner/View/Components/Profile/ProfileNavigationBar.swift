@@ -19,10 +19,15 @@ class ProfileNavigationBar: UINavigationBar {
     let editButton = UIBarButtonItem(image: UIImage(systemName: "pencil"), style: .plain, target: nil, action: nil).then {
         $0.tintColor = .white
     }
-        
+    
+    // 報告ボタン
+    let reportButton = UIBarButtonItem(image: UIImage(systemName: "exclamationmark.bubble"), style: .plain, target: nil, action: nil).then {
+        $0.tintColor = .white
+    }
+    
     private lazy var navigationItem = UINavigationItem().then {
         $0.leftBarButtonItem = closeButton
-        $0.rightBarButtonItem = editButton
+        $0.rightBarButtonItems = [editButton, reportButton]
         $0.title = "プロフィール"
     }
     
@@ -38,9 +43,7 @@ class ProfileNavigationBar: UINavigationBar {
         self.clipsToBounds = true
         self.layer.cornerRadius = 20
         self.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-        self.titleTextAttributes = [
-            .foregroundColor: UIColor.white
-        ]
+        self.titleTextAttributes = [.foregroundColor: UIColor.white ]
         // 半透明を無効にしtintColorを反映
         self.isTranslucent = false
         

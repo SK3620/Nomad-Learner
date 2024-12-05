@@ -41,6 +41,7 @@ enum MyAppError: Error {
     // フライト中画面＆勉強部屋画面
     case fetchUserIdsInLocationFailed(Error?)
     case fetchUserProfilesFailed(Error?)
+    case fetchMoreUserProfilesFailed(Error?)
     
     // 勉強部屋画面退出時
     case removeUserIdFromLocationFailed(Error?)
@@ -78,24 +79,37 @@ enum MyAppError: Error {
            switch self {
            case .loadTermsAndConditionsFailed:
                return NSLocalizedString("ページの読み込みに失敗しました。インターネット接続を確認してください。", comment: "利用規約読み込み失敗メッセージ")
+               
            case .signInFailed:
                return NSLocalizedString("サインインに失敗しました。もう一度お試しください。", comment: "サインイン失敗メッセージ")
+               
            case .signUpFailed:
                return NSLocalizedString("サインアップに失敗しました。もう一度お試しください。", comment: "サインアップ失敗メッセージ")
+               
            case .reauthenticateFailed:
                return NSLocalizedString("アカウントの再認証に失敗しました。もう一度お試しください。", comment: "再認証失敗メッセージ")
+               
            case .deleteAccountFailed:
                return NSLocalizedString("アカウントの削除に失敗しました。もう一度お試しください。", comment: "アカウント削除失敗メッセージ")
+               
+           case .fetchMoreUserProfilesFailed:
+               return NSLocalizedString("追加データの取得に失敗しました。もう一度お試しください。", comment: "アカウント削除失敗メッセージ")
+               
            case .featureAccessDeniedInTrial:
                return NSLocalizedString("この機能はお試し期間中はご利用できません。アカウントを作成する必要があります。", comment: "お試し使用中による制限機能へのアクセス不可メッセージ")
+               
            case .savePendingUpdateDataRetryFailed:
                return NSLocalizedString("前回の勉強記録の保存に失敗しました。", comment: "勉強記録保存失敗のメッセージ")
+               
            case .mailSendFailed:
                return NSLocalizedString("メールを送信できませんでした。もう一度お試しください。", comment: "メール送信失敗メッセージ")
+               
            case .testError(let text):
                return NSLocalizedString("テストエラー: \(text)", comment: "テストエラーメッセージ")
+               
            case .unknown:
                return NSLocalizedString("不明なエラーが発生しました。もう一度お試しください。", comment: "不明なエラーメッセージ")
+               
            default:
                return NSLocalizedString("データの保存/取得に失敗しました。もう一度お試しください。", comment: "不明なエラーメッセージ")
            }
@@ -106,6 +120,7 @@ enum MyAppError: Error {
         switch self {
         case .loadTermsAndConditionsFailed(let error):
             return NSLocalizedString("ページの読み込みに失敗しました。インターネット接続を確認してください。エラー: \(String(describing: error)).", comment: "利用規約読み込み失敗メッセージ")
+            
         case .signInFailed(let error):
             return NSLocalizedString("サインインに失敗しました。エラー: \(error.localizedDescription)。入力したメールアドレスとパスワードを確認してください。", comment: "サインインエラーメッセージ")
             
@@ -117,6 +132,7 @@ enum MyAppError: Error {
             
         case .deleteAccountFailed(let error):
             return NSLocalizedString("アカウントの削除に失敗しました。エラー: \(String(describing: error)).", comment: "アカウント削除エラーメッセージ")
+            
         case .featureAccessDeniedInTrial:
             return NSLocalizedString("この機能はお試し期間中はご利用できません。アカウントを作成する必要があります。", comment: "お試し使用中による制限機能へのアクセス不可メッセージ")
             
@@ -152,6 +168,9 @@ enum MyAppError: Error {
             
         case .fetchUserProfilesFailed(let error):
             return NSLocalizedString("ユーザープロフィールの取得に失敗しました。エラー: \(String(describing: error)).", comment: "ユーザープロフィール取得失敗エラーメッセージ")
+            
+        case .fetchMoreUserProfilesFailed(let error):
+            return NSLocalizedString("追加のユーザープロフィールデータの取得に失敗しました。エラー: \(String(describing: error)).", comment: "ユーザープロフィール追加データ取得エラーメッセージ")
             
         case .removeUserIdFromLocationFailed(let error):
             return NSLocalizedString("ロケーションからユーザーIDの削除に失敗しました。エラー: \(String(describing: error)).", comment: "ユーザーID削除失敗エラーメッセージ")

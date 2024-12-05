@@ -411,7 +411,7 @@ final class MainService: MainServiceProtocol {
             guard let oldestDocument = oldestDocument else {
                 return Disposables.create()
             }
-            
+
             // 前回取得の最後のドキュメント以降のデータ
             let query = self.firebaseConfig.usersInLocationsReference(with: locationId)
                 .order(by: "createdAt", descending: true)
@@ -420,6 +420,7 @@ final class MainService: MainServiceProtocol {
             
             query.getDocuments { snapshots, error in
                 if let error = error {
+                    observer.onError(MyAppError.fetchMoreUserProfilesFailed(error))
                     print("ページネーションによる追加データ取得エラー発生 エラー内容: \(error)")
                 } else {
                     // ユーザーのuuidを取得

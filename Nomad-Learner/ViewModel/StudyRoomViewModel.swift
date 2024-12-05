@@ -226,6 +226,10 @@ extension StudyRoomViewModel {
                 return self.mainService.fetchUserProfiles(userIds: userIds, isInitialFetch: false)
                     .map { (userProfiles: $0, oldestDocument: oldestDocument) }
             }
+            .catch { [weak self] error in
+                self?.myAppErrorRelay.accept(error as? MyAppError)
+                return .empty()
+            }
             .materialize()
         
         fetchMoreUserProfiles

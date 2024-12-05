@@ -108,10 +108,9 @@ extension Router: RouterProtocol {
     // AuthVC（認証画面）→ TermsAndConditionsVC（利用規約同意画面）
     static func showTermsAndConditionsVC(vc: UIViewController) {
         let termsAndConditionsViewController = TermsAndConditionsViewController()
-        termsAndConditionsViewController.customAuthPickerVC = vc as? CustomAuthPickerViewController
-        let navigationController = UINavigationController(rootViewController: termsAndConditionsViewController)
-        navigationController.modalPresentationStyle = .overFullScreen
-        modal(from: vc, to: navigationController)
+        termsAndConditionsViewController.modalTransitionStyle = .crossDissolve
+        termsAndConditionsViewController.modalPresentationStyle = .overFullScreen
+        modal(from: vc, to: termsAndConditionsViewController)
     }
     
     // MapVC（マップ画面）→ WalkThrough（ウォークスルー画面）

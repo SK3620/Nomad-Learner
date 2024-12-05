@@ -14,10 +14,8 @@ import RxCocoa
 
 class TermsAndConditionsViewController: UIViewController {
     
-    var customAuthPickerVC: CustomAuthPickerViewController?
-    
-    private let webView = WKWebView()
-    private let agreeButton = UIButton(type: .system).then {
+    let webView = WKWebView()
+    let agreeButton = UIButton(type: .system).then {
         $0.setTitle("同意する", for: .normal)
         $0.setTitleColor(.white, for: .normal)
         $0.titleLabel?.font = .boldSystemFont(ofSize: 16)
@@ -25,7 +23,7 @@ class TermsAndConditionsViewController: UIViewController {
         $0.layer.cornerRadius = 10
     }
     
-    private let activityIndicator = UIActivityIndicatorView(style: .large).then {
+    let activityIndicator = UIActivityIndicatorView(style: .large).then {
         $0.hidesWhenStopped = true
         $0.color = ColorCodes.primaryPurple.color()
     }
@@ -102,7 +100,6 @@ extension TermsAndConditionsViewController: AlertEnabled, KRProgressHUDEnabled {
         agreeButton.rx.tap
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
-                customAuthPickerVC?.didAgreeTermsAndConditions = true
                 Router.dismissModal(vc: self)
             })
             .disposed(by: disposeBag)

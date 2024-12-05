@@ -21,13 +21,11 @@ import KRProgressHUD
 // MARK: - Customize AuthPickerViewController
 class CustomAuthPickerViewController: FUIAuthPickerViewController {
     
-    // 利用規約に同意したか否か
-    var didAgreeTermsAndConditions: Bool = false
-    
     // iPadの場合キーボードと被らないようAuthStackViewを上げる
     private let bottomEdgeInset: CGFloat = UIDevice.current.userInterfaceIdiom != .pad ? 20 : 150
             
     private lazy var scrollView = view.subviews[0].then {
+        ($0 as! UIScrollView).isScrollEnabled = false
         $0.backgroundColor = .white
     }
     
@@ -42,6 +40,8 @@ class CustomAuthPickerViewController: FUIAuthPickerViewController {
     private let appSupportBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "doc.questionmark"), style: .plain, target: nil, action: nil).then {
         $0.tintColor = .lightGray
     }
+    
+    private let termsAndConditionsView: TermsAndConditionsView = TermsAndConditionsView()
     
     private let appSupportView: AppSupportView = AppSupportView()
     
@@ -67,22 +67,21 @@ class CustomAuthPickerViewController: FUIAuthPickerViewController {
     
     override func viewDidLoad(){
         super.viewDidLoad()
+        
+        if FBAuth.currentUser != nil {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                // 自動ログイン（UIの更新を待つ？）
+                Router.showMap(vc: self)
+            }
+        } else  {
+            // 初回ログイン時は利用規約画面を表示
+            self.showTermsAndConditionsView.onNext(true)
+        }
 
         setupUI()
-        bind()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
-
-        if FBAuth.currentUser != nil {
-            // 自動ログイン（UIの更新を待つ？）
-            Router.showMap(vc: self)
-        } 
-        else if !didAgreeTermsAndConditions {
-            // 初回ログイン時は利用規約画面を表示
-            Router.showTermsAndConditionsVC(vc: self)
-        }
+        bindWebView()
+        bindAppSupport()
+        bindAuth()
     }
     
     private func setupUI() {
@@ -130,7 +129,42 @@ class CustomAuthPickerViewController: FUIAuthPickerViewController {
 }
 
 extension CustomAuthPickerViewController: AlertEnabled, KRProgressHUDEnabled {
-    func bind() {
+    // 利用規約同意
+    private func bindWebView() {
+        // ローディング開始
+        termsAndConditionsView.webView.rx
+            .didStartLoad
+            .subscribe(onNext: { [weak self] _ in
+                self?.termsAndConditionsView.activityIndicator.startAnimating()
+            })
+            .disposed(by: disposeBag)
+        
+        // ローディング完了
+        termsAndConditionsView.webView.rx
+            .didFinishLoad
+            .subscribe(onNext: { [weak self] _ in
+                self?.termsAndConditionsView.activityIndicator.stopAnimating()
+            })
+            .disposed(by: disposeBag)
+        
+        // 利用規約URLリンクアクセスエラー
+        termsAndConditionsView.webView.rx
+            .didFailLoad
+            .map { [weak self] _, error in
+                self?.termsAndConditionsView.activityIndicator.stopAnimating()
+                return AlertActionType.error(.loadTermsAndConditionsFailed(error)) }
+            .bind(to: self.rx.showAlert)
+            .disposed(by: disposeBag)
+        
+        // 利用規約同意ボタン
+        termsAndConditionsView.agreeButton.rx.tap
+            .map { _ in false }
+            .bind(to: showTermsAndConditionsView)
+            .disposed(by: disposeBag)
+    }
+    
+    // アプリサポート
+    private func bindAppSupport() {
         // アプリサポートView表示
         appSupportBarButtonItem.rx.tap
             .map { _ in true }
@@ -170,7 +204,10 @@ extension CustomAuthPickerViewController: AlertEnabled, KRProgressHUDEnabled {
             .compactMap { _ in MyAppSettings.termsAndConditionsUrl }
             .bind(to: openURL)
             .disposed(by: disposeBag)
-            
+    }
+    
+    // 認証
+    private func bindAuth() {
         // パスワード表示/非表示切り替え
         authTextFieldStackView.passwordTextField.togglePasswordVisibilityButton.rx.tap
             .bind(to: togglePasswordVisibility)
@@ -242,20 +279,38 @@ extension CustomAuthPickerViewController: AlertEnabled, KRProgressHUDEnabled {
 }
 
 extension CustomAuthPickerViewController {
+    // 利用規約同意画面表示/非表示
+    private var showTermsAndConditionsView: Binder<Bool> {
+        return Binder(self, binding: { base, shouldShow in
+            if shouldShow {
+                base.appSupportBarButtonItem.isEnabled = false
+                base.view.addSubview(base.termsAndConditionsView)
+                base.termsAndConditionsView.snp.makeConstraints {
+                    $0.edges.equalToSuperview()
+                }
+                base.termsAndConditionsView.loadTermsAndConditions(url: MyAppSettings.termsAndConditionsUrl)
+            } else {
+                base.appSupportBarButtonItem.isEnabled = true
+                base.termsAndConditionsView.removeFromSuperview()
+            }
+        })
+    }
     // アプリサポート画面表示/非表示切り替え
     private var toggleAppSupportViewAppearence: Binder<Bool> {
         return Binder(self, binding: { base, shouldShow in
             if shouldShow {
+                base.appSupportBarButtonItem.isEnabled = false
                 base.view.addSubview(base.appSupportView)
                 base.appSupportView.snp.makeConstraints {
                     $0.edges.equalToSuperview()
                 }
             } else {
+                base.appSupportBarButtonItem.isEnabled = true
                 base.appSupportView.removeFromSuperview()
             }
         })
     }
-    // プライバシーポリシー/問い合わせフォームのリンク先にアクセス
+    // プライバシーポリシー/問い合わせフォーム/利用規約のリンク先にアクセス
     private var openURL: Binder<URL> {
         return Binder(self, binding: { base, url in UIApplication.shared.open(url) })
     }

@@ -37,6 +37,7 @@
 		8344D0312CE6474F007559E0 /* NationalFlagImageUrlString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8344D0302CE6474F007559E0 /* NationalFlagImageUrlString.swift */; };
 		834F4CF22D00BD7B0072329D /* AppSupportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834F4CF12D00BD7B0072329D /* AppSupportView.swift */; };
 		834F4CF42D016ACD0072329D /* TermsAndConditionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834F4CF32D016ACD0072329D /* TermsAndConditionsViewController.swift */; };
+		834F4CF62D018C260072329D /* TermsAndConditionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834F4CF52D018C260072329D /* TermsAndConditionsView.swift */; };
 		8352F9582CFB19A800BF6E35 /* AuthInfoInputStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8352F9572CFB19A800BF6E35 /* AuthInfoInputStackView.swift */; };
 		835BD2F12CA413560088CA02 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835BD2F02CA413560088CA02 /* AppDelegate.swift */; };
 		835BD2F32CA413560088CA02 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835BD2F22CA413560088CA02 /* SceneDelegate.swift */; };
@@ -166,6 +167,7 @@
 		8344D0302CE6474F007559E0 /* NationalFlagImageUrlString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NationalFlagImageUrlString.swift; sourceTree = "<group>"; };
 		834F4CF12D00BD7B0072329D /* AppSupportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSupportView.swift; sourceTree = "<group>"; };
 		834F4CF32D016ACD0072329D /* TermsAndConditionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAndConditionsViewController.swift; sourceTree = "<group>"; };
+		834F4CF52D018C260072329D /* TermsAndConditionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAndConditionsView.swift; sourceTree = "<group>"; };
 		8352F9572CFB19A800BF6E35 /* AuthInfoInputStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInfoInputStackView.swift; sourceTree = "<group>"; };
 		835BD2ED2CA413560088CA02 /* Dev-Nomad-Learner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dev-Nomad-Learner.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		835BD2F02CA413560088CA02 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -483,6 +485,7 @@
 			children = (
 				83A9C2BF2CA7C9B700898F0B /* BottomAuthStackView.swift */,
 				834F4CF12D00BD7B0072329D /* AppSupportView.swift */,
+				834F4CF52D018C260072329D /* TermsAndConditionsView.swift */,
 				8352F9572CFB19A800BF6E35 /* AuthInfoInputStackView.swift */,
 				83A9C2C12CA7D08500898F0B /* AuthTextField.swift */,
 				838753DD2CAED385001EE8F1 /* ValidationLabel.swift */,
@@ -856,6 +859,7 @@
 				837DE5972CBAD12E00819964 /* StudyRoomViewModel.swift in Sources */,
 				831E5C732CC271EF001A90C4 /* MarkerIconView.swift in Sources */,
 				834478612CCA4A680038C7B9 /* ImageCacheManager.swift in Sources */,
+				834F4CF62D018C260072329D /* TermsAndConditionsView.swift in Sources */,
 				83AC8F0D2CF6CF8300FB57B3 /* Driver.swift in Sources */,
 				83A6D7A92CB3D7B000D18A30 /* UIScrollView.swift in Sources */,
 				8344786B2CCFB61E0038C7B9 /* LocationInfo.swift in Sources */,

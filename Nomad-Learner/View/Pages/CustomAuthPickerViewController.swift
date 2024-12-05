@@ -38,7 +38,7 @@ class CustomAuthPickerViewController: FUIAuthPickerViewController {
     }
     
     private let appSupportBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "doc.questionmark"), style: .plain, target: nil, action: nil).then {
-        $0.tintColor = .lightGray
+        $0.tintColor = .gray
     }
     
     // お試し

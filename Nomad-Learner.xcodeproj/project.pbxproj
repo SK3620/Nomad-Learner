@@ -997,7 +997,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Nomad-Learner/Nomad-Learner.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = L35MVZ453P;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -1015,7 +1015,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kenta-suzuki.Nomad-Learner";
 				PRODUCT_NAME = "Nomad-Learner";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1100,7 +1100,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Nomad-Learner/Nomad-Learner.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = L35MVZ453P;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -1118,7 +1118,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kenta-suzuki.Nomad-LearnerDev";
 				PRODUCT_NAME = "Dev-Nomad-Learner";
 				PROVISIONING_PROFILE_SPECIFIER = "";

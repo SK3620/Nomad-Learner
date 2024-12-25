@@ -18,7 +18,7 @@ class MapViewModel {
     var selectedIndexPath = IndexPath(row: 0, section: 0)
     
     // 更新保留中の勉強記録データ
-    var pendingUpdateData: Driver<(pendingUpdateData: PendingUpdateData?, saveRetryError: MyAppError?)> {
+    var pendingUpdateData: Driver<(pendingUpdateData: PendingUpdateData?, dataSaveError: MyAppError?)> {
         return self.pendingUpdateDataRelay.asDriver()
     }
     // 更新保留中の勉強記録データ保存/削除完了か否か
@@ -38,7 +38,7 @@ class MapViewModel {
     // 各ロケーション情報
     private let locationsAndUserInfoRelay = BehaviorRelay<([LocationInfo], User)?>(value: nil)
     // 更新保留中の勉強記録データの存在有無
-    private let pendingUpdateDataRelay = BehaviorRelay<(pendingUpdateData: PendingUpdateData?, saveRetryError: MyAppError?)>(value: (nil, nil))
+    private let pendingUpdateDataRelay = BehaviorRelay<(pendingUpdateData: PendingUpdateData?, dataSaveError: MyAppError?)>(value: (nil, nil))
     // 更新保留中の勉強記録データの保存/削除完了
     private let isPendingUpdateDataHandlingCompletedRelay = BehaviorRelay<Bool>(value: false)
    
@@ -126,7 +126,7 @@ class MapViewModel {
             .concatMap { _ in realmService.fetchPendingUpdateData() }
             .compactMap { $0 }
             .subscribe(onNext: { [weak self] pendingUpdateData in
-                self?.pendingUpdateDataRelay.accept((pendingUpdateData, saveRetryError: nil))
+                self?.pendingUpdateDataRelay.accept((pendingUpdateData, dataSaveError: nil))
             })
             .disposed(by: disposeBag)
     }
@@ -236,7 +236,7 @@ extension MapViewModel {
                 mainService.updateCurrentCoin(addedRewardCoin: addedRewardCoin)
             )
                 .catch { [weak self] error in
-                    self?.pendingUpdateDataRelay.accept((pendingUpdateData, .savePendingUpdateDataRetryFailed(error)))
+                    self?.pendingUpdateDataRelay.accept((pendingUpdateData, .savePendingUpdateDataFailed(error)))
                     return .empty()
                 }
             

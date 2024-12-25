@@ -14,7 +14,7 @@ enum AlertActionType {
     case willDeleteAccount(onConfirm: (String?, String?) -> Void, onCancel: () -> Void = {})
     case willFreeTrialUse(onConfirm: () -> Void)
     
-    case savePendingUpdateData(saveRetryError: MyAppError? = nil, onConfirm: () -> Void, onCancel: () -> Void)
+    case savePendingUpdateData(dataSaveError: MyAppError? = nil, onConfirm: () -> Void, onCancel: () -> Void)
     case willShowDepartVC(onConfirm: () -> Void, onCancel: () -> Void = {}, ticketInfo: TicketInfo)
     
     case exitRoom(onConfirm: () -> Void, onCancel: () -> Void = {})
@@ -77,8 +77,8 @@ enum AlertActionType {
             return "\n本当にアカウントを削除してもよろしいですか？"
         case .willFreeTrialUse:
             return "\nアプリの一部の機能をお試しで使用することができます。\n全ての機能にアクセスするにはアカウントを作成する必要があります。"
-        case .savePendingUpdateData(let saveRetryError, _, _):
-            return "\(saveRetryError?.errorDescription ?? "前回の勉強記録が保存されていません。")\n保存しますか？"
+        case .savePendingUpdateData(let dataSaveError, _, _):
+            return "\(dataSaveError?.errorDescription ?? "前回の勉強記録が保存されていません。")\n保存しますか？"
         case .willShowDepartVC(_, _, let ticketInfo):
             return "\n一度訪問すると、次回の「\(ticketInfo.destination)」への訪問時以降、以下の項目は変更されません。\n\n必要な勉強時間：\(ticketInfo.requiredStudyHours)時間\n報酬コイン：\(ticketInfo.rewardCoin)コイン"
         case .exitRoom:

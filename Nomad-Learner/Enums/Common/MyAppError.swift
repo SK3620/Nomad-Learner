@@ -31,7 +31,7 @@ enum MyAppError: Error {
     case saveUserProfileFailed(Error?)
     case fetchLocationInfoFailed(Error?)
     case fetchUserProfileFailed(Error?)
-    case savePendingUpdateDataRetryFailed(Error)
+    case savePendingUpdateDataFailed(Error)
     
     // フライト中画面
     case updateCurrentCoinAndLocationIdFailed(Error?)
@@ -98,7 +98,7 @@ enum MyAppError: Error {
            case .featureAccessDeniedInTrial:
                return NSLocalizedString("この機能はお試し期間中はご利用できません。アカウントを作成する必要があります。", comment: "お試し使用中による制限機能へのアクセス不可メッセージ")
                
-           case .savePendingUpdateDataRetryFailed:
+           case .savePendingUpdateDataFailed:
                return NSLocalizedString("前回の勉強記録の保存に失敗しました。", comment: "勉強記録保存失敗のメッセージ")
                
            case .mailSendFailed:
@@ -148,7 +148,7 @@ enum MyAppError: Error {
         case .fetchLocationInfoFailed(let error):
             return NSLocalizedString("ロケーション情報の取得に失敗しました。エラー: \(String(describing: error)).", comment: "ロケーション情報取得エラーメッセージ")
             
-        case .savePendingUpdateDataRetryFailed(let error):
+        case .savePendingUpdateDataFailed(let error):
             return NSLocalizedString("前回の勉強記録の保存に失敗しました。エラー: \(String(describing: error)).", comment: "勉強記録保存失敗のメッセージ")
             
         case .userNotFound:

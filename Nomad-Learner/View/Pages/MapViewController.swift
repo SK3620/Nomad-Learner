@@ -296,7 +296,7 @@ extension MapViewController: KRProgressHUDEnabled, AlertEnabled {
         // 更新保留中の勉強記録データ取得
         viewModel.pendingUpdateData
             .filter { $0.pendingUpdateData != nil } // データがなければ処理中断
-            .map { (($0.pendingUpdateData!, $0.saveRetryError)) }
+            .map { (($0.pendingUpdateData!, $0.dataSaveError)) }
             .drive(showSavePendingUpdateDataAlert)
             .disposed(by: disposeBag)
         
@@ -416,11 +416,11 @@ extension MapViewController {
         }
     }
     // 更新保留中の勉強記録データの保存を行うか否か アラート表示
-    private var showSavePendingUpdateDataAlert: Binder<(PendingUpdateData, saveRetryError: MyAppError?)> {
+    private var showSavePendingUpdateDataAlert: Binder<(PendingUpdateData, dataSaveError: MyAppError?)> {
         return Binder(self) { base, tuple in
-            let (pendingUpdateData, saveRetryError) = tuple
+            let (pendingUpdateData, dataSaveError) = tuple
             let alertActionType = AlertActionType.savePendingUpdateData(
-                saveRetryError: saveRetryError ?? nil,
+                dataSaveError: dataSaveError ?? nil,
                 onConfirm: {
                     // 保存処理
                     base.viewModel.handlePendingUpdateData(pendingUpdateData: pendingUpdateData)

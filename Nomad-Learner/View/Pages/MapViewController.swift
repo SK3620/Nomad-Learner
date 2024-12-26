@@ -377,6 +377,11 @@ extension MapViewController {
             
             // マップの初期化
             base.resetMapView()
+            
+            // 初期位置であれば初回ログインとみなし、ウォークスルー画面を表示
+            if userProfile.currentLocationId == MyAppSettings.userInitialLocationId {
+                base.toWalkThroughVC.onNext(())
+            }
           
             // データ取得に伴い、報酬コイン獲得アラートの表示を行う場合
             if dataHandlingType == .fetchWithRewardAlert {

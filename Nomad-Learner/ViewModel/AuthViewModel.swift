@@ -30,15 +30,15 @@ class AuthViewModel {
     
     var willDeleteAccountActionType: AlertActionType {
         .willDeleteAccount(
-            onConfirm: { email, password in
-                self.deleteAccountRelay.accept((email: email!, password: password!))
+            onConfirm: { [weak self] email, password in
+                self?.deleteAccountRelay.accept((email: email!, password: password!))
             }
         )
     }
     
     var willFreeTrialUseActionType: AlertActionType {
         .willFreeTrialUse(
-            onConfirm: { self.useForFreeTrialRelay.accept(()) })
+            onConfirm: { [weak self] in self?.useForFreeTrialRelay.accept(()) })
     }
     
     init(input: (

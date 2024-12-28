@@ -296,6 +296,7 @@ extension CustomAuthPickerViewController {
         return Binder(self, binding: { base, shouldShow in
             if shouldShow {
                 base.appSupportBarButtonItem.isEnabled = false
+                base.freeTrialBarButtonItem.isEnabled = false
                 base.view.addSubview(base.termsAndConditionsView)
                 base.termsAndConditionsView.snp.makeConstraints {
                     $0.edges.equalToSuperview()
@@ -303,6 +304,7 @@ extension CustomAuthPickerViewController {
                 base.termsAndConditionsView.loadTermsAndConditions(url: MyAppSettings.termsAndConditionsUrl)
             } else {
                 base.appSupportBarButtonItem.isEnabled = true
+                base.freeTrialBarButtonItem.isEnabled = true
                 base.termsAndConditionsView.removeFromSuperview()
             }
         })

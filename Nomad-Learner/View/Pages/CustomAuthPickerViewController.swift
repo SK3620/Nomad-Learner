@@ -314,12 +314,14 @@ extension CustomAuthPickerViewController {
         return Binder(self, binding: { base, shouldShow in
             if shouldShow {
                 base.appSupportBarButtonItem.isEnabled = false
+                base.freeTrialBarButtonItem.isEnabled = false
                 base.view.addSubview(base.appSupportView)
                 base.appSupportView.snp.makeConstraints {
                     $0.edges.equalToSuperview()
                 }
             } else {
                 base.appSupportBarButtonItem.isEnabled = true
+                base.freeTrialBarButtonItem.isEnabled = true
                 base.appSupportView.removeFromSuperview()
             }
         })

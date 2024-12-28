@@ -7,7 +7,6 @@ target 'Nomad-Learner' do
   use_frameworks! :linkage => :static
 
   # Pods for Nomad-Learner
-pod 'Alamofire', '~> 5.9.1'
 pod 'RxSwift', '~> 6.5.0'
 pod 'RxCocoa', '~> 6.5.0'
 pod 'KRProgressHUD', '~> 3.4.8'

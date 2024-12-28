@@ -1,5 +1,4 @@
 PODS:
-  - Alamofire (5.9.1)
   - AppAuth (1.7.5):
     - AppAuth/Core (= 1.7.5)
     - AppAuth/ExternalUserAgent (= 1.7.5)
@@ -291,7 +290,6 @@ PODS:
   - Then (3.0.0)
 
 DEPENDENCIES:
-  - Alamofire (~> 5.9.1)
   - CLImageEditor/AllTools (= 0.2.4)
   - Firebase (~> 11.2.0)
   - Firebase/Analytics
@@ -317,7 +315,6 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - Alamofire
     - AppAuth
     - CLImageEditor
     - CocoaLumberjack
@@ -390,7 +387,6 @@ CHECKOUT OPTIONS:
     :tag: 11.2.0
 
 SPEC CHECKSUMS:
-  Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
   AppAuth: 501c04eda8a8d11f179dbe8637b7a91bb7e5d2fa
   CLImageEditor: dc3e5358f641368da3a76fc1c744a4c2ceb270ad
   CocoaLumberjack: 6a459bc897d6d80bd1b8c78482ec7ad05dffc3f0
@@ -453,6 +449,6 @@ SPEC CHECKSUMS:
   SVGKit: 1ad7513f8c74d9652f94ed64ddecda1a23864dea
   Then: 844265ae87834bbe1147d91d5d41a404da2ec27d
 
-PODFILE CHECKSUM: 5daa37f6674bf7528b4a8116a68d3db843997b25
+PODFILE CHECKSUM: c32835c32ef824747c6cc9c343955b60ab7fbf18
 
 COCOAPODS: 1.15.2

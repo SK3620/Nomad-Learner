@@ -94,7 +94,6 @@
 		83A6D7DB2CB80D9100D18A30 /* EditProfileViewNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7DA2CB80D9100D18A30 /* EditProfileViewNavigationBar.swift */; };
 		83A6D7DD2CB8195C00D18A30 /* EditProfileTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7DC2CB8195B00D18A30 /* EditProfileTextView.swift */; };
 		83A6D7E02CB8DA8600D18A30 /* DepartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7DF2CB8DA8600D18A30 /* DepartViewController.swift */; };
-		83A6D7E22CB8F88500D18A30 /* DepartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7E12CB8F88500D18A30 /* DepartViewModel.swift */; };
 		83A6D7E42CB8FD4E00D18A30 /* DepartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7E32CB8FD4E00D18A30 /* DepartView.swift */; };
 		83A73A102CFF382A00C87742 /* BackgroundImageSwitchIntervalSelecViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A73A0F2CFF382A00C87742 /* BackgroundImageSwitchIntervalSelecViewController.swift */; };
 		83A9C2BE2CA7BF2200898F0B /* CustomAuthPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C2BD2CA7BF2200898F0B /* CustomAuthPickerViewController.swift */; };
@@ -225,7 +224,6 @@
 		83A6D7DA2CB80D9100D18A30 /* EditProfileViewNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewNavigationBar.swift; sourceTree = "<group>"; };
 		83A6D7DC2CB8195B00D18A30 /* EditProfileTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileTextView.swift; sourceTree = "<group>"; };
 		83A6D7DF2CB8DA8600D18A30 /* DepartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartViewController.swift; sourceTree = "<group>"; };
-		83A6D7E12CB8F88500D18A30 /* DepartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartViewModel.swift; sourceTree = "<group>"; };
 		83A6D7E32CB8FD4E00D18A30 /* DepartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartView.swift; sourceTree = "<group>"; };
 		83A73A0F2CFF382A00C87742 /* BackgroundImageSwitchIntervalSelecViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundImageSwitchIntervalSelecViewController.swift; sourceTree = "<group>"; };
 		83A9C2BD2CA7BF2200898F0B /* CustomAuthPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAuthPickerViewController.swift; sourceTree = "<group>"; };
@@ -292,7 +290,6 @@
 				8344786E2CD498700038C7B9 /* OnFlightViewModel.swift */,
 				83A6D7BC2CB61A8000D18A30 /* ProfileViewModel.swift */,
 				83A6D7D62CB80C5D00D18A30 /* EditProfileViewModel.swift */,
-				83A6D7E12CB8F88500D18A30 /* DepartViewModel.swift */,
 				837DE5962CBAD12E00819964 /* StudyRoomViewModel.swift */,
 			);
 			path = ViewModel;
@@ -873,7 +870,6 @@
 				834F4CF22D00BD7B0072329D /* AppSupportView.swift in Sources */,
 				83A6D7AB2CB3D93E00D18A30 /* LocationLabel.swift in Sources */,
 				838753E22CAF9E53001EE8F1 /* AlertEnabled.swift in Sources */,
-				83A6D7E22CB8F88500D18A30 /* DepartViewModel.swift in Sources */,
 				837DE59A2CBAD8D400819964 /* NavigationControllerForStudyRoomVC.swift in Sources */,
 				830498CA2CC661C5003973EC /* Parser.swift in Sources */,
 				83A9C2BE2CA7BF2200898F0B /* CustomAuthPickerViewController.swift in Sources */,

@@ -23,6 +23,11 @@ struct MyAppSettings {
     public static var trialUserProfile: User?
     /// お試し利用中か否か
     public static var isTrialUser: Bool { trialUserProfile != nil }
+    /// お試し利用中のメッセージ１
+    public static let trialUseMessage1 = "（※お試し利用中は所持金は減りません）"
+    /// お試し利用中のメッセージ２
+    public static let trialUseMessage2 = "　※お試し利用中は他のユーザーは表示されません。 "
+    
     /// 問い合わせフォームURL
     public static let contactFormUrl = URL(string: "https://tayori.com/form/7c23974951b748bcda08896854f1e7884439eb5c/")
     /// プライバシーポリシーURL

@@ -14,7 +14,6 @@ import FirebaseDatabase
 import FirebaseStorage
 
 protocol MainServiceProtocol {
-    func checkTrialUse() -> Observable<Void> 
     // Firebaseからロケーションデータ取得
     func fetchFixedLocations() -> Observable<[FixedLocation]>
     // ロケーション情報の変更を監視
@@ -82,18 +81,6 @@ final class MainService: MainServiceProtocol {
         listenerForNewUsersParticipation?.remove()
         listenerForUsersExit = nil
         listenerForNewUsersParticipation = nil
-    }
-    
-    func checkTrialUse() -> Observable<Void> {
-        Observable.create { observer in
-            if FBAuth.currentUserId == MyAppSettings.userIdForTrial {
-                observer.onError(MyAppError.featureAccessDeniedInTrial)
-            } else {
-                observer.onNext(())
-                observer.onCompleted()
-            }
-            return Disposables.create()
-        }
     }
     
     // マップのマーカーに設定するロケーション情報取得
@@ -320,10 +307,6 @@ final class MainService: MainServiceProtocol {
                 observer.onError(MyAppError.userNotFound)
                 return Disposables.create()
             }
-//            guard !self.isTrialUse else {
-//                observer.onError(MyAppError.featureAccessDeniedInTrial)
-//                return Disposables.create()
-//            }
             
             // 初期データとして userCount のフィールドを 1 インクリメント
             let locationRef = self.firebaseConfig.locationsCollectionReference().document(locationId)

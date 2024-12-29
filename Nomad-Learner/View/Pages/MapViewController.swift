@@ -186,9 +186,10 @@ extension MapViewController {
         clusterManager.setMapDelegate(self)
     }
     
-    // StudyRoomVC（勉強部屋画面）から戻ってきた時、ロケーション情報再取得
     private func fetchLocationsInfoWithRewardAlert() {
-        if fromScreen == .studyRoomVC {
+        // StudyRoomVC（勉強部屋画面）から戻ってきた&&お試し利用用のユーザーではない場合
+        if fromScreen == .studyRoomVC && MyAppSettings.trialUserProfile == nil {
+            // ロケーションデータ再取得
             viewModel.locationsAndUserInfo
                 .map { ($0, DataHandlingType.fetchWithRewardAlert) }
                 .drive(handleLocationsInfo)

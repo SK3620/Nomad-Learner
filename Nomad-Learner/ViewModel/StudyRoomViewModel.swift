@@ -145,46 +145,58 @@ class StudyRoomViewModel {
             })
             .disposed(by: disposeBag)
         
-        // 参加してきた新規ユーザーをリッスン
-        let listenForNewUsersParticipationResult = mainService.listenForNewUsersParticipation(locationId: locationId)
-            .flatMap { userIds in self.mainService.fetchUserProfiles(userIds: userIds, isInitialFetch: false) }
-            .materialize()
+        // お試し利用中の場合は他ユーザーを表示させない
+        if !(MyAppSettings.isTrialUser) {
+            // 新規ユーザーの参加をリッスン
+            listenForNewUsersParticipation()
+            // ユーザーの退室をリッスン
+            listenForUsersExit()
+        }
         
-        listenForNewUsersParticipationResult
-            .compactMap { $0.event.element }
-            .subscribe(onNext: { [weak self] userProfiles in
-                guard let self = self else { return }
-                // 新規ユーザーのプロフィール画像をプリフェッチ
-                StudyRoomViewModel.prefetch(imageUrlsString: userProfiles.map { $0.profileImageUrl })
-                let addedUserProfiles: [UserProfileChange] = userProfiles.map { .added($0) }
-                self.messageRelay.accept(self.messageRelay.value + addedUserProfiles)
-                
-                self.userProfilesRelay.accept((userProfiles + self.userProfilesRelay.value).moveMyUserProfileToFront())
-            })
-            .disposed(by: disposeBag)
+        // 参加してきた新規ユーザーをリッスン
+        func listenForNewUsersParticipation() {
+            let listenForNewUsersParticipationResult = mainService.listenForNewUsersParticipation(locationId: locationId)
+                .flatMap { userIds in self.mainService.fetchUserProfiles(userIds: userIds, isInitialFetch: false) }
+                .materialize()
+            
+            listenForNewUsersParticipationResult
+                .compactMap { $0.event.element }
+                .subscribe(onNext: { [weak self] userProfiles in
+                    guard let self = self else { return }
+                    // 新規ユーザーのプロフィール画像をプリフェッチ
+                    StudyRoomViewModel.prefetch(imageUrlsString: userProfiles.map { $0.profileImageUrl })
+                    let addedUserProfiles: [UserProfileChange] = userProfiles.map { .added($0) }
+                    self.messageRelay.accept(self.messageRelay.value + addedUserProfiles)
+                    
+                    self.userProfilesRelay.accept((userProfiles + self.userProfilesRelay.value).moveMyUserProfileToFront())
+                })
+                .disposed(by: disposeBag)
+        }
         
         // 退出したユーザーをリッスン
-        let listenForUsersExitResult = mainService.listenForUsersExit(locationId: locationId)
-            .materialize()
-        
-        listenForUsersExitResult
-            .compactMap { $0.event.element }
-            .subscribe(onNext: { [weak self] userIds -> Void in
-                guard let self = self else { return }
-                // 退出したユーザーIDに基づいて更新処理
-                var profilesToRemove = self.userProfilesRelay.value.filter { userIds.contains($0.userId) }
-                // 自分のユーザープロフィールを除外
-                profilesToRemove.removeAll(where: { $0.userId == FBAuth.currentUserId })
-                // 退出ユーザーのプロフィール画像をプリフェッチ
-                StudyRoomViewModel.prefetch(imageUrlsString: profilesToRemove.map { $0.profileImageUrl })
-                // ユーザーの削除メッセージを追加
-                let updatedMessages = self.messageRelay.value + profilesToRemove.map { .removed($0) }
-                self.messageRelay.accept(updatedMessages)
-                // ユーザープロフィールの更新
-                let updatedProfiles = self.userProfilesRelay.value.filter { !userIds.contains($0.userId) }
-                self.userProfilesRelay.accept(updatedProfiles.moveMyUserProfileToFront())
-            })
-            .disposed(by: disposeBag)
+        func listenForUsersExit() {
+            let listenForUsersExitResult = mainService.listenForUsersExit(locationId: locationId)
+                .materialize()
+            
+            listenForUsersExitResult
+                .compactMap { $0.event.element }
+                .subscribe(onNext: { [weak self] userIds -> Void in
+                    guard let self = self else { return }
+                    // 退出したユーザーIDに基づいて更新処理
+                    var profilesToRemove = self.userProfilesRelay.value.filter { userIds.contains($0.userId) }
+                    // 自分のユーザープロフィールを除外
+                    profilesToRemove.removeAll(where: { $0.userId == FBAuth.currentUserId })
+                    // 退出ユーザーのプロフィール画像をプリフェッチ
+                    StudyRoomViewModel.prefetch(imageUrlsString: profilesToRemove.map { $0.profileImageUrl })
+                    // ユーザーの削除メッセージを追加
+                    let updatedMessages = self.messageRelay.value + profilesToRemove.map { .removed($0) }
+                    self.messageRelay.accept(updatedMessages)
+                    // ユーザープロフィールの更新
+                    let updatedProfiles = self.userProfilesRelay.value.filter { !userIds.contains($0.userId) }
+                    self.userProfilesRelay.accept(updatedProfiles.moveMyUserProfileToFront())
+                })
+                .disposed(by: disposeBag)
+        }
     }
 }
 

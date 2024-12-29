@@ -30,8 +30,10 @@ class OnFlightViewController: UIViewController, AlertEnabled {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         // 画面の回転が完了してから実行し、エラーアラートを正常に表示
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            self.bind()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+            MyAppSettings.isTrialUser
+            ? self?.bindForTrial()
+            : self?.bind()
         }
     }
 }
@@ -44,6 +46,15 @@ extension OnFlightViewController {
         
         onFlightView.snp.makeConstraints {
             $0.edges.equalToSuperview()
+        }
+    }
+    
+    private func bindForTrial() {
+        showOnFlightLoading.onNext(true)
+        // 3秒間ローディングさせる
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { [weak self] in
+            self?.showOnFlightLoading.onNext(false)
+            self?.toStudyRoomVC.onNext(([MyAppSettings.trialUserProfile!], nil))
         }
     }
     

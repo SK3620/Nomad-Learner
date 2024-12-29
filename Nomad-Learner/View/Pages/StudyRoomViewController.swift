@@ -64,14 +64,15 @@ class StudyRoomViewController: UIViewController {
         bind()
         update()
         
-        
-        // バックグラウンド移行時
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(self.didEnterBackground),
-            name: UIApplication.didEnterBackgroundNotification,
-            object: nil
-        )
+        if !MyAppSettings.isTrialUser {
+            // バックグラウンド移行時
+            NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(self.didEnterBackground),
+                name: UIApplication.didEnterBackgroundNotification,
+                object: nil
+            )
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -331,17 +332,19 @@ extension StudyRoomViewController: AlertEnabled {
                     didIntervalTimeSelect: { interval in
                         base.viewModel.selectedIntervalTimeRelay.accept(interval)
                         base.rx.showMessage.onNext(.didIntervalSelect(interval))
-                })
+                    })
             case .community:
                 base.rx.showMessage.onNext(.inDevelopment)
             case .exitRoom:
-                let alertActionType: AlertActionType = .exitRoom(
-                    onConfirm: {
-                        base.viewModel.saveStudyProgress() {
-                            Router.backToMapVC(vc: base) // MapVC（マップ画面）に戻る
-                        }
-                    }
-                )
+                // お試し利用用のユーザーの場合、勉強記録データの保存等は行わない
+                let onConfirmAction: () -> Void = MyAppSettings.isTrialUser
+                ? { Router.backToMapVC(vc: base) }
+                : { base.viewModel.saveStudyProgress { Router.backToMapVC(vc: base) }}
+                
+                let alertActionType: AlertActionType = MyAppSettings.isTrialUser
+                ? .exitRoomInTrial(onConfirm: onConfirmAction)
+                : .exitRoom(onConfirm: onConfirmAction)
+                
                 base.rx.showAlert.onNext(alertActionType)
             }
         }

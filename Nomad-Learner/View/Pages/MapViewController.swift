@@ -378,6 +378,12 @@ extension MapViewController {
             // マップの初期化
             base.resetMapView()
             
+            // お試し利用用ユーザーの場合
+            let isTrialUser = userProfile.userId == MyAppSettings.userIdForTrial
+            MyAppSettings.trialUserProfile = isTrialUser
+            ? userProfile
+            : nil
+            
             // 初期位置であれば初回ログインとみなし、ウォークスルー画面を表示
             if userProfile.currentLocationId == MyAppSettings.userInitialLocationId {
                 base.toWalkThroughVC.onNext(())

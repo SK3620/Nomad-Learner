@@ -13,7 +13,9 @@ class EditProfileViewModel {
     
     let didSaveUserProfile: Driver<User?>
     let isLoading: Driver<Bool>
-    let myAppError: Driver<MyAppError>
+    let alertActionType: Driver<AlertActionType>
+    
+    private let disposeBag = DisposeBag()
     
     init(input: (
         username: Driver<String>,
@@ -26,15 +28,11 @@ class EditProfileViewModel {
          currentUserProfile: User,
          mainService: MainServiceProtocol
     ) {
-        // エラーを流す
-        let myAppErrorRelay = BehaviorRelay<MyAppError?>(value: nil)
-        // 発生したエラーを一つに集約
-        self.myAppError = myAppErrorRelay
+        // アラートの種類を流す
+        let alertActionTypeRelay = BehaviorRelay<AlertActionType?>(value: nil)
+        self.alertActionType = alertActionTypeRelay
             .compactMap { $0 }
-            .asDriver(onErrorJustReturn: .unknown)
-        
-        // お試し利用中か否か
-        let checkTrialUse = mainService.checkTrialUse()
+            .asDriver(onErrorJustReturn: .error(.unknown, onConfim: {}))
         
         // インジケーター
         let indicator = ActivityIndicator()
@@ -59,29 +57,42 @@ class EditProfileViewModel {
         // 更新するプロフィール情報
         var updatedUserProfile: User!
         
-        // 保存ボタン押下後、保存処理を行う
-        let saveUserProfileResult = input.saveButtonTaps
-            .withLatestFrom(userProfile)
+        // お試し利用用のユーザーか否か
+        let isTrialUser = input.saveButtonTaps
             .asObservable()
+            .map { _ in
+                print("MyAppSettings.isTrialUser: \(MyAppSettings.isTrialUser)")
+                return MyAppSettings.isTrialUser
+            }
+            .share(replay: 1)
+        
+        // お試し利用用のユーザーの場合、制限機能のアクセス不可アラートを表示
+        isTrialUser
+            .filter { $0 }
+            .map { _ in AlertActionType.featureAccessDeniedInTrial() }
+            .bind(to: alertActionTypeRelay)
+            .disposed(by: disposeBag)
+        
+        // 編集したプロフィール内容の保存結果
+        let saveUserProfileResult = isTrialUser
+            .filter { !$0 }
+            .withLatestFrom(userProfile)
             .flatMapFirst { userProfile in
                 updatedUserProfile = userProfile
                 // 選択されたプロフィール画像がある場合、まず画像を保存する
                 if let image = input.profileImage.unwrappedValue {
                     // Storageにプロフィール画像を保存
-                    return checkTrialUse
-                        .flatMap { _ in
-                            mainService.saveProfileImage(image: image)
-                                .flatMap { downloadUrlString in
-                                    // プロフィール画像をプリフェッチ
-                                    ImageCacheManager.prefetch(from: [URL(string: downloadUrlString)!])
-                                    // プロフィール画像ダウンロードURLを設定
-                                    updatedUserProfile.profileImageUrl = downloadUrlString
-                                    // 画像保存後にユーザープロフィールを保存
-                                    return mainService.saveUserProfile(user: updatedUserProfile, shouldUpdate: true)
-                                }
+                    return mainService.saveProfileImage(image: image)
+                        .flatMap { downloadUrlString in
+                            // プロフィール画像をプリフェッチ
+                            ImageCacheManager.prefetch(from: [URL(string: downloadUrlString)!])
+                            // プロフィール画像ダウンロードURLを設定
+                            updatedUserProfile.profileImageUrl = downloadUrlString
+                            // 画像保存後にユーザープロフィールを保存
+                            return mainService.saveUserProfile(user: updatedUserProfile, shouldUpdate: true)
                         }
                         .catch { error in // ストリームを終了させない
-                            myAppErrorRelay.accept(error as? MyAppError)
+                            alertActionTypeRelay.accept(.error(error as! MyAppError))
                             return .empty()
                         }
                         .materialize()
@@ -90,10 +101,9 @@ class EditProfileViewModel {
                     // ない場合は、空文字を設定し、デフォルト画像を適用
                     updatedUserProfile.profileImageUrl = ""
                     // ユーザープロフィールを保存
-                    return checkTrialUse
-                        .flatMap { _ in mainService.saveUserProfile(user: updatedUserProfile, shouldUpdate: true) }
+                    return mainService.saveUserProfile(user: updatedUserProfile, shouldUpdate: true)
                         .catch { error in // ストリームを終了させない
-                            myAppErrorRelay.accept(error as? MyAppError)
+                            alertActionTypeRelay.accept(.error(error as! MyAppError))
                             return .empty()
                         }
                         .materialize()

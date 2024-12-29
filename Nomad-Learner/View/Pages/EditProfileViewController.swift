@@ -95,9 +95,8 @@ class EditProfileViewController: UIViewController, AlertEnabled, KRProgressHUDEn
             .drive(backToMapVC)
             .disposed(by: disposeBag)
         
-        // エラーダイアログ表示
-        viewModel.myAppError
-            .map { AlertActionType.error($0) }
+        // アラートを表示
+        viewModel.alertActionType
             .drive(self.rx.showAlert)
             .disposed(by: disposeBag)
         

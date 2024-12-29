@@ -9,18 +9,32 @@ import Foundation
 import UIKit
 
 enum AlertActionType {
+    // エラー
     case error(MyAppError, onConfim: () -> Void = {})
     
+    // アカウント削除
     case willDeleteAccount(onConfirm: (String?, String?) -> Void, onCancel: () -> Void = {})
+    // お試し利用
     case willFreeTrialUse(onConfirm: () -> Void)
     
+    // お試し利用中による制限機能へのアクセス不可
+    case featureAccessDeniedInTrial(onConfirm: () -> Void = {})
+        
+    // 更新保留中の勉強記録データ
     case savePendingUpdateData(dataSaveError: MyAppError? = nil, onConfirm: () -> Void, onCancel: () -> Void)
-    case willShowDepartVC(onConfirm: () -> Void, onCancel: () -> Void = {}, ticketInfo: TicketInfo)
+    // 出発画面表示
+    case willShowDepartVC(onConfirm: () -> Void, ticketInfo: TicketInfo)
     
-    case exitRoom(onConfirm: () -> Void, onCancel: () -> Void = {})
-    case breakTime(onConfirm: () -> Void, onCancel: () -> Void = {})
-    case community(onConfirm: () -> Void, onCancel: () -> Void = {})
+    // お試し利用中の退出
+    case exitRoomInTrial(onConfirm: () -> Void)
+    // 退出
+    case exitRoom(onConfirm: () -> Void)
+    // 休憩
+    case breakTime(onConfirm: () -> Void)
+    // コミュニティ
+    case community(onConfirm: () -> Void)
     
+    // 報告
     case didCancelMail(onConfirm: () -> Void = {})
     case didSaveMail(onConfirm: () -> Void = {})
     case didSendMail(onConfirm: () -> Void = {})
@@ -28,7 +42,9 @@ enum AlertActionType {
     
     var comfirmActionStyle: UIAlertAction.Style {
         switch self {
-        case .exitRoom, .willDeleteAccount:
+        case .exitRoom,
+                .exitRoomInTrial,
+                .willDeleteAccount:
             return .destructive
         default:
             return .default
@@ -50,11 +66,14 @@ enum AlertActionType {
             return "アカウントを削除する"
         case .willFreeTrialUse:
             return "お試しで使ってみる"
+        case .featureAccessDeniedInTrial:
+            return "この機能は制限されています"
         case .savePendingUpdateData(let saveRetryError, _, _):
             return saveRetryError != nil ? "エラー" : ""
         case .willShowDepartVC:
             return "確認"
-        case .exitRoom:
+        case .exitRoom,
+                .exitRoomInTrial:
             return "終了する"
         case .breakTime:
             return "休憩する"
@@ -76,11 +95,15 @@ enum AlertActionType {
         case .willDeleteAccount:
             return "\n本当にアカウントを削除してもよろしいですか？"
         case .willFreeTrialUse:
-            return "\nアプリの一部の機能をお試しで使用することができます。\n全ての機能にアクセスするにはアカウントを作成する必要があります。"
+            return "\nアプリの一部の機能をお試しで使用することができます。\n全ての機能を利用するためには、アカウントを作成する必要があります。"
+        case .featureAccessDeniedInTrial:
+            return "\nこの機能はお試し利用中はご利用できません。\n全ての機能を利用するためには、アカウントを作成する必要があります。"
         case .savePendingUpdateData(let dataSaveError, _, _):
             return "\(dataSaveError?.errorDescription ?? "前回の勉強記録が保存されていません。")\n保存しますか？"
-        case .willShowDepartVC(_, _, let ticketInfo):
+        case .willShowDepartVC(_, let ticketInfo):
             return "\n一度訪問すると、次回の「\(ticketInfo.destination)」への訪問時以降、以下の項目は変更されません。\n\n必要な勉強時間：\(ticketInfo.requiredStudyHours)時間\n報酬コイン：\(ticketInfo.rewardCoin)コイン"
+        case .exitRoomInTrial:
+            return "\n本当に終了してもよろしいですか？\n\nお試し利用中のため、勉強記録や旅先への訪問実績などのデータは保存/反映されません。全ての機能を利用するためには、アカウントを作成する必要があります。"
         case .exitRoom:
             return "\n本当に終了してもよろしいですか？\n（終了後、勉強時間が記録されます。）"
         case .breakTime:
@@ -100,7 +123,8 @@ enum AlertActionType {
             return "使ってみる"
         case .savePendingUpdateData:
             return "保存"
-        case .exitRoom:
+        case .exitRoom,
+                .exitRoomInTrial:
             return "終了"
         case .breakTime:
             return "休憩"
@@ -124,6 +148,7 @@ enum AlertActionType {
     var shouldShowCancelAction: Bool {
         switch self {
         case .error,
+                .featureAccessDeniedInTrial,
                 .didSaveMail,
                 .didSendMail,
                 .didCancelMail:
@@ -169,11 +194,13 @@ enum AlertActionType {
         case .savePendingUpdateData(_, let onConfirm, let onCancel):
             return (onConfirm: { _, _ in onConfirm() }, onCancel: { onCancel() })
             
-        case .willShowDepartVC(let onConfirm, _, _),
+        case .willShowDepartVC(let onConfirm, _),
                 .willFreeTrialUse(let onConfirm),
-                .exitRoom(let onConfirm, _),
-                .breakTime(let onConfirm, _),
-                .community(let onConfirm, _),
+                .featureAccessDeniedInTrial(let onConfirm),
+                .exitRoomInTrial(let onConfirm),
+                .exitRoom(let onConfirm),
+                .breakTime(let onConfirm),
+                .community(let onConfirm),
                 .didSendMail(let onConfirm),
                 .didCancelMail(let onConfirm),
                 .didSaveMail(let onConfirm):

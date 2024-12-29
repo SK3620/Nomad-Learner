@@ -17,9 +17,6 @@ enum MyAppError: Error {
     // 利用規約同意画面
     case loadTermsAndConditionsFailed(Error?)
     
-    // お試し利用（制限機能へのアクセス不可）
-    case featureAccessDeniedInTrial
-    
     // 認証画面
     case signInFailed(Error)
     case signUpFailed(Error)
@@ -66,12 +63,7 @@ enum MyAppError: Error {
     
     // MARK: - UIAlert Title
     var alertTitle: String {
-        switch self {
-        case .featureAccessDeniedInTrial:
-            return "この機能は制限されています"
-        default:
-            return "エラー"
-        }
+        return "エラー"
     }
     
     // MARK: - Localized Descriptions (日本語版)
@@ -94,9 +86,6 @@ enum MyAppError: Error {
                
            case .fetchMoreUserProfilesFailed:
                return NSLocalizedString("追加データの取得に失敗しました。もう一度お試しください。", comment: "アカウント削除失敗メッセージ")
-               
-           case .featureAccessDeniedInTrial:
-               return NSLocalizedString("この機能はお試し期間中はご利用できません。アカウントを作成する必要があります。", comment: "お試し使用中による制限機能へのアクセス不可メッセージ")
                
            case .savePendingUpdateDataFailed:
                return NSLocalizedString("前回の勉強記録の保存に失敗しました。", comment: "勉強記録保存失敗のメッセージ")
@@ -132,9 +121,6 @@ enum MyAppError: Error {
             
         case .deleteAccountFailed(let error):
             return NSLocalizedString("アカウントの削除に失敗しました。エラー: \(String(describing: error)).", comment: "アカウント削除エラーメッセージ")
-            
-        case .featureAccessDeniedInTrial:
-            return NSLocalizedString("この機能はお試し期間中はご利用できません。アカウントを作成する必要があります。", comment: "お試し使用中による制限機能へのアクセス不可メッセージ")
             
         case .saveUserProfileFailed(let error):
             return NSLocalizedString("ユーザープロフィールの保存に失敗しました。エラー: \(String(describing: error)).", comment: "プロフィール保存エラーメッセージ")

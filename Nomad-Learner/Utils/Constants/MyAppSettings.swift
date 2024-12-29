@@ -19,6 +19,10 @@ struct MyAppSettings {
     public static let emailForTrial = "nomad@learner.jp"
     public static let passwordForTrial = "NomadLearner1234"
     
+    /// お試し利用用ユーザープロフィール情報（nilの場合は固有ユーザー）
+    public static var trialUserProfile: User?
+    /// お試し利用中か否か
+    public static var isTrialUser: Bool { trialUserProfile != nil }
     /// 問い合わせフォームURL
     public static let contactFormUrl = URL(string: "https://tayori.com/form/7c23974951b748bcda08896854f1e7884439eb5c/")
     /// プライバシーポリシーURL

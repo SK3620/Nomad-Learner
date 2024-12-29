@@ -131,6 +131,7 @@ class CustomAuthPickerViewController: FUIAuthPickerViewController {
         super.viewWillAppear(animated)
         // タイトルなし
         self.title = ""
+        MyAppSettings.trialUserProfile = nil
     }
 }
 

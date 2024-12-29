@@ -113,6 +113,13 @@ class DepartView: UIView {
         $0.textColor = .orange
     }
     
+    // お試し利用中のメッセージ
+    private let trialUseMessage1 = UILabel().then {
+        $0.textColor = .orange
+        $0.font = UIFont.systemFont(ofSize: 18)
+        $0.text = MyAppSettings.trialUseMessage1
+    }
+    
     init(locationInfo: LocationInfo) {
         self.locationInfo = locationInfo
         super.init(frame: .zero)
@@ -199,6 +206,14 @@ class DepartView: UIView {
             $0.centerY.equalTo(backgroundViewForWallet)
             $0.left.equalTo(arrowRightImageView.snp.right).offset(16)
         }
+        
+        if MyAppSettings.isTrialUser {
+            addSubview(trialUseMessage1)
+            trialUseMessage1.snp.makeConstraints {
+                $0.centerX.equalToSuperview()
+                $0.top.equalTo(backgroundViewForWallet.snp.bottom).offset(6)
+            }
+        }
     }
     
     // UIを更新
@@ -206,9 +221,14 @@ class DepartView: UIView {
         let ticketInfo = locationInfo.ticketInfo
         let locationStatus = locationInfo.locationStatus
         
+        // お試し利用中は所持金は減算されない
+        let remainingCoin = MyAppSettings.isTrialUser
+        ? MyAppSettings.userInitialCurrentCoin.toString
+        : ticketInfo.remainingCoin.toString
+        
         ticketFrame.update(with: ticketInfo, locationStatus: locationStatus)
         currentCoinLabel.text = ticketInfo.currentCoin.toString
-        remainingCoinLabel.text = ticketInfo.remainingCoin.toString
+        remainingCoinLabel.text = remainingCoin
     }
     
     required init?(coder: NSCoder) {

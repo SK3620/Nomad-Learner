@@ -50,6 +50,11 @@ class StudyRoomViewController: UIViewController {
     // プロフィール欄
     private let profileCollectionView: ProfileCollectionView = ProfileCollectionView()
     
+    // お試し利用中のメッセージ
+    private let trialUseMessageLabel = ProfileLabel(text: MyAppSettings.trialUseMessage2, fontSize: 16, textColor: .orange, isRounded: true, verticalPadding: 8).then {
+        $0.backgroundColor = UIColor(white: 1.0, alpha: 0.7)
+    }
+    
     private let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
@@ -121,6 +126,13 @@ extension StudyRoomViewController {
             $0.left.equalTo(view.safeAreaLayoutGuide.snp.left).inset(16)
             $0.right.equalTo(chatCollectionView.snp.left).inset(-8)
             $0.bottom.equalToSuperview()
+        }
+        
+        if MyAppSettings.isTrialUser {
+            view.addSubview(trialUseMessageLabel)
+            trialUseMessageLabel.snp.makeConstraints {
+                $0.right.bottom.equalTo(view.safeAreaLayoutGuide)
+            }
         }
     }
     

@@ -14,7 +14,9 @@ import GoogleMaps
 class MapViewModel {
     
     // MARK: - Output
+    // CollectionViewCellに表示するカテゴリー
     let categories: Driver<[LocationCategory]> = Driver.just(LocationCategory.categories)
+    // 選択されたカテゴリーのIndexPath
     var selectedIndexPath = IndexPath(row: 0, section: 0)
     
     // 更新保留中の勉強記録データ
@@ -26,15 +28,15 @@ class MapViewModel {
         return self.isPendingUpdateDataHandlingCompletedRelay.asDriver()
     }
     // 各ロケーション情報
-    var locationsAndUserInfo: Driver<([LocationInfo], User)>
+    let locationsAndUserInfo: Driver<([LocationInfo], User)>
     // 各ロケーション情報（監視）
-    // var monitoredLocationsAndUserInfo: Driver<([LocationInfo], User)>
+    // let monitoredLocationsAndUserInfo: Driver<([LocationInfo], User)>
     // ローディングインジケーター
     let isLoading: Driver<Bool>
     // エラー
     let myAppError: Driver<MyAppError>
     
-    // MARK: - Input
+    // MARK: - Private
     // 各ロケーション情報
     private let locationsAndUserInfoRelay = BehaviorRelay<([LocationInfo], User)?>(value: nil)
     // 更新保留中の勉強記録データの存在有無

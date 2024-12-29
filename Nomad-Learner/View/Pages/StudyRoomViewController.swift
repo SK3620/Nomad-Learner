@@ -19,10 +19,7 @@ class StudyRoomViewController: UIViewController {
     var oldestDocument: QueryDocumentSnapshot?
     
     private var viewModel: StudyRoomViewModel!
-    
-    // グローバル用にアクセス可能な共有インスタンスを保持
-    static var sharedInstance: StudyRoomViewController?
-    
+        
     // 背景画像
     private lazy var backgroundImageView = UIImageView().then {
         guard let initialImageUrlString = locationInfo.fixedLocation.imageUrls.last else { return }
@@ -62,7 +59,6 @@ class StudyRoomViewController: UIViewController {
         bind()
         update()
         
-        StudyRoomViewController.sharedInstance = self
         
         // バックグラウンド移行時
         NotificationCenter.default.addObserver(

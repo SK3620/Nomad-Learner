@@ -45,7 +45,7 @@
 - **GoogleMaps (~> 9.1.1)**
 - **Google-Maps-iOS-Utils (6.0.0)**
 
-### Firebase（認証プロバイダーも使用）
+### Firebase
 
 - **Firebase ~> 11.2.0**
 - **Firebase/Analytics**

@@ -65,7 +65,7 @@ final class MainService: MainServiceProtocol {
     
     private init(){}
     
-    private var observerForFixedLocationsChanges: UInt?
+    // private var observerForFixedLocationsChanges: UInt?
     private var listenerForUsersExit: ListenerRegistration?
     private var listenerForNewUsersParticipation: ListenerRegistration?
     
@@ -274,10 +274,6 @@ final class MainService: MainServiceProtocol {
                 observer.onError(MyAppError.userNotFound)
                 return Disposables.create()
             }
-//            guard !self.isTrialUse else {
-//                observer.onError(MyAppError.featureAccessDeniedInTrial)
-//                return Disposables.create()
-//            }
             
             let updatedData = [
                 "currentCoin": currentCoin,
@@ -563,10 +559,7 @@ final class MainService: MainServiceProtocol {
 }
 
 extension MainService {
-    
-    // お試し利用中か否か
-    private var isTrialUse: Bool { FBAuth.currentUserId == MyAppSettings.userIdForTrial }
-   
+    // 新規ユーザーの参加を監視
     private func setupListenerForNewUsersParticipation(
         locationId: String,
         latestLoadedDocDate: Timestamp,

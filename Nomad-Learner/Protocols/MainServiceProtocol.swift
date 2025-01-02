@@ -139,10 +139,6 @@ final class MainService: MainServiceProtocol {
                 observer.onError(MyAppError.userNotFound)
                 return Disposables.create()
             }
-//            guard !self.isTrialUse else {
-//                observer.onError(MyAppError.featureAccessDeniedInTrial)
-//                return Disposables.create()
-//            }
             
             // 画像をJPEG形式に変換する
             let imageData = image.jpegData(compressionQuality: 0.75)

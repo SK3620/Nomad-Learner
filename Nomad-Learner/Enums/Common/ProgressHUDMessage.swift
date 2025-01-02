@@ -38,21 +38,20 @@ enum ProgressHUDMessage {
         }
     }
     
-    // 適切なスタイルを返す
-    var style: ProgressHUDStyle {
+    var image: String {
         switch self {
-        case .inDevelopment, .inDevelopment2:
-            return .info
-        case .insufficientCoin:
-            return .warning
+        case .getRewardCoin:
+            return "Reward"
         default:
-            return .success
+            return ""
         }
     }
     
     // メッセージを表示
     func show() {
-        style.apply()
+        // 共通のカスタムスタイルを適用
+        applyStyle()
+        
         switch self {
         case .didDeleteAccount:
             // ローディング表示制御のdismiss()よりも後に実行させる
@@ -65,7 +64,7 @@ enum ProgressHUDMessage {
             // ローディング表示制御のdismiss()よりも後に実行させる
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                 KRProgressHUD.set(duration: 5.0)
-                KRProgressHUD.showImage(UIImage(named: "Reward")!, message: message)
+                KRProgressHUD.showImage(UIImage(named: image)!, message: message)
             }
         case .didIntervalSelect, .inDevelopment, .inDevelopment2:
             KRProgressHUD.showInfo(withMessage: message)
@@ -90,34 +89,20 @@ extension ProgressHUDMessage {
         ? "\(rewardCoinMessage)\n\n\(bonusCoinMessage)\n\n\(balanceChangeMessage)"
         : "\(bonusCoinMessage)\n\n\(balanceChangeMessage)"
     }
-}
-
-// 状況別のカスタムスタイルを定義
-enum ProgressHUDStyle {
-    case success
-    case info
-    case warning
     
-    // 共通のカスタムスタイルを適用する
-    func apply() {
-        KRProgressHUD.setDefaultStyle()
-        switch self {
-        case .success:
-            KRProgressHUD.set(style: .custom(background: .white, text: ColorCodes.primaryPurple.color(), icon: ColorCodes.primaryPurple.color()))
-        case .info:
-            KRProgressHUD.set(style: .custom(background: .white, text: ColorCodes.primaryPurple.color(), icon: ColorCodes.primaryPurple.color()))
-        case .warning:
-            KRProgressHUD.set(style: .custom(background: .white, text: ColorCodes.primaryPurple.color(), icon: ColorCodes.primaryPurple.color()))
-        }
-    }
-}
-
-// KRProgressHUDのデフォルトスタイル設定
-extension KRProgressHUD {
-    static func setDefaultStyle() {
+    // 共通のカスタムスタイルを適用
+    private func applyStyle() {
         let basicColor = ColorCodes.primaryPurple.color()
+        
         KRProgressHUD.set(activityIndicatorViewColors: [basicColor])
         KRProgressHUD.set(font: UIFont(name: "HiraginoSans-W6", size: 14)!)
         KRProgressHUD.set(duration: 2.5)
+
+        let customStyle = KRProgressHUDStyle.custom(
+            background: .white,
+            text: basicColor,
+            icon: basicColor
+        )
+        KRProgressHUD.set(style: customStyle)
     }
 }

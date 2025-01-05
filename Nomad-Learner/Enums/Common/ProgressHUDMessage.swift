@@ -50,7 +50,7 @@ enum ProgressHUDMessage {
     // メッセージを表示
     func show() {
         // 共通のカスタムスタイルを適用
-        applyStyle()
+        ProgressHUDMessage.applyStyle()
         
         switch self {
         case .didDeleteAccount:
@@ -91,7 +91,7 @@ extension ProgressHUDMessage {
     }
     
     // 共通のカスタムスタイルを適用
-    private func applyStyle() {
+    static func applyStyle() {
         let basicColor = ColorCodes.primaryPurple.color()
         
         KRProgressHUD.set(activityIndicatorViewColors: [basicColor])

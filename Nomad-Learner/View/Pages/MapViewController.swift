@@ -384,9 +384,9 @@ extension MapViewController {
             MyAppSettings.trialUserProfile = isTrialUser
             ? userProfile
             : nil
-            
+
             // 初期位置であれば初回ログインとみなし、ウォークスルー画面を表示
-            if userProfile.currentLocationId == MyAppSettings.userInitialLocationId {
+            if (userProfile.currentLocationId == MyAppSettings.userInitialLocationId) && (dataHandlingType == .initialFetch) {
                 base.toWalkThroughVC.onNext(())
             }
           

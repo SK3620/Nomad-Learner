@@ -34,12 +34,12 @@ extension UILabel {
         }
     }
     
-    // labelのwidth
+    // ラベルのテキスト内容の幅
     func contentSizeWidth() -> CGFloat {
-       return intrinsicContentSize.width
+        return intrinsicContentSize.width
     }
     
-    // labelのHeight
+    // ラベルのテキスト内容の高さ
     func contentSizeHeight() -> CGFloat {
         return intrinsicContentSize.height
     }

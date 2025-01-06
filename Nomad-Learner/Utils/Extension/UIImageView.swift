@@ -39,7 +39,7 @@ extension UIImageView {
         }
         self.kf.setImage(with: url, options: [.processor(SVGImgProcessor())]) { result in
             switch result {
-            case .success(let _):
+            case .success:
                 print("SVG画像国旗を表示しました")
             case .failure(let error):
                 // SVGではない国旗画像（png等）の場合は、setImage(with:)で通常表示

@@ -11,43 +11,73 @@ import RxSwift
 import UIKit
 
 class WalkThroughViewController: UIViewController {
-        
-    private let tapGesture = UITapGestureRecognizer()
     
-    private lazy var walkThroughImageView = UIImageView().then {
-        $0.image = UIImage(named: "WalkThrough")
-        $0.isUserInteractionEnabled = true
-        $0.addGestureRecognizer(self.tapGesture)
+    private lazy var pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
+    private lazy var pages: [UIViewController] = {
+        return [
+            FirstPageViewController(),
+            SecondPageViewController(),
+            ThirdPageViewController(),
+            FourthPageViewController(),
+            FifthPageViewController(),
+            SixthPageViewController()
+        ]
+    }()
+    
+    private lazy var pageControl = UIPageControl().then {
+        $0.numberOfPages = pages.count
+        $0.currentPage = 0
+        $0.pageIndicatorTintColor = .lightGray
+        $0.currentPageIndicatorTintColor = .black
     }
-    
-    private let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupUI()
-        bind()
+        setupPageViewController()
     }
 }
 
 extension WalkThroughViewController {
-    
+
     private func setupUI() {
-        view.addSubview(walkThroughImageView)
-        walkThroughImageView.snp.makeConstraints {
+        view.backgroundColor = .white
+        addChild(pageViewController)
+        view.addSubview(pageViewController.view)
+        pageViewController.didMove(toParent: self)
+        view.addSubview(pageControl)
+
+        pageViewController.view.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+
+        pageControl.snp.makeConstraints {
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-16)
+            $0.centerX.equalToSuperview()
+        }
     }
-    
-    private func bind() {
-        tapGesture.rx.event
-            .map { _ in () }
-            .bind(to: backToMapVC)
-            .disposed(by: disposeBag)
+
+    private func setupPageViewController() {
+        pageViewController.dataSource = self
+        pageViewController.delegate = self
+        pageViewController.setViewControllers([pages[0]], direction: .forward, animated: true)
     }
 }
 
-extension WalkThroughViewController {
-    // MapVC（マップ画面）へ戻る
-    private var backToMapVC: Binder<Void> { Binder(self, binding: { base, _ in Router.dismissModal(vc: base) })}
+extension WalkThroughViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+        guard let index = pages.firstIndex(of: viewController), index > 0 else { return nil }
+        return pages[index - 1]
+    }
+
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+        guard let index = pages.firstIndex(of: viewController), index < pages.count - 1 else { return nil }
+        return pages[index + 1]
+    }
+
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        if completed, let currentVC = pageViewController.viewControllers?.first, let index = pages.firstIndex(of: currentVC) {
+            pageControl.currentPage = index
+        }
+    }
 }

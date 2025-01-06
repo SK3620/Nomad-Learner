@@ -79,3 +79,49 @@ extension MyAppSettings {
         #endif
     }
 }
+
+extension MyAppSettings {
+    // ウォークスルー画面
+    // First Page
+    public static let firstPageTitle  = "旅 ✖️ 勉強"
+    public static let firstPageSubtitle = "勉強をもっとワクワクに！"
+    public static let firstPageDesc1 = "世界中を旅するような感覚で\n他のユーザーと共に勉強しよう"
+    public static let firstPageDesc2 = "旅先でたくさん勉強してコインを貯めて\n貯めたコインでさらに世界中を旅しよう"
+    public static let firstPageBluredDesc1 = "世界中を旅するような感覚"
+    public static let firstPageBluredDesc2 = "たくさん勉強してコインを貯めて"
+    
+    // Second Page
+    public static let secondPageTitle  = "旅先を選択"
+    public static let secondPageDesc = "マップ上に配置された\n約70箇所から旅先を選択しよう"
+    public static let secondPageBluredDesc = "約70箇所"
+
+    // Third Page
+    public static let thirdPageTitle  = "表示内容を確認"
+    public static let thirdPageDesc1  = "旅先に関する以下の内容を確認しよう"
+    public static let thirdPageDesc2 = "現在地から旅先までの\n「距離と旅費」"
+    public static let thirdPageDesc3 = "「報酬コイン」"
+    public static let thirdPageDesc4 = "報酬コインを獲得するために\n「必要な勉強時間」"
+    public static let thirdPageBluredDesc2 = "「距離と旅費」"
+    public static let thirdPageBluredDesc3 = "「報酬コイン」"
+    public static let thirdPageBluredDesc4 = "「必要な勉強時間」"
+    
+    // Fourth Page
+    public static let fourthPageTitle  = "いざ出発！"
+    public static let fourthPageDesc1 = "コインで旅費を払います"
+    public static let fourthPageDesc2 = "表示されたチケットの内容を再確認して\nいざ出発しよう！"
+    public static let fourthPageBluredDesc2 = "表示されたチケットの内容を再確認して"
+    
+    // Fifth Page
+    public static let fifthPageTitle  = "勉強開始！"
+    public static let fifthPageDesc1 = "タイマーで勉強時間を計測します"
+    public static let fifthPageDesc2 = "様々な景色を画面の背景に\n旅先で出会ったユーザーと共に勉強しよう！"
+    public static let fifthPageDesc3 = "好きな時にいつでも勉強を終了できます"
+    public static let fifthPageBluredDesc2 = "様々な景色を画面の背景に"
+    
+    // Sixth Page
+    public static let sixthPageTitle  = "勉強を終了すると..."
+    public static let sixthPageDesc1 = "その旅先で勉強した合計時間を表示します"
+    public static let sixthPageDesc2 = "報酬コイン獲得を目指して\nたくさん勉強しよう"
+    public static let sixthPageBluredDesc1 = "その旅先で勉強した合計時間"
+    public static let sixthPageBluredDesc2 = "報酬コイン獲得を目指して"
+}

@@ -38,12 +38,10 @@ struct MyAppSettings {
     /// このアプリで定める最低距離（km）
     public static let minDistance: Int = 1000
     /// 必要な最低勉強時間（時間単位）
-    public static let minRequiredStudyHours: Int = 24
+    public static let minRequiredStudyHours: Int = 2
     /// 必要な最大勉強時間（時間単位）
-    public static let maxRequiredStudyHours: Int = 100
+    public static let maxRequiredStudyHours: Int = 20
         
-    /// 報酬コイン計算用の固定値
-    public static let rewardCoinMultiplier: Double = 1.7
     /// ボーナスコイン計算用の固定値
     public static let bonusCoinMultiplier: Int = 100
     

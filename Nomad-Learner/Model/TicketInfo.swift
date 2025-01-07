@@ -30,7 +30,7 @@ struct TicketInfo {
         self.locationId = fixedLocation.locationId
         self.travelDistanceAndCost = TicketInfo.calculateTravelDistanceAndCost(from: currentLocationInfo.coordinate, to: fixedLocation.coordinate)
         self.requiredStudyHours = visitedLocation?.fixedRequiredStudyHours ?? TicketInfo.calculateRequiredStudyHours(for: travelDistanceAndCost)
-        self.rewardCoin = visitedLocation?.fixedRewardCoin ?? TicketInfo.calculateRewardCoin(for: travelDistanceAndCost)
+        self.rewardCoin = visitedLocation?.fixedRewardCoin ?? travelDistanceAndCost
         self.totalStudyHours = visitedLocation?.totalStudyHours ?? 0
         self.totalStudyMins = visitedLocation?.totalStudyMins ?? 0
         self.destination = fixedLocation.location
@@ -65,26 +65,19 @@ extension TicketInfo {
     
     // 必要な合計勉強時間を計算
     private static func calculateRequiredStudyHours(for distance: Int) -> Int {
-        // 10000km以上は必要な最大勉強時間（固定値）を返す
-        if distance >= 10000 {
+        // 10000km以上の場合は最高勉強時間を返す
+        if distance >= 10_000 {
             return MyAppSettings.maxRequiredStudyHours
         }
         
-        let requiredStudyHours: Int
-        
-        if distance < 1_000 {
-            // 1,000km未満の場合の計算
-            requiredStudyHours = (distance / 10) / 2
-            return max(requiredStudyHours, MyAppSettings.minRequiredStudyHours)
-        } else {
-            // 1,000km以上10,000km未満の場合の計算
-            requiredStudyHours = ((distance / 100) + 100) / 2
-            return requiredStudyHours
+        // 1〜999kmの場合は最低勉強時間を返す
+        if distance <= 999 {
+            return MyAppSettings.minRequiredStudyHours
         }
-    }
-    
-    // 報酬コインの計算
-    private static func calculateRewardCoin(for distance: Int) -> Int {
-        Int(Double(distance) * MyAppSettings.rewardCoinMultiplier)
+        
+        // 1000km以上の場合は500kmごとに勉強時間を+1させる
+        let baseHours = 2
+        let additionalHours = (distance - 1000) / 500 + 1
+        return baseHours + additionalHours
     }
 }

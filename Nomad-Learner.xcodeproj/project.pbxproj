@@ -80,7 +80,6 @@
 		83A6D7B72CB4D3CF00D18A30 /* LocationCategoryCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7B62CB4D3CF00D18A30 /* LocationCategoryCollectionView.swift */; };
 		83A6D7B92CB56C7400D18A30 /* KeyChainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7B82CB56C7400D18A30 /* KeyChainManager.swift */; };
 		83A6D7BB2CB6195E00D18A30 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7BA2CB6195E00D18A30 /* ProfileViewController.swift */; };
-		83A6D7BD2CB61A8000D18A30 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7BC2CB61A8000D18A30 /* ProfileViewModel.swift */; };
 		83A6D7C22CB61E6B00D18A30 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7C12CB61E6B00D18A30 /* ProfileView.swift */; };
 		83A6D7C42CB6630700D18A30 /* ProfileNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7C32CB6630700D18A30 /* ProfileNavigationBar.swift */; };
 		83A6D7C62CB682D600D18A30 /* ProfileTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6D7C52CB682D500D18A30 /* ProfileTopView.swift */; };
@@ -115,6 +114,15 @@
 		83AFB3AC2CB29AC500501FEE /* NavigationBoxBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AFB3AB2CB29AC500501FEE /* NavigationBoxBar.swift */; };
 		83AFB3AE2CB2ABD300501FEE /* LocationDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AFB3AD2CB2ABD300501FEE /* LocationDetailView.swift */; };
 		83AFB3B12CB2B75F00501FEE /* NavigationHeightProvidable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AFB3B02CB2B75F00501FEE /* NavigationHeightProvidable.swift */; };
+		83B09CAF2D2A9E5200ADFC87 /* AppOverviewPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B09CAE2D2A9E5200ADFC87 /* AppOverviewPageController.swift */; };
+		83B09CB12D2A9E6100ADFC87 /* SelectLocationPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B09CB02D2A9E6100ADFC87 /* SelectLocationPageViewController.swift */; };
+		83B09CB52D2A9E8600ADFC87 /* ConfirmLocationInfoPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B09CB42D2A9E8600ADFC87 /* ConfirmLocationInfoPageViewController.swift */; };
+		83B09CB72D2A9E9900ADFC87 /* DepartPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B09CB62D2A9E9900ADFC87 /* DepartPageViewController.swift */; };
+		83B09CB92D2A9EAC00ADFC87 /* StudyStartPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B09CB82D2A9EAC00ADFC87 /* StudyStartPageViewController.swift */; };
+		83B09CBB2D2E162300ADFC87 /* AppStartPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B09CBA2D2E162200ADFC87 /* AppStartPageController.swift */; };
+		83B09CBD2D2E16E700ADFC87 /* StudyFinishPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B09CBC2D2E16E700ADFC87 /* StudyFinishPageController.swift */; };
+		83B09CBF2D2E16FC00ADFC87 /* StudyMidwayFinishPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B09CBE2D2E16FC00ADFC87 /* StudyMidwayFinishPageController.swift */; };
+		83B09CC12D2E840900ADFC87 /* NavigationControllerForWalkThroughVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B09CC02D2E840900ADFC87 /* NavigationControllerForWalkThroughVC.swift */; };
 		83C5A1B72CFC757300ED500C /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C5A1B62CFC757300ED500C /* String.swift */; };
 		83C5A1B92CFD9CFC00ED500C /* UserProfileChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C5A1B82CFD9CFC00ED500C /* UserProfileChange.swift */; };
 		83C5E1312CBF7AFE001C27E1 /* NavigationControllerForMapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C5E1302CBF7AFE001C27E1 /* NavigationControllerForMapVC.swift */; };
@@ -210,7 +218,6 @@
 		83A6D7B62CB4D3CF00D18A30 /* LocationCategoryCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCategoryCollectionView.swift; sourceTree = "<group>"; };
 		83A6D7B82CB56C7400D18A30 /* KeyChainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainManager.swift; sourceTree = "<group>"; };
 		83A6D7BA2CB6195E00D18A30 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
-		83A6D7BC2CB61A8000D18A30 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		83A6D7C12CB61E6B00D18A30 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		83A6D7C32CB6630700D18A30 /* ProfileNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNavigationBar.swift; sourceTree = "<group>"; };
 		83A6D7C52CB682D500D18A30 /* ProfileTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTopView.swift; sourceTree = "<group>"; };
@@ -245,6 +252,15 @@
 		83AFB3AB2CB29AC500501FEE /* NavigationBoxBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBoxBar.swift; sourceTree = "<group>"; };
 		83AFB3AD2CB2ABD300501FEE /* LocationDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDetailView.swift; sourceTree = "<group>"; };
 		83AFB3B02CB2B75F00501FEE /* NavigationHeightProvidable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationHeightProvidable.swift; sourceTree = "<group>"; };
+		83B09CAE2D2A9E5200ADFC87 /* AppOverviewPageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppOverviewPageController.swift; sourceTree = "<group>"; };
+		83B09CB02D2A9E6100ADFC87 /* SelectLocationPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectLocationPageViewController.swift; sourceTree = "<group>"; };
+		83B09CB42D2A9E8600ADFC87 /* ConfirmLocationInfoPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmLocationInfoPageViewController.swift; sourceTree = "<group>"; };
+		83B09CB62D2A9E9900ADFC87 /* DepartPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartPageViewController.swift; sourceTree = "<group>"; };
+		83B09CB82D2A9EAC00ADFC87 /* StudyStartPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyStartPageViewController.swift; sourceTree = "<group>"; };
+		83B09CBA2D2E162200ADFC87 /* AppStartPageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStartPageController.swift; sourceTree = "<group>"; };
+		83B09CBC2D2E16E700ADFC87 /* StudyFinishPageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyFinishPageController.swift; sourceTree = "<group>"; };
+		83B09CBE2D2E16FC00ADFC87 /* StudyMidwayFinishPageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMidwayFinishPageController.swift; sourceTree = "<group>"; };
+		83B09CC02D2E840900ADFC87 /* NavigationControllerForWalkThroughVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationControllerForWalkThroughVC.swift; sourceTree = "<group>"; };
 		83C5A1B62CFC757300ED500C /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		83C5A1B82CFD9CFC00ED500C /* UserProfileChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileChange.swift; sourceTree = "<group>"; };
 		83C5E1302CBF7AFE001C27E1 /* NavigationControllerForMapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationControllerForMapVC.swift; sourceTree = "<group>"; };
@@ -288,7 +304,6 @@
 				838753D12CABE9A3001EE8F1 /* AuthViewModel.swift */,
 				83A6D7AE2CB3F0F800D18A30 /* MapViewModel.swift */,
 				8344786E2CD498700038C7B9 /* OnFlightViewModel.swift */,
-				83A6D7BC2CB61A8000D18A30 /* ProfileViewModel.swift */,
 				83A6D7D62CB80C5D00D18A30 /* EditProfileViewModel.swift */,
 				837DE5962CBAD12E00819964 /* StudyRoomViewModel.swift */,
 			);
@@ -335,6 +350,7 @@
 		8304A0E02CA5118700061B33 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				83B09CAB2D2A9E0700ADFC87 /* WalkThrough */,
 				83C5E1362CBFB021001C27E1 /* OnFlight */,
 				837DE5932CBAD0F400819964 /* StudyRoom */,
 				83A6D7DE2CB8DA2500D18A30 /* Depart */,
@@ -585,6 +601,22 @@
 			path = Map;
 			sourceTree = "<group>";
 		};
+		83B09CAB2D2A9E0700ADFC87 /* WalkThrough */ = {
+			isa = PBXGroup;
+			children = (
+				83B09CC02D2E840900ADFC87 /* NavigationControllerForWalkThroughVC.swift */,
+				83B09CAE2D2A9E5200ADFC87 /* AppOverviewPageController.swift */,
+				83B09CB02D2A9E6100ADFC87 /* SelectLocationPageViewController.swift */,
+				83B09CB42D2A9E8600ADFC87 /* ConfirmLocationInfoPageViewController.swift */,
+				83B09CB62D2A9E9900ADFC87 /* DepartPageViewController.swift */,
+				83B09CB82D2A9EAC00ADFC87 /* StudyStartPageViewController.swift */,
+				83B09CBE2D2E16FC00ADFC87 /* StudyMidwayFinishPageController.swift */,
+				83B09CBC2D2E16E700ADFC87 /* StudyFinishPageController.swift */,
+				83B09CBA2D2E162200ADFC87 /* AppStartPageController.swift */,
+			);
+			path = WalkThrough;
+			sourceTree = "<group>";
+		};
 		83C5E1362CBFB021001C27E1 /* OnFlight */ = {
 			isa = PBXGroup;
 			children = (
@@ -797,6 +829,7 @@
 				83C5A1B72CFC757300ED500C /* String.swift in Sources */,
 				83AC8F022CF6CD2F00FB57B3 /* AlertActionType.swift in Sources */,
 				83AFB3B12CB2B75F00501FEE /* NavigationHeightProvidable.swift in Sources */,
+				83B09CBF2D2E16FC00ADFC87 /* StudyMidwayFinishPageController.swift in Sources */,
 				831731CA2CE220560092AE89 /* RewardCoinProgressHUDInfo.swift in Sources */,
 				835BD2F12CA413560088CA02 /* AppDelegate.swift in Sources */,
 				831731C62CDE031D0092AE89 /* Int.swift in Sources */,
@@ -818,6 +851,7 @@
 				830498BF2CC5072C003973EC /* MyAppError.swift in Sources */,
 				837DE5902CBA564A00819964 /* TicketView.swift in Sources */,
 				83A73A102CFF382A00C87742 /* BackgroundImageSwitchIntervalSelecViewController.swift in Sources */,
+				83B09CAF2D2A9E5200ADFC87 /* AppOverviewPageController.swift in Sources */,
 				83A9C2C22CA7D08500898F0B /* AuthTextField.swift in Sources */,
 				83A6D7D22CB7D7DD00D18A30 /* ProfileTextView.swift in Sources */,
 				838753E82CB02B42001EE8F1 /* FBAuth.swift in Sources */,
@@ -826,15 +860,18 @@
 				83AC8F092CF6CEE600FB57B3 /* RoomLayout.swift in Sources */,
 				83C5A1B92CFD9CFC00ED500C /* UserProfileChange.swift in Sources */,
 				83A6D7B12CB3F39300D18A30 /* LocationCategory.swift in Sources */,
+				83B09CBD2D2E16E700ADFC87 /* StudyFinishPageController.swift in Sources */,
 				83C9F3BA2CA9161300CF0D73 /* UITextField.swift in Sources */,
 				83AFB3AA2CB2902C00501FEE /* UIView.swift in Sources */,
 				83C9F3B42CA85BC300CF0D73 /* SeparatorWithLabelView.swift in Sources */,
 				838753E42CB00A4B001EE8F1 /* MapViewController.swift in Sources */,
+				83B09CB52D2A9E8600ADFC87 /* ConfirmLocationInfoPageViewController.swift in Sources */,
 				83A6D7B92CB56C7400D18A30 /* KeyChainManager.swift in Sources */,
 				831E5C862CC4AAC3001A90C4 /* User.swift in Sources */,
 				831E5C752CC2740A001A90C4 /* MarkerInfoWindow.swift in Sources */,
 				83C5E13E2CC0BEFC001C27E1 /* MapView.swift in Sources */,
 				834478652CCD52680038C7B9 /* DynamicLocation.swift in Sources */,
+				83B09CC12D2E840900ADFC87 /* NavigationControllerForWalkThroughVC.swift in Sources */,
 				831731CC2CE228670092AE89 /* MyAppSettings.swift in Sources */,
 				83C5E1312CBF7AFE001C27E1 /* NavigationControllerForMapVC.swift in Sources */,
 				834478692CCF9CE60038C7B9 /* TicketInfo.swift in Sources */,
@@ -843,6 +880,7 @@
 				831731C42CDB0F910092AE89 /* StudyProgressSummary.swift in Sources */,
 				836180E62CBB81E80059937E /* ScreenSizeProvidable.swift in Sources */,
 				838753DE2CAED385001EE8F1 /* ValidationLabel.swift in Sources */,
+				83B09CB72D2A9E9900ADFC87 /* DepartPageViewController.swift in Sources */,
 				83A6D7B32CB3F3E200D18A30 /* LocationCategoryCollectionViewCell.swift in Sources */,
 				83C9F3B62CA907B900CF0D73 /* ColorCodes.swift in Sources */,
 				836180EC2CBBC20A0059937E /* ChatCollectionViewCell.swift in Sources */,
@@ -855,7 +893,9 @@
 				834478612CCA4A680038C7B9 /* ImageCacheManager.swift in Sources */,
 				834F4CF62D018C260072329D /* TermsAndConditionsView.swift in Sources */,
 				83AC8F0D2CF6CF8300FB57B3 /* Driver.swift in Sources */,
+				83B09CB92D2A9EAC00ADFC87 /* StudyStartPageViewController.swift in Sources */,
 				83A6D7A92CB3D7B000D18A30 /* UIScrollView.swift in Sources */,
+				83B09CBB2D2E162300ADFC87 /* AppStartPageController.swift in Sources */,
 				8344786B2CCFB61E0038C7B9 /* LocationInfo.swift in Sources */,
 				831E5C882CC4B493001A90C4 /* VisitedLocation.swift in Sources */,
 				83A6D7D72CB80C5D00D18A30 /* EditProfileViewModel.swift in Sources */,
@@ -898,6 +938,7 @@
 				836180EE2CBBE2820059937E /* PaddingLabel.swift in Sources */,
 				83A6D7C22CB61E6B00D18A30 /* ProfileView.swift in Sources */,
 				837423012D00335100C6DE41 /* APIKeys.swift in Sources */,
+				83B09CB12D2A9E6100ADFC87 /* SelectLocationPageViewController.swift in Sources */,
 				83AFB3AC2CB29AC500501FEE /* NavigationBoxBar.swift in Sources */,
 				83A6D7C82CB68A7700D18A30 /* StudyTimeLabel.swift in Sources */,
 				83A9C2C92CA8378C00898F0B /* UIConstants.swift in Sources */,
@@ -906,7 +947,6 @@
 				836180E12CBB68490059937E /* ProfileCollectionView.swift in Sources */,
 				83A9C2C02CA7C9B700898F0B /* BottomAuthStackView.swift in Sources */,
 				83AC8F002CF6CCCA00FB57B3 /* ProgressHUDMessage.swift in Sources */,
-				83A6D7BD2CB61A8000D18A30 /* ProfileViewModel.swift in Sources */,
 				83AC8F062CF6CE4400FB57B3 /* SignInWithAuthProviderResult.swift in Sources */,
 				83A9C2C52CA7DA5000898F0B /* UILabel.swift in Sources */,
 				836180E82CBBA1620059937E /* ChatCollectionView.swift in Sources */,

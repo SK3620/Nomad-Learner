@@ -106,9 +106,10 @@ extension Router: RouterProtocol {
     
     // MapVC（マップ画面）→ WalkThrough（ウォークスルー画面）
     static func showWalkThoughVC(vc: UIViewController) {
-        let walkThroughViewController = WalkThroughViewController()
-        walkThroughViewController.modalPresentationStyle = .fullScreen
-        modal(from: vc, to: walkThroughViewController)
+         let walkThroughViewController = WalkThroughViewController()
+         let navigationController = NavigationControllerForWalkThroughVC(rootViewController: walkThroughViewController)
+         navigationController.modalPresentationStyle = .fullScreen
+         modal(from: vc, to: navigationController)
     }
     
     // MapVC（マップ画面）/ StudyRoomVC（勉強部屋画面）→ ProfileVC（プロフィール画面）

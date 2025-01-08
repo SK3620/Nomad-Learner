@@ -22,8 +22,6 @@ enum AlertActionType {
         
     // 更新保留中の勉強記録データ
     case savePendingUpdateData(dataSaveError: MyAppError? = nil, onConfirm: () -> Void, onCancel: () -> Void)
-    // 出発画面表示
-    case willShowDepartVC(onConfirm: () -> Void, ticketInfo: TicketInfo)
     
     // お試し利用中の退出
     case exitRoomInTrial(onConfirm: () -> Void)
@@ -70,8 +68,6 @@ enum AlertActionType {
             return "この機能は制限されています"
         case .savePendingUpdateData(let saveRetryError, _, _):
             return saveRetryError != nil ? "エラー" : ""
-        case .willShowDepartVC:
-            return "確認"
         case .exitRoom,
                 .exitRoomInTrial:
             return "終了する"
@@ -100,8 +96,6 @@ enum AlertActionType {
             return "\nこの機能はお試し利用中はご利用できません。\n全ての機能を利用するためには、アカウントを作成する必要があります。"
         case .savePendingUpdateData(let dataSaveError, _, _):
             return "\(dataSaveError?.errorDescription ?? "前回の勉強記録が保存されていません。")\n保存しますか？"
-        case .willShowDepartVC(_, let ticketInfo):
-            return "\n一度訪問すると、次回の「\(ticketInfo.destination)」への訪問時以降、以下の項目は変更されません。\n\n必要な勉強時間：\(ticketInfo.requiredStudyHours)時間\n報酬コイン：\(ticketInfo.rewardCoin)コイン"
         case .exitRoomInTrial:
             return "\n本当に終了してもよろしいですか？\n\nお試し利用中のため、勉強記録や旅先への訪問実績などのデータは保存/反映されません。全ての機能を利用するためには、アカウントを作成する必要があります。"
         case .exitRoom:
@@ -194,8 +188,7 @@ enum AlertActionType {
         case .savePendingUpdateData(_, let onConfirm, let onCancel):
             return (onConfirm: { _, _ in onConfirm() }, onCancel: { onCancel() })
             
-        case .willShowDepartVC(let onConfirm, _),
-                .willFreeTrialUse(let onConfirm),
+        case .willFreeTrialUse(let onConfirm),
                 .featureAccessDeniedInTrial(let onConfirm),
                 .exitRoomInTrial(let onConfirm),
                 .exitRoom(let onConfirm),

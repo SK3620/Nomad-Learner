@@ -336,26 +336,12 @@ extension MapViewController {
             guard let locationInfo = base.tappedLocationInfo else { return }
             
             let isSufficientCoin = locationInfo.locationStatus.isSufficientCoin
-            let hasntVisited = locationInfo.visitedLocation == nil
-            
             if !isSufficientCoin {
                 // 所持金が足りない場合、警告を表示
                 base.rx.showMessage.onNext(.insufficientCoin)
-                return
-            }
-            
-            if hasntVisited {
-                // 初回訪問の場合、アラートを表示して遷移
-                let alertActionType = AlertActionType.willShowDepartVC(
-                    onConfirm: {
-                        base.mapView.clearPolyline() // ポリラインを削除
-                        Router.showDepartVC(vc: base, locationInfo: locationInfo) // DepartVC（出発準備画面）へ遷移
-                    },
-                    ticketInfo: locationInfo.ticketInfo
-                )
-                base.rx.showAlert.onNext(alertActionType)
             } else {
-                base.mapView.clearPolyline() // ポリラインを削除
+                // ポリラインを削除
+                base.mapView.clearPolyline()
                 // 既に訪問済みの場合、直接DepartVCへ遷移
                 Router.showDepartVC(vc: base, locationInfo: locationInfo)
             }
@@ -384,9 +370,9 @@ extension MapViewController {
             MyAppSettings.trialUserProfile = isTrialUser
             ? userProfile
             : nil
-            
-            // 初期位置であれば初回ログインとみなし、ウォークスルー画面を表示
-            if userProfile.currentLocationId == MyAppSettings.userInitialLocationId {
+
+            // ウォークスルー画面を表示
+            if (userProfile.currentLocationId == MyAppSettings.userInitialLocationId) && (dataHandlingType == .initialFetch) {
                 base.toWalkThroughVC.onNext(())
             }
           

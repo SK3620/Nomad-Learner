@@ -13,9 +13,7 @@ import SnapKit
 class ProfileBottomView: UIView {
     
     var userProfile: User
-    
-    var orientation: ScreenOrientation
-    
+        
     // profileTableViewのアニメーション時のデフォルト位置
     private var defaultPositionY = CGFloat()
     
@@ -48,9 +46,8 @@ class ProfileBottomView: UIView {
         $0.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
     }
     
-    init(orientation: ScreenOrientation, with userProfile: User) {
+    init(with userProfile: User) {
         self.userProfile = userProfile
-        self.orientation = orientation
         
         super.init(frame: .zero)
         backgroundColor = .white
@@ -101,12 +98,7 @@ class ProfileBottomView: UIView {
     
     override func draw(_ rect: CGRect) {
         super.draw(rect)
-        
         self.defaultPositionY = self.frame.origin.y
-        // 画面横向き時のUIの調整
-        if self.orientation == .landscape {
-            self.adjustConstraintsForPositiveOffset()
-        }
     }
     
     required init?(coder: NSCoder) {

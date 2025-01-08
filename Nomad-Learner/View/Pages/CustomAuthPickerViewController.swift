@@ -23,7 +23,7 @@ class CustomAuthPickerViewController: FUIAuthPickerViewController {
     
     // iPadの場合キーボードと被らないようAuthStackViewを上げる
     private let bottomEdgeInset: CGFloat = UIDevice.current.userInterfaceIdiom != .pad ? 20 : 150
-            
+    
     private lazy var scrollView = view.subviews[0].then {
         ($0 as! UIScrollView).isScrollEnabled = false
         $0.backgroundColor = .white
@@ -51,7 +51,7 @@ class CustomAuthPickerViewController: FUIAuthPickerViewController {
     private let appSupportView: AppSupportView = AppSupportView()
     
     private let appIconImageView = UIImageView(image: UIImage(named: "Logo"))
-        
+    
     private let authTextFieldStackView: AuthInfoInputStackView = AuthInfoInputStackView()
     
     private let bottomAuthStackView: BottomAuthStackView = BottomAuthStackView()
@@ -73,20 +73,35 @@ class CustomAuthPickerViewController: FUIAuthPickerViewController {
     override func viewDidLoad(){
         super.viewDidLoad()
         
-        if FBAuth.currentUser != nil {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                // 自動ログイン（UIの更新を待つ？）
-                Router.showMap(vc: self)
-            }
-        } else  {
-            // 初回ログイン時は利用規約画面を表示
-            self.showTermsAndConditionsView.onNext(true)
-        }
-
+        // 自動ログインの制御
+        handleAutoLogin()
+        
         setupUI()
         bindWebView()
         bindAppSupport()
         bindAuth()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // タイトルなし
+        self.title = ""
+        MyAppSettings.trialUserProfile = nil
+    }
+}
+ 
+extension CustomAuthPickerViewController {
+    
+    private func handleAutoLogin() {
+        if FBAuth.currentUser != nil {
+            // 自動ログイン
+            DispatchQueue.main.async {
+                Router.showMap(vc: self)
+            }
+        } else {
+            // 初回ログイン時は利用規約画面を表示
+            self.showTermsAndConditionsView.onNext(true)
+        }
     }
     
     private func setupUI() {
@@ -125,13 +140,6 @@ class CustomAuthPickerViewController: FUIAuthPickerViewController {
                 bottomAuthStackView.addProviderButton(button)
             }
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        // タイトルなし
-        self.title = ""
-        MyAppSettings.trialUserProfile = nil
     }
 }
 

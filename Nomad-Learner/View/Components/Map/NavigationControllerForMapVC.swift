@@ -7,7 +7,7 @@
 
 import UIKit
 
-// StudyRoomVC用のナビゲーションコントローラー
+// MapVC用のナビゲーションコントローラー
 class NavigationControllerForMapVC: UINavigationController {
     
     // 自動回転の許可を制御

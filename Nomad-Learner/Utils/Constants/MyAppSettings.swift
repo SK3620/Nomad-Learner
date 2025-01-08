@@ -38,14 +38,12 @@ struct MyAppSettings {
     /// このアプリで定める最低距離（km）
     public static let minDistance: Int = 1000
     /// 必要な最低勉強時間（時間単位）
-    public static let minRequiredStudyHours: Int = 24
+    public static let minRequiredStudyHours: Int = 2
     /// 必要な最大勉強時間（時間単位）
-    public static let maxRequiredStudyHours: Int = 100
+    public static let maxRequiredStudyHours: Int = 8
         
-    /// 報酬コイン計算用の固定値
-    public static let rewardCoinMultiplier: Double = 1.7
     /// ボーナスコイン計算用の固定値
-    public static let bonusCoinMultiplier: Int = 100
+    public static let bonusCoinMultiplier: Int = 1000
     
     /// 背景画像切り替えインターバル時間
     public static let backgroundImageSwitchInterval = MyAppSettings.dynamicBackgroundImageSwitchInterval
@@ -78,4 +76,83 @@ extension MyAppSettings {
         return 5 // 5分
         #endif
     }
+}
+
+extension MyAppSettings {
+    // ウォークスルー画面
+    // アプリ概要
+    public static let appOverviewPageTitle  = "Nomad-Learner"
+    public static let appOverviewPageSubtitle = "「旅✖️自習」で自習をもっとワクワクに！"
+    public static let appOverviewPageDesc1 = "世界中を旅するような感覚で\n他のユーザーと共に自習しよう"
+    public static let appOverviewPageDesc2 = "旅先を選んで、その場所で自習を開始\n目標の自習時間を達成すると\n報酬コインがもらえます"
+    public static let appOverviewPageDesc3 = "貯めたコインで次の旅先へ進もう！"
+    public static let appOverviewPageBluredDesc1 = "世界中を旅するような感覚"
+    public static let appOverviewPageBluredDesc2 = "旅先を選んで、その場所で自習を開始\n目標の自習時間を達成すると\n報酬コインがもらえます"
+        
+    // 旅先選択
+    public static let selectLocationPageTitle  = "旅先を選ぼう"
+    public static let selectLocationPageDesc1 = "マップ上の約70箇所から旅先を選ぼう"
+    public static let selectLocationPageDesc2 = "マーカー上の数字は、現在その旅先で\n自習中のユーザー数を表します"
+    public static let selectLocationPageBluredDesc1 = "約70箇所"
+    public static let selectLocationPageBluredDesc2 = "現在その旅先で\n自習中のユーザー数"
+    
+    // ロケーション情報確認
+    public static let confirmLocationInfoPageTitle  = "表示内容を確認"
+    public static let confirmLocationInfoPageDesc1 = "① 旅費を支払うための「保有コイン」"
+    public static let confirmLocationInfoPageDesc2 = "② 現在地から旅先までの\n「距離」と「旅費」"
+    public static let confirmLocationInfoPageDesc3 = "③ 報酬コインを獲得するために\n「必要な自習時間」"
+    public static let confirmLocationInfoPageDesc4 = "④ 獲得できる「報酬コイン」"
+    public static let confirmLocationInfoPageBluredDesc1 = "「保有コイン」"
+    public static let confirmLocationInfoPageBluredDesc2 = ["「距離」", "「旅費」"]
+    public static let confirmLocationInfoPageBluredDesc3 = "「必要な自習時間」"
+    public static let confirmLocationInfoPageBluredDesc4 = "「報酬コイン」"
+
+    // 出発
+    public static let departPageTitle  = "いざ出発！"
+    public static let departPageDesc1 = "チケット内容を確認"
+    public static let departPageDesc2 = "保有コインで旅費を支払って出発！"
+    public static let departPageBluredDesc = "チケット内容"
+    
+    // 自習開始
+    public static let studyStartPageTitle  = "旅先で自習開始！"
+    public static let studyStartPageDesc1 = "タイマーで自習時間を計測"
+    public static let studyStartPageDesc2 = "目標である「必要な自習時間」を目指そう！"
+    public static let studyStartPageDesc3 = "旅先の様々な景色を背景に\n旅先で出会ったユーザーと共に自習しよう！"
+    public static let studyStartPageBluredDesc2 = "目標である「必要な自習時間」を目指そう！"
+    public static let studyStartPageBluredDesc3 = "旅先の様々な景色を背景に"
+
+    // 自習終了（中断）
+    public static let studyMidwayFinishPageTitle  = "途中で自習を\n終了してもOK"
+    public static let studyMidwayFinishPageDesc = "好きなときにいつでも自習を終了して\n他の旅先で自習を始めることも可能"
+    public static let studyMidwayFinishPageBluredDesc = "他の旅先で自習を始めることも可能"
+    
+    // 自習終了（目標の自習時間クリア）
+    public static let studyFinishPageTitle  = "自習を終了すると…"
+    public static let studyFinishPageDesc1 = "その旅先で自習した合計時間を表示"
+    public static let studyFinishPageDesc2 = "その旅先での目標の自習時間を達成すると\n報酬コインがもらえます"
+    public static let studyFinishPageDesc3 = "貯めたコインで次の旅先へ進もう！"
+    public static let studyFinishPageBluredDesc2 = "目標の自習時間を達成すると"
+    
+    // アプリを使い始める
+    public static let appStartPageTitle  = "始めよう！"
+    public static let appStartPageDesc1 = "スタート地点は日本！"
+    public static let appStartPageDesc2 = "旅先を選んでいざ出発＆自習を始めよう！"
+    public static let appStartPageBluredDesc1 = "スタート地点は日本！"
+}
+
+extension MyAppSettings {
+    // WalkThroughVC（ウォークスルー画面）
+    // 画像名
+    public static let appOverviewPageImage1 = "AppOverview1"
+    public static let appOverviewPageImage2 = "AppOverview2"
+    public static let appOverviewPageImage3 = "AppOverview3"
+    public static let selectLocationPageImage = "SelectLocation"
+    public static let confirmLocationInfoPageImage = "ConfirmLocationInfo"
+    public static let departPageImage = "Depart"
+    public static let studyStartPageImage1 = "StudyStart1"
+    public static let studyStartPageImage2 = "StudyStart2"
+    public static let studyStartPageImage3 = "StudyStart3"
+    public static let studyMidwayFinishPageImage = "StudyMidwayFinish"
+    public static let studyFinishPageImage = "StudyFinish"
+    public static let appStartPageImage = "AppStart"
 }

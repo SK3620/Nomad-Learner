@@ -30,7 +30,7 @@ struct TicketInfo {
         self.locationId = fixedLocation.locationId
         self.travelDistanceAndCost = TicketInfo.calculateTravelDistanceAndCost(from: currentLocationInfo.coordinate, to: fixedLocation.coordinate)
         self.requiredStudyHours = visitedLocation?.fixedRequiredStudyHours ?? TicketInfo.calculateRequiredStudyHours(for: travelDistanceAndCost)
-        self.rewardCoin = visitedLocation?.fixedRewardCoin ?? TicketInfo.calculateRewardCoin(for: travelDistanceAndCost)
+        self.rewardCoin = visitedLocation?.fixedRewardCoin ?? travelDistanceAndCost
         self.totalStudyHours = visitedLocation?.totalStudyHours ?? 0
         self.totalStudyMins = visitedLocation?.totalStudyMins ?? 0
         self.destination = fixedLocation.location
@@ -65,26 +65,24 @@ extension TicketInfo {
     
     // 必要な合計勉強時間を計算
     private static func calculateRequiredStudyHours(for distance: Int) -> Int {
-        // 10000km以上は必要な最大勉強時間（固定値）を返す
-        if distance >= 10000 {
-            return MyAppSettings.maxRequiredStudyHours
-        }
+        let maxRequiredStudyHours = MyAppSettings.maxRequiredStudyHours
+        let minRequiredStudyHours = MyAppSettings.minRequiredStudyHours
         
-        let requiredStudyHours: Int
-        
-        if distance < 1_000 {
-            // 1,000km未満の場合の計算
-            requiredStudyHours = (distance / 10) / 2
-            return max(requiredStudyHours, MyAppSettings.minRequiredStudyHours)
-        } else {
-            // 1,000km以上10,000km未満の場合の計算
-            requiredStudyHours = ((distance / 100) + 100) / 2
-            return requiredStudyHours
+        switch distance {
+        case 0...1999:
+            return minRequiredStudyHours
+        case 2000...2999:
+            return minRequiredStudyHours + 1
+        case 3000...3999:
+            return minRequiredStudyHours + 2
+        case 4000...4999:
+            return minRequiredStudyHours + 3
+        case 5000...5999:
+            return minRequiredStudyHours + 4
+        case 6000...6999:
+            return minRequiredStudyHours + 5
+        default:
+            return maxRequiredStudyHours
         }
-    }
-    
-    // 報酬コインの計算
-    private static func calculateRewardCoin(for distance: Int) -> Int {
-        Int(Double(distance) * MyAppSettings.rewardCoinMultiplier)
     }
 }

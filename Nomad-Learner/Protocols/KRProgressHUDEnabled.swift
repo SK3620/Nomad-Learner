@@ -17,7 +17,7 @@ extension Reactive where Base: KRProgressHUDEnabled {
     // ローディング表示制御
     var showProgress: Binder<Bool> {
         return Binder(self.base) { _, isShow in
-            KRProgressHUD.setDefaultStyle()
+            ProgressHUDMessage.applyStyle()
             isShow ? KRProgressHUD.show(withMessage: "ローディング...") : KRProgressHUD.dismiss()
         }
     }

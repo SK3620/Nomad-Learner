@@ -26,9 +26,8 @@ class ProfileViewController: UIViewController {
     private let disposeBag = DisposeBag()
     
     // ユーザープロフィール情報を渡す
-    private lazy var profileView: ProfileView = ProfileView(orientation: self.orientation, with: self.userProfile)
+    private lazy var profileView: ProfileView = ProfileView(with: self.userProfile)
     
-    // カスタムイニシャライザ
     init(orientation: ScreenOrientation, with userProfile: User) {
         self.orientation = orientation
         self.userProfile = userProfile

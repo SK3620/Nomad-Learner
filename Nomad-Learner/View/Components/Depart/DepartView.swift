@@ -82,6 +82,21 @@ class DepartView: UIView {
     // チケット
     private let ticketFrame: TicketView = TicketView()
     
+    // 所持金や旅費支払い後の残高情報等を表示
+    private lazy var walletInfoStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [
+            backgroundViewForWallet,
+            currentCoinLabel,
+            arrowRightImageView,
+            remainingCoinLabel
+        ])
+        stackView.axis = .horizontal
+        stackView.spacing = 16
+        stackView.alignment = .center
+        stackView.distribution = .fill
+        return stackView
+    }()
+    
     // お財布アイコンの背景View
     private let backgroundViewForWallet = UIView().then {
         $0.backgroundColor = UIColor(red: 240/255, green: 224/255, blue: 207/255, alpha: 1)
@@ -89,9 +104,7 @@ class DepartView: UIView {
     }
     
     // お財布のアイコン
-    private let walletImageView = UIImageView().then {
-        $0.image = UIImage(named: "Wallet")
-    }
+    private let walletImageView = UIImageView(image: UIImage(named: "Wallet"))
     
     // ユーザーが持つ現在の所持金
     private let currentCoinLabel = UILabel().then {
@@ -137,10 +150,7 @@ class DepartView: UIView {
         knobBackgroundView.addSubview(knobImageButton)
         addSubview(ticketFrame)
         backgroundViewForWallet.addSubview(walletImageView)
-        addSubview(backgroundViewForWallet)
-        addSubview(currentCoinLabel)
-        addSubview(arrowRightImageView)
-        addSubview(remainingCoinLabel)
+        addSubview(walletInfoStackView)
         
         ticketView.snp.makeConstraints {
             $0.height.equalToSuperview().multipliedBy(0.75)
@@ -183,8 +193,6 @@ class DepartView: UIView {
         
         backgroundViewForWallet.snp.makeConstraints {
             $0.size.equalTo(35)
-            $0.top.equalTo(ticketFrame.snp.bottom).offset(16)
-            $0.left.equalTo(ticketFrame).inset(16)
         }
         
         walletImageView.snp.makeConstraints {
@@ -192,26 +200,16 @@ class DepartView: UIView {
             $0.size.equalTo(20)
         }
         
-        currentCoinLabel.snp.makeConstraints {
-            $0.centerY.equalTo(backgroundViewForWallet)
-            $0.left.equalTo(backgroundViewForWallet.snp.right).offset(16)
-        }
-        
-        arrowRightImageView.snp.makeConstraints {
-            $0.top.equalTo(currentCoinLabel)
-            $0.left.equalTo(currentCoinLabel.snp.right).offset(16)
-        }
-        
-        remainingCoinLabel.snp.makeConstraints {
-            $0.centerY.equalTo(backgroundViewForWallet)
-            $0.left.equalTo(arrowRightImageView.snp.right).offset(16)
+        walletInfoStackView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(ticketFrame.snp.bottom).offset(16)
         }
         
         if MyAppSettings.isTrialUser {
             addSubview(trialUseMessage1)
             trialUseMessage1.snp.makeConstraints {
                 $0.centerX.equalToSuperview()
-                $0.top.equalTo(backgroundViewForWallet.snp.bottom).offset(6)
+                $0.top.equalTo(walletInfoStackView.snp.bottom).offset(6)
             }
         }
     }

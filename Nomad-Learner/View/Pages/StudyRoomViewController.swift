@@ -351,7 +351,7 @@ extension StudyRoomViewController: AlertEnabled {
     }
 }
 
-extension StudyRoomViewController: /*UICollectionViewDataSource,*/ UICollectionViewDelegateFlowLayout {
+extension StudyRoomViewController: UICollectionViewDelegateFlowLayout {
     
     // 固定な横幅と動的な高さのセルサイズを返す
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

@@ -65,19 +65,24 @@ extension TicketInfo {
     
     // 必要な合計勉強時間を計算
     private static func calculateRequiredStudyHours(for distance: Int) -> Int {
-        // 10000km以上の場合は最高勉強時間を返す
-        if distance >= 10_000 {
-            return MyAppSettings.maxRequiredStudyHours
-        }
+        let maxRequiredStudyHours = MyAppSettings.maxRequiredStudyHours
+        let minRequiredStudyHours = MyAppSettings.minRequiredStudyHours
         
-        // 1〜999kmの場合は最低勉強時間を返す
-        if distance <= 999 {
-            return MyAppSettings.minRequiredStudyHours
+        switch distance {
+        case 0...1999:
+            return minRequiredStudyHours
+        case 2000...2999:
+            return minRequiredStudyHours + 1
+        case 3000...3999:
+            return minRequiredStudyHours + 2
+        case 4000...4999:
+            return minRequiredStudyHours + 3
+        case 5000...5999:
+            return minRequiredStudyHours + 4
+        case 6000...6999:
+            return minRequiredStudyHours + 5
+        default:
+            return maxRequiredStudyHours
         }
-        
-        // 1000km以上の場合は500kmごとに勉強時間を+1させる
-        let baseHours = 2
-        let additionalHours = (distance - 1000) / 500 + 1
-        return baseHours + additionalHours
     }
 }

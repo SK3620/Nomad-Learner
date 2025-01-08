@@ -40,7 +40,7 @@ struct MyAppSettings {
     /// 必要な最低勉強時間（時間単位）
     public static let minRequiredStudyHours: Int = 2
     /// 必要な最大勉強時間（時間単位）
-    public static let maxRequiredStudyHours: Int = 20
+    public static let maxRequiredStudyHours: Int = 8
         
     /// ボーナスコイン計算用の固定値
     public static let bonusCoinMultiplier: Int = 100

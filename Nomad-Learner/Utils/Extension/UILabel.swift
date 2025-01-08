@@ -49,7 +49,7 @@ extension UILabel {
         text: String,
         highlightedWords: [String] = [],
         highlightColor: UIColor = ColorCodes.primaryPurple.color(),
-        font: UIFont,
+        font: UIFont = .systemFont(ofSize: 16),
         lineSpacing: CGFloat = 6,
         kern: CGFloat = 0.8
     ) -> NSAttributedString {
@@ -57,8 +57,10 @@ extension UILabel {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = lineSpacing
         paragraphStyle.alignment = .center
+        
         textAlignment = .center
         numberOfLines = 0
+        self.font = font
         
         // 全体のフォントや間隔を設定
         attributedString.addAttributes([

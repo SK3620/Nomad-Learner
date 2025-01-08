@@ -75,7 +75,7 @@ class CustomAuthPickerViewController: FUIAuthPickerViewController {
         
         if FBAuth.currentUser != nil {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                // 自動ログイン（UIの更新を待つ？）
+                // 自動ログイン（UIの更新を待つ）
                 Router.showMap(vc: self)
             }
         } else  {

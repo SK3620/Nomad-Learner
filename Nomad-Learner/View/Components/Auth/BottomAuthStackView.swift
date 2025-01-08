@@ -14,7 +14,7 @@ class BottomAuthStackView: UIStackView {
     // SignUp/SignInボタン
     let authButton = UIButton(type: .system).then {
         $0.layer.cornerRadius = 44 / 2
-        $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        $0.titleLabel?.font = .boldSystemFont(ofSize: 16)
         $0.tintColor = .white
         $0.backgroundColor = ColorCodes.primaryPurple.color()
     }

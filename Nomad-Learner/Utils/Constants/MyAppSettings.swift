@@ -43,7 +43,7 @@ struct MyAppSettings {
     public static let maxRequiredStudyHours: Int = 8
         
     /// ボーナスコイン計算用の固定値
-    public static let bonusCoinMultiplier: Int = 100
+    public static let bonusCoinMultiplier: Int = 1000
     
     /// 背景画像切り替えインターバル時間
     public static let backgroundImageSwitchInterval = MyAppSettings.dynamicBackgroundImageSwitchInterval

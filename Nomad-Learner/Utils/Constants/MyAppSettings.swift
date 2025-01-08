@@ -122,4 +122,19 @@ extension MyAppSettings {
     public static let sixthPageDesc2 = "報酬コイン獲得を目指して\nたくさん勉強しよう"
     public static let sixthPageBluredDesc1 = "その旅先で勉強した合計時間"
     public static let sixthPageBluredDesc2 = "報酬コイン獲得を目指して"
+extension MyAppSettings {
+    // WalkThroughVC（ウォークスルー画面）
+    // 画像名
+    public static let appOverviewPageImage1 = "AppOverview1"
+    public static let appOverviewPageImage2 = "AppOverview2"
+    public static let appOverviewPageImage3 = "AppOverview3"
+    public static let selectLocationPageImage = "SelectLocation"
+    public static let confirmLocationInfoPageImage = "ConfirmLocationInfo"
+    public static let departPageImage = "Depart"
+    public static let studyStartPageImage1 = "StudyStart1"
+    public static let studyStartPageImage2 = "StudyStart2"
+    public static let studyStartPageImage3 = "StudyStart3"
+    public static let studyMidwayFinishPageImage = "StudyMidwayFinish"
+    public static let studyFinishPageImage = "StudyFinish"
+    public static let appStartPageImage = "AppStart"
 }

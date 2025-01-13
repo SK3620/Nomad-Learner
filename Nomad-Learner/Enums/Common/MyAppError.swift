@@ -52,7 +52,6 @@ enum MyAppError: Error {
     // テスト用
     case testError(String)
     
-    // MARK: - LocalizedError Implementation
     public var errorDescription: String? {
 #if DEVELOP // 開発
         return debugDescription
@@ -61,50 +60,49 @@ enum MyAppError: Error {
 #endif
     }
     
-    // MARK: - UIAlert Title
     var alertTitle: String {
         return "エラー"
     }
     
-    // MARK: - Localized Descriptions (日本語版)
-       var description: String {
-           switch self {
-           case .loadTermsAndConditionsFailed:
-               return NSLocalizedString("ページの読み込みに失敗しました。インターネット接続を確認してください。", comment: "利用規約読み込み失敗メッセージ")
-               
-           case .signInFailed:
-               return NSLocalizedString("サインインに失敗しました。もう一度お試しください。", comment: "サインイン失敗メッセージ")
-               
-           case .signUpFailed:
-               return NSLocalizedString("サインアップに失敗しました。もう一度お試しください。", comment: "サインアップ失敗メッセージ")
-               
-           case .reauthenticateFailed:
-               return NSLocalizedString("アカウントの再認証に失敗しました。もう一度お試しください。", comment: "再認証失敗メッセージ")
-               
-           case .deleteAccountFailed:
-               return NSLocalizedString("アカウントの削除に失敗しました。もう一度お試しください。", comment: "アカウント削除失敗メッセージ")
-               
-           case .fetchMoreUserProfilesFailed:
-               return NSLocalizedString("追加データの取得に失敗しました。もう一度お試しください。", comment: "アカウント削除失敗メッセージ")
-               
-           case .savePendingUpdateDataFailed:
-               return NSLocalizedString("前回の勉強記録の保存に失敗しました。", comment: "勉強記録保存失敗のメッセージ")
-               
-           case .mailSendFailed:
-               return NSLocalizedString("メールを送信できませんでした。もう一度お試しください。", comment: "メール送信失敗メッセージ")
-               
-           case .testError(let text):
-               return NSLocalizedString("テストエラー: \(text)", comment: "テストエラーメッセージ")
-               
-           case .unknown:
-               return NSLocalizedString("不明なエラーが発生しました。もう一度お試しください。", comment: "不明なエラーメッセージ")
-               
-           default:
-               return NSLocalizedString("データの保存/取得に失敗しました。もう一度お試しください。", comment: "不明なエラーメッセージ")
-           }
-       }
+    // 本番用
+    var description: String {
+        switch self {
+        case .loadTermsAndConditionsFailed:
+            return NSLocalizedString("ページの読み込みに失敗しました。インターネット接続を確認してください。", comment: "利用規約読み込み失敗メッセージ")
+            
+        case .signInFailed:
+            return NSLocalizedString("サインインに失敗しました。もう一度お試しください。", comment: "サインイン失敗メッセージ")
+            
+        case .signUpFailed:
+            return NSLocalizedString("サインアップに失敗しました。もう一度お試しください。", comment: "サインアップ失敗メッセージ")
+            
+        case .reauthenticateFailed:
+            return NSLocalizedString("アカウントの再認証に失敗しました。もう一度お試しください。", comment: "再認証失敗メッセージ")
+            
+        case .deleteAccountFailed:
+            return NSLocalizedString("アカウントの削除に失敗しました。もう一度お試しください。", comment: "アカウント削除失敗メッセージ")
+            
+        case .fetchMoreUserProfilesFailed:
+            return NSLocalizedString("追加データの取得に失敗しました。もう一度お試しください。", comment: "アカウント削除失敗メッセージ")
+            
+        case .savePendingUpdateDataFailed:
+            return NSLocalizedString("前回の勉強記録の保存に失敗しました。", comment: "勉強記録保存失敗のメッセージ")
+            
+        case .mailSendFailed:
+            return NSLocalizedString("メールを送信できませんでした。もう一度お試しください。", comment: "メール送信失敗メッセージ")
+            
+        case .testError(let text):
+            return NSLocalizedString("テストエラー: \(text)", comment: "テストエラーメッセージ")
+            
+        case .unknown:
+            return NSLocalizedString("不明なエラーが発生しました。もう一度お試しください。", comment: "不明なエラーメッセージ")
+            
+        default:
+            return NSLocalizedString("データの保存/取得に失敗しました。もう一度お試しください。", comment: "不明なエラーメッセージ")
+        }
+    }
        
-    // MARK: - Debug Descriptions (デバッグ用)
+    // デバッグ用
     var debugDescription: String {
         switch self {
         case .loadTermsAndConditionsFailed(let error):

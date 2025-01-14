@@ -24,7 +24,6 @@ class OnFlightViewModel {
         mainService: MainServiceProtocol,
         locationInfo: LocationInfo
     ) {
-        
         // 一度全キャッシュクリア
         ImageCacheManager.clearCache()
         // 必要な画像のみプリフェッチ

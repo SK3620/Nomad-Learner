@@ -24,7 +24,7 @@ enum ProgressHUDMessage {
         case .didDeleteAccount:
             return "アカウントを正常に削除しました。"
         case .insufficientCoin:
-            return "所持金が足りません。"
+            return "保有コインが足りません。"
         case .getRewardCoin(let info):
             return configureMessage(info: info)
         case .didIntervalSelect(let interval):
@@ -83,7 +83,7 @@ extension ProgressHUDMessage {
         ? "報酬\n＋\(info.rewardCoin)"
         : "報酬\n＋\(info.rewardCoin)（獲得済み）"
         
-        let balanceChangeMessage = "所持金: \(info.originalCoin) ▶︎ \(info.currentCoin)"
+        let balanceChangeMessage = "保有コイン: \(info.originalCoin) ▶︎ \(info.currentCoin)"
         
         return info.completionFlag == 1
         ? "\(rewardCoinMessage)\n\n\(bonusCoinMessage)\n\n\(balanceChangeMessage)"

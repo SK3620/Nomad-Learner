@@ -24,7 +24,7 @@ struct MyAppSettings {
     /// お試し利用中か否か
     public static var isTrialUser: Bool { trialUserProfile != nil }
     /// お試し利用中のメッセージ１
-    public static let trialUseMessage1 = "（※お試し利用中は所持金は減りません）"
+    public static let trialUseMessage1 = "（※お試し利用中は保有コインは減りません）"
     /// お試し利用中のメッセージ２
     public static let trialUseMessage2 = "　※お試し利用中は他のユーザーは表示されません。 "
     
@@ -48,7 +48,7 @@ struct MyAppSettings {
     /// 背景画像切り替えインターバル時間
     public static let backgroundImageSwitchInterval = MyAppSettings.dynamicBackgroundImageSwitchInterval
     
-    /// ユーザー初期所持金
+    /// ユーザー初期保有コイン
     public static let userInitialCurrentCoin: Int = 10000
     /// ユーザー初期位置
     public static let userInitialLocationId: String = "mount_fuji"

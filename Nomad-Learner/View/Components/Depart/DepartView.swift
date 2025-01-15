@@ -82,7 +82,7 @@ class DepartView: UIView {
     // チケット
     private let ticketFrame: TicketView = TicketView()
     
-    // 所持金や旅費支払い後の残高情報等を表示
+    // 保有コインや旅費支払い後の残高情報等を表示
     private lazy var walletInfoStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [
             backgroundViewForWallet,
@@ -106,7 +106,7 @@ class DepartView: UIView {
     // お財布のアイコン
     private let walletImageView = UIImageView(image: UIImage(named: "Wallet"))
     
-    // ユーザーが持つ現在の所持金
+    // ユーザーが持つ現在の保有コイン
     private let currentCoinLabel = UILabel().then {
         $0.textColor = .darkGray
         $0.font = UIFont.boldSystemFont(ofSize: 20)
@@ -219,7 +219,7 @@ class DepartView: UIView {
         let ticketInfo = locationInfo.ticketInfo
         let locationStatus = locationInfo.locationStatus
         
-        // お試し利用中は所持金は減算されない
+        // お試し利用中は保有コインは減算されない
         let remainingCoin = MyAppSettings.isTrialUser
         ? MyAppSettings.userInitialCurrentCoin.toString
         : ticketInfo.remainingCoin.toString

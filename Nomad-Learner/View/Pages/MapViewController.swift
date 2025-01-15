@@ -61,7 +61,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
     private let profileBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person"), style: .plain, target: nil, action: nil).then {
         $0.tintColor = ColorCodes.primaryPurple.color()
     }
-    // お財布アイコンと所持金ラベルのスタックビュー
+    // お財布アイコンと保有コインラベルのスタックビュー
     private lazy var walletStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [self.walletImageView, self.currentCoinLabel])
         stackView.axis = .horizontal
@@ -70,7 +70,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
         return stackView
     }()
     
-    // 現在の所持金
+    // 現在の保有コイン
     private let currentCoinLabel = UILabel().then {
         $0.font = .boldSystemFont(ofSize: 24)
         $0.textColor = .black
@@ -337,7 +337,7 @@ extension MapViewController {
             
             let isSufficientCoin = locationInfo.locationStatus.isSufficientCoin
             if !isSufficientCoin {
-                // 所持金が足りない場合、警告を表示
+                // 保有コインが足りない場合、警告を表示
                 base.rx.showMessage.onNext(.insufficientCoin)
             } else {
                 // ポリラインを削除

@@ -28,7 +28,7 @@ protocol MainServiceProtocol {
     func fetchVisitedLocations() -> Observable<[VisitedLocation]>
     // マップ上の各ロケーションの状態の取得
     func fetchLocations() -> Observable<[DynamicLocation]>
-    // ユーザープロフィールの現在のロケーションIDと現在の所持金を更新
+    // ユーザープロフィールの現在のロケーションIDと現在の保有コインを更新
     func updateCurrentCoinAndLocationId(locationId: String, currentCoin: Int) ->  Observable<Void>
     // 参加中のロケーションにuuidを追加
     func addUserIdToLocation(locationId: String) -> Observable<Void>
@@ -46,7 +46,7 @@ protocol MainServiceProtocol {
     func removeUserIdFromLocation(locationId: String) -> Observable<Void>
     // 勉強部屋からの退出時、合計勉強時間、ミッション勉強時間、報酬コインを保存
     func saveStudyProgressAndRewards(locationId: String, updatedData: VisitedLocation) -> Observable<Void>
-    // 所持金に報酬コインを加算
+    // 保有コインに報酬コインを加算
     func updateCurrentCoin(addedRewardCoin: Int) -> Observable<Void>
     
     /*
@@ -267,7 +267,7 @@ final class MainService: MainServiceProtocol {
         }
     }
     
-    // ユーザープロフィールの現在のロケーションIDと現在の所持金を更新
+    // ユーザープロフィールの現在のロケーションIDと現在の保有コインを更新
     func updateCurrentCoinAndLocationId(locationId: String, currentCoin: Int) -> Observable<Void> {
         Observable.create { observer in
             guard let userId = FBAuth.currentUserId else {
@@ -532,7 +532,7 @@ final class MainService: MainServiceProtocol {
         }
     }
     
-    // 所持金に報酬コインを加算
+    // 保有コインに報酬コインを加算
     func updateCurrentCoin(addedRewardCoin: Int) -> Observable<Void> {
         Observable.create { observer in
             guard let userId = FBAuth.currentUserId else {

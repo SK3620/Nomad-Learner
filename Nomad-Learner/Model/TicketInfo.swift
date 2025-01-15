@@ -17,7 +17,7 @@ struct TicketInfo {
     let totalStudyMins: Int // そのロケーションでの合計勉強時間（分単位）
     let destination: String // 目的地
     let countryAndRegion: String // 目的地の国と地域
-    let currentCoin: Int // 所持金
+    let currentCoin: Int // 保有コイン
     let remainingCoin: Int // 旅費支払い後の残高
     let nationalFlagImageUrlString: (current: String, destination: String) // 現在地と目的地の国旗画像URL文字列
     

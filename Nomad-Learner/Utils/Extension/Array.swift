@@ -38,7 +38,7 @@ extension Array {
         let currentCoin = userProfile.currentCoin
         let rewardCoin = visitedLocation.fixedRewardCoin ?? 0
         let bonusCoin = visitedLocation.bonusCoin
-        // 元々の所持金
+        // 元々の保有コイン
         let originalCoin = currentCoin - ((completionFlag == 1 ? rewardCoin : 0) + bonusCoin)
         // ボーナスコイン獲得に必要だった勉強時間
         let studyHoursForBonus = bonusCoin / MyAppSettings.bonusCoinMultiplier

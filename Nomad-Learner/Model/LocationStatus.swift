@@ -10,7 +10,7 @@ import Foundation
 struct LocationStatus {
     let locationId: String // ロケーションID
     let userCount: Int // 参加人数
-    let isSufficientCoin: Bool // 所持金が足りるか否か
+    let isSufficientCoin: Bool // 保有コインが足りるか否か
     let isMyCurrentLocation: Bool // 現在地か否か
     let isCompleted: Bool // 必要な合計勉強時間をクリアしているか否か
     let isOngoing: Bool // 進行中かどうか
@@ -48,7 +48,7 @@ struct LocationStatus {
         let fixedLocationId = fixedLocation.locationId
         // 過去に訪問したロケーションかどうか
         let hasVisited = (visitedLocation?.locationId == fixedLocationId)
-        // 所持金が足りてるか否か
+        // 保有コインが足りてるか否か
         let isSufficientCoin = (ticketInfo.currentCoin >= ticketInfo.travelDistanceAndCost)
         // 現在地か否か
         let isMyCurrentLocation = (currentLocationId == fixedLocationId)

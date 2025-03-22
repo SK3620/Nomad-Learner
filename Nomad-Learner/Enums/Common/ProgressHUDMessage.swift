@@ -95,7 +95,7 @@ extension ProgressHUDMessage {
         let basicColor = ColorCodes.primaryPurple.color()
         
         KRProgressHUD.set(activityIndicatorViewColors: [basicColor])
-        KRProgressHUD.set(font: UIFont(name: "HiraginoSans-W6", size: 14)!)
+        KRProgressHUD.set(font: UIFont(name: MyAppSettings.boldFontName, size: 14)!)
         KRProgressHUD.set(duration: 2.5)
 
         let customStyle = KRProgressHUDStyle.custom(

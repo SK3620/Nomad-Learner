@@ -72,6 +72,8 @@ class StudyRoomViewController: UIViewController {
                 name: UIApplication.didEnterBackgroundNotification,
                 object: nil
             )
+            // アプリ画面復帰時
+            NotificationCenter.default.addObserver(self, selector: #selector(self.didBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
         }
     }
     
@@ -146,6 +148,11 @@ extension StudyRoomViewController {
     @objc func didEnterBackground() {
         // アプリをキルした場合でもローカルに勉強記録等を保存しておく
         viewModel.saveStudyProgress(shouldSaveLocallyOnKill: true)
+    }
+    
+    // アプリ画面に復帰した時の処理
+    @objc func didBecomeActive() {
+        print("アプリ画面に復帰しました！！！")
     }
 }
 

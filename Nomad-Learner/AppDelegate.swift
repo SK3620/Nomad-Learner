@@ -29,6 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         print("え")
         
+        print("か")
         // 指定したフォントを全画面に適用
         UILabel.appearance().substituteFontName = MyAppSettings.normalFontName
         UILabel.appearance().substituteFontBoldName = MyAppSettings.boldFontName

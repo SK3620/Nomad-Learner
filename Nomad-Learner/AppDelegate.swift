@@ -21,6 +21,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         FirebaseApp.configure()
         
+        print("あ")
+        
+        print("い")
+        
+        print("う")
+        
+        print("え")
+        
         // 指定したフォントを全画面に適用
         UILabel.appearance().substituteFontName = MyAppSettings.normalFontName
         UILabel.appearance().substituteFontBoldName = MyAppSettings.boldFontName
